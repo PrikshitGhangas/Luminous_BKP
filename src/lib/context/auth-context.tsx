@@ -32,6 +32,7 @@ interface AuthContextType {
   source: AuthSource;
   signUp: (input: SignUpInput) => Promise<{ error: string | null; needsEmailVerification: boolean }>;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
+  signInWithProvider: (provider: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: string | null }>;
   launchDemo: (role: UserRole) => void;
@@ -193,6 +194,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  /** Initiate an OAuth/social sign-in via Supabase Auth. */
+  const signInWithProvider = useCallback(async (provider: string) => {
+    try {
+      const client = await getBrowserClient();
+      if (!client) return { error: 'Authentication is not configured.' };
+      const redirectTo = `${window.location.origin}/auth/callback`;
+      const { error } = await client.auth.signInWithOAuth({
+        provider: provider as never,
+        options: { redirectTo },
+      });
+      if (error) return { error: friendlyAuthMessage(error.message) };
+      return { error: null };
+    } catch {
+      return { error: 'Unable to start social sign-in. Please try again.' };
+    }
+  }, []);
+
   const signOut = useCallback(async () => {
     try {
       const client = await getBrowserClient();
@@ -203,6 +221,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setSource(null);
     setProfile(null);
     setUser(null);
+    // Clear any demo-mode markers so protected routes are enforced again.
+    if (typeof document !== 'undefined') {
+      document.cookie = 'luminous_demo=; path=/; max-age=0';
+      document.cookie = 'luminous_role=; path=/; max-age=0';
+    }
   }, []);
 
   const resetPassword = useCallback(async (email: string) => {
@@ -231,6 +254,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       avatar_url: demo.avatar_url,
       is_active: demo.is_active !== false,
     });
+    // Allow the middleware to recognize this as demo mode (client-only persona).
+    if (typeof document !== 'undefined') {
+      document.cookie = `luminous_demo=1; path=/; max-age=3600; SameSite=Lax`;
+      document.cookie = `luminous_role=${demo.role}; path=/; max-age=3600; SameSite=Lax`;
+    }
   }, []);
 
   const switchRole = useCallback(
@@ -274,6 +302,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         source,
         signUp,
         signIn,
+        signInWithProvider,
         signOut,
         resetPassword,
         launchDemo,

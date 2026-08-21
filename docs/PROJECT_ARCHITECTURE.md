@@ -601,34 +601,48 @@ CREATE TABLE announcements (
 
 ## 5. Authentication Architecture
 
+> **Authentication and authorization are separate layers.**
+> - **Authentication** establishes *who* the user is (identity + session).
+> - **Authorization** determines *what* that identity is allowed to do.
+>
+> Authentication is handled through **Supabase Auth**, supporting email-based
+> authentication and OAuth/social login. Authentication establishes the user's
+> identity and session, while authorization is enforced separately through
+> trusted server-side role resolution and PostgreSQL Row Level Security.
+
 ```
-┌─────────────┐        ┌──────────────────┐        ┌──────────────┐
-│  User Login │───────▶│ Supabase Auth    │───────▶│ JWT Token    │
-│  (Email/Pwd)│        │ (signInWithPwd)  │        │ (httpOnly    │
-└─────────────┘        └──────────────────┘        │  cookie)     │
-                              │                     └──────┬───────┘
-                              │ on signup trigger           │
-                              ▼                             ▼
-                       ┌──────────────────┐        ┌──────────────┐
-                       │ Create profile   │        │ Next.js      │
-                       │ (DB trigger)     │        │ Middleware    │
-                       └──────────────────┘        │ (verify JWT) │
-                                                   └──────┬───────┘
-                                                          │
-                                                   ┌──────▼───────┐
-                                                   │ Route Handler│
-                                                   │ (getUser +   │
-                                                   │  role check) │
-                                                   └──────────────┘
+User
+  ↓
+Supabase Auth         (email/password sign-in, OAuth/social login, JWT + session)
+  ↓
+Authenticated Session / JWT   (managed via @supabase/ssr secure cookies)
+  ↓
+Server-side Role Resolution   (role read from the profiles table by auth.uid(), never from client input)
+  ↓
+RBAC Authorization            (Next.js middleware + route handlers + permission checks)
+  ↓
+PostgreSQL RLS                (Row Level Security policies keyed on the authenticated JWT)
+  ↓
+Authorized ERP / Safety / AI Operations
 ```
+
+### Authentication vs. Authorization
+
+| Layer | Mechanism | Responsibility |
+|-------|-----------|----------------|
+| **Authentication** | Supabase Auth (JWT / session, via `@supabase/ssr`) | Verify identity, issue and refresh the session, manage sign-in / sign-out / password recovery / email verification. Supports **email** and **OAuth/social** providers. |
+| **Authorization** | Server-side role resolution + RBAC + PostgreSQL RLS | Determine and enforce what a given authenticated identity may access. Institutional roles (student, faculty, security, admin, warden, parent, placement_officer, super_admin) are **never trusted from client input**. |
 
 ### Auth Flow
 
-1. **Sign Up**: User registers → Supabase creates `auth.users` row → DB trigger creates `profiles` row with default role `student`
-2. **Sign In**: Supabase issues JWT → stored in httpOnly cookie via `@supabase/ssr`
-3. **Middleware**: Every request → `middleware.ts` refreshes session → checks if route requires auth
-4. **API Routes**: Server-side `getUser()` → lookup `profiles.role` → RBAC check
-5. **Admin Promotion**: Super admin can change user roles via admin panel
+1. **Sign Up**: User registers (email/password) → Supabase creates an `auth.users` row → a database trigger provisions a matching `profiles` row with a **default, non-privileged** role. Privileged roles (e.g. `super_admin`) cannot be self-assigned through the signup UI or signup metadata.
+2. **Sign In**: Supabase authenticates the email/password (or an OAuth provider) and issues a JWT, which is stored in a **secure HTTP-only cookie** via `@supabase/ssr` and persisted across page navigation and refresh.
+3. **Middleware**: Every request runs through `middleware.ts`, which refreshes the Supabase session and verifies that an authenticated user exists before a protected route is served.
+4. **Role Resolution**: On authentication, the user's role is read **server-side** from the `profiles` table using the authenticated user's JWT/`auth.uid()` — never from a value supplied by the browser.
+5. **Authorization Check**: Route handlers and the middleware apply role-based checks before any data operation.
+6. **Database Access**: All database reads/writes rely on the authenticated user's Supabase JWT context, with **PostgreSQL Row Level Security** as the final enforcement layer.
+
+> **OAuth / social login**: Supabase Auth natively supports OAuth providers (e.g. Google, GitHub, Microsoft). In this repository the email/password flow and the Supabase session plumbing are implemented; the OAuth provider buttons are wired to `signInWithOAuth` but require the corresponding provider to be **enabled in the Supabase project** (Auth → Providers) and an OAuth callback/redirect route. **Status: partially implemented — requires project provider configuration and verification.**
 
 ### Role Hierarchy
 
@@ -638,8 +652,8 @@ super_admin          ← Full platform control
        ├── security  ← Safety operations
        ├── faculty   ← Academic operations
        ├── warden    ← Hostel operations
-       ├── transport_admin ← Transport ops
-       └── receptionist    ← Visitor desk
+       ├── placement_officer ← Career operations
+       └── other     ← General institute member
   └── student        ← Student access
   └── parent         ← Read-only parent view
 ```

@@ -15,7 +15,6 @@ import {
   MapPin,
   Bell,
   BarChart3,
-  Users,
   ShieldCheck,
   GraduationCap,
   Briefcase,

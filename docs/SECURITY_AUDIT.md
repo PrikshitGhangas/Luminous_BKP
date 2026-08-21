@@ -124,7 +124,7 @@ Real exploitable **CRITICAL** and **HIGH** severity vulnerabilities were identif
 - **Vulnerability**: Application lacked standard HTTP defense headers against clickjacking, sniffing, and MIME confusion. Role cookie was unvalidated.
 - **Fix Implemented**:
   - Added security headers: `X-Frame-Options: SAMEORIGIN`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`, and `X-XSS-Protection`.
-  - Validated role cookie against allowed `UserRole` whitelist with fallback to `'student'`.
+  - Authenticated routing now verifies the **Supabase session** via `@supabase/ssr` and resolves the user's role **server-side from the `profiles` table** rather than trusting a client-supplied role cookie. When Supabase is not configured, the legacy role cookie is validated against the allowed `UserRole` whitelist with fallback to `'student'`.
 
 ### 3.10. [MEDIUM] AI Prompt Injection Defense Hardening
 - **Locations**: `src/lib/services/ai-incident.ts`, `src/lib/services/ai-complaint.ts`, `src/lib/services/copilot/gemini-engine.ts`

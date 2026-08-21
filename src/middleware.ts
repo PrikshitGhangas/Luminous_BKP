@@ -31,8 +31,17 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
   return response;
 }
 
+/** Demo-mode guard: allow navigation while a clearly-labeled demo persona is active. */
+function isDemoSession(request: NextRequest): boolean {
+  return request.cookies.get('luminous_demo')?.value === '1';
+}
+
 function isPublic(pathname: string): boolean {
   if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot-password') {
+    return true;
+  }
+  // OAuth callback must be reachable without an existing session to complete the code exchange.
+  if (pathname === '/auth/callback') {
     return true;
   }
   if (DEMO_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(prefix + '/'))) {
@@ -61,6 +70,26 @@ export async function middleware(request: NextRequest) {
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Demo mode short-circuit: a clearly-labeled client-only demo persona is active.
+  // Honor it BEFORE touching Supabase so demo navigation is instant and never
+  // depends on a live Supabase project. Role-based route guards still apply.
+  if (isDemoSession(request)) {
+    if (isPublic(pathname)) {
+      return applySecurityHeaders(NextResponse.next());
+    }
+    const rawRoleCookie = request.cookies.get('luminous_role')?.value;
+    const roleCookie: UserRole =
+      rawRoleCookie && ALLOWED_ROLES.includes(rawRoleCookie as UserRole)
+        ? (rawRoleCookie as UserRole)
+        : 'student';
+    if (!isRouteAllowed(pathname, roleCookie)) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/';
+      return applySecurityHeaders(NextResponse.redirect(url));
+    }
+    return applySecurityHeaders(NextResponse.next());
+  }
 
   // If Supabase isn't configured, fall back to the legacy cookie-based demo guard
   // so the app remains navigable during development.

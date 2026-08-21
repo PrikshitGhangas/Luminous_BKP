@@ -25,9 +25,9 @@
 
 | Major Area | Verdict | Details & Evidence |
 | :--- | :---: | :--- |
-| **Authentication** | `PASS` | Role switcher and session provider verified with local storage persistence and cookie sync for middleware. |
-| **Logout** | `PASS` | Cookie teardown and token clearance tested; unprivileged state redirects cleanly. |
-| **Protected Routes** | `PASS` | Server middleware (`src/middleware.ts`) and client guards intercept unauthorized access with HTTP 403 banner. |
+| **Authentication** | `PASS` | Sessions are established through **Supabase Auth** (`@supabase/ssr`), authenticated via email/password (and OAuth where a provider is enabled) and resolved server-side; the role is read from the `profiles` table, never trusted from the client. Email verification and password-recovery states are handled in the auth UI. |
+| **Logout** | `PASS` | `signOut()` invalidates the Supabase session and clears the session cookie; the app returns to an unauthenticated state and protected routes redirect to login. |
+| **Protected Routes** | `PASS` | Server middleware (`src/middleware.ts`) verifies the Supabase session and resolves the role server-side; client guards also intercept unauthorized access with an HTTP 403 banner. |
 | **RBAC Matrix** | `PASS` | Complete permission table enforced across all 8 user roles (`super_admin`, `admin`, `faculty`, `student`, `parent`, `security`, `warden`, `placement_officer`). |
 | **Student Dashboard** | `PASS` | Renders enrolled courses, attendance breakdown, upcoming exam notices, active grievance widgets, and quick action bar. |
 | **Admin Dashboard (Command Center)** | `PASS` | Real-time threat level selector, critical metrics strip, interactive map, live incident feed, and automated action priorities. |

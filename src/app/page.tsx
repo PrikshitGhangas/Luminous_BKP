@@ -60,7 +60,10 @@ export default function LandingPage() {
   const handleLaunchRole = (role: UserRole) => {
     launchDemo(role);
     const targetPath = ROLE_DETAILS[role].defaultPath;
-    router.push(targetPath);
+    // Use a full page navigation so the freshly-set demo cookie is sent to the
+    // middleware on the very next request (client-side router pushes may not
+    // carry a just-set cookie reliably).
+    window.location.assign(targetPath);
   };
 
   const handleLogout = async () => {

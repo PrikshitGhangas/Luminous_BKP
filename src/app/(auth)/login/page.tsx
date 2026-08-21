@@ -8,13 +8,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
 
+const OAUTH_PROVIDERS = [
+  { id: 'google', label: 'Google' },
+  { id: 'github', label: 'GitHub' },
+  { id: 'azure', label: 'Microsoft' },
+] as const;
+
 export default function LoginPage() {
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { signIn, signInWithProvider } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [oauthProvider, setOauthProvider] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,6 +47,18 @@ export default function LoginPage() {
     }
   };
 
+  const handleOAuth = async (provider: string) => {
+    setErrorMessage(null);
+    setOauthProvider(provider);
+    try {
+      const { error } = await signInWithProvider(provider);
+      if (error) setErrorMessage(error);
+      // On success, Supabase redirects to the provider (no navigation needed here).
+    } finally {
+      setOauthProvider(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
@@ -52,6 +71,37 @@ export default function LoginPage() {
         <p className="text-sm text-[#667085]">
           Access your campus safety and ERP dashboard
         </p>
+      </div>
+
+      {/* OAuth / social sign-in */}
+      <div className="space-y-2">
+        <div className="grid grid-cols-3 gap-2">
+          {OAUTH_PROVIDERS.map((p) => (
+            <Button
+              key={p.id}
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => handleOAuth(p.id)}
+              disabled={!!oauthProvider}
+              className="gap-1.5 text-xs"
+            >
+              {oauthProvider === p.id && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
+              <span>{p.label}</span>
+            </Button>
+          ))}
+        </div>
+        <p className="text-center text-[10px] text-[#8A9199]">
+          Social sign-in uses Supabase Auth and requires the provider to be enabled in the project.
+        </p>
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-[#D0D1D6]" />
+          </div>
+          <div className="relative flex justify-center text-[11px] uppercase tracking-wide">
+            <span className="bg-white px-2 text-[#8A9199]">or continue with email</span>
+          </div>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>

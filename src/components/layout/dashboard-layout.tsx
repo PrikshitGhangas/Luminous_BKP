@@ -26,7 +26,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  if (isLoading) {
+  // Demo mode is a client-only persona and should never be gated by the
+  // real Supabase session loading state.
+  if (isLoading && !isDemoMode) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-[#F1F2F0]">
         <LoadingSpinner text="Authenticating Luminous AI..." />

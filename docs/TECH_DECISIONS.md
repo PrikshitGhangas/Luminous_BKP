@@ -145,24 +145,28 @@ const model = genAI.getGenerativeModel({
 **Decision**: Use Supabase Auth with `@supabase/ssr` for cookie-based sessions.
 
 **Rationale**:
-- **httpOnly cookies** are more secure than localStorage tokens
+- **HTTP-only cookies** are more secure than localStorage tokens
 - **`@supabase/ssr`** handles cookie management for both server and client
 - **Next.js Middleware** can read cookies for route protection
 - **Server Components** can access the session without client-side JS
-- **Built-in** email/password auth is sufficient for hackathon (no OAuth complexity)
+- **Supabase Auth** supports email-based authentication **and** OAuth/social login through its built-in provider federation
 
-**Auth Method**: Email + Password (single method, minimum complexity)
+**Auth Methods**:
+- **Email-based authentication** — implemented (sign-up, sign-in, sign-out, password recovery, email verification states).
+- **OAuth / social login** — supported by Supabase Auth; the login UI exposes provider buttons that call `signInWithOAuth`. The OAuth flow is fully functional **once the desired provider(s) are enabled in the Supabase project** (Auth → Providers) and the project callback/redirect URL is configured. **Status: partially implemented (UI + client wired; requires Supabase provider configuration and verification).**
+
+**Authentication vs. Authorization**: Supabase Auth is only responsible for establishing identity and issuing the session/JWT. Institutional roles (student, faculty, security, admin, warden, parent, placement_officer, super_admin) are resolved **server-side from the `profiles` table**, never accepted from client input. Access is enforced separately by Next.js middleware + route-handler RBAC and by PostgreSQL Row Level Security policies keyed on the authenticated JWT.
 
 **Session Flow**:
-1. User signs in → Supabase creates JWT
-2. `@supabase/ssr` stores JWT in httpOnly cookies
-3. Middleware reads cookie on every request, refreshes if needed
-4. Server Components use `createServerClient` to get authenticated user
-5. Route Handlers use `createServerClient` to verify auth before DB operations
+1. User authenticates (email/password via `signInWithPassword`; or an OAuth provider via `signInWithOAuth`) → Supabase creates a JWT / session
+2. `@supabase/ssr` stores the session in HTTP-only cookies
+3. Middleware reads the cookie on every request, refreshes if needed, and verifies an authenticated user exists
+4. Server Components use `createServerClient` to get the authenticated user
+5. Route Handlers use `createServerClient` to verify auth before DB operations, then resolve the role server-side
 
 **Why not NextAuth?**
 - Supabase Auth is already integrated with our database
-- NextAuth adds unnecessary complexity when we're already using Supabase
+- NextAuth would add unnecessary complexity when we're already using Supabase
 - One less dependency to manage
 
 ---
