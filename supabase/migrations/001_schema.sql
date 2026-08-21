@@ -330,7 +330,9 @@ CREATE INDEX idx_users_is_in_distress
 -- =========================
 
 -- Active incidents with student & guard info
-CREATE OR REPLACE VIEW public.active_incidents_view AS
+CREATE OR REPLACE VIEW public.active_incidents_view
+WITH (security_invoker = true)
+AS
 SELECT
   i.id               AS incident_id,
   i.description,
@@ -370,7 +372,9 @@ LEFT JOIN public.users g ON g.id = i.assigned_to
 WHERE i.status != 'resolved';
 
 -- Available guards and volunteers
-CREATE OR REPLACE VIEW public.available_guards_view AS
+CREATE OR REPLACE VIEW public.available_guards_view
+WITH (security_invoker = true)
+AS
 SELECT
   u.id,
   u.name,
@@ -384,7 +388,9 @@ WHERE u.role IN ('guard', 'volunteer')
   AND u.is_available = TRUE;
 
 -- Available therapists
-CREATE OR REPLACE VIEW public.available_therapists_view AS
+CREATE OR REPLACE VIEW public.available_therapists_view
+WITH (security_invoker = true)
+AS
 SELECT
   u.id,
   u.name,
