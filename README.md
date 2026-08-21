@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌟 Luminous — AI-Powered Campus Safety ERP & Smart Campus Platform
 
-## Getting Started
+> **Where Every ERP Module Becomes an Intelligent Safety Net.**
 
-First, run the development server:
+Luminous is a unified campus platform where daily academic modules (timetables, attendance, student profiles, leave requests) directly power an enterprise-grade emergency response system.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Key Innovations & Features
+
+### 🔴 Core Safety & Smart Dispatch
+1. **Tiered Emergency SOS**:
+   - **3 Presses**: Level 1 Campus Alert → dispatches nearest available guard/volunteer via PostGIS geospatial calculation.
+   - **5 Presses**: Level 2 Police/Emergency (112) → broadcasts to all campus responders & parents.
+   - **Auto-Escalation**: Unanswered Level 1 alerts auto-escalate to Level 2 after 120 seconds.
+2. **Cross-Validated Indoor Location ("Dead Reckoning")**:
+   - When GPS accuracy degrades indoors (>50m), the system cross-validates against the student's timetable and approved off-campus outing requests.
+   - Guard receives both the GPS approximate radius and contextual hints (*"Likely in Chemistry Block, Lab 3"*).
+3. **Ghost Mode Privacy**: Zero continuous tracking. Location is only transmitted on SOS trigger, attendance geofence entry, or opt-in Night Walk mode.
+4. **Offline / Airplane Mode Failsafe**: Instant fallback to native SMS pre-populated with GPS coordinates, blood group, medical conditions, and guard numbers.
+
+### 🟡 AI-Powered Modules (Google Gemini 2.0 Flash)
+1. **Anonymous Tip Classifier**: Classifies student tips into category (*ragging, harassment, infrastructure, etc.*) and severity (*low, medium, high*).
+2. **Wellbeing Chat Triage & Anti-Spam**: Evaluates student messages, assigns urgency scores, and filters joke/spam submissions.
+3. **Warm Counselor Handoff**: Generates a 3-bullet factual summary and approach strategy for therapists so students never have to re-explain their trauma.
+4. **AI Copilot & Incident Assistant**: Natural language querying and automated triage for security personnel.
+
+### 🟢 Smart ERP Integration
+1. **Academic ERP**: Full curriculum management, timetables, attendance tracking, courses, and departments.
+2. **Geofenced Attendance**: Automatic attendance verification using PostGIS polygon boundaries and scheduled class slots.
+3. **Leave & Outing Filing**: Off-campus visit requests with destination coordinates acting as secondary location hints.
+4. **Medical Student Profiles**: Vital information (blood group, allergies, conditions) displayed directly to responding security guards.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**: Next.js (App Router), React 19, TypeScript, Tailwind CSS, Lucide Icons, Recharts
+- **Backend & Database**: Supabase (PostgreSQL 17 + PostGIS)
+- **Security**: ~50 Row Level Security (RLS) policies with `security_invoker = true`
+- **Serverless Compute**: Supabase Edge Functions (Deno / TypeScript) & Next.js API Routes
+- **AI Intelligence**: Google Gemini 2.0 Flash
+- **Realtime**: Supabase Realtime WebSocket Channels
+
+---
+
+## 📂 Repository Structure
+
+```
+├── docs/
+│   ├── DATABASE_DESIGN.md             # Comprehensive DB schema & entity relationships
+│   ├── DATABASE_IMPLEMENTATION.md     # Production implementation & deployment guide
+│   ├── HACKATHON_DEMO.md              # 5-minute interactive pitch & demo guide
+│   ├── QA_REPORT.md                   # Full QA verification & audit report
+│   ├── SECURITY_AUDIT.md              # RLS and RBAC security analysis
+│   ├── UI_UX_DESIGN.md                # Design system and user experience specs
+│   ├── Luminous_Summary.docx          # Demo script & judge Q&As
+│   └── Luminous_Preparation_Guide.pdf # Architecture & presentation guide
+├── src/                               # Next.js frontend & full dashboard suite
+│   ├── app/                           # App router pages (Safety, ERP, Auth, APIs)
+│   ├── components/                    # UI & Feature components (Copilot, Map, Charts)
+│   └── lib/                           # Contexts, Services, Hooks, and Supabase client
+├── supabase/
+│   ├── migrations/                    # Core schema, academic ERP, safety, and RLS policies
+│   ├── functions/                     # Edge functions (SOS, Location, AI Triage, Handoff)
+│   └── seed/                          # Demo seed datasets
+├── API_DOCUMENTATION.md               # API endpoints & Realtime specifications
+└── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏃 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-## Learn More
+### 2. Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Run Automated Tests
+```bash
+npm test
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
