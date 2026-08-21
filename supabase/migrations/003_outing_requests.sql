@@ -11,16 +11,16 @@ CREATE TYPE outing_status AS ENUM ('pending', 'approved', 'active', 'completed',
 -- ============================================================
 -- OUTING REQUESTS
 -- ============================================================
-CREATE TABLE outing_requests (
+CREATE TABLE public.outing_requests (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  student_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  student_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
   destination_name TEXT NOT NULL,                           -- "Lalbagh Garden", "MG Road Mall"
   destination_location GEOGRAPHY(POINT, 4326) NOT NULL,    -- PostGIS point for the destination
   purpose TEXT,                                             -- "Family visit", "Shopping", etc.
   expected_departure TIMESTAMPTZ NOT NULL,
   expected_return TIMESTAMPTZ NOT NULL,
   status outing_status NOT NULL DEFAULT 'pending',
-  approved_by UUID REFERENCES users(id),                   -- faculty or admin who approved
+  approved_by UUID REFERENCES public.users(id),                   -- faculty or admin who approved
   approved_at TIMESTAMPTZ,
   activated_at TIMESTAMPTZ,                                -- when student actually left campus
   completed_at TIMESTAMPTZ,

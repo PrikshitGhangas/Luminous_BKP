@@ -66,11 +66,11 @@ Deno.serve(async (req) => {
       const { data: session, error: sessionError } = await adminClient
         .from('therapy_sessions')
         .insert({
-          student_id: anonymous ? null : studentId,
+          student_id: studentId,
           status: 'queued',
           urgency,
           anonymous: anonymous ?? false,
-          triage_summary: triageSummary ?? null,
+          ai_triage_summary: triageSummary ?? null,
         })
         .select('id')
         .single()
@@ -93,7 +93,7 @@ Deno.serve(async (req) => {
     // Check therapist slot availability for current day/time
     const now = new Date()
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-    const currentDay = days[now.getDay()]
+    const currentDay = days[now.getDay()].toLowerCase()
     const currentTime = now.toTimeString().slice(0, 8)
 
     const therapistIds = availableTherapists.map((t) => t.id)
@@ -102,7 +102,7 @@ Deno.serve(async (req) => {
       .from('therapist_slots')
       .select('therapist_id')
       .in('therapist_id', therapistIds)
-      .eq('day', currentDay)
+      .ilike('day', currentDay)
       .lte('start_time', currentTime)
       .gte('end_time', currentTime)
 
@@ -129,12 +129,13 @@ Deno.serve(async (req) => {
     const { data: session, error: sessionError } = await adminClient
       .from('therapy_sessions')
       .insert({
-        student_id: anonymous ? null : studentId,
+        student_id: studentId,
         therapist_id: selectedTherapist.id,
-        status: 'queued',
+        status: 'active',
         urgency,
         anonymous: anonymous ?? false,
-        triage_summary: triageSummary ?? null,
+        ai_triage_summary: triageSummary ?? null,
+        started_at: new Date().toISOString(),
       })
       .select('id')
       .single()
@@ -150,14 +151,14 @@ Deno.serve(async (req) => {
         currently_busy: true,
         active_session_with: studentId,
       })
-      .eq('id', selectedTherapist.id)
+      .eq('user_id', selectedTherapist.id)
 
     return new Response(
       JSON.stringify({
         sessionId: session.id,
         therapist: {
           id: selectedTherapist.id,
-          name: selectedTherapist.full_name ?? selectedTherapist.name,
+          name: selectedTherapist.name,
           specialization: selectedTherapist.specialization ?? null,
         },
         status: 'connected',

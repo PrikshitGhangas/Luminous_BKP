@@ -1,11 +1,14 @@
 -- ============================================================================
--- SafeCampus — Seed Data
+-- Luminous (SafeCampus) — Seed Data
 -- Realistic Indian college demo data (Bangalore-area campus)
 -- Run after migrations. Requires PostGIS extension enabled.
 -- ============================================================================
 
 -- Enable PostGIS if not already enabled
 CREATE EXTENSION IF NOT EXISTS postgis;
+
+-- Temporarily bypass FK constraints to allow seeding sample users
+SET session_replication_role = 'replica';
 
 DO $$
 DECLARE
@@ -65,24 +68,22 @@ DECLARE
   v_tip_4             uuid := gen_random_uuid();
   v_tip_5             uuid := gen_random_uuid();
 
-  -- Campus center coordinates (Bangalore area)
-  -- 12.9700°N, 77.5900°E
 BEGIN
 
   -- ==========================================================================
   -- 1. USERS — Students
   -- ==========================================================================
-  INSERT INTO users (id, name, email, role, department, year, phone, blood_group, medical_conditions, hostel_room, is_in_distress, distress_level, is_available, evidence_mode_consent, created_at) VALUES
-    (v_student_priya,     'Priya Sharma',      'priya.sharma@college.edu',      'student', 'CSE', 3, '+919876543210', 'B+',   'Asthma',            'GH-204', false, null, true,  true,  now()),
-    (v_student_arjun,     'Arjun Patel',       'arjun.patel@college.edu',       'student', 'ECE', 2, '+919876543211', 'O+',   null,                'BH-112', false, null, true,  true,  now()),
-    (v_student_sneha,     'Sneha Nair',        'sneha.nair@college.edu',        'student', 'CSE', 4, '+919876543212', 'A+',   null,                'GH-301', false, null, true,  false, now()),
-    (v_student_rohit,     'Rohit Kumar',       'rohit.kumar@college.edu',       'student', 'ME',  1, '+919876543213', 'AB+',  'Diabetes (Type 1)', 'BH-105', false, null, true,  true,  now()),
-    (v_student_anita,     'Anita Deshmukh',    'anita.deshmukh@college.edu',    'student', 'ECE', 3, '+919876543214', 'B-',   null,                'GH-102', false, null, true,  true,  now()),
-    (v_student_vikram,    'Vikram Singh',      'vikram.singh@college.edu',      'student', 'CSE', 2, '+919876543215', 'O-',   'Epilepsy',          'BH-308', false, null, true,  false, now()),
-    (v_student_deepa,     'Deepa Menon',       'deepa.menon@college.edu',       'student', 'CE',  1, '+919876543216', 'A-',   null,                'GH-405', false, null, true,  true,  now()),
-    (v_student_karthik,   'Karthik Rao',       'karthik.rao@college.edu',       'student', 'ME',  4, '+919876543217', 'A+',   null,                'BH-210', false, null, true,  true,  now()),
-    (v_student_meghna,    'Meghna Joshi',      'meghna.joshi@college.edu',      'student', 'CSE', 1, '+919876543218', 'B+',   'Migraine (chronic)','GH-103', false, null, true,  false, now()),
-    (v_student_siddharth, 'Siddharth Reddy',   'siddharth.reddy@college.edu',   'student', 'ECE', 3, '+919876543219', 'O+',   null,                'BH-401', false, null, true,  true,  now());
+  INSERT INTO users (id, name, email, role, department, year, phone, blood_group, medical_conditions, hostel_room, is_in_distress, distress_level, is_available, created_at) VALUES
+    (v_student_priya,     'Priya Sharma',      'priya.sharma@college.edu',      'student', 'CSE', 3, '+919876543210', 'B+',   'Asthma',            'GH-204', false, null, true,  now()),
+    (v_student_arjun,     'Arjun Patel',       'arjun.patel@college.edu',       'student', 'ECE', 2, '+919876543211', 'O+',   null,                'BH-112', false, null, true,  now()),
+    (v_student_sneha,     'Sneha Nair',        'sneha.nair@college.edu',        'student', 'CSE', 4, '+919876543212', 'A+',   null,                'GH-301', false, null, true,  now()),
+    (v_student_rohit,     'Rohit Kumar',       'rohit.kumar@college.edu',       'student', 'ME',  1, '+919876543213', 'AB+',  'Diabetes (Type 1)', 'BH-105', false, null, true,  now()),
+    (v_student_anita,     'Anita Deshmukh',    'anita.deshmukh@college.edu',    'student', 'ECE', 3, '+919876543214', 'B-',   null,                'GH-102', false, null, true,  now()),
+    (v_student_vikram,    'Vikram Singh',      'vikram.singh@college.edu',      'student', 'CSE', 2, '+919876543215', 'O-',   'Epilepsy',          'BH-308', false, null, true,  now()),
+    (v_student_deepa,     'Deepa Menon',       'deepa.menon@college.edu',       'student', 'CE',  1, '+919876543216', 'A-',   null,                'GH-405', false, null, true,  now()),
+    (v_student_karthik,   'Karthik Rao',       'karthik.rao@college.edu',       'student', 'ME',  4, '+919876543217', 'A+',   null,                'BH-210', false, null, true,  now()),
+    (v_student_meghna,    'Meghna Joshi',      'meghna.joshi@college.edu',      'student', 'CSE', 1, '+919876543218', 'B+',   'Migraine (chronic)','GH-103', false, null, true,  now()),
+    (v_student_siddharth, 'Siddharth Reddy',   'siddharth.reddy@college.edu',   'student', 'ECE', 3, '+919876543219', 'O+',   null,                'BH-401', false, null, true,  now());
 
   -- ==========================================================================
   -- 2. USERS — Guards
@@ -131,12 +132,12 @@ BEGIN
   -- 7. EMERGENCY CONTACTS (for students)
   -- ==========================================================================
   INSERT INTO emergency_contacts (id, user_id, name, phone, relation) VALUES
-    -- Priya's emergency contacts (including parent user)
+    -- Priya's emergency contacts
     (gen_random_uuid(), v_student_priya, 'Ramesh Sharma',   '+919800110001', 'Father'),
     (gen_random_uuid(), v_student_priya, 'Sunita Sharma',   '+919800110010', 'Mother'),
     (gen_random_uuid(), v_student_priya, 'Amit Sharma',     '+919800110011', 'Brother'),
 
-    -- Arjun's emergency contacts (including parent user)
+    -- Arjun's emergency contacts
     (gen_random_uuid(), v_student_arjun, 'Sunita Patel',    '+919800110002', 'Mother'),
     (gen_random_uuid(), v_student_arjun, 'Rajendra Patel',  '+919800110012', 'Father'),
 
@@ -156,195 +157,190 @@ BEGIN
     (gen_random_uuid(), v_student_vikram, 'Jaspreet Singh',  '+919800110051', 'Mother');
 
   -- ==========================================================================
-  -- 8. THERAPIST PROFILES
+  -- 8. THERAPIST PROFILES (PK is user_id)
   -- ==========================================================================
-  INSERT INTO therapist_profiles (id, user_id, specialization, currently_busy, active_session_with) VALUES
-    (gen_random_uuid(), v_therapist_meena,  'Anxiety & Panic Disorders',      false, null),
-    (gen_random_uuid(), v_therapist_rahul,  'General Counseling & Stress',    false, null),
-    (gen_random_uuid(), v_therapist_ananya, 'Trauma & PTSD',                  false, null);
+  INSERT INTO therapist_profiles (user_id, specialization, currently_busy, active_session_with, sessions_today) VALUES
+    (v_therapist_meena,  'Anxiety & Panic Disorders',      false, null, 0),
+    (v_therapist_rahul,  'General Counseling & Stress',    false, null, 0),
+    (v_therapist_ananya, 'Trauma & PTSD',                  false, null, 0);
 
   -- ==========================================================================
-  -- 9. THERAPIST SLOTS (Weekday availability)
+  -- 9. THERAPIST SLOTS (day is TEXT)
   -- ==========================================================================
-  -- Dr. Meena Iyer — Mon to Fri, 9 AM - 1 PM and 2 PM - 5 PM
-  INSERT INTO therapist_slots (id, therapist_id, day_of_week, start_time, end_time) VALUES
-    (gen_random_uuid(), v_therapist_meena, 'Monday',    '09:00', '13:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Monday',    '14:00', '17:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Tuesday',   '09:00', '13:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Tuesday',   '14:00', '17:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Wednesday', '09:00', '13:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Wednesday', '14:00', '17:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Thursday',  '09:00', '13:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Thursday',  '14:00', '17:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Friday',    '09:00', '13:00'),
-    (gen_random_uuid(), v_therapist_meena, 'Friday',    '14:00', '17:00'),
+  INSERT INTO therapist_slots (id, therapist_id, day, start_time, end_time) VALUES
+    -- Dr. Meena Iyer — Mon to Fri, 9 AM - 1 PM and 2 PM - 5 PM
+    (gen_random_uuid(), v_therapist_meena, 'monday',    '09:00', '13:00'),
+    (gen_random_uuid(), v_therapist_meena, 'monday',    '14:00', '17:00'),
+    (gen_random_uuid(), v_therapist_meena, 'tuesday',   '09:00', '13:00'),
+    (gen_random_uuid(), v_therapist_meena, 'tuesday',   '14:00', '17:00'),
+    (gen_random_uuid(), v_therapist_meena, 'wednesday', '09:00', '13:00'),
+    (gen_random_uuid(), v_therapist_meena, 'wednesday', '14:00', '17:00'),
+    (gen_random_uuid(), v_therapist_meena, 'thursday',  '09:00', '13:00'),
+    (gen_random_uuid(), v_therapist_meena, 'thursday',  '14:00', '17:00'),
+    (gen_random_uuid(), v_therapist_meena, 'friday',    '09:00', '13:00'),
+    (gen_random_uuid(), v_therapist_meena, 'friday',    '14:00', '17:00'),
 
-  -- Dr. Rahul Verma — Mon, Wed, Fri, 10 AM - 4 PM
-    (gen_random_uuid(), v_therapist_rahul, 'Monday',    '10:00', '16:00'),
-    (gen_random_uuid(), v_therapist_rahul, 'Wednesday', '10:00', '16:00'),
-    (gen_random_uuid(), v_therapist_rahul, 'Friday',    '10:00', '16:00'),
+    -- Dr. Rahul Verma — Mon, Wed, Fri, 10 AM - 4 PM
+    (gen_random_uuid(), v_therapist_rahul, 'monday',    '10:00', '16:00'),
+    (gen_random_uuid(), v_therapist_rahul, 'wednesday', '10:00', '16:00'),
+    (gen_random_uuid(), v_therapist_rahul, 'friday',    '10:00', '16:00'),
 
-  -- Dr. Ananya Reddy — Tue, Thu, 9 AM - 5 PM; Sat, 9 AM - 1 PM
-    (gen_random_uuid(), v_therapist_ananya, 'Tuesday',  '09:00', '17:00'),
-    (gen_random_uuid(), v_therapist_ananya, 'Thursday', '09:00', '17:00'),
-    (gen_random_uuid(), v_therapist_ananya, 'Saturday', '09:00', '13:00');
+    -- Dr. Ananya Reddy — Tue, Thu, 9 AM - 5 PM; Sat, 9 AM - 1 PM
+    (gen_random_uuid(), v_therapist_ananya, 'tuesday',  '09:00', '17:00'),
+    (gen_random_uuid(), v_therapist_ananya, 'thursday', '09:00', '17:00'),
+    (gen_random_uuid(), v_therapist_ananya, 'saturday', '09:00', '13:00');
 
   -- ==========================================================================
   -- 10. CAMPUS BUILDINGS (PostGIS POINT + POLYGON)
-  --
-  -- Campus centered at 12.9700°N, 77.5900°E
-  -- ~0.001° latitude  ≈ 111m
-  -- ~0.001° longitude ≈ 96m  (at 13°N)
-  -- Each building: ~40m × 30m footprint
   -- ==========================================================================
-  INSERT INTO campus_buildings (id, name, code, location, boundary) VALUES
+  INSERT INTO campus_buildings (id, name, location, boundary, floors) VALUES
     -- Main Academic Block (center-north)
-    (v_bld_main_academic, 'Main Academic Block', 'MAB',
+    (v_bld_main_academic, 'Main Academic Block',
       ST_SetSRID(ST_MakePoint(77.5900, 12.9710), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5898 12.9708, 77.5902 12.9708, 77.5902 12.9712, 77.5898 12.9712, 77.5898 12.9708)'
-      )), 4326)::geography),
+      )), 4326)::geography, 4),
 
     -- Chemistry Block (north-east)
-    (v_bld_chemistry, 'Chemistry Block', 'CHEM',
+    (v_bld_chemistry, 'Chemistry Block',
       ST_SetSRID(ST_MakePoint(77.5912, 12.9712), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5910 12.9710, 77.5914 12.9710, 77.5914 12.9714, 77.5910 12.9714, 77.5910 12.9710)'
-      )), 4326)::geography),
+      )), 4326)::geography, 3),
 
     -- Computer Science Block (center)
-    (v_bld_cs, 'Computer Science Block', 'CSB',
+    (v_bld_cs, 'Computer Science Block',
       ST_SetSRID(ST_MakePoint(77.5900, 12.9700), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5898 12.9698, 77.5902 12.9698, 77.5902 12.9702, 77.5898 12.9702, 77.5898 12.9698)'
-      )), 4326)::geography),
+      )), 4326)::geography, 4),
 
     -- Library (center-west)
-    (v_bld_library, 'Library', 'LIB',
+    (v_bld_library, 'Library',
       ST_SetSRID(ST_MakePoint(77.5888, 12.9700), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5886 12.9698, 77.5890 12.9698, 77.5890 12.9702, 77.5886 12.9702, 77.5886 12.9698)'
-      )), 4326)::geography),
+      )), 4326)::geography, 3),
 
     -- Boys Hostel (south-east)
-    (v_bld_boys_hostel, 'Boys Hostel', 'BH',
+    (v_bld_boys_hostel, 'Boys Hostel',
       ST_SetSRID(ST_MakePoint(77.5915, 12.9688), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5912 12.9685, 77.5918 12.9685, 77.5918 12.9691, 77.5912 12.9691, 77.5912 12.9685)'
-      )), 4326)::geography),
+      )), 4326)::geography, 5),
 
     -- Girls Hostel (south-west)
-    (v_bld_girls_hostel, 'Girls Hostel', 'GH',
+    (v_bld_girls_hostel, 'Girls Hostel',
       ST_SetSRID(ST_MakePoint(77.5885, 12.9688), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5882 12.9685, 77.5888 12.9685, 77.5888 12.9691, 77.5882 12.9691, 77.5882 12.9685)'
-      )), 4326)::geography),
+      )), 4326)::geography, 5),
 
     -- Sports Complex (south-center)
-    (v_bld_sports, 'Sports Complex', 'SC',
+    (v_bld_sports, 'Sports Complex',
       ST_SetSRID(ST_MakePoint(77.5900, 12.9685), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5896 12.9682, 77.5904 12.9682, 77.5904 12.9688, 77.5896 12.9688, 77.5896 12.9682)'
-      )), 4326)::geography),
+      )), 4326)::geography, 2),
 
     -- Administrative Block (north-west)
-    (v_bld_admin_block, 'Administrative Block', 'ADM',
+    (v_bld_admin_block, 'Administrative Block',
       ST_SetSRID(ST_MakePoint(77.5888, 12.9712), 4326)::geography,
       ST_SetSRID(ST_MakePolygon(ST_GeomFromText(
         'LINESTRING(77.5886 12.9710, 77.5890 12.9710, 77.5890 12.9714, 77.5886 12.9714, 77.5886 12.9710)'
-      )), 4326)::geography));
+      )), 4326)::geography, 3);
 
   -- ==========================================================================
-  -- 11. TIMETABLE — Priya Sharma (CSE, 3rd year)
+  -- 11. TIMETABLE SLOTS — Priya Sharma (CSE, 3rd year)
   -- ==========================================================================
-  INSERT INTO timetable (id, user_id, day_of_week, slot, subject, building_id, room) VALUES
+  INSERT INTO timetable_slots (id, user_id, day, start_time, end_time, subject, building, room) VALUES
     -- Monday
-    (gen_random_uuid(), v_student_priya, 'Monday',    '09:00-10:00', 'Data Structures',          v_bld_cs,            'CSB-201'),
-    (gen_random_uuid(), v_student_priya, 'Monday',    '10:00-11:00', 'Operating Systems',         v_bld_cs,            'CSB-302'),
-    (gen_random_uuid(), v_student_priya, 'Monday',    '11:30-12:30', 'Database Management',       v_bld_cs,            'CSB-105'),
-    (gen_random_uuid(), v_student_priya, 'Monday',    '14:00-15:00', 'Computer Networks Lab',     v_bld_cs,            'CSB-Lab2'),
+    (gen_random_uuid(), v_student_priya, 'monday',    '09:00', '10:00', 'Data Structures',          'Computer Science Block', 'CSB-201'),
+    (gen_random_uuid(), v_student_priya, 'monday',    '10:00', '11:00', 'Operating Systems',         'Computer Science Block', 'CSB-302'),
+    (gen_random_uuid(), v_student_priya, 'monday',    '11:30', '12:30', 'Database Management',       'Computer Science Block', 'CSB-105'),
+    (gen_random_uuid(), v_student_priya, 'monday',    '14:00', '15:00', 'Computer Networks Lab',     'Computer Science Block', 'CSB-Lab2'),
     -- Tuesday
-    (gen_random_uuid(), v_student_priya, 'Tuesday',   '09:00-10:00', 'Operating Systems',         v_bld_cs,            'CSB-302'),
-    (gen_random_uuid(), v_student_priya, 'Tuesday',   '10:00-11:00', 'Data Structures',           v_bld_cs,            'CSB-201'),
-    (gen_random_uuid(), v_student_priya, 'Tuesday',   '14:00-15:00', 'Chemistry',                 v_bld_chemistry,     'CHEM-Lab3'),
-    (gen_random_uuid(), v_student_priya, 'Tuesday',   '15:00-16:00', 'Chemistry',                 v_bld_chemistry,     'CHEM-Lab3'),
+    (gen_random_uuid(), v_student_priya, 'tuesday',   '09:00', '10:00', 'Operating Systems',         'Computer Science Block', 'CSB-302'),
+    (gen_random_uuid(), v_student_priya, 'tuesday',   '10:00', '11:00', 'Data Structures',           'Computer Science Block', 'CSB-201'),
+    (gen_random_uuid(), v_student_priya, 'tuesday',   '14:00', '15:00', 'Chemistry',                 'Chemistry Block',        'CHEM-Lab3'),
+    (gen_random_uuid(), v_student_priya, 'tuesday',   '15:00', '16:00', 'Chemistry',                 'Chemistry Block',        'CHEM-Lab3'),
     -- Wednesday
-    (gen_random_uuid(), v_student_priya, 'Wednesday', '09:00-10:00', 'Database Management',       v_bld_cs,            'CSB-105'),
-    (gen_random_uuid(), v_student_priya, 'Wednesday', '10:00-11:00', 'Computer Networks',         v_bld_cs,            'CSB-203'),
-    (gen_random_uuid(), v_student_priya, 'Wednesday', '11:30-12:30', 'Mathematics III',           v_bld_main_academic, 'MAB-101'),
+    (gen_random_uuid(), v_student_priya, 'wednesday', '09:00', '10:00', 'Database Management',       'Computer Science Block', 'CSB-105'),
+    (gen_random_uuid(), v_student_priya, 'wednesday', '10:00', '11:00', 'Computer Networks',         'Computer Science Block', 'CSB-203'),
+    (gen_random_uuid(), v_student_priya, 'wednesday', '11:30', '12:30', 'Mathematics III',           'Main Academic Block',    'MAB-101'),
     -- Thursday
-    (gen_random_uuid(), v_student_priya, 'Thursday',  '09:00-10:00', 'Data Structures',           v_bld_cs,            'CSB-201'),
-    (gen_random_uuid(), v_student_priya, 'Thursday',  '10:00-11:00', 'Operating Systems',         v_bld_cs,            'CSB-302'),
-    (gen_random_uuid(), v_student_priya, 'Thursday',  '14:00-15:00', 'Database Management Lab',   v_bld_cs,            'CSB-Lab1'),
-    (gen_random_uuid(), v_student_priya, 'Thursday',  '15:00-16:00', 'Database Management Lab',   v_bld_cs,            'CSB-Lab1'),
+    (gen_random_uuid(), v_student_priya, 'thursday',  '09:00', '10:00', 'Data Structures',           'Computer Science Block', 'CSB-201'),
+    (gen_random_uuid(), v_student_priya, 'thursday',  '10:00', '11:00', 'Operating Systems',         'Computer Science Block', 'CSB-302'),
+    (gen_random_uuid(), v_student_priya, 'thursday',  '14:00', '15:00', 'Database Management Lab',   'Computer Science Block', 'CSB-Lab1'),
+    (gen_random_uuid(), v_student_priya, 'thursday',  '15:00', '16:00', 'Database Management Lab',   'Computer Science Block', 'CSB-Lab1'),
     -- Friday
-    (gen_random_uuid(), v_student_priya, 'Friday',    '09:00-10:00', 'Computer Networks',         v_bld_cs,            'CSB-203'),
-    (gen_random_uuid(), v_student_priya, 'Friday',    '10:00-11:00', 'Mathematics III',           v_bld_main_academic, 'MAB-101'),
-    (gen_random_uuid(), v_student_priya, 'Friday',    '11:30-12:30', 'Soft Skills',               v_bld_main_academic, 'MAB-Seminar');
+    (gen_random_uuid(), v_student_priya, 'friday',    '09:00', '10:00', 'Computer Networks',         'Computer Science Block', 'CSB-203'),
+    (gen_random_uuid(), v_student_priya, 'friday',    '10:00', '11:00', 'Mathematics III',           'Main Academic Block',    'MAB-101'),
+    (gen_random_uuid(), v_student_priya, 'friday',    '11:30', '12:30', 'Soft Skills',               'Main Academic Block',    'MAB-Seminar');
 
   -- ==========================================================================
-  -- 12. TIMETABLE — Arjun Patel (ECE, 2nd year)
+  -- 12. TIMETABLE SLOTS — Arjun Patel (ECE, 2nd year)
   -- ==========================================================================
-  INSERT INTO timetable (id, user_id, day_of_week, slot, subject, building_id, room) VALUES
+  INSERT INTO timetable_slots (id, user_id, day, start_time, end_time, subject, building, room) VALUES
     -- Monday
-    (gen_random_uuid(), v_student_arjun, 'Monday',    '09:00-10:00', 'Signals & Systems',         v_bld_main_academic, 'MAB-201'),
-    (gen_random_uuid(), v_student_arjun, 'Monday',    '10:00-11:00', 'Analog Electronics',        v_bld_main_academic, 'MAB-302'),
-    (gen_random_uuid(), v_student_arjun, 'Monday',    '11:30-12:30', 'Engineering Mathematics',   v_bld_main_academic, 'MAB-101'),
-    (gen_random_uuid(), v_student_arjun, 'Monday',    '14:00-15:00', 'Electronics Lab',           v_bld_main_academic, 'MAB-Lab1'),
+    (gen_random_uuid(), v_student_arjun, 'monday',    '09:00', '10:00', 'Signals & Systems',         'Main Academic Block', 'MAB-201'),
+    (gen_random_uuid(), v_student_arjun, 'monday',    '10:00', '11:00', 'Analog Electronics',        'Main Academic Block', 'MAB-302'),
+    (gen_random_uuid(), v_student_arjun, 'monday',    '11:30', '12:30', 'Engineering Mathematics',   'Main Academic Block', 'MAB-101'),
+    (gen_random_uuid(), v_student_arjun, 'monday',    '14:00', '15:00', 'Electronics Lab',           'Main Academic Block', 'MAB-Lab1'),
     -- Tuesday
-    (gen_random_uuid(), v_student_arjun, 'Tuesday',   '09:00-10:00', 'Digital Electronics',       v_bld_main_academic, 'MAB-205'),
-    (gen_random_uuid(), v_student_arjun, 'Tuesday',   '10:00-11:00', 'Signals & Systems',         v_bld_main_academic, 'MAB-201'),
-    (gen_random_uuid(), v_student_arjun, 'Tuesday',   '14:00-15:00', 'Analog Electronics Lab',    v_bld_main_academic, 'MAB-Lab2'),
+    (gen_random_uuid(), v_student_arjun, 'tuesday',   '09:00', '10:00', 'Digital Electronics',       'Main Academic Block', 'MAB-205'),
+    (gen_random_uuid(), v_student_arjun, 'tuesday',   '10:00', '11:00', 'Signals & Systems',         'Main Academic Block', 'MAB-201'),
+    (gen_random_uuid(), v_student_arjun, 'tuesday',   '14:00', '15:00', 'Analog Electronics Lab',    'Main Academic Block', 'MAB-Lab2'),
     -- Wednesday
-    (gen_random_uuid(), v_student_arjun, 'Wednesday', '09:00-10:00', 'Analog Electronics',        v_bld_main_academic, 'MAB-302'),
-    (gen_random_uuid(), v_student_arjun, 'Wednesday', '10:00-11:00', 'Engineering Mathematics',   v_bld_main_academic, 'MAB-101'),
-    (gen_random_uuid(), v_student_arjun, 'Wednesday', '11:30-12:30', 'Digital Electronics',       v_bld_main_academic, 'MAB-205'),
+    (gen_random_uuid(), v_student_arjun, 'wednesday', '09:00', '10:00', 'Analog Electronics',        'Main Academic Block', 'MAB-302'),
+    (gen_random_uuid(), v_student_arjun, 'wednesday', '10:00', '11:00', 'Engineering Mathematics',   'Main Academic Block', 'MAB-101'),
+    (gen_random_uuid(), v_student_arjun, 'wednesday', '11:30', '12:30', 'Digital Electronics',       'Main Academic Block', 'MAB-205'),
     -- Thursday
-    (gen_random_uuid(), v_student_arjun, 'Thursday',  '09:00-10:00', 'Signals & Systems',         v_bld_main_academic, 'MAB-201'),
-    (gen_random_uuid(), v_student_arjun, 'Thursday',  '10:00-11:00', 'Digital Electronics Lab',   v_bld_main_academic, 'MAB-Lab3'),
-    (gen_random_uuid(), v_student_arjun, 'Thursday',  '14:00-15:00', 'Communication Systems',     v_bld_main_academic, 'MAB-304'),
+    (gen_random_uuid(), v_student_arjun, 'thursday',  '09:00', '10:00', 'Signals & Systems',         'Main Academic Block', 'MAB-201'),
+    (gen_random_uuid(), v_student_arjun, 'thursday',  '10:00', '11:00', 'Digital Electronics Lab',   'Main Academic Block', 'MAB-Lab3'),
+    (gen_random_uuid(), v_student_arjun, 'thursday',  '14:00', '15:00', 'Communication Systems',     'Main Academic Block', 'MAB-304'),
     -- Friday
-    (gen_random_uuid(), v_student_arjun, 'Friday',    '09:00-10:00', 'Engineering Mathematics',   v_bld_main_academic, 'MAB-101'),
-    (gen_random_uuid(), v_student_arjun, 'Friday',    '10:00-11:00', 'Communication Systems',     v_bld_main_academic, 'MAB-304'),
-    (gen_random_uuid(), v_student_arjun, 'Friday',    '11:30-12:30', 'Environmental Science',     v_bld_main_academic, 'MAB-Seminar');
+    (gen_random_uuid(), v_student_arjun, 'friday',    '09:00', '10:00', 'Engineering Mathematics',   'Main Academic Block', 'MAB-101'),
+    (gen_random_uuid(), v_student_arjun, 'friday',    '10:00', '11:00', 'Communication Systems',     'Main Academic Block', 'MAB-304'),
+    (gen_random_uuid(), v_student_arjun, 'friday',    '11:30', '12:30', 'Environmental Science',     'Main Academic Block', 'MAB-Seminar');
 
   -- ==========================================================================
-  -- 13. TIMETABLE — Rohit Kumar (ME, 1st year)
+  -- 13. TIMETABLE SLOTS — Rohit Kumar (ME, 1st year)
   -- ==========================================================================
-  INSERT INTO timetable (id, user_id, day_of_week, slot, subject, building_id, room) VALUES
+  INSERT INTO timetable_slots (id, user_id, day, start_time, end_time, subject, building, room) VALUES
     -- Monday
-    (gen_random_uuid(), v_student_rohit, 'Monday',    '09:00-10:00', 'Engineering Drawing',       v_bld_main_academic, 'MAB-401'),
-    (gen_random_uuid(), v_student_rohit, 'Monday',    '10:00-11:00', 'Physics',                   v_bld_main_academic, 'MAB-102'),
-    (gen_random_uuid(), v_student_rohit, 'Monday',    '14:00-15:00', 'Workshop Practice',         v_bld_main_academic, 'MAB-Workshop'),
+    (gen_random_uuid(), v_student_rohit, 'monday',    '09:00', '10:00', 'Engineering Drawing',       'Main Academic Block', 'MAB-401'),
+    (gen_random_uuid(), v_student_rohit, 'monday',    '10:00', '11:00', 'Physics',                   'Main Academic Block', 'MAB-102'),
+    (gen_random_uuid(), v_student_rohit, 'monday',    '14:00', '15:00', 'Workshop Practice',         'Main Academic Block', 'MAB-Workshop'),
     -- Tuesday
-    (gen_random_uuid(), v_student_rohit, 'Tuesday',   '09:00-10:00', 'Mathematics I',             v_bld_main_academic, 'MAB-103'),
-    (gen_random_uuid(), v_student_rohit, 'Tuesday',   '10:00-11:00', 'Basic Electrical Engg',     v_bld_main_academic, 'MAB-204'),
-    (gen_random_uuid(), v_student_rohit, 'Tuesday',   '11:30-12:30', 'Chemistry',                 v_bld_chemistry,     'CHEM-101'),
-    (gen_random_uuid(), v_student_rohit, 'Tuesday',   '14:00-15:00', 'Chemistry Lab',             v_bld_chemistry,     'CHEM-Lab1'),
+    (gen_random_uuid(), v_student_rohit, 'tuesday',   '09:00', '10:00', 'Mathematics I',             'Main Academic Block', 'MAB-103'),
+    (gen_random_uuid(), v_student_rohit, 'tuesday',   '10:00', '11:00', 'Basic Electrical Engg',     'Main Academic Block', 'MAB-204'),
+    (gen_random_uuid(), v_student_rohit, 'tuesday',   '11:30', '12:30', 'Chemistry',                 'Chemistry Block',     'CHEM-101'),
+    (gen_random_uuid(), v_student_rohit, 'tuesday',   '14:00', '15:00', 'Chemistry Lab',             'Chemistry Block',     'CHEM-Lab1'),
     -- Wednesday
-    (gen_random_uuid(), v_student_rohit, 'Wednesday', '09:00-10:00', 'Physics',                   v_bld_main_academic, 'MAB-102'),
-    (gen_random_uuid(), v_student_rohit, 'Wednesday', '10:00-11:00', 'Mathematics I',             v_bld_main_academic, 'MAB-103'),
-    (gen_random_uuid(), v_student_rohit, 'Wednesday', '14:00-15:00', 'Physics Lab',               v_bld_main_academic, 'MAB-PhysLab'),
+    (gen_random_uuid(), v_student_rohit, 'wednesday', '09:00', '10:00', 'Physics',                   'Main Academic Block', 'MAB-102'),
+    (gen_random_uuid(), v_student_rohit, 'wednesday', '10:00', '11:00', 'Mathematics I',             'Main Academic Block', 'MAB-103'),
+    (gen_random_uuid(), v_student_rohit, 'wednesday', '14:00', '15:00', 'Physics Lab',               'Main Academic Block', 'MAB-PhysLab'),
     -- Thursday
-    (gen_random_uuid(), v_student_rohit, 'Thursday',  '09:00-10:00', 'Engineering Drawing',       v_bld_main_academic, 'MAB-401'),
-    (gen_random_uuid(), v_student_rohit, 'Thursday',  '10:00-11:00', 'Basic Electrical Engg',     v_bld_main_academic, 'MAB-204'),
-    (gen_random_uuid(), v_student_rohit, 'Thursday',  '11:30-12:30', 'English Communication',     v_bld_main_academic, 'MAB-Seminar'),
+    (gen_random_uuid(), v_student_rohit, 'thursday',  '09:00', '10:00', 'Engineering Drawing',       'Main Academic Block', 'MAB-401'),
+    (gen_random_uuid(), v_student_rohit, 'thursday',  '10:00', '11:00', 'Basic Electrical Engg',     'Main Academic Block', 'MAB-204'),
+    (gen_random_uuid(), v_student_rohit, 'thursday',  '11:30', '12:30', 'English Communication',     'Main Academic Block', 'MAB-Seminar'),
     -- Friday
-    (gen_random_uuid(), v_student_rohit, 'Friday',    '09:00-10:00', 'Mathematics I',             v_bld_main_academic, 'MAB-103'),
-    (gen_random_uuid(), v_student_rohit, 'Friday',    '10:00-11:00', 'Chemistry',                 v_bld_chemistry,     'CHEM-101'),
-    (gen_random_uuid(), v_student_rohit, 'Friday',    '14:00-15:00', 'Electrical Lab',            v_bld_main_academic, 'MAB-ELab');
+    (gen_random_uuid(), v_student_rohit, 'friday',    '09:00', '10:00', 'Mathematics I',             'Main Academic Block', 'MAB-103'),
+    (gen_random_uuid(), v_student_rohit, 'friday',    '10:00', '11:00', 'Chemistry',                 'Chemistry Block',     'CHEM-101'),
+    (gen_random_uuid(), v_student_rohit, 'friday',    '14:00', '15:00', 'Electrical Lab',            'Main Academic Block', 'MAB-ELab');
 
   -- ==========================================================================
   -- 14. INCIDENTS (1 resolved, 1 active Level 1, 1 resolved Level 2)
   -- ==========================================================================
-  INSERT INTO incidents (id, reported_by, description, sos_level, location, location_source, timetable_fallback, status, assigned_to, ai_classification, offline_triggered, created_at, resolved_at) VALUES
+  INSERT INTO incidents (id, reported_by, description, sos_level, location, location_source, fallback_building, fallback_room, fallback_subject, status, assigned_to, ai_classification, offline_triggered, created_at, resolved_at) VALUES
     -- Incident 1: Resolved Level 1 — medical emergency
     (v_incident_1, v_student_priya,
       'Feeling dizzy and having difficulty breathing during chemistry lab. Asthma attack triggered by chemical fumes.',
       'campus',
       ST_SetSRID(ST_MakePoint(77.5912, 12.9712), 4326)::geography,
       'timetable_fallback',
-      '{"building": "Chemistry Block", "room": "CHEM-Lab3", "subject": "Chemistry"}'::jsonb,
+      'Chemistry Block', 'CHEM-Lab3', 'Chemistry',
       'resolved',
       v_guard_rajesh,
       'medical_emergency',
@@ -358,7 +354,7 @@ BEGIN
       'campus',
       ST_SetSRID(ST_MakePoint(77.5885, 12.9688), 4326)::geography,
       'gps',
-      null,
+      null, null, null,
       'assigned',
       v_guard_manoj,
       'suspicious_activity',
@@ -372,7 +368,7 @@ BEGIN
       'police',
       ST_SetSRID(ST_MakePoint(77.5915, 12.9688), 4326)::geography,
       'gps',
-      null,
+      null, null, null,
       'resolved',
       v_guard_rajesh,
       'ragging',
@@ -412,23 +408,20 @@ BEGIN
   -- ==========================================================================
   -- 16. TRUSTED CIRCLE — Priya and Anita
   -- ==========================================================================
-  INSERT INTO trusted_circle (id, user_id, trusted_user_id, trusted_name, trusted_phone, created_at) VALUES
+  INSERT INTO trusted_circle (id, user_id, trusted_user_id, created_at) VALUES
     -- Priya's trusted circle
-    (gen_random_uuid(), v_student_priya, v_student_sneha,    'Sneha Nair',      '+919876543212', now()),
-    (gen_random_uuid(), v_student_priya, v_student_anita,    'Anita Deshmukh',  '+919876543214', now()),
-    (gen_random_uuid(), v_student_priya, null,               'Ramesh Sharma',   '+919800110001', now()),  -- father (external contact)
+    (gen_random_uuid(), v_student_priya, v_student_sneha,    now()),
+    (gen_random_uuid(), v_student_priya, v_student_anita,    now()),
+    (gen_random_uuid(), v_student_priya, v_student_deepa,    now()),
 
     -- Anita's trusted circle
-    (gen_random_uuid(), v_student_anita, v_student_priya,    'Priya Sharma',    '+919876543210', now()),
-    (gen_random_uuid(), v_student_anita, v_student_deepa,    'Deepa Menon',     '+919876543216', now()),
-    (gen_random_uuid(), v_student_anita, v_student_siddharth,'Siddharth Reddy', '+919876543219', now()),
-    (gen_random_uuid(), v_student_anita, null,               'Pramod Deshmukh', '+919800110040', now());  -- father (external contact)
+    (gen_random_uuid(), v_student_anita, v_student_priya,    now()),
+    (gen_random_uuid(), v_student_anita, v_student_deepa,    now()),
+    (gen_random_uuid(), v_student_anita, v_student_siddharth,now()),
+    (gen_random_uuid(), v_student_anita, v_student_sneha,    now());
 
   -- ==========================================================================
-  -- 17. PARENT-STUDENT LINKS
-  -- ==========================================================================
-  -- ==========================================================================
-  -- OUTING REQUESTS (for off-campus location fallback)
+  -- 17. OUTING REQUESTS (for off-campus location fallback)
   -- ==========================================================================
   INSERT INTO outing_requests (id, student_id, destination_name, destination_location, purpose, expected_departure, expected_return, status, approved_by, approved_at) VALUES
     -- Priya: active outing to Lalbagh Garden (approved, currently active)
@@ -453,7 +446,7 @@ BEGIN
   -- ==========================================================================
   -- Done! Print summary
   -- ==========================================================================
-  RAISE NOTICE '✅ SafeCampus seed data loaded successfully!';
+  RAISE NOTICE '✅ Luminous seed data loaded successfully!';
   RAISE NOTICE '   👨‍🎓 10 students, 4 guards, 2 volunteers';
   RAISE NOTICE '   🧑‍⚕️ 3 therapists with profiles & slots';
   RAISE NOTICE '   👨‍💼 1 admin, 2 parents';
@@ -463,3 +456,6 @@ BEGIN
   RAISE NOTICE '   🚶 3 outing requests (1 active, 1 approved, 1 completed)';
 
 END $$;
+
+-- Restore replication role
+SET session_replication_role = 'origin';

@@ -100,12 +100,12 @@ Return a JSON object with exactly two fields: "category" and "severity".`
     const { data: tip, error: insertError } = await adminClient
       .from('tips')
       .insert({
-        reporter_id: anonymous ? null : user.id,
+        reported_by: anonymous ? null : user.id,
         text,
         anonymous: anonymous ?? false,
         ai_category: aiCategory,
         ai_severity: aiSeverity,
-        status: 'pending',
+        status: 'new',
       })
       .select('id')
       .single()

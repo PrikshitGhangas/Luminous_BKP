@@ -51,8 +51,8 @@ Deno.serve(async (req) => {
 
     // Check if the point is inside any campus building boundary using PostGIS
     const { data: buildings, error: geoError } = await adminClient.rpc('check_point_in_buildings', {
-      check_lng: location.lng,
-      check_lat: location.lat,
+      p_lng: location.lng,
+      p_lat: location.lat,
     })
 
     // Fallback: if the RPC doesn't exist, try a direct query approach
@@ -68,9 +68,9 @@ Deno.serve(async (req) => {
       if (directMatch && directMatch.length > 0) {
         // Use RPC-based ST_DWithin as proximity check (within ~50 meters)
         const { data: nearbyBuildings } = await adminClient.rpc('find_nearby_buildings', {
-          check_lng: location.lng,
-          check_lat: location.lat,
-          radius_meters: 50,
+          p_lng: location.lng,
+          p_lat: location.lat,
+          p_radius_meters: 50,
         })
 
         if (nearbyBuildings && nearbyBuildings.length > 0) {
@@ -96,7 +96,7 @@ Deno.serve(async (req) => {
     // User is inside a building — check timetable for current slot
     const now = new Date()
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-    const currentDay = days[now.getDay()]
+    const currentDay = days[now.getDay()].toLowerCase()
     const currentTime = now.toTimeString().slice(0, 8) // HH:MM:SS
     const todayDate = now.toISOString().split('T')[0] // YYYY-MM-DD
 
@@ -104,7 +104,7 @@ Deno.serve(async (req) => {
       .from('timetable_slots')
       .select('id, subject, room')
       .eq('user_id', userId)
-      .eq('day', currentDay)
+      .ilike('day', currentDay)
       .eq('building', matchedBuilding.name)
       .lte('start_time', currentTime)
       .gte('end_time', currentTime)
@@ -124,9 +124,8 @@ Deno.serve(async (req) => {
             status: 'present',
             method: 'geofence',
             building: matchedBuilding.name,
-            timetable_slot_id: timetableSlot.id,
           },
-          { onConflict: 'user_id,date,timetable_slot_id' }
+          { onConflict: 'user_id,date' }
         )
 
       if (!attendanceError) {

@@ -91,13 +91,13 @@ Deno.serve(async (req) => {
     // Find ALL available guards and volunteers
     const { data: allGuards } = await adminClient
       .from('users')
-      .select('id, full_name, phone')
+      .select('id, name, phone')
       .in('role', ['guard', 'volunteer'])
       .eq('is_available', true)
 
     const guards = (allGuards ?? []).map((g) => ({
       id: g.id,
-      name: g.full_name,
+      name: g.name,
       phone: g.phone,
     }))
 

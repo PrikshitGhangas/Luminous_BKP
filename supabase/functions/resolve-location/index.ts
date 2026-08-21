@@ -61,14 +61,14 @@ Deno.serve(async (req) => {
     // --- GPS is broad. Try timetable cross-validation ---
     const now = new Date()
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-    const currentDay = days[now.getDay()]
+    const currentDay = days[now.getDay()].toLowerCase()
     const currentTime = now.toTimeString().slice(0, 8)
 
     const { data: slot } = await adminClient
       .from('timetable_slots')
       .select('building, room, subject')
       .eq('user_id', userId)
-      .eq('day', currentDay)
+      .ilike('day', currentDay)
       .lte('start_time', currentTime)
       .gte('end_time', currentTime)
       .limit(1)

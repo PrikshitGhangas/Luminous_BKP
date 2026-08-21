@@ -72,7 +72,7 @@ CREATE TABLE public.users (
   -- real-time location
   current_location    GEOGRAPHY(POINT, 4326),
   location_accuracy   FLOAT,
-  location_reason     location_source,
+  location_reason     TEXT, -- 'sos' | 'attendance' | 'nightwalk' | 'gps' | null
   location_updated_at TIMESTAMPTZ,
 
   -- distress state
@@ -99,7 +99,7 @@ CREATE TABLE public.emergency_contacts (
 CREATE TABLE public.timetable_slots (
   id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id    UUID     NOT NULL REFERENCES public.users (id) ON DELETE CASCADE,
-  day        SMALLINT NOT NULL CHECK (day BETWEEN 0 AND 6),  -- 0 = Sunday
+  day        TEXT     NOT NULL,  -- 'monday', 'tuesday', etc.
   start_time TIME     NOT NULL,
   end_time   TIME     NOT NULL,
   subject    TEXT,
@@ -154,7 +154,7 @@ CREATE TABLE public.therapist_profiles (
 CREATE TABLE public.therapist_slots (
   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   therapist_id UUID NOT NULL REFERENCES public.users (id) ON DELETE CASCADE,
-  day          SMALLINT NOT NULL CHECK (day BETWEEN 0 AND 6),
+  day          TEXT NOT NULL,  -- 'monday', 'tuesday', etc.
   start_time   TIME     NOT NULL,
   end_time     TIME     NOT NULL,
 
@@ -165,7 +165,7 @@ CREATE TABLE public.therapist_slots (
 CREATE TABLE public.therapy_sessions (
   id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   student_id        UUID           NOT NULL REFERENCES public.users (id) ON DELETE CASCADE,
-  therapist_id      UUID           NOT NULL REFERENCES public.users (id) ON DELETE CASCADE,
+  therapist_id      UUID           REFERENCES public.users (id) ON DELETE SET NULL,
   urgency           urgency_level  NOT NULL DEFAULT 'medium',
   ai_triage_summary TEXT,
   ai_warm_handoff   JSONB,

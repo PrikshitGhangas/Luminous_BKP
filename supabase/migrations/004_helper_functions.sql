@@ -46,7 +46,7 @@ BEGIN
     AND u.id NOT IN (
       SELECT ts.user_id
       FROM timetable_slots ts
-      WHERE ts.day = v_day
+      WHERE LOWER(TRIM(ts.day)) = v_day
         AND ts.start_time <= v_now
         AND ts.end_time > v_now
     )
