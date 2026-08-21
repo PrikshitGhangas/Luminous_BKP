@@ -35,9 +35,23 @@ function getInitialUser(): UserProfile {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<UserProfile | null>(getInitialUser);
+  const [user, setUser] = useState<UserProfile | null>(DEMO_USERS.super_admin);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isDemoMode] = useState<boolean>(true);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+    try {
+      const stored = localStorage.getItem(AUTH_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as UserProfile;
+        setUser(parsed);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Sync role cookie for middleware routing checks
   const syncRoleCookie = useCallback((roleName: string | null) => {
@@ -51,10 +65,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user && mounted) {
       syncRoleCookie(user.role);
     }
-  }, [user, syncRoleCookie]);
+  }, [user, mounted, syncRoleCookie]);
 
   const loginAsRole = useCallback(
     (targetRole: UserRole) => {

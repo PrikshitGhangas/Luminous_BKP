@@ -111,12 +111,6 @@ const NAV_SECTIONS: NavSection[] = [
         roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer'],
       },
       {
-        title: 'Visitor Passes',
-        href: '/visitors',
-        icon: Users,
-        roles: ['super_admin', 'admin', 'security', 'student', 'faculty', 'warden'],
-      },
-      {
         title: 'Safety Analytics',
         href: '/analytics/safety',
         icon: BarChart3,
@@ -306,8 +300,8 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
       {/* User & Role Badge */}
       {!isCollapsed && user && (
-        <div className="border-b border-[#243356] bg-[#131C38]/90 p-3">
-          <div className="flex items-center gap-2.5">
+        <div className="border-b border-[#243356] bg-[#131C38]/90 p-3" suppressHydrationWarning>
+          <div className="flex items-center gap-2.5" suppressHydrationWarning>
             <div className="relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -317,10 +311,10 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
               />
               <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-[#FFD700] ring-2 ring-[#0F1026]" />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="truncate text-xs font-bold text-[#F4F1DE]">{user.full_name}</p>
-              <div className="mt-0.5 flex items-center gap-1">
-                <span className="inline-block px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#D4AF37]/15 text-[#FFD700] border border-[#D4AF37]/30 font-mono">
+            <div className="flex-1 min-w-0" suppressHydrationWarning>
+              <p className="truncate text-xs font-bold text-[#F4F1DE]" suppressHydrationWarning>{user.full_name}</p>
+              <div className="mt-0.5 flex items-center gap-1" suppressHydrationWarning>
+                <span className="inline-block px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#D4AF37]/15 text-[#FFD700] border border-[#D4AF37]/30 font-mono" suppressHydrationWarning>
                   {roleMeta?.label}
                 </span>
               </div>
