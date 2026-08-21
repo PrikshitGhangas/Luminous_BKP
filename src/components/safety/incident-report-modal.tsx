@@ -150,28 +150,28 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="w-full max-w-xl rounded-2xl border border-[#D4AF37]/50 bg-[#0F1026] text-[#F4F1DE] shadow-2xl shadow-black/80 overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="w-full max-w-xl rounded-2xl border border-[#D0D1D6] bg-white text-[#202226] shadow-xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Header with Step Progress */}
-        <div className="border-b border-[#243356] bg-[#131C38] px-6 py-4">
+        <div className="border-b border-[#D0D1D6] bg-[#F4F5F6] px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#FFD700] via-[#D4AF37] to-[#C5A059] text-[#0B132B]">
-                <Flame className="h-4 w-4 font-bold" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#EAB308] via-[#D4AF37] to-[#C5A059]">
+                <Flame className="h-4 w-4 font-bold text-[#202226]" />
               </div>
               <div>
-                <h3 className="font-bold text-sm text-[#F4F1DE] font-mono flex items-center gap-2">
-                  <span>REPORT CAMPUS SAFETY INCIDENT</span>
+                <h3 className="font-bold text-sm text-[#202226] flex items-center gap-2">
+                  <span>Report Campus Safety Incident</span>
                 </h3>
-                <p className="text-[11px] text-[#B8B5A3] font-mono">
-                  Autonomous Gemini 3.7 Flash Triage &amp; Rapid Dispatch
+                <p className="text-[11px] text-[#555960]">
+                  AI triage &amp; rapid dispatch
                 </p>
               </div>
             </div>
 
             <button
               onClick={resetForm}
-              className="rounded-lg p-1.5 text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700]"
+              className="rounded-lg p-1.5 text-[#555960] hover:bg-[#E7E8EB] hover:text-[#202226]"
             >
               <X className="h-5 w-5" />
             </button>
@@ -179,14 +179,14 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
 
           {/* Stepper Progress Bar */}
           {currentStep < 5 && (
-            <div className="mt-3 grid grid-cols-4 gap-1.5 pt-2 border-t border-[#243356]">
+            <div className="mt-3 grid grid-cols-4 gap-1.5 pt-2 border-t border-[#D0D1D6]">
               {['1. Details', '2. Location', '3. Evidence', '4. AI Review'].map((st, i) => (
                 <div
                   key={st}
                   className={`h-1.5 rounded-full transition-all ${
                     currentStep >= i + 1
-                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFD700]'
-                      : 'bg-[#243356]'
+                      ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37]'
+                      : 'bg-[#D0D1D6]'
                   }`}
                 />
               ))}
@@ -198,18 +198,18 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
         <div className="flex-1 overflow-y-auto p-6 space-y-4 text-xs">
           {/* Quick Hero Test Case Injector Button */}
           {currentStep === 1 && (
-            <div className="rounded-xl border border-[#D4AF37]/40 bg-[#131C38]/90 p-3 flex items-center justify-between gap-2 shadow-md">
-              <div className="flex items-center gap-2 text-xs text-[#F4F1DE]">
-                <Sparkles className="h-4 w-4 text-[#FFD700] shrink-0" />
+            <div className="rounded-xl border border-[#EAB308]/40 bg-[#FEFCE8] p-3 flex items-center justify-between gap-2 shadow-sm">
+              <div className="flex items-center gap-2 text-xs text-[#202226]">
+                <Sparkles className="h-4 w-4 text-[#B45309] shrink-0" />
                 <span>
-                  <strong className="text-[#FFD700]">Hero Test Case:</strong> Smoke near Block D electrical room
+                  <strong className="text-[#B45309]">Hero Test Case:</strong> Smoke near Block D electrical room
                 </span>
               </div>
               <Button
                 type="button"
                 size="sm"
                 onClick={handleFillHeroTestCase}
-                className="h-7 text-[11px] font-mono bg-[#D4AF37] text-[#0B132B] font-bold shrink-0 hover:bg-[#FFD700]"
+                className="h-7 text-[11px] bg-[#EAB308] text-[#202226] font-bold shrink-0 hover:bg-[#D4AF37]"
               >
                 Auto-Fill Hero Test
               </Button>
@@ -220,8 +220,8 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
           {currentStep === 1 && (
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="space-y-1">
-                <label className="font-bold text-[#F4F1DE] font-mono">
-                  Incident Headline / Short Title <span className="text-red-400">*</span>
+                <label className="font-bold text-[#202226]">
+                  Incident Headline / Short Title <span className="text-[#DC2626]">*</span>
                 </label>
                 <Input
                   value={title}
@@ -232,19 +232,19 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#F4F1DE] font-mono">
-                  Detailed Description of Situation &amp; Observations <span className="text-red-400">*</span>
+                <label className="font-bold text-[#202226]">
+                  Detailed Description of Situation &amp; Observations <span className="text-[#DC2626]">*</span>
                 </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Provide complete details: What did you see, hear, or smell? Are people in immediate danger? Any ongoing sounds or visible fumes?"
+                  placeholder="Provide complete details: What did you see, hear, or smell? Are people in immediate danger?"
                   rows={4}
-                  className="w-full rounded-xl border border-[#243356] bg-[#131C38] p-3 text-xs text-[#F4F1DE] placeholder:text-[#7A786B] focus:border-[#D4AF37] focus:outline-none"
+                  className="w-full rounded-xl border border-[#D0D1D6] bg-white p-3 text-xs text-[#202226] placeholder:text-[#8A9199] focus:border-[#EAB308] focus:outline-none"
                   required
                 />
-                <span className="text-[10px] text-[#B8B5A3] font-mono">
-                  Gemini 3.7 Flash will analyze this text to categorize risk and route departments.
+                <span className="text-[10px] text-[#555960]">
+                  AI will analyze this text to categorize risk and route departments.
                 </span>
               </div>
             </div>
@@ -254,13 +254,13 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
           {currentStep === 2 && (
             <div className="space-y-4 animate-in fade-in duration-150">
               <div className="space-y-1">
-                <label className="font-bold text-[#F4F1DE] font-mono">
-                  Select Campus Facility / Location <span className="text-red-400">*</span>
+                <label className="font-bold text-[#202226]">
+                  Select Campus Facility / Location <span className="text-[#DC2626]">*</span>
                 </label>
                 <select
                   value={locationName}
                   onChange={(e) => setLocationName(e.target.value)}
-                  className="h-10 w-full rounded-xl border border-[#243356] bg-[#131C38] px-3 text-xs text-[#F4F1DE] focus:border-[#D4AF37] focus:outline-none font-mono"
+                  className="h-10 w-full rounded-xl border border-[#D0D1D6] bg-white px-3 text-xs text-[#202226] focus:border-[#EAB308] focus:outline-none"
                 >
                   {CAMPUS_LOCATIONS.map((loc) => (
                     <option key={loc.id} value={loc.name}>
@@ -268,19 +268,19 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                     </option>
                   ))}
                 </select>
-                <span className="text-[10px] text-[#B8B5A3] font-mono">
-                  Selected facility vector node will be highlighted on the Security Command Map.
+                <span className="text-[10px] text-[#555960]">
+                  Selected facility will be highlighted on the Command Map.
                 </span>
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#F4F1DE] font-mono">
+                <label className="font-bold text-[#202226]">
                   Incident Category
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as IncidentCategory)}
-                  className="h-10 w-full rounded-xl border border-[#243356] bg-[#131C38] px-3 text-xs text-[#F4F1DE] focus:border-[#D4AF37] focus:outline-none capitalize font-mono"
+                  className="h-10 w-full rounded-xl border border-[#D0D1D6] bg-white px-3 text-xs text-[#202226] focus:border-[#EAB308] focus:outline-none capitalize"
                 >
                   <option value="fire">Fire / Smoke / Electrical Arc</option>
                   <option value="medical">Medical Urgency / Injury</option>
@@ -299,21 +299,21 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
             <div className="space-y-4 animate-in fade-in duration-150">
               {/* Emergency Toggle */}
               <div className={`p-4 rounded-xl border transition-all ${
-                isEmergency ? 'bg-red-950/40 border-red-500' : 'bg-[#131C38] border-[#243356]'
+                isEmergency ? 'bg-[#FEF2F2] border-[#DC2626]' : 'bg-white border-[#D0D1D6]'
               }`}>
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isEmergency}
                     onChange={(e) => setIsEmergency(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded border-[#243356] bg-[#0F1026] text-red-600 focus:ring-red-500 cursor-pointer"
+                    className="mt-0.5 h-4 w-4 rounded border-[#D0D1D6] bg-white text-[#DC2626] focus:ring-[#DC2626] cursor-pointer"
                   />
                   <div>
-                    <span className="font-bold text-[#F4F1DE] flex items-center gap-1.5">
-                      <AlertOctagon className="h-4 w-4 text-red-400" />
+                    <span className="font-bold text-[#202226] flex items-center gap-1.5">
+                      <AlertOctagon className="h-4 w-4 text-[#DC2626]" />
                       <span>Immediate Emergency / Life Safety Threat</span>
                     </span>
-                    <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+                    <p className="text-[11px] text-[#555960] mt-0.5">
                       Flags this report for instant audio siren broadcast and high-priority responder paging.
                     </p>
                   </div>
@@ -321,20 +321,20 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
               </div>
 
               {/* Anonymous Whistleblower Toggle */}
-              <div className="p-4 rounded-xl bg-[#131C38] border border-[#243356]">
+              <div className="p-4 rounded-xl bg-white border border-[#D0D1D6]">
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isAnonymous}
                     onChange={(e) => setIsAnonymous(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 rounded border-[#243356] bg-[#0F1026] text-[#D4AF37] focus:ring-[#D4AF37] cursor-pointer"
+                    className="mt-0.5 h-4 w-4 rounded border-[#D0D1D6] bg-white text-[#EAB308] focus:ring-[#EAB308] cursor-pointer"
                   />
                   <div>
-                    <span className="font-bold text-[#F4F1DE] flex items-center gap-1.5">
-                      <EyeOff className="h-4 w-4 text-[#FFD700]" />
+                    <span className="font-bold text-[#202226] flex items-center gap-1.5">
+                      <EyeOff className="h-4 w-4 text-[#B45309]" />
                       <span>Anonymous Whistleblower Protection</span>
                     </span>
-                    <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+                    <p className="text-[11px] text-[#555960] mt-0.5">
                       Your name, email, and student ID will be stripped from all logs and records.
                     </p>
                   </div>
@@ -343,22 +343,22 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
 
               {/* Evidence Upload Dropzone Simulation */}
               <div className="space-y-1.5">
-                <label className="font-bold text-[#F4F1DE] font-mono">
+                <label className="font-bold text-[#202226]">
                   Optional Evidence (Photo / Video / Document)
                 </label>
                 <div
                   onClick={() => setEvidenceFileName('electrical_room_smoke_photo.jpg')}
-                  className="rounded-xl border-2 border-dashed border-[#243356] hover:border-[#D4AF37]/50 bg-[#131C38]/50 p-4 text-center cursor-pointer transition-colors"
+                  className="rounded-xl border-2 border-dashed border-[#D0D1D6] hover:border-[#EAB308]/50 bg-[#F4F5F6] p-4 text-center cursor-pointer transition-colors"
                 >
-                  <UploadCloud className="h-6 w-6 text-[#C5A059] mx-auto mb-1" />
+                  <UploadCloud className="h-6 w-6 text-[#555960] mx-auto mb-1" />
                   {evidenceFileName ? (
-                    <div className="flex items-center justify-center gap-2 text-emerald-400 font-mono text-xs">
+                    <div className="flex items-center justify-center gap-2 text-[#067a4f] text-xs">
                       <Check className="h-4 w-4" />
                       <span>Attached: {evidenceFileName}</span>
                     </div>
                   ) : (
-                    <p className="text-xs text-[#B8B5A3]">
-                      Click to attach simulated photo (e.g. <span className="text-[#FFD700]">electrical_room_smoke_photo.jpg</span>)
+                    <p className="text-xs text-[#555960]">
+                      Click to attach simulated photo (e.g. <span className="text-[#B45309]">electrical_room_smoke_photo.jpg</span>)
                     </p>
                   )}
                 </div>
@@ -372,24 +372,24 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
               {isAiLoading ? (
                 <div className="py-12 text-center space-y-3">
                   <div className="flex justify-center">
-                    <Sparkles className="h-8 w-8 text-[#FFD700] animate-spin" />
+                    <Sparkles className="h-8 w-8 text-[#B45309] animate-spin" />
                   </div>
-                  <h4 className="font-bold text-sm text-[#F4F1DE] font-mono">
-                    Gemini 3.7 Flash Analyzing Incident Telemetry...
+                  <h4 className="font-bold text-sm text-[#202226]">
+                    Analyzing Incident Telemetry...
                   </h4>
-                  <p className="text-xs text-[#B8B5A3] max-w-sm mx-auto">
+                  <p className="text-xs text-[#555960] max-w-sm mx-auto">
                     Synthesizing hazard indicators, validating against building schemas, and predicting department routing.
                   </p>
                 </div>
               ) : aiAnalysis ? (
                 <div className="space-y-4">
                   {/* AI Output Card */}
-                  <div className="rounded-xl border border-[#D4AF37] bg-gradient-to-br from-[#131C38] via-[#0F1026] to-[#1C2541] p-4 space-y-3 shadow-xl">
-                    <div className="flex items-center justify-between border-b border-[#243356] pb-2">
+                  <div className="rounded-xl border border-[#EAB308] bg-gradient-to-br from-[#FEFCE8] to-white p-4 space-y-3 shadow-sm">
+                    <div className="flex items-center justify-between border-b border-[#EAB308]/30 pb-2">
                       <div className="flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-[#FFD700]" />
-                        <span className="font-bold font-mono text-xs text-[#FFD700]">
-                          Gemini 3.7 Flash Triage Card
+                        <Sparkles className="h-4 w-4 text-[#B45309]" />
+                        <span className="font-bold text-xs text-[#B45309]">
+                          AI Triage Card
                         </span>
                       </div>
                       <SeverityBadge
@@ -399,19 +399,19 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                       />
                     </div>
 
-                    <p className="text-xs text-[#F4F1DE] leading-relaxed">
+                    <p className="text-xs text-[#202226] leading-relaxed">
                       {aiAnalysis.summary}
                     </p>
 
                     {/* Grounded Recommendations */}
                     <div className="space-y-1 pt-1">
-                      <span className="text-[10px] font-mono text-[#C5A059] uppercase block font-bold">
+                      <span className="text-[10px] text-[#555960] uppercase block font-bold">
                         Recommended Actions:
                       </span>
-                      <ul className="space-y-1 text-[11px] text-[#B8B5A3]">
+                      <ul className="space-y-1 text-[11px] text-[#555960]">
                         {aiAnalysis.recommended_actions.map((act, i) => (
                           <li key={i} className="flex items-start gap-1.5">
-                            <span className="text-[#FFD700] font-bold">•</span>
+                            <span className="text-[#B45309] font-bold">•</span>
                             <span>{act}</span>
                           </li>
                         ))}
@@ -419,10 +419,10 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                     </div>
 
                     {/* Department Routing */}
-                    <div className="pt-2 border-t border-[#243356] flex items-center gap-2 flex-wrap text-[10px] font-mono">
-                      <span className="text-[#C5A059]">Departments:</span>
+                    <div className="pt-2 border-t border-[#EAB308]/20 flex items-center gap-2 flex-wrap text-[10px]">
+                      <span className="text-[#555960]">Departments:</span>
                       {aiAnalysis.departments.map((d, i) => (
-                        <span key={i} className="px-2 py-0.5 rounded bg-[#0B132B] border border-[#243356] text-[#FFD700]">
+                        <span key={i} className="px-2 py-0.5 rounded bg-[#F4F5F6] border border-[#D0D1D6] text-[#B45309]">
                           {d}
                         </span>
                       ))}
@@ -430,20 +430,20 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                   </div>
 
                   {/* Submission Summary Details */}
-                  <div className="rounded-xl bg-[#131C38] p-3.5 border border-[#243356] space-y-2 text-xs">
-                    <div className="flex justify-between border-b border-[#243356] pb-1">
-                      <span className="text-[#B8B5A3]">Location:</span>
-                      <span className="font-bold text-[#F4F1DE]">{locationName}</span>
+                  <div className="rounded-xl bg-[#F4F5F6] p-3.5 border border-[#D0D1D6] space-y-2 text-xs">
+                    <div className="flex justify-between border-b border-[#D0D1D6] pb-1">
+                      <span className="text-[#555960]">Location:</span>
+                      <span className="font-bold text-[#202226]">{locationName}</span>
                     </div>
-                    <div className="flex justify-between border-b border-[#243356] pb-1">
-                      <span className="text-[#B8B5A3]">Reporter:</span>
-                      <span className="font-mono text-[#FFD700]">
+                    <div className="flex justify-between border-b border-[#D0D1D6] pb-1">
+                      <span className="text-[#555960]">Reporter:</span>
+                      <span className="text-[#B45309]">
                         {isAnonymous ? 'Whistleblower (Protected)' : 'Aanya Patel (Student)'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[#B8B5A3]">Emergency Tier:</span>
-                      <span className="font-mono font-bold text-red-400">
+                      <span className="text-[#555960]">Emergency Tier:</span>
+                      <span className="font-bold text-[#DC2626]">
                         {aiAnalysis.emergency_required || isEmergency ? 'IMMEDIATE DISPATCH REQUIRED' : 'STANDARD'}
                       </span>
                     </div>
@@ -456,37 +456,37 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
           {/* STEP 5: Success Confirmation */}
           {currentStep === 5 && (
             <div className="py-8 text-center space-y-4 animate-in zoom-in-95 duration-200">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-950 border-2 border-emerald-500 mx-auto text-emerald-400">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#ECFDF5] border-2 border-[#10B981] mx-auto text-[#10B981]">
                 <CheckCircle className="h-8 w-8" />
               </div>
 
               <div>
-                <h4 className="font-bold text-base text-[#F4F1DE] font-mono">
+                <h4 className="font-bold text-base text-[#202226]">
                   Incident Dispatched &amp; Logged
                 </h4>
-                <p className="text-xs text-[#B8B5A3] mt-1">
-                  Incident ID: <strong className="font-mono text-[#FFD700]">{createdIncidentId}</strong>
+                <p className="text-xs text-[#555960] mt-1">
+                  Incident ID: <strong className="text-[#B45309]">{createdIncidentId}</strong>
                 </p>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#131C38] border border-[#243356] max-w-sm mx-auto text-left text-xs space-y-1">
-                <p className="text-[#F4F1DE] flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
+              <div className="p-3 rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] max-w-sm mx-auto text-left text-xs space-y-1">
+                <p className="text-[#202226] flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-[#10B981]" />
                   <span>Assigned to <strong>Capt. Vikram Sharma (Security)</strong></span>
                 </p>
-                <p className="text-[#F4F1DE] flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <p className="text-[#202226] flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-[#10B981]" />
                   <span>Placed onto <strong>Live Command Center Map</strong></span>
                 </p>
-                <p className="text-[#F4F1DE] flex items-center gap-1.5">
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <p className="text-[#202226] flex items-center gap-1.5">
+                  <Check className="h-3.5 w-3.5 text-[#10B981]" />
                   <span>Added to <strong>Immutable Audit Trail</strong></span>
                 </p>
               </div>
 
               <Button
                 onClick={resetForm}
-                className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold font-mono text-xs px-6"
+                className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#202226] font-bold text-xs px-6"
               >
                 Done &amp; View Command Center
               </Button>
@@ -496,7 +496,7 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
 
         {/* Footer Navigation Buttons */}
         {currentStep < 5 && (
-          <div className="flex items-center justify-between border-t border-[#243356] bg-[#131C38] px-6 py-3.5">
+          <div className="flex items-center justify-between border-t border-[#D0D1D6] bg-[#F4F5F6] px-6 py-3.5">
             <div>
               {currentStep > 1 && (
                 <Button
@@ -524,7 +524,7 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                   size="sm"
                   onClick={() => setCurrentStep((s) => s + 1)}
                   disabled={currentStep === 1 && (!title || !description)}
-                  className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold text-xs gap-1"
+                  className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#202226] font-bold text-xs gap-1"
                 >
                   <span>Next</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -536,7 +536,7 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                   type="button"
                   size="sm"
                   onClick={handleRunAiTriage}
-                  className="bg-gradient-to-r from-[#FFD700] via-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/30"
+                  className="bg-gradient-to-r from-[#EAB308] via-[#D4AF37] to-[#C5A059] text-[#202226] font-bold text-xs gap-1.5 shadow-sm"
                 >
                   <Sparkles className="h-4 w-4" />
                   <span>Run AI Triage Analysis</span>
@@ -549,7 +549,7 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                   size="sm"
                   onClick={handleSubmitIncident}
                   disabled={isSubmitting || isAiLoading}
-                  className="bg-gradient-to-r from-red-600 to-amber-600 text-white font-bold text-xs gap-1.5 shadow-lg shadow-red-900/40"
+                  className="bg-gradient-to-r from-[#DC2626] to-[#F59E0B] text-white font-bold text-xs gap-1.5 shadow-sm"
                 >
                   <ShieldAlert className="h-4 w-4" />
                   <span>{isSubmitting ? 'Transmitting...' : 'Confirm & Dispatch Incident'}</span>

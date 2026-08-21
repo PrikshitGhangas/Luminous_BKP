@@ -87,13 +87,13 @@ export default function VisitorsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
-            <Users className="h-6 w-6 text-[#FFD700]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
+            <Users className="h-6 w-6 text-[#B45309]" />
             <span>VISITOR PASS MANAGEMENT &amp; ACCESS CONTROL</span>
           </h1>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-sans">
+          <p className="text-xs text-[#555960] mt-1 font-sans">
             Digital visitor badges, host approvals, security clearance, QR pass cards, and gate entry/exit logs
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function VisitorsPage() {
         <Button
           onClick={() => setIsRequestModalOpen(true)}
           size="sm"
-          className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+          className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
         >
           <Plus className="h-4 w-4" />
           <span>Apply for Visitor Pass</span>
@@ -109,7 +109,7 @@ export default function VisitorsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#243356] pb-2 overflow-x-auto">
+      <div className="flex items-center gap-2 border-b border-[#D0D1D6] pb-2 overflow-x-auto">
         {[
           { id: 'passes', label: 'All Visitor Badges & Passes', icon: QrCode },
           { id: 'host_approvals', label: 'Host Approval Desk', icon: UserCheck, count: visitorPasses.filter(v => v.status === 'pending_host').length },
@@ -123,14 +123,14 @@ export default function VisitorsPage() {
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono font-bold transition-all whitespace-nowrap ${
                 isActive
-                  ? 'bg-[#D4AF37] text-[#0B132B] shadow-md shadow-[#D4AF37]/20'
-                  : 'bg-[#0F1026] text-[#B8B5A3] border border-[#243356] hover:text-white hover:border-[#D4AF37]/50'
+                  ? 'bg-[#EAB308] text-[#0B132B] shadow-md shadow-[#D4AF37]/20'
+                  : 'bg-[#F4F5F6] text-[#555960] border border-[#D0D1D6] hover:text-white hover:border-[#EAB308]/50'
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
               <span>{tab.label}</span>
               {tab.count !== undefined && tab.count > 0 && (
-                <span className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${isActive ? 'bg-[#0B132B] text-[#FFD700]' : 'bg-[#1C2541] text-[#FFD700]'}`}>
+                <span className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${isActive ? 'bg-white text-[#B45309]' : 'bg-[#E7E8EB] text-[#B45309]'}`}>
                   {tab.count}
                 </span>
               )}
@@ -143,20 +143,20 @@ export default function VisitorsPage() {
       {activeTab === 'passes' && (
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="flex-1 flex items-center gap-3 bg-[#0F1026] p-3 rounded-xl border border-[#243356]">
-              <Search className="h-4 w-4 text-[#C5A059] shrink-0" />
+            <div className="flex-1 flex items-center gap-3 bg-[#F4F5F6] p-3 rounded-xl border border-[#D0D1D6]">
+              <Search className="h-4 w-4 text-[#B45309] shrink-0" />
               <Input
                 placeholder="Search visitor name, pass number, or host..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-transparent border-0 text-xs text-[#F4F1DE] placeholder:text-[#B8B5A3]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="bg-transparent border-0 text-xs text-[#202226] placeholder:text-[#555960]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </div>
 
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="rounded-xl bg-[#0F1026] border border-[#243356] text-xs text-[#F4F1DE] px-3 py-2 font-mono"
+              className="rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] text-xs text-[#202226] px-3 py-2 font-mono"
             >
               <option value="ALL">All Statuses</option>
               <option value="pending_host">Pending Host Approval</option>
@@ -169,26 +169,26 @@ export default function VisitorsPage() {
 
           <div className="space-y-3">
             {filteredPasses.map((vp) => (
-              <Card key={vp.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+              <Card key={vp.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
                 <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                   <div className="flex items-start gap-3">
-                    <div className="p-2.5 rounded-xl bg-[#131C38] border border-[#243356] text-[#FFD700] shrink-0 mt-0.5">
+                    <div className="p-2.5 rounded-xl bg-white border border-[#D0D1D6] text-[#B45309] shrink-0 mt-0.5">
                       <QrCode className="h-6 w-6" />
                     </div>
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-[#F4F1DE]">{vp.visitor_name}</span>
-                        <span className="font-mono text-[10px] bg-[#1C2541] border border-[#243356] text-[#FFD700] px-2 py-0.5 rounded font-bold">
+                        <span className="font-bold text-sm text-[#202226]">{vp.visitor_name}</span>
+                        <span className="font-mono text-[10px] bg-[#E7E8EB] border border-[#D0D1D6] text-[#B45309] px-2 py-0.5 rounded font-bold">
                           {vp.pass_number}
                         </span>
                         {vp.visitor_company && (
-                          <span className="text-[#B8B5A3] font-mono text-[11px]">({vp.visitor_company})</span>
+                          <span className="text-[#555960] font-mono text-[11px]">({vp.visitor_company})</span>
                         )}
                       </div>
-                      <p className="text-[#B8B5A3] font-mono text-[11px]">
-                        Host: <strong className="text-[#F4F1DE]">{vp.host_name}</strong> ({vp.host_department}) · Target: {vp.destination_building}
+                      <p className="text-[#555960] font-mono text-[11px]">
+                        Host: <strong className="text-[#202226]">{vp.host_name}</strong> ({vp.host_department}) · Target: {vp.destination_building}
                       </p>
-                      <p className="text-[#B8B5A3] text-[11px]">Purpose: {vp.purpose}</p>
+                      <p className="text-[#555960] text-[11px]">Purpose: {vp.purpose}</p>
                     </div>
                   </div>
 
@@ -202,7 +202,7 @@ export default function VisitorsPage() {
                           : vp.status === 'approved_host'
                           ? 'bg-purple-500/15 text-purple-300 border-purple-500/30'
                           : vp.status === 'checked_out'
-                          ? 'bg-[#1C2541] text-[#B8B5A3] border-[#243356]'
+                          ? 'bg-[#E7E8EB] text-[#555960] border-[#D0D1D6]'
                           : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
                       }`}
                     >
@@ -214,7 +214,7 @@ export default function VisitorsPage() {
                         size="sm"
                         variant="outline"
                         onClick={() => setSelectedPass(vp)}
-                        className="text-[11px] h-7 border-[#243356] text-[#FFD700] gap-1"
+                        className="text-[11px] h-7 border-[#D0D1D6] text-[#B45309] gap-1"
                       >
                         <QrCode className="h-3 w-3" />
                         <span>View Pass QR</span>
@@ -254,7 +254,7 @@ export default function VisitorsPage() {
       {activeTab === 'host_approvals' && (
         <div className="space-y-3">
           {visitorPasses.filter((v) => v.status === 'pending_host').length === 0 ? (
-            <Card className="bg-[#0F1026] border-[#243356] p-8 text-center text-[#B8B5A3] font-mono">
+            <Card className="bg-[#F4F5F6] border-[#D0D1D6] p-8 text-center text-[#555960] font-mono">
               <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto mb-2" />
               <p>No pending visitor requests awaiting host approval.</p>
             </Card>
@@ -262,18 +262,18 @@ export default function VisitorsPage() {
             visitorPasses
               .filter((v) => v.status === 'pending_host')
               .map((vp) => (
-                <Card key={vp.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+                <Card key={vp.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
                   <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-sm">{vp.visitor_name}</span>
-                        <span className="text-[#C5A059] font-mono text-[11px]">({vp.visitor_company || 'Guest'})</span>
+                        <span className="text-[#B45309] font-mono text-[11px]">({vp.visitor_company || 'Guest'})</span>
                       </div>
-                      <p className="text-[#B8B5A3] font-mono text-[11px] mt-0.5">
-                        Host Requested: <strong className="text-[#FFD700]">{vp.host_name}</strong> ({vp.host_department})
+                      <p className="text-[#555960] font-mono text-[11px] mt-0.5">
+                        Host Requested: <strong className="text-[#B45309]">{vp.host_name}</strong> ({vp.host_department})
                       </p>
-                      <p className="text-[#B8B5A3] text-[11px]">Visit Date: {vp.visit_date || 'Today'} · Slot: {vp.visit_time_slot || '09:00 AM'}</p>
-                      <p className="text-[#F4F1DE] mt-1 font-mono text-[11px]">Purpose: {vp.purpose}</p>
+                      <p className="text-[#555960] text-[11px]">Visit Date: {vp.visit_date || 'Today'} · Slot: {vp.visit_time_slot || '09:00 AM'}</p>
+                      <p className="text-[#202226] mt-1 font-mono text-[11px]">Purpose: {vp.purpose}</p>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -306,33 +306,33 @@ export default function VisitorsPage() {
       {activeTab === 'security_clearance' && (
         <div className="space-y-3">
           {visitorPasses.filter((v) => v.status === 'approved_host').length === 0 ? (
-            <Card className="bg-[#0F1026] border-[#243356] p-8 text-center text-[#B8B5A3] font-mono">
-              <ShieldCheck className="h-10 w-10 text-[#FFD700] mx-auto mb-2" />
+            <Card className="bg-[#F4F5F6] border-[#D0D1D6] p-8 text-center text-[#555960] font-mono">
+              <ShieldCheck className="h-10 w-10 text-[#B45309] mx-auto mb-2" />
               <p>No host-approved passes currently awaiting security clearance.</p>
             </Card>
           ) : (
             visitorPasses
               .filter((v) => v.status === 'approved_host')
               .map((vp) => (
-                <Card key={vp.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+                <Card key={vp.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
                   <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-[#F4F1DE]">{vp.visitor_name}</span>
+                        <span className="font-bold text-sm text-[#202226]">{vp.visitor_name}</span>
                         <Badge className="bg-purple-500/15 text-purple-300 border-purple-500/30 font-mono text-[10px]">
                           HOST APPROVED
                         </Badge>
                       </div>
-                      <p className="text-[#B8B5A3] font-mono text-[11px] mt-0.5">
+                      <p className="text-[#555960] font-mono text-[11px] mt-0.5">
                         Host: {vp.host_name} · Destination: {vp.destination_building}
                       </p>
-                      <p className="text-[#B8B5A3] text-[11px]">Phone: {vp.visitor_phone} · Vehicle: {vp.vehicle_number || 'N/A'}</p>
+                      <p className="text-[#555960] text-[11px]">Phone: {vp.visitor_phone} · Vehicle: {vp.vehicle_number || 'N/A'}</p>
                     </div>
 
                     <Button
                       size="sm"
                       onClick={() => approveVisitorSecurity(vp.id, `VIS-SEC-${Math.floor(100 + Math.random() * 900)}`)}
-                      className="text-xs bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold gap-1 font-mono shrink-0"
+                      className="text-xs bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold gap-1 font-mono shrink-0"
                     >
                       <ShieldCheck className="h-3.5 w-3.5" />
                       <span>Issue Security Clearance Badge</span>
@@ -347,26 +347,26 @@ export default function VisitorsPage() {
       {/* Modal: DIGITAL QR PASS BADGE */}
       {selectedPass && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-sm bg-[#0F1026] border-2 border-[#D4AF37] text-[#F4F1DE] shadow-2xl shadow-[#D4AF37]/30">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38] text-center relative">
-              <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-[#D4AF37]/20 text-[#FFD700] mb-1 mx-auto">
+          <Card className="w-full max-w-sm bg-[#F4F5F6] border-2 border-[#EAB308] text-[#202226] shadow-2xl shadow-[#D4AF37]/30">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white text-center relative">
+              <div className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-[#EAB308]/20 text-[#B45309] mb-1 mx-auto">
                 <ShieldCheck className="h-5 w-5" />
               </div>
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] uppercase tracking-wider">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] uppercase tracking-wider">
                 LUMINOUS UNIVERSITY DIGITAL VISITOR BADGE
               </CardTitle>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setSelectedPass(null)}
-                className="absolute right-2 top-2 h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="absolute right-2 top-2 h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
             </CardHeader>
             <CardContent className="p-5 text-center space-y-4 text-xs font-mono">
               {/* QR Code Container */}
-              <div className="mx-auto w-44 h-44 bg-white p-3 rounded-2xl flex flex-col items-center justify-center shadow-lg border-4 border-[#D4AF37]">
+              <div className="mx-auto w-44 h-44 bg-white p-3 rounded-2xl flex flex-col items-center justify-center shadow-lg border-4 border-[#EAB308]">
                 <QrCode className="w-32 h-32 text-[#0B132B]" />
                 <span className="text-[10px] text-[#0B132B] font-bold tracking-widest mt-1">
                   {selectedPass.pass_number}
@@ -374,18 +374,18 @@ export default function VisitorsPage() {
               </div>
 
               <div className="space-y-1 text-center">
-                <h3 className="font-bold text-base text-[#F4F1DE] font-sans">{selectedPass.visitor_name}</h3>
-                <p className="text-[#C5A059] text-xs">{selectedPass.visitor_company || 'Official Campus Guest'}</p>
-                <span className="inline-block px-2 py-0.5 rounded bg-[#1C2541] border border-[#243356] text-[#FFD700] text-[10px] font-bold">
+                <h3 className="font-bold text-base text-[#202226] font-sans">{selectedPass.visitor_name}</h3>
+                <p className="text-[#B45309] text-xs">{selectedPass.visitor_company || 'Official Campus Guest'}</p>
+                <span className="inline-block px-2 py-0.5 rounded bg-[#E7E8EB] border border-[#D0D1D6] text-[#B45309] text-[10px] font-bold">
                   SECURITY BADGE ID: {selectedPass.badge_id}
                 </span>
               </div>
 
-              <div className="bg-[#131C38] p-3 rounded-xl border border-[#243356] text-left text-[11px] space-y-1 text-[#B8B5A3]">
-                <p><strong className="text-[#F4F1DE]">Host:</strong> {selectedPass.host_name} ({selectedPass.host_department})</p>
-                <p><strong className="text-[#F4F1DE]">Destination:</strong> {selectedPass.destination_building}</p>
-                <p><strong className="text-[#F4F1DE]">Visit Window:</strong> {selectedPass.visit_date || 'Today'} ({selectedPass.visit_time_slot || 'All Day'})</p>
-                <p><strong className="text-[#F4F1DE]">Status:</strong> <span className="text-[#FFD700] font-bold uppercase">{selectedPass.status}</span></p>
+              <div className="bg-white p-3 rounded-xl border border-[#D0D1D6] text-left text-[11px] space-y-1 text-[#555960]">
+                <p><strong className="text-[#202226]">Host:</strong> {selectedPass.host_name} ({selectedPass.host_department})</p>
+                <p><strong className="text-[#202226]">Destination:</strong> {selectedPass.destination_building}</p>
+                <p><strong className="text-[#202226]">Visit Window:</strong> {selectedPass.visit_date || 'Today'} ({selectedPass.visit_time_slot || 'All Day'})</p>
+                <p><strong className="text-[#202226]">Status:</strong> <span className="text-[#B45309] font-bold uppercase">{selectedPass.status}</span></p>
               </div>
             </CardContent>
           </Card>
@@ -395,9 +395,9 @@ export default function VisitorsPage() {
       {/* Modal: APPLY FOR VISITOR PASS */}
       {isRequestModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
                 <Plus className="h-4 w-4" />
                 <span>Submit Digital Visitor Pass Request</span>
               </CardTitle>
@@ -405,7 +405,7 @@ export default function VisitorsPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsRequestModalOpen(false)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -414,124 +414,124 @@ export default function VisitorsPage() {
               <form onSubmit={handleRequestSubmit} className="space-y-3 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Visitor Full Name *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Visitor Full Name *</label>
                     <Input
                       required
                       placeholder="e.g. Dr. Anita Roy"
                       value={vName}
                       onChange={(e) => setVName(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Contact Phone *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Contact Phone *</label>
                     <Input
                       required
                       placeholder="e.g. +1 (555) 012-3399"
                       value={vPhone}
                       onChange={(e) => setVPhone(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Organization / Company</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Organization / Company</label>
                     <Input
                       placeholder="e.g. Stanford AI Institute"
                       value={vCompany}
                       onChange={(e) => setVCompany(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Vehicle Registration No.</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Vehicle Registration No.</label>
                     <Input
                       placeholder="e.g. KA-01-EQ-9921"
                       value={vVehicle}
                       onChange={(e) => setVVehicle(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Host Faculty / Student *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Host Faculty / Student *</label>
                     <Input
                       required
                       placeholder="e.g. Prof. Sarah Jenkins"
                       value={vHostName}
                       onChange={(e) => setVHostName(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Host Department</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Host Department</label>
                     <Input
                       placeholder="e.g. Computer Science & Engineering"
                       value={vHostDept}
                       onChange={(e) => setVHostDept(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Visit Date</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Visit Date</label>
                     <Input
                       type="date"
                       value={vDate}
                       onChange={(e) => setVDate(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Destination Building</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Destination Building</label>
                     <Input
                       placeholder="e.g. Engineering Block D"
                       value={vBuilding}
                       onChange={(e) => setVBuilding(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Time Slot Window</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Time Slot Window</label>
                     <Input
                       placeholder="e.g. 10:00 AM - 01:00 PM"
                       value={vTime}
                       onChange={(e) => setVTime(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Visit Purpose *</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Visit Purpose *</label>
                   <textarea
                     required
                     rows={2}
                     placeholder="State full purpose of visit (e.g., Guest lecture, lab audit, student meeting)..."
                     value={vPurpose}
                     onChange={(e) => setVPurpose(e.target.value)}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#243356]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsRequestModalOpen(false)}
-                    className="text-xs border-[#243356]"
+                    className="text-xs border-[#D0D1D6]"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs"
+                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
                   >
                     Submit Request
                   </Button>

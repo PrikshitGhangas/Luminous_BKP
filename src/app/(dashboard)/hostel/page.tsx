@@ -104,13 +104,13 @@ export default function HostelPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
-            <Building2 className="h-6 w-6 text-[#FFD700]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
+            <Building2 className="h-6 w-6 text-[#B45309]" />
             <span>HOSTEL QUARTERS &amp; RESIDENTIAL WARDEN DESK</span>
           </h1>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-sans">
+          <p className="text-xs text-[#555960] mt-1 font-sans">
             Room allocations, night curfews, occupancy records, maintenance ticketing, and hostel incidents
           </p>
         </div>
@@ -119,7 +119,7 @@ export default function HostelPage() {
           <Button
             onClick={() => setIsMaintenanceModalOpen(true)}
             size="sm"
-            className="bg-[#131C38] hover:bg-[#1C2541] text-[#FFD700] border border-[#D4AF37]/40 text-xs font-semibold gap-1.5"
+            className="bg-white hover:bg-[#E7E8EB] text-[#B45309] border border-[#EAB308]/40 text-xs font-semibold gap-1.5"
           >
             <Wrench className="h-4 w-4" />
             <span>Submit Maintenance Ticket</span>
@@ -127,7 +127,7 @@ export default function HostelPage() {
           <Button
             onClick={() => setIsIncidentModalOpen(true)}
             size="sm"
-            className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+            className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
           >
             <Plus className="h-4 w-4" />
             <span>Report Hostel Incident</span>
@@ -168,7 +168,7 @@ export default function HostelPage() {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#243356] pb-2 overflow-x-auto">
+      <div className="flex items-center gap-2 border-b border-[#D0D1D6] pb-2 overflow-x-auto">
         {[
           { id: 'buildings', label: 'Residential Buildings', icon: Building2 },
           { id: 'rooms', label: 'Room Directory & Allocations', icon: Bed },
@@ -184,14 +184,14 @@ export default function HostelPage() {
               onClick={() => setActiveTab(tab.id as typeof activeTab)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono font-bold transition-all whitespace-nowrap ${
                 isActive
-                  ? 'bg-[#D4AF37] text-[#0B132B] shadow-md shadow-[#D4AF37]/20'
-                  : 'bg-[#0F1026] text-[#B8B5A3] border border-[#243356] hover:text-white hover:border-[#D4AF37]/50'
+                  ? 'bg-[#EAB308] text-[#0B132B] shadow-md shadow-[#D4AF37]/20'
+                  : 'bg-[#F4F5F6] text-[#555960] border border-[#D0D1D6] hover:text-white hover:border-[#EAB308]/50'
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
               <span>{tab.label}</span>
               {tab.count !== undefined && tab.count > 0 && (
-                <span className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${isActive ? 'bg-[#0B132B] text-[#FFD700]' : 'bg-[#1C2541] text-[#FFD700]'}`}>
+                <span className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${isActive ? 'bg-white text-[#B45309]' : 'bg-[#E7E8EB] text-[#B45309]'}`}>
                   {tab.count}
                 </span>
               )}
@@ -204,51 +204,51 @@ export default function HostelPage() {
       {activeTab === 'buildings' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {hostelBuildings.map((b) => (
-            <Card key={b.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-              <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]/60 flex flex-row items-center justify-between">
+            <Card key={b.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+              <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60 flex flex-row items-center justify-between">
                 <div>
-                  <CardTitle className="text-sm font-bold font-mono text-[#F4F1DE] flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-[#FFD700]" />
+                  <CardTitle className="text-sm font-bold font-mono text-[#202226] flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-[#B45309]" />
                     <span>{b.name}</span>
                   </CardTitle>
-                  <p className="text-[11px] font-mono text-[#C5A059] mt-0.5">Building Code: {b.code}</p>
+                  <p className="text-[11px] font-mono text-[#B45309] mt-0.5">Building Code: {b.code}</p>
                 </div>
                 <Badge className={`font-mono text-[10px] ${b.gender === 'Boys' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : 'bg-pink-500/15 text-pink-300 border-pink-500/30'}`}>
                   {b.gender} Residency
                 </Badge>
               </CardHeader>
               <CardContent className="p-4 space-y-3.5 text-xs">
-                <div className="grid grid-cols-3 gap-2 bg-[#131C38] p-3 rounded-lg border border-[#243356] text-center font-mono">
+                <div className="grid grid-cols-3 gap-2 bg-white p-3 rounded-lg border border-[#D0D1D6] text-center font-mono">
                   <div>
-                    <span className="text-[10px] text-[#C5A059] block">ROOMS</span>
-                    <span className="font-bold text-[#F4F1DE]">{b.totalRooms}</span>
+                    <span className="text-[10px] text-[#B45309] block">ROOMS</span>
+                    <span className="font-bold text-[#202226]">{b.totalRooms}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-[#C5A059] block">OCCUPIED</span>
+                    <span className="text-[10px] text-[#B45309] block">OCCUPIED</span>
                     <span className="font-bold text-emerald-400">{b.occupiedBeds} / {b.totalBeds}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-[#C5A059] block">VACANT BEDS</span>
-                    <span className="font-bold text-[#FFD700]">{b.totalBeds - b.occupiedBeds}</span>
+                    <span className="text-[10px] text-[#B45309] block">VACANT BEDS</span>
+                    <span className="font-bold text-[#B45309]">{b.totalBeds - b.occupiedBeds}</span>
                   </div>
                 </div>
 
-                <div className="space-y-1.5 font-mono text-[11px] text-[#B8B5A3]">
+                <div className="space-y-1.5 font-mono text-[11px] text-[#555960]">
                   <div className="flex items-center gap-2">
-                    <User className="h-3.5 w-3.5 text-[#C5A059]" />
-                    <span>Warden in Charge: <strong className="text-[#F4F1DE]">{b.wardenName}</strong></span>
+                    <User className="h-3.5 w-3.5 text-[#B45309]" />
+                    <span>Warden in Charge: <strong className="text-[#202226]">{b.wardenName}</strong></span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="h-3.5 w-3.5 text-[#C5A059]" />
+                    <Phone className="h-3.5 w-3.5 text-[#B45309]" />
                     <span>Desk Helpline: {b.wardenPhone}</span>
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-[10px] font-mono text-[#C5A059] uppercase font-bold mb-1.5">Amenities &amp; Facilities:</p>
+                  <p className="text-[10px] font-mono text-[#B45309] uppercase font-bold mb-1.5">Amenities &amp; Facilities:</p>
                   <div className="flex flex-wrap gap-1.5">
                     {b.amenities.map((am) => (
-                      <span key={am} className="px-2 py-0.5 rounded bg-[#1C2541] border border-[#243356] text-[10px] font-mono text-[#F4F1DE]">
+                      <span key={am} className="px-2 py-0.5 rounded bg-[#E7E8EB] border border-[#D0D1D6] text-[10px] font-mono text-[#202226]">
                         ✓ {am}
                       </span>
                     ))}
@@ -264,13 +264,13 @@ export default function HostelPage() {
       {activeTab === 'rooms' && (
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="flex-1 flex items-center gap-3 bg-[#0F1026] p-3 rounded-xl border border-[#243356]">
-              <Search className="h-4 w-4 text-[#C5A059] shrink-0" />
+            <div className="flex-1 flex items-center gap-3 bg-[#F4F5F6] p-3 rounded-xl border border-[#D0D1D6]">
+              <Search className="h-4 w-4 text-[#B45309] shrink-0" />
               <Input
                 placeholder="Search room number or resident student name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="bg-transparent border-0 text-xs text-[#F4F1DE] placeholder:text-[#B8B5A3]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="bg-transparent border-0 text-xs text-[#202226] placeholder:text-[#555960]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
               />
             </div>
 
@@ -278,7 +278,7 @@ export default function HostelPage() {
               <select
                 value={buildingFilter}
                 onChange={(e) => setBuildingFilter(e.target.value)}
-                className="rounded-xl bg-[#0F1026] border border-[#243356] text-xs text-[#F4F1DE] px-3 py-2 font-mono"
+                className="rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] text-xs text-[#202226] px-3 py-2 font-mono"
               >
                 <option value="ALL">All Blocks</option>
                 <option value="HST-A">Block A</option>
@@ -290,7 +290,7 @@ export default function HostelPage() {
               <select
                 value={roomStatusFilter}
                 onChange={(e) => setRoomStatusFilter(e.target.value)}
-                className="rounded-xl bg-[#0F1026] border border-[#243356] text-xs text-[#F4F1DE] px-3 py-2 font-mono"
+                className="rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] text-xs text-[#202226] px-3 py-2 font-mono"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="Occupied">Occupied</option>
@@ -305,11 +305,11 @@ export default function HostelPage() {
               <Card
                 key={r.id}
                 onClick={() => setSelectedRoom(r)}
-                className="bg-[#0F1026] border-[#243356] hover:border-[#D4AF37]/50 transition-colors cursor-pointer text-[#F4F1DE]"
+                className="bg-[#F4F5F6] border-[#D0D1D6] hover:border-[#EAB308]/50 transition-colors cursor-pointer text-[#202226]"
               >
-                <CardHeader className="p-3.5 border-b border-[#243356] bg-[#131C38]/40 flex flex-row items-center justify-between">
+                <CardHeader className="p-3.5 border-b border-[#D0D1D6] bg-white/40 flex flex-row items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Bed className="h-4 w-4 text-[#FFD700]" />
+                    <Bed className="h-4 w-4 text-[#B45309]" />
                     <span className="font-bold font-mono text-sm">{r.buildingCode} — Room {r.roomNumber}</span>
                   </div>
                   <Badge
@@ -325,20 +325,20 @@ export default function HostelPage() {
                   </Badge>
                 </CardHeader>
                 <CardContent className="p-3.5 space-y-2 text-xs">
-                  <div className="flex justify-between font-mono text-[11px] text-[#B8B5A3]">
+                  <div className="flex justify-between font-mono text-[11px] text-[#555960]">
                     <span>Floor {r.floor} · {r.type} Occupancy</span>
-                    <span className="font-bold text-[#F4F1DE]">{r.occupiedCount} / {r.capacity} Beds</span>
+                    <span className="font-bold text-[#202226]">{r.occupiedCount} / {r.capacity} Beds</span>
                   </div>
 
                   <div className="space-y-1">
-                    <p className="text-[10px] font-mono text-[#C5A059] uppercase font-bold">Occupants:</p>
+                    <p className="text-[10px] font-mono text-[#B45309] uppercase font-bold">Occupants:</p>
                     {r.occupants.length === 0 ? (
-                      <p className="text-[11px] text-[#B8B5A3] italic font-mono">No students currently assigned</p>
+                      <p className="text-[11px] text-[#555960] italic font-mono">No students currently assigned</p>
                     ) : (
                       r.occupants.map((occ) => (
-                        <div key={occ.bedNumber} className="flex justify-between p-1.5 rounded bg-[#131C38] border border-[#243356] font-mono text-[11px]">
-                          <span className="font-bold text-[#F4F1DE]">{occ.studentName} ({occ.rollNumber})</span>
-                          <span className="text-[#FFD700] text-[10px]">{occ.bedNumber}</span>
+                        <div key={occ.bedNumber} className="flex justify-between p-1.5 rounded bg-white border border-[#D0D1D6] font-mono text-[11px]">
+                          <span className="font-bold text-[#202226]">{occ.studentName} ({occ.rollNumber})</span>
+                          <span className="text-[#B45309] text-[10px]">{occ.bedNumber}</span>
                         </div>
                       ))
                     )}
@@ -353,9 +353,9 @@ export default function HostelPage() {
       {/* TAB 3: OCCUPANCY ANALYTICS */}
       {activeTab === 'occupancy' && (
         <div className="space-y-4">
-          <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]/60">
-              <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
+          <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60">
+              <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 <span>Hostel Capacity &amp; Allocation Breakdown</span>
               </CardTitle>
@@ -366,12 +366,12 @@ export default function HostelPage() {
                 return (
                   <div key={b.id} className="space-y-1.5">
                     <div className="flex justify-between font-mono text-xs">
-                      <span className="font-bold text-[#F4F1DE]">{b.name} ({b.code})</span>
-                      <span className="text-[#FFD700] font-bold">{b.occupiedBeds} / {b.totalBeds} Beds ({pct}%)</span>
+                      <span className="font-bold text-[#202226]">{b.name} ({b.code})</span>
+                      <span className="text-[#B45309] font-bold">{b.occupiedBeds} / {b.totalBeds} Beds ({pct}%)</span>
                     </div>
-                    <div className="h-3 w-full bg-[#131C38] rounded-full overflow-hidden border border-[#243356]">
+                    <div className="h-3 w-full bg-white rounded-full overflow-hidden border border-[#D0D1D6]">
                       <div
-                        className="h-full bg-gradient-to-r from-[#D4AF37] to-[#10B981] rounded-full transition-all"
+                        className="h-full bg-gradient-to-r from-[#EAB308] to-[#10B981] rounded-full transition-all"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
@@ -387,21 +387,21 @@ export default function HostelPage() {
       {activeTab === 'maintenance' && (
         <div className="space-y-3">
           {hostelMaintenance.map((m) => (
-            <Card key={m.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+            <Card key={m.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
               <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[#C5A059] font-bold">{m.ticketNumber}</span>
-                    <Badge className="bg-[#1C2541] text-[#FFD700] border-[#243356] font-mono text-[10px]">
+                    <span className="font-mono text-[#B45309] font-bold">{m.ticketNumber}</span>
+                    <Badge className="bg-[#E7E8EB] text-[#B45309] border-[#D0D1D6] font-mono text-[10px]">
                       {m.buildingCode} — Room {m.roomNumber}
                     </Badge>
                     <Badge className="bg-purple-500/15 text-purple-300 border-purple-500/30 text-[10px] font-mono">
                       {m.category}
                     </Badge>
                   </div>
-                  <h3 className="font-bold text-[#F4F1DE] text-sm">{m.description}</h3>
-                  <p className="text-[#B8B5A3] font-mono text-[11px]">
-                    Reported by: {m.reportedBy} · Priority: <strong className="text-[#FFD700]">{m.priority}</strong>
+                  <h3 className="font-bold text-[#202226] text-sm">{m.description}</h3>
+                  <p className="text-[#555960] font-mono text-[11px]">
+                    Reported by: {m.reportedBy} · Priority: <strong className="text-[#B45309]">{m.priority}</strong>
                   </p>
                 </div>
                 <div className="text-left sm:text-right font-mono">
@@ -415,7 +415,7 @@ export default function HostelPage() {
                     {m.status}
                   </Badge>
                   {m.assignedTechnician && (
-                    <p className="text-[10px] text-[#B8B5A3] mt-1">Tech: {m.assignedTechnician}</p>
+                    <p className="text-[10px] text-[#555960] mt-1">Tech: {m.assignedTechnician}</p>
                   )}
                 </div>
               </CardContent>
@@ -428,20 +428,20 @@ export default function HostelPage() {
       {activeTab === 'incidents' && (
         <div className="space-y-3">
           {hostelIncidents.map((inc) => (
-            <Card key={inc.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+            <Card key={inc.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
               <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[#C5A059] font-bold">{inc.incidentNumber}</span>
+                    <span className="font-mono text-[#B45309] font-bold">{inc.incidentNumber}</span>
                     <Badge className="bg-red-500/15 text-red-300 border-red-500/30 font-mono text-[10px]">
                       {inc.category}
                     </Badge>
-                    <span className="font-mono text-[#B8B5A3] text-[11px]">{inc.buildingCode}</span>
+                    <span className="font-mono text-[#555960] text-[11px]">{inc.buildingCode}</span>
                   </div>
-                  <h3 className="font-bold text-[#F4F1DE] text-sm">{inc.title}</h3>
-                  <p className="text-[#B8B5A3] text-[11px]">{inc.description}</p>
+                  <h3 className="font-bold text-[#202226] text-sm">{inc.title}</h3>
+                  <p className="text-[#555960] text-[11px]">{inc.description}</p>
                   {inc.studentName && (
-                    <p className="text-[#FFD700] font-mono text-[11px]">
+                    <p className="text-[#B45309] font-mono text-[11px]">
                       Student Flagged: {inc.studentName} ({inc.studentRoll})
                     </p>
                   )}
@@ -451,7 +451,7 @@ export default function HostelPage() {
                     {inc.status}
                   </Badge>
                   {inc.actionTaken && (
-                    <p className="text-[10px] text-[#B8B5A3] mt-1 italic">{inc.actionTaken}</p>
+                    <p className="text-[10px] text-[#555960] mt-1 italic">{inc.actionTaken}</p>
                   )}
                 </div>
               </CardContent>
@@ -463,9 +463,9 @@ export default function HostelPage() {
       {/* Modal: Room Details */}
       {selectedRoom && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-md bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-md bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
                 <Bed className="h-4 w-4" />
                 <span>{selectedRoom.buildingCode} — Room {selectedRoom.roomNumber} Details</span>
               </CardTitle>
@@ -473,35 +473,35 @@ export default function HostelPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setSelectedRoom(null)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
             </CardHeader>
             <CardContent className="p-4 space-y-3 text-xs">
-              <div className="grid grid-cols-2 gap-2 bg-[#131C38] p-3 rounded-lg border border-[#243356] font-mono text-center">
+              <div className="grid grid-cols-2 gap-2 bg-white p-3 rounded-lg border border-[#D0D1D6] font-mono text-center">
                 <div>
-                  <span className="text-[10px] text-[#C5A059] block">OCCUPANCY TYPE</span>
-                  <span className="font-bold text-[#F4F1DE]">{selectedRoom.type} Bed</span>
+                  <span className="text-[10px] text-[#B45309] block">OCCUPANCY TYPE</span>
+                  <span className="font-bold text-[#202226]">{selectedRoom.type} Bed</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#C5A059] block">CURRENT OCCUPANTS</span>
+                  <span className="text-[10px] text-[#B45309] block">CURRENT OCCUPANTS</span>
                   <span className="font-bold text-emerald-400">{selectedRoom.occupiedCount} / {selectedRoom.capacity}</span>
                 </div>
               </div>
 
               <div>
-                <p className="text-[10px] font-mono text-[#C5A059] uppercase font-bold mb-1.5">Assigned Resident Students:</p>
+                <p className="text-[10px] font-mono text-[#B45309] uppercase font-bold mb-1.5">Assigned Resident Students:</p>
                 {selectedRoom.occupants.length === 0 ? (
-                  <p className="text-[11px] text-[#B8B5A3] italic font-mono">No students assigned to this room.</p>
+                  <p className="text-[11px] text-[#555960] italic font-mono">No students assigned to this room.</p>
                 ) : (
                   selectedRoom.occupants.map((occ) => (
-                    <div key={occ.bedNumber} className="p-2.5 rounded bg-[#131C38] border border-[#243356] font-mono text-xs space-y-0.5 mb-2">
-                      <div className="flex justify-between font-bold text-[#F4F1DE]">
+                    <div key={occ.bedNumber} className="p-2.5 rounded bg-white border border-[#D0D1D6] font-mono text-xs space-y-0.5 mb-2">
+                      <div className="flex justify-between font-bold text-[#202226]">
                         <span>{occ.studentName}</span>
-                        <span className="text-[#FFD700]">{occ.bedNumber}</span>
+                        <span className="text-[#B45309]">{occ.bedNumber}</span>
                       </div>
-                      <p className="text-[10px] text-[#B8B5A3]">Roll Number: {occ.rollNumber} • Student ID: {occ.studentId}</p>
+                      <p className="text-[10px] text-[#555960]">Roll Number: {occ.rollNumber} • Student ID: {occ.studentId}</p>
                     </div>
                   ))
                 )}
@@ -514,9 +514,9 @@ export default function HostelPage() {
       {/* Modal: Submit Maintenance Ticket */}
       {isMaintenanceModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
                 <Wrench className="h-4 w-4" />
                 <span>Submit Hostel Maintenance Ticket</span>
               </CardTitle>
@@ -524,7 +524,7 @@ export default function HostelPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMaintenanceModalOpen(false)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -533,11 +533,11 @@ export default function HostelPage() {
               <form onSubmit={handleMaintenanceSubmit} className="space-y-3 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Hostel Block *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Hostel Block *</label>
                     <select
                       value={maintBuilding}
                       onChange={(e) => setMaintBuilding(e.target.value)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     >
                       <option value="HST-A">Block A (Boys Senior)</option>
                       <option value="HST-B">Block B (Girls Senior)</option>
@@ -546,24 +546,24 @@ export default function HostelPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Room Number *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Room Number *</label>
                     <Input
                       required
                       placeholder="e.g. 304"
                       value={maintRoom}
                       onChange={(e) => setMaintRoom(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Category</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Category</label>
                     <select
                       value={maintCategory}
                       onChange={(e) => setMaintCategory(e.target.value as typeof maintCategory)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     >
                       <option value="Plumbing">Plumbing</option>
                       <option value="Electrical">Electrical</option>
@@ -573,11 +573,11 @@ export default function HostelPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Priority</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Priority</label>
                     <select
                       value={maintPriority}
                       onChange={(e) => setMaintPriority(e.target.value as typeof maintPriority)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     >
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
@@ -587,29 +587,29 @@ export default function HostelPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Issue Description *</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Issue Description *</label>
                   <textarea
                     required
                     rows={3}
                     placeholder="Describe the maintenance defect, location in room, or urgency..."
                     value={maintDesc}
                     onChange={(e) => setMaintDesc(e.target.value)}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#243356]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsMaintenanceModalOpen(false)}
-                    className="text-xs border-[#243356]"
+                    className="text-xs border-[#D0D1D6]"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs"
+                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
                   >
                     Lodge Ticket
                   </Button>
@@ -623,9 +623,9 @@ export default function HostelPage() {
       {/* Modal: Report Hostel Incident */}
       {isIncidentModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4" />
                 <span>Log Residential Hostel Incident</span>
               </CardTitle>
@@ -633,7 +633,7 @@ export default function HostelPage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsIncidentModalOpen(false)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -642,11 +642,11 @@ export default function HostelPage() {
               <form onSubmit={handleIncidentSubmit} className="space-y-3 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Hostel Block *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Hostel Block *</label>
                     <select
                       value={incBuilding}
                       onChange={(e) => setIncBuilding(e.target.value)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     >
                       <option value="HST-A">Block A</option>
                       <option value="HST-B">Block B</option>
@@ -655,11 +655,11 @@ export default function HostelPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Incident Category *</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Incident Category *</label>
                     <select
                       value={incCategory}
                       onChange={(e) => setIncCategory(e.target.value as typeof incCategory)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     >
                       <option value="Curfew Violation">Curfew Violation</option>
                       <option value="Noise Violation">Noise Violation</option>
@@ -671,61 +671,61 @@ export default function HostelPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Incident Title *</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Incident Title *</label>
                   <Input
                     required
                     placeholder="e.g. Late entry past 22:30 curfew at South Gate"
                     value={incTitle}
                     onChange={(e) => setIncTitle(e.target.value)}
-                    className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                    className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Student Name (Optional)</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Student Name (Optional)</label>
                     <Input
                       placeholder="e.g. Aanya Patel"
                       value={incStudent}
                       onChange={(e) => setIncStudent(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Student Roll (Optional)</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Student Roll (Optional)</label>
                     <Input
                       placeholder="e.g. CS23B042"
                       value={incRoll}
                       onChange={(e) => setIncRoll(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Full Description *</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Full Description *</label>
                   <textarea
                     required
                     rows={3}
                     placeholder="Details of incident, time, location, warden observations..."
                     value={incDesc}
                     onChange={(e) => setIncDesc(e.target.value)}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#243356]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsIncidentModalOpen(false)}
-                    className="text-xs border-[#243356]"
+                    className="text-xs border-[#D0D1D6]"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs"
+                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
                   >
                     Log Incident
                   </Button>

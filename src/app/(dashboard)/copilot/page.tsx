@@ -310,28 +310,28 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="rounded-2xl border border-[#D4AF37]/40 bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl">
+      <div className="rounded-2xl border border-[#EAB308]/40 bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#FFD700]">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#EAB308]/20 border border-[#EAB308]/40 text-[#B45309]">
                 <Sparkles className="h-4 w-4" />
               </div>
-              <h1 className="text-xl font-bold font-mono text-[#F4F1DE] tracking-wide">
+              <h1 className="text-xl font-bold font-mono text-[#202226] tracking-wide">
                 CAMPUSSHIELD AI COPILOT COMMAND HUB
               </h1>
-              <span className="rounded bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2 py-0.5 text-xs font-mono font-bold text-[#FFD700]">
+              <span className="rounded bg-[#EAB308]/15 border border-[#EAB308]/30 px-2 py-0.5 text-xs font-mono font-bold text-[#B45309]">
                 Gemini 3.7 Flash
               </span>
             </div>
-            <p className="text-xs text-[#B8B5A3] font-mono max-w-3xl">
-              Strictly Controlled Server-Side Architecture: <code className="text-[#FFD700]">User → Gemini → approved tool → server authorization → database → Gemini → answer</code>. Never generates arbitrary SQL or bypasses authorization.
+            <p className="text-xs text-[#555960] font-mono max-w-3xl">
+              Strictly Controlled Server-Side Architecture: <code className="text-[#B45309]">User → Gemini → approved tool → server authorization → database → Gemini → answer</code>. Never generates arbitrary SQL or bypasses authorization.
             </p>
           </div>
 
           {/* Active Testing Persona Switcher */}
-          <div className="flex items-center gap-2 bg-[#0B132B] p-2 rounded-xl border border-[#243356]">
-            <span className="text-[11px] font-mono text-[#C5A059] uppercase font-bold pl-2">
+          <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-[#D0D1D6]">
+            <span className="text-[11px] font-mono text-[#B45309] uppercase font-bold pl-2">
               Simulate Persona:
             </span>
             <select
@@ -342,7 +342,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                 switchRole(newR);
               }}
               aria-label="Simulate Persona"
-              className="h-8 rounded-lg bg-[#1C2541] border border-[#243356] px-2 text-xs font-mono font-bold text-[#FFD700] focus:border-[#D4AF37] focus:outline-none cursor-pointer"
+              className="h-8 rounded-lg bg-[#E7E8EB] border border-[#D0D1D6] px-2 text-xs font-mono font-bold text-[#B45309] focus:border-[#EAB308] focus:outline-none cursor-pointer"
             >
               <option value="admin">Administrator (Marcus Chen)</option>
               <option value="super_admin">Super Admin (Dr. Evelyn Vance)</option>
@@ -360,11 +360,11 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Interactive Chat & Architecture Inspector */}
         <div className="lg:col-span-7 space-y-4">
-          <Card className="border-[#243356] bg-[#0B132B] text-[#F4F1DE] shadow-xl overflow-hidden flex flex-col h-[700px]">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#0F1026] flex flex-row items-center justify-between">
+          <Card className="border-[#D0D1D6] bg-white text-[#202226] shadow-xl overflow-hidden flex flex-col h-[700px]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-[#F4F5F6] flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
-                <Terminal className="h-4 w-4 text-[#FFD700]" />
-                <CardTitle className="text-xs font-mono font-bold uppercase text-[#F4F1DE] tracking-wider">
+                <Terminal className="h-4 w-4 text-[#B45309]" />
+                <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226] tracking-wider">
                   Interactive AI Copilot Session
                 </CardTitle>
               </div>
@@ -377,7 +377,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                   onClick={() => setMessages([messages[0]])}
                   variant="outline"
                   size="sm"
-                  className="h-7 text-[10px] font-mono border-[#243356] hover:border-[#D4AF37] text-[#B8B5A3] gap-1"
+                  className="h-7 text-[10px] font-mono border-[#D0D1D6] hover:border-[#EAB308] text-[#555960] gap-1"
                 >
                   <RotateCcw className="h-3 w-3" />
                   Reset
@@ -395,21 +395,21 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                     msg.role === 'user' ? 'items-end' : 'items-start'
                   )}
                 >
-                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#B8B5A3] px-1">
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-[#555960] px-1">
                     {msg.role === 'user' ? (
                       <>
                         <span>{msg.timestamp}</span>
-                        <span className="text-[#FFD700] font-bold">
+                        <span className="text-[#B45309] font-bold">
                           {msg.simulatedRole?.toUpperCase()}
                         </span>
-                        <User className="h-3 w-3 text-[#C5A059]" />
+                        <User className="h-3 w-3 text-[#B45309]" />
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-3 w-3 text-[#FFD700]" />
-                        <span className="text-[#FFD700] font-bold">CAMPUSSHIELD AI</span>
+                        <Sparkles className="h-3 w-3 text-[#B45309]" />
+                        <span className="text-[#B45309] font-bold">CAMPUSSHIELD AI</span>
                         {msg.executionTimeMs && (
-                          <span className="text-[9px] text-[#7A786B]">
+                          <span className="text-[9px] text-[#8A9199]">
                             ({msg.executionTimeMs}ms • Gemini 3.7 Flash)
                           </span>
                         )}
@@ -421,8 +421,8 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                     className={cn(
                       'max-w-[90%] rounded-2xl p-4 text-xs leading-relaxed whitespace-pre-wrap',
                       msg.role === 'user'
-                        ? 'bg-[#1C2541] border border-[#D4AF37]/40 text-[#F4F1DE] rounded-tr-none'
-                        : 'bg-[#131C38] border border-[#243356] text-[#F4F1DE] rounded-tl-none shadow-lg'
+                        ? 'bg-[#E7E8EB] border border-[#EAB308]/40 text-[#202226] rounded-tr-none'
+                        : 'bg-white border border-[#D0D1D6] text-[#202226] rounded-tl-none shadow-lg'
                     )}
                   >
                     {msg.content}
@@ -430,7 +430,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
 
                   {/* Visual 5-Step Architecture Trace */}
                   {msg.toolTrace && (
-                    <div className="w-full max-w-[90%] rounded-xl border border-[#243356] bg-[#0F1026] p-3 text-[11px] font-mono space-y-2">
+                    <div className="w-full max-w-[90%] rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] p-3 text-[11px] font-mono space-y-2">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           {msg.toolTrace.authorized ? (
@@ -444,20 +444,20 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                               SERVER RBAC: DENIED
                             </span>
                           )}
-                          <span className="text-[#7A786B]">|</span>
-                          <span className="text-[#FFD700] font-bold">
+                          <span className="text-[#8A9199]">|</span>
+                          <span className="text-[#B45309] font-bold">
                             Tool: {msg.toolTrace.toolName}()
                           </span>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1 text-[10px] text-[#B8B5A3]">
-                        <div className="bg-[#0B132B] p-1.5 rounded border border-[#243356]">
-                          <strong className="text-[#FFD700]">Clearance:</strong>{' '}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1 text-[10px] text-[#555960]">
+                        <div className="bg-white p-1.5 rounded border border-[#D0D1D6]">
+                          <strong className="text-[#B45309]">Clearance:</strong>{' '}
                           {msg.toolTrace.clearanceRequired}
                         </div>
-                        <div className="bg-[#0B132B] p-1.5 rounded border border-[#243356]">
-                          <strong className="text-[#FFD700]">SQL Prevention:</strong> Zero SQL (Controlled API)
+                        <div className="bg-white p-1.5 rounded border border-[#D0D1D6]">
+                          <strong className="text-[#B45309]">SQL Prevention:</strong> Zero SQL (Controlled API)
                         </div>
                       </div>
                     </div>
@@ -466,7 +466,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
               ))}
 
               {isLoading && (
-                <div className="flex items-center gap-2 text-xs font-mono text-[#FFD700] animate-pulse p-3 bg-[#131C38] rounded-xl border border-[#243356] w-fit">
+                <div className="flex items-center gap-2 text-xs font-mono text-[#B45309] animate-pulse p-3 bg-white rounded-xl border border-[#D0D1D6] w-fit">
                   <Sparkles className="h-4 w-4 animate-spin" />
                   <span>Gemini 3.7 Flash invoking server authorization gateway...</span>
                 </div>
@@ -474,8 +474,8 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
             </CardContent>
 
             {/* Quick Prompts */}
-            <div className="border-t border-[#243356] bg-[#0F1026] p-2.5 space-y-1.5">
-              <span className="text-[10px] font-mono text-[#C5A059] uppercase font-bold block px-1">
+            <div className="border-t border-[#D0D1D6] bg-[#F4F5F6] p-2.5 space-y-1.5">
+              <span className="text-[10px] font-mono text-[#B45309] uppercase font-bold block px-1">
                 Suggested Directives for {selectedRole.toUpperCase()}:
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -483,7 +483,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                   <button
                     key={idx}
                     onClick={() => handleSend(p)}
-                    className="rounded-lg border border-[#243356] bg-[#131C38] px-2.5 py-1 text-[11px] text-[#B8B5A3] hover:border-[#D4AF37] hover:text-[#FFD700] transition-colors cursor-pointer"
+                    className="rounded-lg border border-[#D0D1D6] bg-white px-2.5 py-1 text-[11px] text-[#555960] hover:border-[#EAB308] hover:text-[#B45309] transition-colors cursor-pointer"
                   >
                     {p}
                   </button>
@@ -492,7 +492,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
             </div>
 
             {/* Input Footer */}
-            <div className="border-t border-[#243356] bg-[#0B132B] p-3">
+            <div className="border-t border-[#D0D1D6] bg-white p-3">
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -505,12 +505,12 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                   onChange={(e) => setInputQuery(e.target.value)}
                   placeholder={`Ask CampusShield AI as ${selectedRole.toUpperCase()}...`}
                   disabled={isLoading}
-                  className="bg-[#0F1026] border-[#243356] text-xs text-[#F4F1DE] focus:border-[#D4AF37]"
+                  className="bg-[#F4F5F6] border-[#D0D1D6] text-xs text-[#202226] focus:border-[#EAB308]"
                 />
                 <Button
                   type="submit"
                   disabled={isLoading || !inputQuery.trim()}
-                  className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold font-mono text-xs px-4"
+                  className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold font-mono text-xs px-4"
                 >
                   <Send className="h-3.5 w-3.5 mr-1.5" />
                   Ask AI
@@ -522,14 +522,14 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
 
         {/* Right Column: RBAC Security Test Runner & Scorecard */}
         <div className="lg:col-span-5 space-y-4">
-          <Card className="border-[#243356] bg-[#0B132B] text-[#F4F1DE] shadow-xl overflow-hidden">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#0F1026] flex flex-row items-center justify-between">
+          <Card className="border-[#D0D1D6] bg-white text-[#202226] shadow-xl overflow-hidden">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-[#F4F5F6] flex flex-row items-center justify-between">
               <div>
-                <CardTitle className="text-xs font-mono font-bold uppercase text-[#F4F1DE] flex items-center gap-2">
+                <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226] flex items-center gap-2">
                   <ShieldAlert className="h-4 w-4 text-amber-400" />
                   <span>Zero-Trust Security Test Suite</span>
                 </CardTitle>
-                <p className="text-[10px] text-[#B8B5A3] font-mono mt-0.5">
+                <p className="text-[10px] text-[#555960] font-mono mt-0.5">
                   Verifies FERPA, role boundaries, and confidentiality rules
                 </p>
               </div>
@@ -538,7 +538,7 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                 onClick={runAllTests}
                 disabled={isRunningAll}
                 size="sm"
-                className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold font-mono text-xs h-8 gap-1.5"
+                className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold font-mono text-xs h-8 gap-1.5"
               >
                 <Play className="h-3.5 w-3.5" />
                 <span>{isRunningAll ? 'Executing...' : 'Run All Tests'}</span>
@@ -573,9 +573,9 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                           >
                             {test.expectedOutcome === 'DENIED' ? 'MUST BE DENIED' : 'AUTHORIZED'}
                           </span>
-                          <span className="text-[#B8B5A3]">Role: <strong className="text-[#FFD700] uppercase">{test.role}</strong></span>
+                          <span className="text-[#555960]">Role: <strong className="text-[#B45309] uppercase">{test.role}</strong></span>
                         </div>
-                        <h5 className="font-bold text-xs font-mono text-[#F4F1DE]">
+                        <h5 className="font-bold text-xs font-mono text-[#202226]">
                           {test.title}
                         </h5>
                       </div>
@@ -584,19 +584,19 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                         onClick={() => handleSend(test.prompt, test.role)}
                         size="sm"
                         variant="outline"
-                        className="h-6 text-[10px] font-mono border-[#243356] hover:border-[#D4AF37] hover:text-[#FFD700] text-[#B8B5A3] px-2 shrink-0"
+                        className="h-6 text-[10px] font-mono border-[#D0D1D6] hover:border-[#EAB308] hover:text-[#B45309] text-[#555960] px-2 shrink-0"
                       >
                         <Play className="h-2.5 w-2.5 mr-1" />
                         Run
                       </Button>
                     </div>
 
-                    <div className="bg-[#0B132B] rounded p-2 border border-[#243356] font-mono text-[10px] text-[#F4F1DE]">
+                    <div className="bg-white rounded p-2 border border-[#D0D1D6] font-mono text-[10px] text-[#202226]">
                       &ldquo;{test.prompt}&rdquo;
                     </div>
 
-                    <div className="flex items-center justify-between text-[9px] text-[#B8B5A3] font-mono">
-                      <span>Target: <code className="text-[#FFD700]">{test.targetData}</code></span>
+                    <div className="flex items-center justify-between text-[9px] text-[#555960] font-mono">
+                      <span>Target: <code className="text-[#B45309]">{test.targetData}</code></span>
                       <span>Enforcement: <strong className={isViolation ? 'text-red-400' : 'text-emerald-400'}>{test.expectedOutcome}</strong></span>
                     </div>
 

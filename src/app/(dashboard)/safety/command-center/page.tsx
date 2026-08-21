@@ -89,20 +89,20 @@ export default function SafetyCommandCenterPage() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* 1. Tactical SOC Header Bar */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#243356] pb-4">
+      {/* 1. SOC Header Bar */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#AEB0B7] pb-4">
         <div>
           <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="flex h-3 w-3 rounded-full bg-[#FFD700] animate-ping" />
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2">
-              <span>CAMPUS SECURITY OPERATIONS CENTER (SOC)</span>
+            <span className="flex h-3 w-3 rounded-full bg-[#EAB308] animate-ping" />
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] flex items-center gap-2">
+              <span>Campus Security Operations Center (SOC)</span>
             </h1>
-            <span className="rounded bg-[#D4AF37]/15 border border-[#D4AF37]/40 px-2 py-0.5 text-[10px] font-mono font-bold text-[#FFD700]">
-              HERO COMMAND MATRIX
+            <span className="rounded bg-[#EAB308]/15 border border-[#EAB308]/40 px-2 py-0.5 text-[10px] font-bold text-[#B45309]">
+              COMMAND CENTER
             </span>
           </div>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-mono">
-            Autonomous Gemini 3.7 Flash Incident Triage · Real-time Multi-Sector Vector Telemetry · Rapid Dispatch
+          <p className="text-xs text-[#555960] mt-1">
+            Autonomous AI Incident Triage · Real-time Multi-Sector Vector Telemetry · Rapid Dispatch
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export default function SafetyCommandCenterPage() {
           <Button
             size="sm"
             onClick={() => setIsReportModalOpen(true)}
-            className="bg-gradient-to-r from-[#FFD700] via-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold text-xs gap-1.5 shadow-lg shadow-[#D4AF37]/20"
+            className="bg-gradient-to-r from-[#EAB308] via-[#EAB308] to-[#D4AF37] text-[#202226] font-bold text-xs gap-1.5 shadow-sm"
           >
             <Plus className="h-4 w-4" />
             <span>Report Incident</span>
@@ -120,7 +120,7 @@ export default function SafetyCommandCenterPage() {
           <Button
             size="sm"
             onClick={() => setIsBroadcastOpen(!isBroadcastOpen)}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs gap-1.5 shadow-md shadow-red-900/40 border border-red-500/40"
+            className="bg-[#DC2626] hover:bg-[#b91c1c] text-white font-bold text-xs gap-1.5 shadow-sm border border-[#DC2626]"
           >
             <Radio className="h-3.5 w-3.5 animate-pulse" />
             <span>Broadcast Alert</span>
@@ -131,7 +131,7 @@ export default function SafetyCommandCenterPage() {
             variant="outline"
             onClick={resetDemoData}
             title="Reset to default seeded demo state"
-            className="text-xs font-mono text-[#B8B5A3] hover:text-[#FFD700]"
+            className="text-xs text-[#555960] hover:text-[#202226]"
           >
             <RefreshCw className="h-3.5 w-3.5" />
           </Button>
@@ -139,13 +139,13 @@ export default function SafetyCommandCenterPage() {
       </div>
 
       {/* 2. Global Threat Level & Filter Ribbon */}
-      <div className="rounded-xl border border-[#243356] bg-[#0F1026] p-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-lg">
+      <div className="rounded-xl border border-[#AEB0B7] bg-white p-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-sm">
         {/* Threat Level Switcher */}
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-mono uppercase font-bold text-[#C5A059] shrink-0">
+          <span className="text-[11px] uppercase font-bold text-[#555960] shrink-0">
             Campus Safety Threat Posture:
           </span>
-          <div className="flex items-center gap-1 bg-[#131C38] border border-[#243356] p-1 rounded-lg text-xs font-mono font-bold">
+          <div className="flex items-center gap-1 bg-[#E7E8EB] border border-[#D0D1D6] p-1 rounded-lg text-xs font-bold">
             {(['NORMAL', 'ELEVATED', 'HIGH_ALERT', 'LOCKDOWN'] as ThreatLevel[]).map((lvl) => (
               <button
                 key={lvl}
@@ -153,13 +153,13 @@ export default function SafetyCommandCenterPage() {
                 className={`px-2 py-0.5 rounded uppercase transition-colors cursor-pointer text-[10px] ${
                   threatLevel === lvl
                     ? lvl === 'LOCKDOWN'
-                      ? 'bg-red-600 text-white animate-pulse'
+                      ? 'bg-[#DC2626] text-white animate-pulse'
                       : lvl === 'HIGH_ALERT'
-                      ? 'bg-amber-600 text-white'
+                      ? 'bg-[#F59E0B] text-white'
                       : lvl === 'ELEVATED'
-                      ? 'bg-[#D4AF37] text-[#0B132B]'
-                      : 'bg-emerald-600 text-white'
-                    : 'text-[#B8B5A3] hover:text-[#FFD700]'
+                      ? 'bg-[#EAB308] text-[#202226]'
+                      : 'bg-[#10B981] text-white'
+                    : 'text-[#555960] hover:text-[#202226]'
                 }`}
               >
                 {lvl}
@@ -172,16 +172,16 @@ export default function SafetyCommandCenterPage() {
         <div className="flex items-center gap-3 flex-wrap">
           {/* Severity Filter */}
           <div className="flex items-center gap-1">
-            <span className="text-[10px] font-mono text-[#C5A059]">Severity:</span>
-            <div className="flex items-center gap-0.5 bg-[#131C38] border border-[#243356] p-0.5 rounded-lg text-[10px] font-mono">
+            <span className="text-[10px] text-[#555960]">Severity:</span>
+            <div className="flex items-center gap-0.5 bg-[#E7E8EB] border border-[#D0D1D6] p-0.5 rounded-lg text-[10px]">
               {['all', 'critical', 'high', 'medium', 'low'].map((sev) => (
                 <button
                   key={sev}
                   onClick={() => setSeverityFilter(sev)}
                   className={`px-2 py-0.5 rounded capitalize transition-colors cursor-pointer ${
                     severityFilter === sev
-                      ? 'bg-[#D4AF37] text-[#0B132B] font-bold'
-                      : 'text-[#B8B5A3] hover:text-[#FFD700]'
+                      ? 'bg-[#EAB308] text-[#202226] font-bold'
+                      : 'text-[#555960] hover:text-[#202226]'
                   }`}
                 >
                   {sev}
@@ -192,16 +192,16 @@ export default function SafetyCommandCenterPage() {
 
           {/* Time Filter */}
           <div className="flex items-center gap-1">
-            <span className="text-[10px] font-mono text-[#C5A059]">Time Window:</span>
-            <div className="flex items-center gap-0.5 bg-[#131C38] border border-[#243356] p-0.5 rounded-lg text-[10px] font-mono">
+            <span className="text-[10px] text-[#555960]">Time Window:</span>
+            <div className="flex items-center gap-0.5 bg-[#E7E8EB] border border-[#D0D1D6] p-0.5 rounded-lg text-[10px]">
               {(['today', '7days', '30days'] as TimeFilter[]).map((tf) => (
                 <button
                   key={tf}
                   onClick={() => setTimeFilter(tf)}
                   className={`px-2 py-0.5 rounded uppercase transition-colors cursor-pointer ${
                     timeFilter === tf
-                      ? 'bg-[#D4AF37] text-[#0B132B] font-bold'
-                      : 'text-[#B8B5A3] hover:text-[#FFD700]'
+                      ? 'bg-[#EAB308] text-[#202226] font-bold'
+                      : 'text-[#555960] hover:text-[#202226]'
                   }`}
                 >
                   {tf === 'today' ? 'Today' : tf === '7days' ? '7 Days' : '30 Days'}
@@ -214,13 +214,13 @@ export default function SafetyCommandCenterPage() {
 
       {/* Emergency Broadcast Creation Panel (Collapsible) */}
       {isBroadcastOpen && (
-        <div className="rounded-xl border border-red-500 bg-red-950/30 p-4 space-y-3 animate-in fade-in duration-150">
-          <div className="flex items-center justify-between border-b border-red-500/40 pb-2">
-            <div className="flex items-center gap-2 text-red-300 font-bold font-mono text-xs">
+        <div className="rounded-xl border border-[#DC2626] bg-[#FEF2F2] p-4 space-y-3 animate-in fade-in duration-150">
+          <div className="flex items-center justify-between border-b border-[#DC2626]/40 pb-2">
+            <div className="flex items-center gap-2 text-[#DC2626] font-bold text-xs">
               <ShieldAlert className="h-4 w-4" />
               <span>TRANSMIT IMMEDIATE CAMPUS EMERGENCY BROADCAST</span>
             </div>
-            <button onClick={() => setIsBroadcastOpen(false)} className="text-red-300 hover:text-white">
+            <button onClick={() => setIsBroadcastOpen(false)} className="text-[#DC2626] hover:text-[#B91C1C]">
               ✕
             </button>
           </div>
@@ -228,22 +228,22 @@ export default function SafetyCommandCenterPage() {
           <form onSubmit={handleSendBroadcast} className="space-y-3 text-xs">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="text-[#F4F1DE] font-semibold block mb-1">Headline</label>
+                <label className="text-[#202226] font-semibold block mb-1">Headline</label>
                 <input
                   value={broadcastTitle}
                   onChange={(e) => setBroadcastTitle(e.target.value)}
                   placeholder="e.g., HAZARD PROTOCOL: Block D Evacuation"
-                  className="w-full h-9 rounded-lg border border-red-500/50 bg-[#0F1026] px-3 text-xs text-[#F4F1DE]"
+                  className="w-full h-9 rounded-lg border border-[#DC2626]/50 bg-white px-3 text-xs text-[#202226]"
                   required
                 />
               </div>
               <div>
-                <label className="text-[#F4F1DE] font-semibold block mb-1">Directives &amp; Action Plan</label>
+                <label className="text-[#202226] font-semibold block mb-1">Directives &amp; Action Plan</label>
                 <input
                   value={broadcastMessage}
                   onChange={(e) => setBroadcastMessage(e.target.value)}
                   placeholder="e.g., Avoid Block D 3rd floor. Responders on site."
-                  className="w-full h-9 rounded-lg border border-red-500/50 bg-[#0F1026] px-3 text-xs text-[#F4F1DE]"
+                  className="w-full h-9 rounded-lg border border-[#DC2626]/50 bg-white px-3 text-xs text-[#202226]"
                   required
                 />
               </div>
@@ -252,7 +252,7 @@ export default function SafetyCommandCenterPage() {
               <Button type="button" variant="outline" size="sm" onClick={() => setIsBroadcastOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" size="sm" className="bg-red-600 hover:bg-red-700 text-white font-bold">
+              <Button type="submit" size="sm" className="bg-[#DC2626] hover:bg-[#b91c1c] text-white font-bold">
                 Broadcast Across All 8 Roles
               </Button>
             </div>
@@ -329,10 +329,10 @@ export default function SafetyCommandCenterPage() {
 
       {/* 5. AI Safety Intelligence & Pattern Synthesis */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-[#243356] pb-2">
-          <Sparkles className="h-4 w-4 text-[#FFD700]" />
-          <h2 className="text-sm font-bold font-mono text-[#F4F1DE] uppercase tracking-wider">
-            AI SAFETY INTELLIGENCE &amp; PREDICTIVE RISK SYNTHESIS
+        <div className="flex items-center gap-2 border-b border-[#AEB0B7] pb-2">
+          <Sparkles className="h-4 w-4 text-[#B45309]" />
+          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider">
+            AI Safety Intelligence &amp; Predictive Risk Synthesis
           </h2>
         </div>
         <AISafetyIntelligencePanel />
@@ -340,10 +340,10 @@ export default function SafetyCommandCenterPage() {
 
       {/* 6. Incident Velocity & First Responder Response Time Charts */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-[#243356] pb-2">
-          <Activity className="h-4 w-4 text-[#FFD700]" />
-          <h2 className="text-sm font-bold font-mono text-[#F4F1DE] uppercase tracking-wider">
-            CAMPUS INCIDENT TRENDS &amp; SLA VELOCITY CHARTS
+        <div className="flex items-center gap-2 border-b border-[#AEB0B7] pb-2">
+          <Activity className="h-4 w-4 text-[#B45309]" />
+          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider">
+            Campus Incident Trends &amp; SLA Velocity Charts
           </h2>
         </div>
         <IncidentCharts timeFilter={timeFilter} />
@@ -351,10 +351,10 @@ export default function SafetyCommandCenterPage() {
 
       {/* 7. Security Activity Stream & Active Patrol Telemetry */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-[#243356] pb-2">
-          <ShieldCheck className="h-4 w-4 text-[#FFD700]" />
-          <h2 className="text-sm font-bold font-mono text-[#F4F1DE] uppercase tracking-wider">
-            SECURITY OPERATIONS TELEMETRY &amp; AUDIT LOG STREAM
+        <div className="flex items-center gap-2 border-b border-[#AEB0B7] pb-2">
+          <ShieldCheck className="h-4 w-4 text-[#B45309]" />
+          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider">
+            Security Operations Telemetry &amp; Audit Log Stream
           </h2>
         </div>
         <SecurityActivityFeed />

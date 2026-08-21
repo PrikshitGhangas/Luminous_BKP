@@ -82,21 +82,21 @@ export default function ComplaintsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
-            <MessageSquareWarning className="h-6 w-6 text-[#FFD700]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
+            <MessageSquareWarning className="h-6 w-6 text-[#B45309]" />
             <span>GRIEVANCE &amp; COMPLAINTS REDRESSAL</span>
           </h1>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-sans">
-            Student &amp; staff ticket resolution platform powered by <strong className="text-[#FFD700] font-mono">Gemini AI Autonomous Triage</strong>
+          <p className="text-xs text-[#555960] mt-1 font-sans">
+            Student &amp; staff ticket resolution platform powered by <strong className="text-[#B45309] font-mono">Gemini AI Autonomous Triage</strong>
           </p>
         </div>
 
         <Button
           onClick={() => setIsLodgeModalOpen(true)}
           size="sm"
-          className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+          className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
         >
           <Sparkles className="h-4 w-4" />
           <span>Lodge Grievance (AI Assisted)</span>
@@ -111,8 +111,8 @@ export default function ComplaintsPage() {
             onClick={() => setCategoryFilter(cat.id)}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all whitespace-nowrap ${
               categoryFilter === cat.id
-                ? 'bg-[#D4AF37] text-[#0B132B]'
-                : 'bg-[#0F1026] text-[#B8B5A3] border border-[#243356] hover:text-white'
+                ? 'bg-[#EAB308] text-[#0B132B]'
+                : 'bg-[#F4F5F6] text-[#555960] border border-[#D0D1D6] hover:text-white'
             }`}
           >
             {cat.label}
@@ -122,20 +122,20 @@ export default function ComplaintsPage() {
 
       {/* Search & Status Filter */}
       <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex-1 flex items-center gap-3 bg-[#0F1026] p-3 rounded-xl border border-[#243356]">
-          <Search className="h-4 w-4 text-[#C5A059] shrink-0" />
+        <div className="flex-1 flex items-center gap-3 bg-[#F4F5F6] p-3 rounded-xl border border-[#D0D1D6]">
+          <Search className="h-4 w-4 text-[#B45309] shrink-0" />
           <Input
             placeholder="Search complaint title, ticket ID, or reporter name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-transparent border-0 text-xs text-[#F4F1DE] placeholder:text-[#B8B5A3]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="bg-transparent border-0 text-xs text-[#202226] placeholder:text-[#555960]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
           />
         </div>
 
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="rounded-xl bg-[#0F1026] border border-[#243356] text-xs text-[#F4F1DE] px-3 py-2 font-mono"
+          className="rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] text-xs text-[#202226] px-3 py-2 font-mono"
         >
           <option value="ALL">All Statuses</option>
           <option value="Pending">Pending Triage</option>
@@ -151,13 +151,13 @@ export default function ComplaintsPage() {
           <Card
             key={c.id}
             onClick={() => setSelectedTicket(c)}
-            className="bg-[#0F1026] border-[#243356] hover:border-[#D4AF37]/50 transition-colors cursor-pointer text-[#F4F1DE]"
+            className="bg-[#F4F5F6] border-[#D0D1D6] hover:border-[#EAB308]/50 transition-colors cursor-pointer text-[#202226]"
           >
             <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="space-y-1.5 flex-1">
                 <div className="flex flex-wrap items-center gap-2 font-mono">
-                  <span className="font-bold text-[#FFD700]">{c.ticketNumber}</span>
-                  <Badge className="bg-[#1C2541] text-[#F4F1DE] border-[#243356] text-[10px] uppercase font-bold">
+                  <span className="font-bold text-[#B45309]">{c.ticketNumber}</span>
+                  <Badge className="bg-[#E7E8EB] text-[#202226] border-[#D0D1D6] text-[10px] uppercase font-bold">
                     {c.category}
                   </Badge>
                   <Badge
@@ -172,18 +172,18 @@ export default function ComplaintsPage() {
                     {c.priority} PRIORITY
                   </Badge>
                   {c.aiClassifiedCategory && (
-                    <span className="text-[10px] text-[#C5A059] flex items-center gap-1 font-bold">
-                      <Bot className="h-3 w-3 text-[#FFD700]" />
+                    <span className="text-[10px] text-[#B45309] flex items-center gap-1 font-bold">
+                      <Bot className="h-3 w-3 text-[#B45309]" />
                       <span>Gemini Classified</span>
                     </span>
                   )}
                 </div>
 
-                <h3 className="font-bold text-[#F4F1DE] text-sm">{c.title}</h3>
-                <p className="text-[#B8B5A3] line-clamp-2 text-[11px]">{c.description}</p>
-                <div className="flex flex-wrap items-center gap-3 text-[10px] text-[#B8B5A3] font-mono">
+                <h3 className="font-bold text-[#202226] text-sm">{c.title}</h3>
+                <p className="text-[#555960] line-clamp-2 text-[11px]">{c.description}</p>
+                <div className="flex flex-wrap items-center gap-3 text-[10px] text-[#555960] font-mono">
                   <span>Filed by: {c.reportedBy} ({c.reporterRole})</span>
-                  <span>Assigned Dept: <strong className="text-[#F4F1DE]">{c.assignedDepartment}</strong></span>
+                  <span>Assigned Dept: <strong className="text-[#202226]">{c.assignedDepartment}</strong></span>
                 </div>
               </div>
 
@@ -201,7 +201,7 @@ export default function ComplaintsPage() {
                 >
                   {c.status}
                 </Badge>
-                <p className="text-[10px] text-[#B8B5A3] mt-1">
+                <p className="text-[10px] text-[#555960] mt-1">
                   {new Date(c.createdAt).toLocaleDateString()}
                 </p>
               </div>
@@ -213,20 +213,20 @@ export default function ComplaintsPage() {
       {/* Modal: TICKET DETAIL & RESOLUTION */}
       {selectedTicket && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
+          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
               <div className="space-y-0.5">
-                <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
+                <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
                   <span>Ticket {selectedTicket.ticketNumber}</span>
-                  <Badge className="bg-[#1C2541] text-[#F4F1DE] text-[10px]">{selectedTicket.category}</Badge>
+                  <Badge className="bg-[#E7E8EB] text-[#202226] text-[10px]">{selectedTicket.category}</Badge>
                 </CardTitle>
-                <p className="text-[11px] text-[#B8B5A3] font-mono">Filed by {selectedTicket.reportedBy} on {new Date(selectedTicket.createdAt).toLocaleString()}</p>
+                <p className="text-[11px] text-[#555960] font-mono">Filed by {selectedTicket.reportedBy} on {new Date(selectedTicket.createdAt).toLocaleString()}</p>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setSelectedTicket(null)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -234,30 +234,30 @@ export default function ComplaintsPage() {
 
             <CardContent className="p-4 space-y-4 text-xs font-mono">
               <div className="space-y-1">
-                <h3 className="font-bold text-[#F4F1DE] text-sm font-sans">{selectedTicket.title}</h3>
-                <p className="text-[#B8B5A3] text-xs font-sans bg-[#131C38] p-3 rounded-lg border border-[#243356]">{selectedTicket.description}</p>
+                <h3 className="font-bold text-[#202226] text-sm font-sans">{selectedTicket.title}</h3>
+                <p className="text-[#555960] text-xs font-sans bg-white p-3 rounded-lg border border-[#D0D1D6]">{selectedTicket.description}</p>
               </div>
 
               {/* Gemini AI Intelligence Triage Card */}
               {selectedTicket.aiSummary && (
-                <div className="bg-[#131C38]/90 border border-[#D4AF37]/40 rounded-xl p-3.5 space-y-2">
-                  <div className="flex items-center gap-2 text-[#FFD700] font-bold">
+                <div className="bg-white/90 border border-[#EAB308]/40 rounded-xl p-3.5 space-y-2">
+                  <div className="flex items-center gap-2 text-[#B45309] font-bold">
                     <Bot className="h-4 w-4" />
                     <span>Gemini 3.7 Flash AI Autonomous Triage Summary</span>
                   </div>
-                  <p className="text-[11px] text-[#F4F1DE] font-sans italic">&ldquo;{selectedTicket.aiSummary}&rdquo;</p>
+                  <p className="text-[11px] text-[#202226] font-sans italic">&ldquo;{selectedTicket.aiSummary}&rdquo;</p>
 
-                  <div className="text-[11px] text-[#B8B5A3] space-y-1 pt-1">
-                    <p className="text-[#C5A059] font-bold">AI Recommended Operational Actions:</p>
+                  <div className="text-[11px] text-[#555960] space-y-1 pt-1">
+                    <p className="text-[#B45309] font-bold">AI Recommended Operational Actions:</p>
                     {selectedTicket.aiRecommendedActions?.map((act, idx) => (
-                      <p key={idx} className="text-[10px] text-[#F4F1DE]">✓ {act}</p>
+                      <p key={idx} className="text-[10px] text-[#202226]">✓ {act}</p>
                     ))}
                   </div>
                 </div>
               )}
 
-              <div className="flex items-center justify-between border-t border-[#243356] pt-3">
-                <span className="text-[#B8B5A3]">Update Ticket Resolution Status:</span>
+              <div className="flex items-center justify-between border-t border-[#D0D1D6] pt-3">
+                <span className="text-[#555960]">Update Ticket Resolution Status:</span>
                 <div className="flex gap-2">
                   {selectedTicket.status !== 'In Progress' && (
                     <Button
@@ -293,17 +293,17 @@ export default function ComplaintsPage() {
       {/* Modal: LODGE GRIEVANCE WITH GEMINI AI */}
       {isLodgeModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-[#FFD700]" />
+          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-[#B45309]" />
                 <span>Lodge Grievance with Gemini AI Triage</span>
               </CardTitle>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsLodgeModalOpen(false)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -311,33 +311,33 @@ export default function ComplaintsPage() {
             <CardContent className="p-4 space-y-3.5">
               <form onSubmit={handleLodgeSubmit} className="space-y-3 text-xs">
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Grievance Subject / Title *</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Grievance Subject / Title *</label>
                   <Input
                     required
                     placeholder="e.g. Hostel Block B Wi-Fi downtime / Library AC noise / Exam grade discrepancy"
                     value={ticketTitle}
                     onChange={(e) => setTicketTitle(e.target.value)}
-                    className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                    className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Location Premises</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Location Premises</label>
                     <Input
                       placeholder="e.g. Hostel Block B Floor 3"
                       value={ticketLocation}
                       onChange={(e) => setTicketLocation(e.target.value)}
-                      className="bg-[#131C38] border-[#243356] text-xs text-[#F4F1DE]"
+                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
                     />
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Category Hint (Optional)</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Category Hint (Optional)</label>
                     <select
                       value={ticketCategoryHint}
                       onChange={(e) => setTicketCategoryHint(e.target.value as ComplaintCategory)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     >
                       <option value="academic">Academic</option>
                       <option value="hostel">Hostel</option>
@@ -352,19 +352,19 @@ export default function ComplaintsPage() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Detailed Description *</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Detailed Description *</label>
                   <textarea
                     required
                     rows={4}
                     placeholder="Describe the complaint in detail. Gemini AI will evaluate category, priority, and assign the appropriate department automatically..."
                     value={ticketDesc}
                     onChange={(e) => setTicketDesc(e.target.value)}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                   />
                 </div>
 
-                <div className="bg-[#131C38] p-3 rounded-lg border border-[#243356] text-[11px] text-[#B8B5A3] space-y-1 font-mono">
-                  <div className="font-bold text-[#FFD700] flex items-center gap-1.5">
+                <div className="bg-white p-3 rounded-lg border border-[#D0D1D6] text-[11px] text-[#555960] space-y-1 font-mono">
+                  <div className="font-bold text-[#B45309] flex items-center gap-1.5">
                     <Bot className="h-4 w-4" />
                     <span>Gemini AI Classification Active</span>
                   </div>
@@ -373,19 +373,19 @@ export default function ComplaintsPage() {
                   </p>
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#243356]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsLodgeModalOpen(false)}
-                    className="text-xs border-[#243356]"
+                    className="text-xs border-[#D0D1D6]"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     disabled={isAiLoading}
-                    className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5"
+                    className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5"
                   >
                     {isAiLoading ? (
                       <span>Classifying with Gemini AI...</span>

@@ -13,13 +13,13 @@ export default function DashboardIndexPage() {
     if (role && roleMeta) {
       router.replace(roleMeta.defaultPath);
     } else {
-      router.replace('/command-center');
+      router.replace('/login');
     }
   }, [role, roleMeta, router]);
 
   return (
     <div className="flex min-h-[400px] items-center justify-center">
-      <LoadingSpinner text="Routing to role-specific dashboard..." />
+      <LoadingSpinner text="Loading your dashboard..." />
     </div>
   );
 }

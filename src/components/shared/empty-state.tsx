@@ -23,20 +23,20 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center p-8 text-center rounded-2xl border border-dashed border-[#243356] bg-[#0F1026]/70 text-[#F4F1DE]',
+        'flex flex-col items-center justify-center p-8 text-center rounded-2xl border border-dashed border-[#D6D8D5] bg-white text-[#1F2933]',
         className
       )}
     >
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#131C38] border border-[#D4AF37]/30 text-[#FFD700] mb-3.5 shadow-lg shadow-black/30">
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F7F8F6] border border-[#EAB308]/30 text-[#8a6d1a] mb-3.5">
         <Icon className="h-6 w-6" />
       </div>
-      <h3 className="text-sm font-bold font-mono text-[#F4F1DE] uppercase tracking-wider">{title}</h3>
-      <p className="mt-1 text-xs text-[#B8B5A3] max-w-sm leading-relaxed">{description}</p>
+      <h3 className="text-sm font-bold text-[#1F2933]">{title}</h3>
+      <p className="mt-1 text-xs text-[#667085] max-w-sm leading-relaxed">{description}</p>
       {actionLabel && onAction && (
         <Button
           onClick={onAction}
           size="sm"
-          className="mt-4 bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold font-mono text-xs shadow-md shadow-[#D4AF37]/20"
+          className="mt-4 text-xs"
         >
           {actionLabel}
         </Button>

@@ -6,7 +6,8 @@ export type UserRole =
   | 'parent'
   | 'security'
   | 'warden'
-  | 'placement_officer';
+  | 'placement_officer'
+  | 'other';
 
 export type IncidentCategory =
   | 'fire'
@@ -64,6 +65,20 @@ export interface UserProfile {
   is_active: boolean;
   metadata?: Record<string, unknown>;
   created_at?: string;
+}
+
+/** DB `profiles` row (extends auth.users). */
+export interface Profile {
+  id: string;
+  email: string;
+  full_name: string;
+  role: string;
+  department_id?: string | null;
+  phone?: string | null;
+  avatar_url?: string | null;
+  is_active: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface IncidentTimelineEvent {

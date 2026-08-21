@@ -243,7 +243,7 @@ export default function HackathonDemoPage() {
       {/* Toast Notification Notification */}
       {demoMessage && (
         <div className="fixed top-20 right-6 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="flex items-center gap-2.5 rounded-xl border border-[#D4AF37] bg-[#131C38] px-4 py-3 text-xs font-mono text-[#F4F1DE] shadow-2xl shadow-black">
+          <div className="flex items-center gap-2.5 rounded-xl border border-[#EAB308] bg-white px-4 py-3 text-xs font-mono text-[#202226] shadow-2xl shadow-black">
             <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
             <span>{demoMessage}</span>
           </div>
@@ -251,11 +251,11 @@ export default function HackathonDemoPage() {
       )}
 
       {/* Demo Header */}
-      <div className="rounded-2xl border border-[#D4AF37]/50 bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl space-y-4">
+      <div className="rounded-2xl border border-[#EAB308]/50 bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-[#D4AF37]/20 border border-[#D4AF37]/50 px-2.5 py-0.5 text-[10px] font-mono font-bold text-[#FFD700] uppercase tracking-wider">
+              <span className="rounded-md bg-[#EAB308]/20 border border-[#EAB308]/50 px-2.5 py-0.5 text-[10px] font-mono font-bold text-[#B45309] uppercase tracking-wider">
                 HACKATHON DEMO CONTROL HUB
               </span>
               {isDemoMode && (
@@ -267,10 +267,10 @@ export default function HackathonDemoPage() {
                 GEMINI 3.7 FLASH TRIAGE ACTIVE
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
               <span>LUMINOUS AI — AUTONOMOUS SAFETY ORCHESTRATOR</span>
             </h1>
-            <p className="text-xs text-[#B8B5A3] font-mono max-w-3xl leading-relaxed">
+            <p className="text-xs text-[#555960] font-mono max-w-3xl leading-relaxed">
               Demonstrates the end-to-end incident triage, rapid dispatch, geospatial map updates, emergency alerts, and AI risk pattern intelligence.
             </p>
           </div>
@@ -280,7 +280,7 @@ export default function HackathonDemoPage() {
             <Button
               onClick={handleRunFullDemoFlow}
               disabled={isSubmittingHero}
-              className="bg-gradient-to-r from-[#FFD700] via-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold text-xs font-mono gap-1.5 shadow-lg shadow-[#D4AF37]/25 h-10 px-4"
+              className="bg-gradient-to-r from-[#F4C430] via-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold text-xs font-mono gap-1.5 shadow-lg shadow-[#D4AF37]/25 h-10 px-4"
             >
               <Play className="h-4 w-4 fill-[#0B132B]" />
               <span>Auto-Run 3-Min Demo Flow</span>
@@ -289,7 +289,7 @@ export default function HackathonDemoPage() {
             <Button
               onClick={handleReset}
               variant="outline"
-              className="border-[#243356] hover:border-red-500/50 hover:bg-red-950/30 text-red-400 text-xs font-mono font-bold gap-1.5 h-10"
+              className="border-[#D0D1D6] hover:border-red-500/50 hover:bg-red-950/30 text-red-400 text-xs font-mono font-bold gap-1.5 h-10"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               <span>Reset Demo State</span>
@@ -298,22 +298,22 @@ export default function HackathonDemoPage() {
         </div>
 
         {/* Active Persona & Threat Level Bar */}
-        <div className="pt-3 border-t border-[#243356] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-          <div className="flex items-center gap-2 text-[#B8B5A3]">
+        <div className="pt-3 border-t border-[#D0D1D6] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+          <div className="flex items-center gap-2 text-[#555960]">
             <span>Active Persona:</span>
-            <span className="font-bold text-[#FFD700] bg-[#0B132B] px-2 py-0.5 rounded border border-[#243356]">
+            <span className="font-bold text-[#B45309] bg-white px-2 py-0.5 rounded border border-[#D0D1D6]">
               {user?.full_name || 'Active User'} ({role?.toUpperCase()})
             </span>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="text-[#B8B5A3]">
-              Active Incidents: <strong className="text-[#FFD700]">{activeIncidentsCount}</strong>
+            <span className="text-[#555960]">
+              Active Incidents: <strong className="text-[#B45309]">{activeIncidentsCount}</strong>
             </span>
-            <span className="text-[#B8B5A3]">
+            <span className="text-[#555960]">
               Threat Level: <strong className="text-amber-400">{threatLevel}</strong>
             </span>
-            <span className="text-[#B8B5A3]">
+            <span className="text-[#555960]">
               Alerts: <strong className="text-red-400">{alerts.filter((a) => a.is_active).length} Active</strong>
             </span>
           </div>
@@ -321,15 +321,15 @@ export default function HackathonDemoPage() {
       </div>
 
       {/* CORE 5-STEP HACKATHON STORY STEPPER */}
-      <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE] shadow-2xl">
-        <CardHeader className="p-5 pb-3 border-b border-[#243356] bg-[#131C38] flex flex-row items-center justify-between">
+      <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226] shadow-2xl">
+        <CardHeader className="p-5 pb-3 border-b border-[#D0D1D6] bg-white flex flex-row items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <Sparkles className="h-5 w-5 text-[#FFD700]" />
-            <CardTitle className="text-sm font-mono font-bold uppercase text-[#F4F1DE]">
+            <Sparkles className="h-5 w-5 text-[#B45309]" />
+            <CardTitle className="text-sm font-mono font-bold uppercase text-[#202226]">
               CORE STORY DEMONSTRATION WORKFLOW (5 STAGES)
             </CardTitle>
           </div>
-          <span className="text-[10px] font-mono text-[#C5A059]">
+          <span className="text-[10px] font-mono text-[#B45309]">
             Click any step to inspect or execute persona action
           </span>
         </CardHeader>
@@ -349,10 +349,10 @@ export default function HackathonDemoPage() {
                 onClick={() => setActiveStep(st.num)}
                 className={`p-3 rounded-xl border text-left transition-all cursor-pointer font-mono ${
                   activeStep === st.num
-                    ? 'bg-gradient-to-br from-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold border-[#FFD700] shadow-lg shadow-[#D4AF37]/20'
+                    ? 'bg-gradient-to-br from-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold border-[#EAB308] shadow-md shadow-[#D4AF37]/20'
                     : activeStep > st.num
                     ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-300'
-                    : 'bg-[#131C38] border-[#243356] text-[#B8B5A3] hover:text-[#FFD700]'
+                    : 'bg-white border-[#D0D1D6] text-[#555960] hover:text-[#B45309]'
                 }`}
               >
                 <div className="flex items-center justify-between text-xs">
@@ -366,16 +366,16 @@ export default function HackathonDemoPage() {
 
           {/* STEP 1 DETAILS: Student Incident Report */}
           {activeStep === 1 && (
-            <div className="p-5 rounded-xl border border-[#243356] bg-[#131C38] space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D0D1D6] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-mono font-bold mb-1">
                     <span>STAGE 1: STUDENT PERSONA (AANYA PATEL)</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#F4F1DE] font-mono">
+                  <h3 className="text-base font-bold text-[#202226] font-mono">
                     Step 1: Student Reports Dangerous Incident
                   </h3>
-                  <p className="text-xs text-[#B8B5A3]">
+                  <p className="text-xs text-[#555960]">
                     The student observes active smoke and electrical arcing near Block D and files a high-urgency report.
                   </p>
                 </div>
@@ -391,15 +391,15 @@ export default function HackathonDemoPage() {
               </div>
 
               {/* Sample Incident Card Preview */}
-              <div className="p-4 rounded-lg bg-[#0F1026] border border-[#243356] space-y-2 text-xs font-mono">
-                <div className="flex justify-between border-b border-[#243356] pb-1.5 text-[#C5A059]">
+              <div className="p-4 rounded-lg bg-[#F4F5F6] border border-[#D0D1D6] space-y-2 text-xs font-mono">
+                <div className="flex justify-between border-b border-[#D0D1D6] pb-1.5 text-[#B45309]">
                   <span>Reporter: Aanya Patel (Student ID: 2023-CSE-042)</span>
                   <span>Location: Engineering Block (Block D)</span>
                 </div>
-                <div className="font-bold text-[#FFD700]">
+                <div className="font-bold text-[#B45309]">
                   Headline: Smoke &amp; Burning Odor near Block D Electrical Room
                 </div>
-                <p className="text-[#B8B5A3] font-sans text-xs">
+                <p className="text-[#555960] font-sans text-xs">
                   &ldquo;There is smoke coming from the electrical room near Block D. I can also smell something burning.&rdquo;
                 </p>
               </div>
@@ -424,16 +424,16 @@ export default function HackathonDemoPage() {
 
           {/* STEP 2 DETAILS: Gemini AI Triage */}
           {activeStep === 2 && (
-            <div className="p-5 rounded-xl border border-[#D4AF37]/40 bg-gradient-to-br from-[#131C38] to-[#0F1026] space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#EAB308]/40 bg-gradient-to-br from-[#131C38] to-[#0F1026] space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#D4AF37]/20 text-[#FFD700] text-[10px] font-mono font-bold mb-1">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#EAB308]/20 text-[#B45309] text-[10px] font-mono font-bold mb-1">
                     <span>STAGE 2: GEMINI 3.7 FLASH AUTONOMOUS ANALYSIS</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#F4F1DE] font-mono">
+                  <h3 className="text-base font-bold text-[#202226] font-mono">
                     Step 2: Gemini Analyzes Incident &amp; Escalates to CRITICAL
                   </h3>
-                  <p className="text-xs text-[#B8B5A3]">
+                  <p className="text-xs text-[#555960]">
                     Gemini evaluates hazard indicators, classifies severity as CRITICAL (98% confidence), and attaches Hazmat SOP directives.
                   </p>
                 </div>
@@ -441,7 +441,7 @@ export default function HackathonDemoPage() {
                 <Button
                   size="sm"
                   onClick={() => setActiveStep(3)}
-                  className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs font-mono gap-1.5 shrink-0"
+                  className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs font-mono gap-1.5 shrink-0"
                 >
                   <span>Proceed to Step 3: Security Dispatch</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -449,36 +449,36 @@ export default function HackathonDemoPage() {
               </div>
 
               {/* Gemini Output Visualization Card */}
-              <div className="rounded-xl border border-[#D4AF37] bg-[#0F1026] p-4 space-y-3 shadow-xl">
-                <div className="flex items-center justify-between border-b border-[#243356] pb-2">
+              <div className="rounded-xl border border-[#EAB308] bg-[#F4F5F6] p-4 space-y-3 shadow-xl">
+                <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-[#FFD700]" />
-                    <span className="font-bold font-mono text-xs text-[#FFD700]">
+                    <Sparkles className="h-4 w-4 text-[#B45309]" />
+                    <span className="font-bold font-mono text-xs text-[#B45309]">
                       Gemini 3.7 Flash Triage Card
                     </span>
                   </div>
                   <SeverityBadge severity="critical" size="md" isAiClassified />
                 </div>
 
-                <p className="text-xs text-[#F4F1DE] leading-relaxed font-sans">
+                <p className="text-xs text-[#202226] leading-relaxed font-sans">
                   Active smoke and potential electrical fire hazard detected near Block D. Immediate containment, evacuation, and circuit isolation required.
                 </p>
 
                 <div className="space-y-1 font-mono text-xs">
-                  <span className="text-[#C5A059] font-bold block uppercase text-[10px]">
+                  <span className="text-[#B45309] font-bold block uppercase text-[10px]">
                     Recommended Action Directives:
                   </span>
-                  <ul className="space-y-1 text-[#B8B5A3] text-[11px]">
+                  <ul className="space-y-1 text-[#555960] text-[11px]">
                     <li className="flex items-center gap-1.5">
-                      <span className="text-[#FFD700]">•</span>
+                      <span className="text-[#B45309]">•</span>
                       <span>Dispatch Campus Rapid Security &amp; Hazmat Team immediately</span>
                     </li>
                     <li className="flex items-center gap-1.5">
-                      <span className="text-[#FFD700]">•</span>
+                      <span className="text-[#B45309]">•</span>
                       <span>Isolate local electrical main distribution breakers</span>
                     </li>
                     <li className="flex items-center gap-1.5">
-                      <span className="text-[#FFD700]">•</span>
+                      <span className="text-[#B45309]">•</span>
                       <span>Initiate Level 1 localized building evacuation</span>
                     </li>
                   </ul>
@@ -489,16 +489,16 @@ export default function HackathonDemoPage() {
 
           {/* STEP 3 DETAILS: Security Receive & Acknowledge */}
           {activeStep === 3 && (
-            <div className="p-5 rounded-xl border border-[#243356] bg-[#131C38] space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D0D1D6] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold mb-1">
                     <span>STAGE 3: SECURITY OPERATIONS DESK</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#F4F1DE] font-mono">
+                  <h3 className="text-base font-bold text-[#202226] font-mono">
                     Step 3: Security Receives &amp; Acknowledges Incident
                   </h3>
-                  <p className="text-xs text-[#B8B5A3]">
+                  <p className="text-xs text-[#555960]">
                     Capt. Vikram Sharma receives real-time dispatch alert on Security Desk (`/security`) and dispatches Rapid Patrol Unit Alpha.
                   </p>
                 </div>
@@ -512,7 +512,7 @@ export default function HackathonDemoPage() {
                     <span>Acknowledge &amp; Dispatch Unit Alpha</span>
                   </Button>
 
-                  <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#243356]">
+                  <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#D0D1D6]">
                     <Link href="/security">Open Security Desk →</Link>
                   </Button>
                 </div>
@@ -522,16 +522,16 @@ export default function HackathonDemoPage() {
 
           {/* STEP 4 DETAILS: Command Center & Campus Map */}
           {activeStep === 4 && (
-            <div className="p-5 rounded-xl border border-[#243356] bg-[#131C38] space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D0D1D6] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-red-500/20 text-red-300 text-[10px] font-mono font-bold mb-1">
                     <span>STAGE 4: GEOSPATIAL MAP &amp; EMERGENCY BROADCAST</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#F4F1DE] font-mono">
+                  <h3 className="text-base font-bold text-[#202226] font-mono">
                     Step 4: Command Center &amp; Campus Map Update Live
                   </h3>
-                  <p className="text-xs text-[#B8B5A3]">
+                  <p className="text-xs text-[#555960]">
                     Threat level escalates to HIGH_ALERT. The geospatial map shows Block D pulsing red, and emergency broadcasts are transmitted.
                   </p>
                 </div>
@@ -539,7 +539,7 @@ export default function HackathonDemoPage() {
                 <Button
                   size="sm"
                   onClick={() => setActiveStep(5)}
-                  className="bg-[#D4AF37] text-[#0B132B] font-bold text-xs font-mono gap-1.5"
+                  className="bg-[#EAB308] text-[#0B132B] font-bold text-xs font-mono gap-1.5"
                 >
                   <span>Proceed to Step 5: Admin Intelligence</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -550,44 +550,44 @@ export default function HackathonDemoPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                 <Link
                   href="/safety/command-center"
-                  className="p-3.5 rounded-xl border border-[#243356] bg-[#0F1026] hover:border-[#D4AF37] transition-all space-y-1 block font-mono"
+                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308] transition-all space-y-1 block font-mono"
                 >
-                  <div className="flex items-center justify-between text-xs text-[#FFD700] font-bold">
+                  <div className="flex items-center justify-between text-xs text-[#B45309] font-bold">
                     <span className="flex items-center gap-1.5">
                       <Radio className="h-4 w-4" />
                       <span>Command Center</span>
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                  <p className="text-[11px] text-[#B8B5A3]">View live threat posture and active emergency queue</p>
+                  <p className="text-[11px] text-[#555960]">View live threat posture and active emergency queue</p>
                 </Link>
 
                 <Link
                   href="/campus-map"
-                  className="p-3.5 rounded-xl border border-[#243356] bg-[#0F1026] hover:border-[#D4AF37] transition-all space-y-1 block font-mono"
+                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308] transition-all space-y-1 block font-mono"
                 >
-                  <div className="flex items-center justify-between text-xs text-[#FFD700] font-bold">
+                  <div className="flex items-center justify-between text-xs text-[#B45309] font-bold">
                     <span className="flex items-center gap-1.5">
                       <MapPin className="h-4 w-4" />
                       <span>Campus Map</span>
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                  <p className="text-[11px] text-[#B8B5A3]">See Block D pulsing red hazard warning</p>
+                  <p className="text-[11px] text-[#555960]">See Block D pulsing red hazard warning</p>
                 </Link>
 
                 <Link
                   href="/safety/emergency"
-                  className="p-3.5 rounded-xl border border-[#243356] bg-[#0F1026] hover:border-[#D4AF37] transition-all space-y-1 block font-mono"
+                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308] transition-all space-y-1 block font-mono"
                 >
-                  <div className="flex items-center justify-between text-xs text-[#FFD700] font-bold">
+                  <div className="flex items-center justify-between text-xs text-[#B45309] font-bold">
                     <span className="flex items-center gap-1.5">
                       <Bell className="h-4 w-4" />
                       <span>Emergency Alerts</span>
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                  <p className="text-[11px] text-[#B8B5A3]">Inspect active evacuation broadcast alert</p>
+                  <p className="text-[11px] text-[#555960]">Inspect active evacuation broadcast alert</p>
                 </Link>
               </div>
             </div>
@@ -601,10 +601,10 @@ export default function HackathonDemoPage() {
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-mono font-bold mb-1">
                     <span>STAGE 5: AI RISK INTELLIGENCE &amp; ADMIN GOVERNANCE</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#F4F1DE] font-mono">
+                  <h3 className="text-base font-bold text-[#202226] font-mono">
                     Step 5: AI Identifies Broader Pattern &amp; Admin Executes Recommendation
                   </h3>
-                  <p className="text-xs text-[#B8B5A3]">
+                  <p className="text-xs text-[#555960]">
                     AI Risk Intelligence correlates 7 Block D infrastructure incidents over the last 30 days and recommends an electrical inspection SOP.
                   </p>
                 </div>
@@ -618,17 +618,17 @@ export default function HackathonDemoPage() {
                     <span>Execute Electrical Directive</span>
                   </Button>
 
-                  <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#243356]">
+                  <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#D0D1D6]">
                     <Link href="/safety/risk-intelligence">Open Risk Intelligence →</Link>
                   </Button>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl border border-[#D4AF37]/40 bg-[#0B132B] space-y-2 font-mono text-xs">
-                <div className="text-[#FFD700] font-bold">
+              <div className="p-4 rounded-xl border border-[#EAB308]/40 bg-white space-y-2 font-mono text-xs">
+                <div className="text-[#B45309] font-bold">
                   AI Pattern Cluster #1: Block D (Engineering) Recurrent Electrical &amp; Fume Strain
                 </div>
-                <p className="text-[#B8B5A3] font-sans text-xs">
+                <p className="text-[#555960] font-sans text-xs">
                   Grounded Evidence: 7 incidents logged in last 30 days. Directive: &ldquo;Schedule an electrical inspection and thermal imaging of all sub-panels in Block D.&rdquo;
                 </p>
               </div>
@@ -638,15 +638,15 @@ export default function HackathonDemoPage() {
       </Card>
 
       {/* DEMO ACCOUNTS & PERSONA SWITCHER GRID */}
-      <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE] shadow-xl">
-        <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38] flex flex-row items-center justify-between">
+      <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226] shadow-xl">
+        <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
-            <UserCheck className="h-4 w-4 text-[#FFD700]" />
-            <CardTitle className="text-xs font-mono font-bold uppercase text-[#F4F1DE]">
+            <UserCheck className="h-4 w-4 text-[#B45309]" />
+            <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226]">
               DEMO PERSONA ACCOUNTS (1-CLICK ROLE SWITCHING)
             </CardTitle>
           </div>
-          <span className="text-[10px] font-mono text-[#B8B5A3]">Instant RBAC Clearance Transition</span>
+          <span className="text-[10px] font-mono text-[#555960]">Instant RBAC Clearance Transition</span>
         </CardHeader>
 
         <CardContent className="p-4">
@@ -689,27 +689,27 @@ export default function HackathonDemoPage() {
                 }}
                 className={`p-3.5 rounded-xl border transition-all cursor-pointer space-y-2 font-mono ${
                   role === usr.roleKey
-                    ? 'border-[#D4AF37] bg-[#131C38] shadow-lg shadow-[#D4AF37]/15'
-                    : 'border-[#243356] bg-[#0F1026] hover:border-[#D4AF37]/50'
+                    ? 'border-[#EAB308] bg-white shadow-lg shadow-[#D4AF37]/15'
+                    : 'border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308]/50'
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <span className="text-lg">{usr.icon}</span>
                   {role === usr.roleKey ? (
-                    <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#D4AF37] text-[#0B132B]">
+                    <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#EAB308] text-[#0B132B]">
                       ACTIVE
                     </span>
                   ) : (
-                    <span className="px-2 py-0.5 rounded text-[9px] bg-[#1C2541] text-[#B8B5A3]">
+                    <span className="px-2 py-0.5 rounded text-[9px] bg-[#E7E8EB] text-[#555960]">
                       SWITCH
                     </span>
                   )}
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-[#F4F1DE]">{usr.name}</div>
-                  <div className="text-[10px] text-[#FFD700]">{usr.email}</div>
+                  <div className="font-bold text-xs text-[#202226]">{usr.name}</div>
+                  <div className="text-[10px] text-[#B45309]">{usr.email}</div>
                 </div>
-                <p className="text-[10px] text-[#B8B5A3] font-sans line-clamp-2">{usr.desc}</p>
+                <p className="text-[10px] text-[#555960] font-sans line-clamp-2">{usr.desc}</p>
               </div>
             ))}
           </div>
@@ -717,21 +717,21 @@ export default function HackathonDemoPage() {
       </Card>
 
       {/* INTERACTIVE GEMINI AI TRIAGE SANDBOX */}
-      <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE] shadow-xl">
-        <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38] flex flex-row items-center justify-between">
+      <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226] shadow-xl">
+        <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
-            <Cpu className="h-4 w-4 text-[#FFD700]" />
-            <CardTitle className="text-xs font-mono font-bold uppercase text-[#F4F1DE]">
+            <Cpu className="h-4 w-4 text-[#B45309]" />
+            <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226]">
               GEMINI 3.7 FLASH REAL-TIME AI TRIAGE SANDBOX
             </CardTitle>
           </div>
-          <span className="text-[10px] font-mono text-[#C5A059]">Test custom inputs &amp; inspect JSON output</span>
+          <span className="text-[10px] font-mono text-[#B45309]">Test custom inputs &amp; inspect JSON output</span>
         </CardHeader>
 
         <CardContent className="p-4 space-y-4">
           {/* Preset Buttons */}
           <div className="space-y-1.5 font-mono">
-            <span className="text-[10px] text-[#C5A059] uppercase font-bold block">
+            <span className="text-[10px] text-[#B45309] uppercase font-bold block">
               Quick Test Presets:
             </span>
             <div className="flex flex-wrap gap-2">
@@ -743,7 +743,7 @@ export default function HackathonDemoPage() {
                     setSandboxLocation(pst.location);
                     setSandboxCategory(pst.category);
                   }}
-                  className="px-2.5 py-1 rounded bg-[#131C38] border border-[#243356] hover:border-[#D4AF37] text-xs text-[#F4F1DE] font-bold cursor-pointer transition-colors"
+                  className="px-2.5 py-1 rounded bg-white border border-[#D0D1D6] hover:border-[#EAB308] text-xs text-[#202226] font-bold cursor-pointer transition-colors"
                 >
                   {pst.name}
                 </button>
@@ -754,31 +754,31 @@ export default function HackathonDemoPage() {
           {/* Prompt & Controls */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="md:col-span-2 space-y-1">
-              <label className="text-[11px] font-mono text-[#F4F1DE]">
+              <label className="text-[11px] font-mono text-[#202226]">
                 Incident Report Text Description:
               </label>
               <textarea
                 value={sandboxPrompt}
                 onChange={(e) => setSandboxPrompt(e.target.value)}
                 rows={3}
-                className="w-full rounded-xl border border-[#243356] bg-[#131C38] p-3 text-xs text-[#F4F1DE] focus:border-[#D4AF37] focus:outline-none"
+                className="w-full rounded-xl border border-[#D0D1D6] bg-white p-3 text-xs text-[#202226] focus:border-[#EAB308] focus:outline-none"
               />
             </div>
 
             <div className="space-y-3 font-mono">
               <div>
-                <label className="text-[11px] text-[#F4F1DE]">Location:</label>
+                <label className="text-[11px] text-[#202226]">Location:</label>
                 <Input
                   value={sandboxLocation}
                   onChange={(e) => setSandboxLocation(e.target.value)}
-                  className="h-8 text-xs bg-[#131C38] border-[#243356]"
+                  className="h-8 text-xs bg-white border-[#D0D1D6]"
                 />
               </div>
 
               <Button
                 onClick={handleRunSandbox}
                 disabled={isSandboxLoading || !sandboxPrompt}
-                className="w-full bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs gap-1.5 h-9"
+                className="w-full bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs gap-1.5 h-9"
               >
                 <Sparkles className="h-4 w-4" />
                 <span>{isSandboxLoading ? 'Analyzing...' : 'Run Gemini Triage'}</span>
@@ -788,15 +788,15 @@ export default function HackathonDemoPage() {
 
           {/* AI Sandbox Output Result */}
           {isSandboxLoading ? (
-            <div className="py-8 text-center space-y-2 font-mono text-xs text-[#B8B5A3]">
-              <Sparkles className="h-6 w-6 text-[#FFD700] animate-spin mx-auto" />
+            <div className="py-8 text-center space-y-2 font-mono text-xs text-[#555960]">
+              <Sparkles className="h-6 w-6 text-[#B45309] animate-spin mx-auto" />
               <p>Gemini 3.7 Flash synthesizing incident telemetry...</p>
             </div>
           ) : sandboxResult ? (
-            <div className="p-4 rounded-xl border border-[#D4AF37]/50 bg-[#131C38] space-y-3 animate-in fade-in">
-              <div className="flex items-center justify-between border-b border-[#243356] pb-2 font-mono text-xs">
+            <div className="p-4 rounded-xl border border-[#EAB308]/50 bg-white space-y-3 animate-in fade-in">
+              <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2 font-mono text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="text-[#FFD700] font-bold">Structured AI Triage Output</span>
+                  <span className="text-[#B45309] font-bold">Structured AI Triage Output</span>
                   {sandboxUsedFallback ? (
                     <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px]">
                       Deterministic Triage Fallback (0ms Latency)
@@ -808,46 +808,46 @@ export default function HackathonDemoPage() {
                   )}
                 </div>
                 {sandboxLatency !== null && (
-                  <span className="text-[#C5A059]">Response Time: {sandboxLatency}ms</span>
+                  <span className="text-[#B45309]">Response Time: {sandboxLatency}ms</span>
                 )}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[#B8B5A3]">Severity Classification:</span>
+                    <span className="text-[#555960]">Severity Classification:</span>
                     <SeverityBadge severity={sandboxResult.severity.toLowerCase() as IncidentSeverity} size="sm" isAiClassified />
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#B8B5A3]">Confidence Score:</span>
+                    <span className="text-[#555960]">Confidence Score:</span>
                     <span className="text-emerald-400 font-bold">{Math.round((sandboxResult.confidence || 0.98) * 100)}%</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#B8B5A3]">Category:</span>
-                    <span className="text-[#FFD700] font-bold capitalize">{sandboxResult.category}</span>
+                    <span className="text-[#555960]">Category:</span>
+                    <span className="text-[#B45309] font-bold capitalize">{sandboxResult.category}</span>
                   </div>
                   <div>
-                    <span className="text-[#C5A059] block mb-1">Executive Summary:</span>
-                    <p className="text-[#F4F1DE] font-sans text-xs bg-[#0F1026] p-2.5 rounded border border-[#243356]">
+                    <span className="text-[#B45309] block mb-1">Executive Summary:</span>
+                    <p className="text-[#202226] font-sans text-xs bg-[#F4F5F6] p-2.5 rounded border border-[#D0D1D6]">
                       {sandboxResult.summary}
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[#C5A059] block">Actionable Directives:</span>
-                  <ul className="space-y-1 text-[#B8B5A3] text-[11px]">
+                  <span className="text-[#B45309] block">Actionable Directives:</span>
+                  <ul className="space-y-1 text-[#555960] text-[11px]">
                     {sandboxResult.recommended_actions.map((act, i) => (
                       <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-[#FFD700]">•</span>
+                        <span className="text-[#B45309]">•</span>
                         <span>{act}</span>
                       </li>
                     ))}
                   </ul>
-                  <div className="pt-2 border-t border-[#243356] flex items-center gap-1 flex-wrap text-[10px]">
-                    <span className="text-[#C5A059]">Departments Routed:</span>
+                  <div className="pt-2 border-t border-[#D0D1D6] flex items-center gap-1 flex-wrap text-[10px]">
+                    <span className="text-[#B45309]">Departments Routed:</span>
                     {sandboxResult.departments.map((d, i) => (
-                      <span key={i} className="px-1.5 py-0.5 rounded bg-[#0B132B] text-[#FFD700] border border-[#243356]">
+                      <span key={i} className="px-1.5 py-0.5 rounded bg-white text-[#B45309] border border-[#D0D1D6]">
                         {d}
                       </span>
                     ))}

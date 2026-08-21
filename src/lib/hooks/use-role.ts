@@ -2,7 +2,7 @@
 
 import { useAuth } from './use-auth';
 import { UserRole } from '../types';
-import { ROLE_DETAILS, isRouteAllowed } from '../constants/roles';
+import { ROLE_DETAILS, PERMISSIONS, isRouteAllowed } from '../constants/roles';
 
 export function useRole() {
   const { role, user, switchRole } = useAuth();
@@ -18,6 +18,11 @@ export function useRole() {
 
   const roleMeta = role ? ROLE_DETAILS[role] : null;
 
+  const permissions = role ? PERMISSIONS[role] ?? [] : [];
+
+  /** UX-level permission check. Backend/RLS is the real enforcement layer. */
+  const can = (permission: string): boolean => permissions.includes(permission);
+
   const canAccess = (path: string): boolean => {
     if (!role) return false;
     return isRouteAllowed(path, role);
@@ -32,6 +37,8 @@ export function useRole() {
     role,
     user,
     roleMeta,
+    permissions,
+    can,
     isSuperAdmin,
     isAdmin,
     isSecurity,

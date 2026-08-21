@@ -101,10 +101,10 @@ export default function SafetySosPage() {
       <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-start gap-3 text-amber-200">
         <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
         <div className="text-xs space-y-0.5">
-          <span className="font-bold uppercase tracking-wider font-mono text-[#FFD700]">
+          <span className="font-bold uppercase tracking-wider font-mono text-[#B45309]">
             Demo &amp; Training Simulation Notice:
           </span>
-          <p className="text-[#F4F1DE] opacity-90 leading-relaxed">
+          <p className="text-[#202226] opacity-90 leading-relaxed">
             This student panic SOS interface simulates immediate campus security dispatch and command center incident creation. In a real-world emergency outside campus, always dial your local emergency services (911 / 112).
           </p>
         </div>
@@ -113,13 +113,13 @@ export default function SafetySosPage() {
       {/* Top Banner */}
       <div className="text-center space-y-2">
         <div className="inline-flex items-center gap-2 rounded-full bg-red-950/80 border border-red-500/40 px-4 py-1 text-xs font-bold text-red-300 font-mono">
-          <HeartPulse className="h-4 w-4 animate-pulse text-[#FFD700]" />
+          <HeartPulse className="h-4 w-4 animate-pulse text-[#B45309]" />
           <span>LUMINOUS EMERGENCY DISTRESS MESH</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F4F1DE] font-mono">
+        <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#202226] font-mono">
           WOMEN&apos;S SAFETY &amp; INSTANT SOS BEACON
         </h1>
-        <p className="text-xs sm:text-sm text-[#B8B5A3] max-w-lg mx-auto">
+        <p className="text-xs sm:text-sm text-[#555960] max-w-lg mx-auto">
           Pressing SOS creates a <strong>CRITICAL</strong> priority incident, transmits GPS coordinates, alerts Campus Security SOC, and immediately mobilizes the nearest patrol unit.
         </p>
       </div>
@@ -131,8 +131,8 @@ export default function SafetySosPage() {
             onClick={() => setSelectedCategory('womens_safety')}
             className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
               selectedCategory === 'womens_safety'
-                ? 'border-pink-500 bg-pink-950/40 text-[#FFD700] ring-2 ring-pink-500/30 font-bold'
-                : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                ? 'border-pink-500 bg-pink-950/40 text-[#B45309] ring-2 ring-pink-500/30 font-bold'
+                : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
             }`}
           >
             <div className="text-xs font-mono">Women&apos;s Safety</div>
@@ -143,8 +143,8 @@ export default function SafetySosPage() {
             onClick={() => setSelectedCategory('sos_panic')}
             className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
               selectedCategory === 'sos_panic'
-                ? 'border-red-500 bg-red-950/40 text-[#FFD700] ring-2 ring-red-500/30 font-bold'
-                : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                ? 'border-red-500 bg-red-950/40 text-[#B45309] ring-2 ring-red-500/30 font-bold'
+                : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
             }`}
           >
             <div className="text-xs font-mono">Panic SOS</div>
@@ -155,8 +155,8 @@ export default function SafetySosPage() {
             onClick={() => setSelectedCategory('threat')}
             className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
               selectedCategory === 'threat'
-                ? 'border-amber-500 bg-amber-950/40 text-[#FFD700] ring-2 ring-amber-500/30 font-bold'
-                : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                ? 'border-amber-500 bg-amber-950/40 text-[#B45309] ring-2 ring-amber-500/30 font-bold'
+                : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
             }`}
           >
             <div className="text-xs font-mono">Intruder / Threat</div>
@@ -167,8 +167,8 @@ export default function SafetySosPage() {
             onClick={() => setSelectedCategory('medical')}
             className={`p-3 rounded-xl border text-center transition-all cursor-pointer ${
               selectedCategory === 'medical'
-                ? 'border-blue-500 bg-blue-950/40 text-[#FFD700] ring-2 ring-blue-500/30 font-bold'
-                : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                ? 'border-blue-500 bg-blue-950/40 text-[#B45309] ring-2 ring-blue-500/30 font-bold'
+                : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
             }`}
           >
             <div className="text-xs font-mono">Medical Distress</div>
@@ -178,7 +178,7 @@ export default function SafetySosPage() {
       )}
 
       {/* Main SOS Trigger Console */}
-      <div className="flex flex-col items-center justify-center p-8 bg-[#131C38] rounded-2xl border border-[#243356] shadow-2xl text-center space-y-6">
+      <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl border border-[#D0D1D6] shadow-2xl text-center space-y-6">
         {!isSosActive ? (
           <>
             <div className="relative flex items-center justify-center">
@@ -195,7 +195,7 @@ export default function SafetySosPage() {
                 disabled={isTriggering}
                 className="relative z-10 flex h-40 w-40 flex-col items-center justify-center rounded-full bg-gradient-to-br from-red-600 via-red-700 to-red-950 text-white shadow-2xl shadow-red-600/60 hover:brightness-110 active:scale-95 transition-all cursor-pointer select-none border-4 border-red-400 group"
               >
-                <HeartPulse className="h-12 w-12 animate-pulse text-[#FFD700] group-hover:scale-110 transition-transform" />
+                <HeartPulse className="h-12 w-12 animate-pulse text-[#B45309] group-hover:scale-110 transition-transform" />
                 <span className="mt-1 text-sm font-extrabold tracking-wider font-mono">
                   {isHolding ? `HOLDING (${holdProgress}%)` : isTriggering ? 'DISPATCHING...' : 'PRESS SOS'}
                 </span>
@@ -207,23 +207,23 @@ export default function SafetySosPage() {
 
             {/* Hold progress bar */}
             {isHolding && (
-              <div className="w-48 bg-[#0F1026] rounded-full h-2 overflow-hidden border border-[#243356]">
+              <div className="w-48 bg-[#F4F5F6] rounded-full h-2 overflow-hidden border border-[#D0D1D6]">
                 <div
-                  className="bg-[#FFD700] h-full transition-all duration-100"
+                  className="bg-[#EAB308] h-full transition-all duration-100"
                   style={{ width: `${holdProgress}%` }}
                 />
               </div>
             )}
 
-            <div className="flex items-center gap-2 text-xs font-mono text-[#C5A059] bg-[#0F1026] px-3.5 py-1.5 rounded-full border border-[#243356]">
+            <div className="flex items-center gap-2 text-xs font-mono text-[#B45309] bg-[#F4F5F6] px-3.5 py-1.5 rounded-full border border-[#D0D1D6]">
               <MapPin className="h-4 w-4 text-red-400 animate-bounce" />
               <span>Location: {locationName}</span>
             </div>
           </>
         ) : (
           <div className="space-y-4 py-2 w-full max-w-lg animate-in fade-in zoom-in-95 duration-300">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-red-600 text-white shadow-2xl shadow-red-600/70 animate-bounce border-2 border-[#FFD700]">
-              <Radio className="h-10 w-10 text-[#FFD700]" />
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-red-600 text-white shadow-2xl shadow-red-600/70 animate-bounce border-2 border-[#EAB308]">
+              <Radio className="h-10 w-10 text-[#B45309]" />
             </div>
 
             <div className="space-y-1">
@@ -231,39 +231,39 @@ export default function SafetySosPage() {
                 <span className="h-2 w-2 rounded-full bg-red-400 animate-ping" />
                 <span>ACTIVE DISTRESS BEACON • CRITICAL INCIDENT LOGGED</span>
               </div>
-              <h2 className="text-xl font-bold text-[#FFD700] font-mono">
+              <h2 className="text-xl font-bold text-[#B45309] font-mono">
                 SECURITY PATROL ALPHA DISPATCHED
               </h2>
-              <p className="text-xs text-[#F4F1DE]">
+              <p className="text-xs text-[#202226]">
                 Security Operations Center &amp; Campus Admin notified. GPS location locked.
               </p>
             </div>
 
             {/* Live Responder Telemetry */}
-            <div className="rounded-xl bg-[#0F1026] border border-[#243356] p-4 text-xs font-mono text-[#F4F1DE] text-left space-y-2">
-              <div className="flex items-center justify-between border-b border-[#243356] pb-2">
-                <span className="text-[#C5A059]">Incident ID:</span>
-                <span className="font-bold text-[#FFD700]">
+            <div className="rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] p-4 text-xs font-mono text-[#202226] text-left space-y-2">
+              <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2">
+                <span className="text-[#B45309]">Incident ID:</span>
+                <span className="font-bold text-[#B45309]">
                   {activeSosIncident?.incident_number || 'SOS-ACTIVE'}
                 </span>
               </div>
-              <div className="flex items-center justify-between border-b border-[#243356] pb-2">
-                <span className="text-[#C5A059]">Caller:</span>
+              <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2">
+                <span className="text-[#B45309]">Caller:</span>
                 <span className="font-bold">{user?.full_name || 'Aanya Patel'}</span>
               </div>
-              <div className="flex items-center justify-between border-b border-[#243356] pb-2">
-                <span className="text-[#C5A059]">Assigned Officer:</span>
+              <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2">
+                <span className="text-[#B45309]">Assigned Officer:</span>
                 <span className="font-bold text-emerald-400">Capt. Vikram Sharma &amp; Officer Ramos</span>
               </div>
-              <div className="flex items-center justify-between border-b border-[#243356] pb-2">
-                <span className="text-[#C5A059]">Estimated Arrival:</span>
-                <span className="font-bold text-[#FFD700] flex items-center gap-1">
+              <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2">
+                <span className="text-[#B45309]">Estimated Arrival:</span>
+                <span className="font-bold text-[#B45309] flex items-center gap-1">
                   <Clock className="h-3.5 w-3.5 animate-spin" />
                   <span>~90 seconds</span>
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[#C5A059]">Direct GPS Target:</span>
+                <span className="text-[#B45309]">Direct GPS Target:</span>
                 <span className="font-bold text-xs truncate max-w-[200px]">{locationName}</span>
               </div>
             </div>
@@ -277,7 +277,7 @@ export default function SafetySosPage() {
               >
                 Cancel Beacon / False Alarm
               </Button>
-              <Button asChild size="sm" className="bg-[#D4AF37] text-[#0B132B] font-bold text-xs">
+              <Button asChild size="sm" className="bg-[#EAB308] text-[#0B132B] font-bold text-xs">
                 <Link href="/security">
                   <span>View in Security SOC</span>
                 </Link>
@@ -290,29 +290,29 @@ export default function SafetySosPage() {
       {/* Emergency Contacts & Night Escort Service */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Helplines */}
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-          <CardHeader className="p-4 pb-2 border-b border-[#243356]">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-[#C5A059] font-mono flex items-center justify-between">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+          <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6]">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-[#B45309] font-mono flex items-center justify-between">
               <span>Direct Emergency Helplines</span>
-              <Phone className="h-4 w-4 text-[#FFD700]" />
+              <Phone className="h-4 w-4 text-[#B45309]" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-2.5">
-            <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#131C38] border border-[#243356]">
+            <div className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-[#D0D1D6]">
               <div>
-                <p className="text-xs font-bold text-[#F4F1DE]">Campus Security SOC Desk</p>
-                <p className="text-[11px] text-[#C5A059] font-mono">+1 (555) 019-9111</p>
+                <p className="text-xs font-bold text-[#202226]">Campus Security SOC Desk</p>
+                <p className="text-[11px] text-[#B45309] font-mono">+1 (555) 019-9111</p>
               </div>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1 border-[#243356] text-emerald-400">
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1 border-[#D0D1D6] text-emerald-400">
                 <Phone className="h-3 w-3" />
                 <span>Call</span>
               </Button>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#131C38] border border-[#243356]">
+            <div className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-[#D0D1D6]">
               <div>
-                <p className="text-xs font-bold text-[#F4F1DE]">Women&apos;s Safety Rapid Helpline</p>
-                <p className="text-[11px] text-[#C5A059] font-mono">+1 (555) 019-9115 (Toll Free)</p>
+                <p className="text-xs font-bold text-[#202226]">Women&apos;s Safety Rapid Helpline</p>
+                <p className="text-[11px] text-[#B45309] font-mono">+1 (555) 019-9115 (Toll Free)</p>
               </div>
               <Button size="sm" variant="outline" className="h-7 text-xs gap-1 border-pink-500/40 text-pink-300">
                 <Phone className="h-3 w-3" />
@@ -320,12 +320,12 @@ export default function SafetySosPage() {
               </Button>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#131C38] border border-[#243356]">
+            <div className="flex items-center justify-between p-2.5 rounded-lg bg-white border border-[#D0D1D6]">
               <div>
-                <p className="text-xs font-bold text-[#F4F1DE]">Campus Ambulance &amp; Medical Centre</p>
-                <p className="text-[11px] text-[#C5A059] font-mono">+1 (555) 019-9112</p>
+                <p className="text-xs font-bold text-[#202226]">Campus Ambulance &amp; Medical Centre</p>
+                <p className="text-[11px] text-[#B45309] font-mono">+1 (555) 019-9112</p>
               </div>
-              <Button size="sm" variant="outline" className="h-7 text-xs gap-1 border-[#243356] text-emerald-400">
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1 border-[#D0D1D6] text-emerald-400">
                 <Phone className="h-3 w-3" />
                 <span>Call</span>
               </Button>
@@ -334,15 +334,15 @@ export default function SafetySosPage() {
         </Card>
 
         {/* Night Walk Safety Escort */}
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-          <CardHeader className="p-4 pb-2 border-b border-[#243356]">
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-[#C5A059] font-mono flex items-center justify-between">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+          <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6]">
+            <CardTitle className="text-xs font-bold uppercase tracking-wider text-[#B45309] font-mono flex items-center justify-between">
               <span>Night Walk Safety Escort Service</span>
               <ShieldCheck className="h-4 w-4 text-emerald-400" />
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-3 text-xs">
-            <p className="text-[#B8B5A3] leading-relaxed">
+            <p className="text-[#555960] leading-relaxed">
               Walking alone after dark from the library, laboratory, or bus terminal to your hostel? Request a vetted campus security officer escort.
             </p>
             <div className="flex items-center gap-2 font-medium text-emerald-400">
@@ -359,9 +359,9 @@ export default function SafetySosPage() {
               <Button
                 size="sm"
                 onClick={() => setEscortRequested(true)}
-                className="w-full bg-[#1C2541] hover:bg-[#243356] text-[#F4F1DE] border border-[#243356] text-xs gap-2 font-mono"
+                className="w-full bg-[#E7E8EB] hover:bg-[#243356] text-[#202226] border border-[#D0D1D6] text-xs gap-2 font-mono"
               >
-                <Users className="h-3.5 w-3.5 text-[#FFD700]" />
+                <Users className="h-3.5 w-3.5 text-[#B45309]" />
                 <span>Request Security Officer Escort</span>
               </Button>
             )}

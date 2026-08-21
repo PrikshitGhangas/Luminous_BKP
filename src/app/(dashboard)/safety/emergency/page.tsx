@@ -110,23 +110,23 @@ export default function SafetyEmergencyPage() {
       <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-start gap-3 text-amber-200">
         <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
         <div className="text-xs space-y-0.5">
-          <span className="font-bold uppercase tracking-wider font-mono text-[#FFD700]">
+          <span className="font-bold uppercase tracking-wider font-mono text-[#B45309]">
             Operational Training &amp; Demo System Notice:
           </span>
-          <p className="text-[#F4F1DE] opacity-90 leading-relaxed">
+          <p className="text-[#202226] opacity-90 leading-relaxed">
             This module provides simulated multi-channel campus alert broadcasting for university security drills and internal incident dispatch. It does <strong>NOT</strong> dispatch external police or local municipal 911/112 emergency services.
           </p>
         </div>
       </div>
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2">
             <Bell className="h-6 w-6 text-red-500 animate-pulse" />
             <span>CAMPUS EMERGENCY RESPONSE &amp; BROADCAST HUB</span>
           </h1>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-mono">
+          <p className="text-xs text-[#555960] mt-1 font-mono">
             Multi-tier perimeter alerts: Campus-wide, Building-level, Hostel sector, and Department containment
           </p>
         </div>
@@ -162,7 +162,7 @@ export default function SafetyEmergencyPage() {
               'critical'
             )
           }
-          className="p-4 rounded-xl bg-[#131C38] border border-red-500/30 hover:border-red-400 hover:bg-[#1C2541] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="p-4 rounded-xl bg-white border border-red-500/30 hover:border-red-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
         >
           <div className="flex items-center justify-between">
             <span className="p-2 rounded-lg bg-red-950/80 text-red-400 border border-red-600/40">
@@ -173,10 +173,10 @@ export default function SafetyEmergencyPage() {
             </span>
           </div>
           <div>
-            <h3 className="text-sm font-bold text-[#F4F1DE] group-hover:text-[#FFD700] transition-colors">
+            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
               Campus-Wide Alert
             </h3>
-            <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+            <p className="text-[11px] text-[#555960] mt-0.5">
               Full lockdown, severe weather, or universal evacuation
             </p>
           </div>
@@ -196,7 +196,7 @@ export default function SafetyEmergencyPage() {
               'high'
             )
           }
-          className="p-4 rounded-xl bg-[#131C38] border border-amber-500/30 hover:border-amber-400 hover:bg-[#1C2541] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="p-4 rounded-xl bg-white border border-amber-500/30 hover:border-amber-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
         >
           <div className="flex items-center justify-between">
             <span className="p-2 rounded-lg bg-amber-950/80 text-amber-400 border border-amber-600/40">
@@ -207,10 +207,10 @@ export default function SafetyEmergencyPage() {
             </span>
           </div>
           <div>
-            <h3 className="text-sm font-bold text-[#F4F1DE] group-hover:text-[#FFD700] transition-colors">
+            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
               Building Specific
             </h3>
-            <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+            <p className="text-[11px] text-[#555960] mt-0.5">
               Targeted academic block alarms &amp; localized hazard containment
             </p>
           </div>
@@ -230,7 +230,7 @@ export default function SafetyEmergencyPage() {
               'medium'
             )
           }
-          className="p-4 rounded-xl bg-[#131C38] border border-orange-500/30 hover:border-orange-400 hover:bg-[#1C2541] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="p-4 rounded-xl bg-white border border-orange-500/30 hover:border-orange-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
         >
           <div className="flex items-center justify-between">
             <span className="p-2 rounded-lg bg-orange-950/80 text-orange-400 border border-orange-600/40">
@@ -241,10 +241,10 @@ export default function SafetyEmergencyPage() {
             </span>
           </div>
           <div>
-            <h3 className="text-sm font-bold text-[#F4F1DE] group-hover:text-[#FFD700] transition-colors">
+            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
               Hostel Alert
             </h3>
-            <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+            <p className="text-[11px] text-[#555960] mt-0.5">
               Residential quarters curfew alerts &amp; dormitory emergency pings
             </p>
           </div>
@@ -264,7 +264,7 @@ export default function SafetyEmergencyPage() {
               'high'
             )
           }
-          className="p-4 rounded-xl bg-[#131C38] border border-indigo-500/30 hover:border-indigo-400 hover:bg-[#1C2541] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="p-4 rounded-xl bg-white border border-indigo-500/30 hover:border-indigo-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
         >
           <div className="flex items-center justify-between">
             <span className="p-2 rounded-lg bg-indigo-950/80 text-indigo-400 border border-indigo-600/40">
@@ -275,10 +275,10 @@ export default function SafetyEmergencyPage() {
             </span>
           </div>
           <div>
-            <h3 className="text-sm font-bold text-[#F4F1DE] group-hover:text-[#FFD700] transition-colors">
+            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
               Department Alert
             </h3>
-            <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+            <p className="text-[11px] text-[#555960] mt-0.5">
               Specialized faculty labs, server room isolations, and workshops
             </p>
           </div>
@@ -290,8 +290,8 @@ export default function SafetyEmergencyPage() {
 
       {/* Broadcast Modal / Form */}
       {isBroadcastModalOpen && (
-        <Card className="border-red-500/50 bg-[#0F1026] text-[#F4F1DE] shadow-2xl animate-in fade-in duration-200">
-          <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-red-950/30 flex flex-row items-center justify-between">
+        <Card className="border-red-500/50 bg-[#F4F5F6] text-[#202226] shadow-2xl animate-in fade-in duration-200">
+          <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-red-950/30 flex flex-row items-center justify-between">
             <CardTitle className="text-sm font-bold text-red-300 flex items-center gap-2 font-mono">
               <ShieldAlert className="h-5 w-5 text-red-400 animate-pulse" />
               <span>TRANSMIT EMERGENCY BROADCAST</span>
@@ -304,7 +304,7 @@ export default function SafetyEmergencyPage() {
             <form onSubmit={handleBroadcast} className="space-y-4 text-xs">
               {/* Alert Scope Selector */}
               <div className="space-y-1.5">
-                <label className="font-bold text-[#FFD700] uppercase font-mono text-[11px] block">
+                <label className="font-bold text-[#B45309] uppercase font-mono text-[11px] block">
                   1. Target Alert Scope &amp; Radius
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -313,8 +313,8 @@ export default function SafetyEmergencyPage() {
                     onClick={() => setScope('campus_wide')}
                     className={`p-2.5 rounded-lg border text-left flex flex-col gap-1 transition-all cursor-pointer ${
                       scope === 'campus_wide'
-                        ? 'border-red-500 bg-red-950/50 text-[#F4F1DE]'
-                        : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                        ? 'border-red-500 bg-red-950/50 text-[#202226]'
+                        : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
                     }`}
                   >
                     <div className="flex items-center gap-1.5 font-bold font-mono text-xs">
@@ -329,8 +329,8 @@ export default function SafetyEmergencyPage() {
                     onClick={() => setScope('building')}
                     className={`p-2.5 rounded-lg border text-left flex flex-col gap-1 transition-all cursor-pointer ${
                       scope === 'building'
-                        ? 'border-amber-500 bg-amber-950/50 text-[#F4F1DE]'
-                        : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                        ? 'border-amber-500 bg-amber-950/50 text-[#202226]'
+                        : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
                     }`}
                   >
                     <div className="flex items-center gap-1.5 font-bold font-mono text-xs">
@@ -345,8 +345,8 @@ export default function SafetyEmergencyPage() {
                     onClick={() => setScope('hostel')}
                     className={`p-2.5 rounded-lg border text-left flex flex-col gap-1 transition-all cursor-pointer ${
                       scope === 'hostel'
-                        ? 'border-orange-500 bg-orange-950/50 text-[#F4F1DE]'
-                        : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                        ? 'border-orange-500 bg-orange-950/50 text-[#202226]'
+                        : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
                     }`}
                   >
                     <div className="flex items-center gap-1.5 font-bold font-mono text-xs">
@@ -361,8 +361,8 @@ export default function SafetyEmergencyPage() {
                     onClick={() => setScope('department')}
                     className={`p-2.5 rounded-lg border text-left flex flex-col gap-1 transition-all cursor-pointer ${
                       scope === 'department'
-                        ? 'border-indigo-500 bg-indigo-950/50 text-[#F4F1DE]'
-                        : 'border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541]'
+                        ? 'border-indigo-500 bg-indigo-950/50 text-[#202226]'
+                        : 'border-[#D0D1D6] bg-white text-[#555960] hover:bg-[#E7E8EB]'
                     }`}
                   >
                     <div className="flex items-center gap-1.5 font-bold font-mono text-xs">
@@ -377,13 +377,13 @@ export default function SafetyEmergencyPage() {
               {/* Target Entity Selection if not campus_wide */}
               {scope !== 'campus_wide' && (
                 <div className="space-y-1.5 animate-in fade-in">
-                  <label className="font-bold text-[#FFD700] uppercase font-mono text-[11px] block">
+                  <label className="font-bold text-[#B45309] uppercase font-mono text-[11px] block">
                     Specific Destination:
                   </label>
                   <select
                     value={targetEntity}
                     onChange={(e) => setTargetEntity(e.target.value)}
-                    className="h-10 w-full rounded-md border border-[#243356] bg-[#131C38] px-3 text-xs text-[#F4F1DE] focus:border-[#D4AF37] focus:outline-none font-mono"
+                    className="h-10 w-full rounded-md border border-[#D0D1D6] bg-white px-3 text-xs text-[#202226] focus:border-[#EAB308] focus:outline-none font-mono"
                   >
                     {scope === 'building' &&
                       BUILDINGS.map((b) => (
@@ -409,7 +409,7 @@ export default function SafetyEmergencyPage() {
 
               {/* Headline */}
               <div className="space-y-1">
-                <label className="font-bold text-[#F4F1DE] uppercase font-mono text-[11px]">
+                <label className="font-bold text-[#202226] uppercase font-mono text-[11px]">
                   Alert Headline / Title
                 </label>
                 <Input
@@ -417,13 +417,13 @@ export default function SafetyEmergencyPage() {
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. FLASH CHEMICAL SPILL CONTAINMENT PROTOCOL"
                   required
-                  className="bg-[#131C38] border-[#243356] font-mono text-xs"
+                  className="bg-white border-[#D0D1D6] font-mono text-xs"
                 />
               </div>
 
               {/* Detailed Guidance */}
               <div className="space-y-1">
-                <label className="font-bold text-[#F4F1DE] uppercase font-mono text-[11px]">
+                <label className="font-bold text-[#202226] uppercase font-mono text-[11px]">
                   Operational Directive &amp; Instructions
                 </label>
                 <textarea
@@ -431,7 +431,7 @@ export default function SafetyEmergencyPage() {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Clear instructions: Seal room doors, avoid corridor B, report to assembly point..."
                   rows={3}
-                  className="w-full rounded-md border border-[#243356] bg-[#131C38] p-3 text-xs text-[#F4F1DE] placeholder:text-[#7A786B] focus:border-[#D4AF37] focus:outline-none"
+                  className="w-full rounded-md border border-[#D0D1D6] bg-white p-3 text-xs text-[#202226] placeholder:text-[#8A9199] focus:border-[#EAB308] focus:outline-none"
                   required
                 />
               </div>
@@ -439,13 +439,13 @@ export default function SafetyEmergencyPage() {
               {/* Protocol Type & Severity */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="font-bold text-[#F4F1DE] uppercase font-mono text-[11px]">
+                  <label className="font-bold text-[#202226] uppercase font-mono text-[11px]">
                     Emergency Classification
                   </label>
                   <select
                     value={alertType}
                     onChange={(e) => setAlertType(e.target.value as AlertType)}
-                    className="h-10 w-full rounded-md border border-[#243356] bg-[#131C38] px-2 text-xs text-[#F4F1DE] focus:border-[#D4AF37] focus:outline-none font-mono"
+                    className="h-10 w-full rounded-md border border-[#D0D1D6] bg-white px-2 text-xs text-[#202226] focus:border-[#EAB308] focus:outline-none font-mono"
                   >
                     <option value="lockdown">Campus Lockdown</option>
                     <option value="evacuation">Evacuation Directive</option>
@@ -457,13 +457,13 @@ export default function SafetyEmergencyPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="font-bold text-[#F4F1DE] uppercase font-mono text-[11px]">
+                  <label className="font-bold text-[#202226] uppercase font-mono text-[11px]">
                     Urgency Tier
                   </label>
                   <select
                     value={severity}
                     onChange={(e) => setSeverity(e.target.value as IncidentSeverity)}
-                    className="h-10 w-full rounded-md border border-[#243356] bg-[#131C38] px-2 text-xs text-[#F4F1DE] focus:border-[#D4AF37] focus:outline-none font-mono"
+                    className="h-10 w-full rounded-md border border-[#D0D1D6] bg-white px-2 text-xs text-[#202226] focus:border-[#EAB308] focus:outline-none font-mono"
                   >
                     <option value="critical">CRITICAL (Immediate Threat to Life)</option>
                     <option value="high">HIGH (Urgent Containment)</option>
@@ -473,13 +473,13 @@ export default function SafetyEmergencyPage() {
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#243356]">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
                   onClick={() => setIsBroadcastModalOpen(false)}
-                  className="border-[#243356] text-xs"
+                  className="border-[#D0D1D6] text-xs"
                 >
                   Cancel
                 </Button>
@@ -501,38 +501,38 @@ export default function SafetyEmergencyPage() {
       {/* Emergency Broadcast History & Active Feed */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-[#F4F1DE] uppercase tracking-wider font-mono flex items-center gap-2">
-            <History className="h-4 w-4 text-[#FFD700]" />
+          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider font-mono flex items-center gap-2">
+            <History className="h-4 w-4 text-[#B45309]" />
             <span>Emergency Broadcast History &amp; Active Feed ({alerts.length})</span>
           </h2>
-          <span className="text-[11px] font-mono text-[#C5A059]">REAL-TIME AUDIT TRAIL</span>
+          <span className="text-[11px] font-mono text-[#B45309]">REAL-TIME AUDIT TRAIL</span>
         </div>
 
         {alerts.length === 0 ? (
-          <Card className="p-8 text-center bg-[#0F1026] border-[#243356] text-[#B8B5A3] font-mono text-xs">
+          <Card className="p-8 text-center bg-[#F4F5F6] border-[#D0D1D6] text-[#555960] font-mono text-xs">
             No active emergency alerts recorded. All sectors in normal operating posture.
           </Card>
         ) : (
           alerts.map((alert) => (
             <Card
               key={alert.id}
-              className={`border-l-4 transition-all bg-[#0F1026] text-[#F4F1DE] ${
+              className={`border-l-4 transition-all bg-[#F4F5F6] text-[#202226] ${
                 alert.severity === 'critical'
-                  ? 'border-l-red-500 border-[#243356]'
+                  ? 'border-l-red-500 border-[#D0D1D6]'
                   : alert.severity === 'high'
-                  ? 'border-l-amber-500 border-[#243356]'
-                  : 'border-l-blue-500 border-[#243356]'
+                  ? 'border-l-amber-500 border-[#D0D1D6]'
+                  : 'border-l-blue-500 border-[#D0D1D6]'
               }`}
             >
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-2 flex-wrap">
                     <SeverityBadge severity={alert.severity} size="sm" />
-                    <span className="rounded bg-[#131C38] border border-[#243356] px-2 py-0.5 text-[10px] font-bold uppercase font-mono text-[#FFD700]">
+                    <span className="rounded bg-white border border-[#D0D1D6] px-2 py-0.5 text-[10px] font-bold uppercase font-mono text-[#B45309]">
                       {alert.scope ? alert.scope.replace('_', ' ') : 'CAMPUS WIDE'}
                     </span>
                     {alert.target_entity && (
-                      <span className="rounded bg-[#1C2541] border border-[#243356] px-2 py-0.5 text-[10px] font-mono text-[#C5A059]">
+                      <span className="rounded bg-[#E7E8EB] border border-[#D0D1D6] px-2 py-0.5 text-[10px] font-mono text-[#B45309]">
                         Target: {alert.target_entity}
                       </span>
                     )}
@@ -543,17 +543,17 @@ export default function SafetyEmergencyPage() {
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] text-[#C5A059] font-mono">
+                  <span className="text-[11px] text-[#B45309] font-mono">
                     {formatTimeAgo(alert.created_at)}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-bold text-[#F4F1DE]">{alert.title}</h3>
-                  <p className="text-xs text-[#B8B5A3] mt-1 leading-relaxed">{alert.message}</p>
+                  <h3 className="text-sm font-bold text-[#202226]">{alert.title}</h3>
+                  <p className="text-xs text-[#555960] mt-1 leading-relaxed">{alert.message}</p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#C5A059] pt-2 border-t border-[#243356] font-mono">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#B45309] pt-2 border-t border-[#D0D1D6] font-mono">
                   <span>Authorized by: {alert.created_by}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-emerald-400">Pushed to Mobile App, SMS Mesh &amp; IoT Alarms</span>
@@ -561,7 +561,7 @@ export default function SafetyEmergencyPage() {
                       size="sm"
                       variant="outline"
                       onClick={() => dismissAlert(alert.id)}
-                      className="h-6 text-[10px] border-[#243356] text-[#F4F1DE]"
+                      className="h-6 text-[10px] border-[#D0D1D6] text-[#202226]"
                     >
                       Dismiss Alert
                     </Button>

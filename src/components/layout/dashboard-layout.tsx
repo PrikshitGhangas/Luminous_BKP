@@ -16,9 +16,10 @@ import Link from 'next/link';
 import { AcademicProvider } from '@/lib/context/academic-context';
 import { CampusServicesProvider } from '@/lib/context/campus-services-context';
 import { CampusShieldCopilot } from '@/components/copilot/campus-shield-copilot';
+import { DemoModeBanner } from '@/components/shared/demo-mode-banner';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { isLoading } = useAuth();
+  const { isLoading, isDemoMode } = useAuth();
   const { role, roleMeta, canAccess } = useRole();
   const pathname = usePathname();
   const router = useRouter();
@@ -27,7 +28,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-[#0B132B]">
+      <div className="flex h-screen w-screen items-center justify-center bg-[#F1F2F0]">
         <LoadingSpinner text="Authenticating Luminous AI..." />
       </div>
     );
@@ -38,7 +39,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <AcademicProvider>
       <CampusServicesProvider>
-        <div className="min-h-screen bg-[#0B132B] text-[#F4F1DE] antialiased font-sans">
+        <div className="min-h-screen bg-[#F1F2F0] text-[#1F2933] antialiased font-sans">
           {/* Desktop Sidebar */}
           <div className="hidden md:block">
             <Sidebar
@@ -51,7 +52,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {isMobileMenuOpen && (
             <div className="fixed inset-0 z-50 md:hidden">
               <div
-                className="fixed inset-0 bg-black/70 backdrop-blur-xs"
+                className="fixed inset-0 bg-black/40 backdrop-blur-xs"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
               <div className="relative z-50 h-full w-72">
@@ -72,29 +73,30 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           >
             <Topbar onToggleMobileMenu={() => setIsMobileMenuOpen(true)} />
             <AlertBanner />
+            {isDemoMode && <DemoModeBanner />}
             <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
               {!isAllowed ? (
-                <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6 bg-[#0F1026] border border-red-500/30 rounded-2xl shadow-2xl space-y-5 max-w-2xl mx-auto my-8">
-                  <div className="h-16 w-16 rounded-full bg-red-950/80 border-2 border-red-500/60 flex items-center justify-center text-red-400 shadow-xl shadow-red-900/40 animate-pulse">
+                <div className="flex flex-col items-center justify-center min-h-[60vh] text-center p-6 bg-white border border-[#C94C4C]/40 rounded-2xl shadow-sm space-y-5 max-w-2xl mx-auto my-8">
+                  <div className="h-16 w-16 rounded-full bg-[#C94C4C]/10 border-2 border-[#C94C4C]/40 flex items-center justify-center text-[#C94C4C]">
                     <ShieldAlert className="h-8 w-8" />
                   </div>
 
                   <div className="space-y-2">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono font-bold">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C94C4C]/10 border border-[#C94C4C]/30 text-[#C94C4C] text-xs font-bold">
                       <span>RBAC RESTRICTION • HTTP 403 FORBIDDEN</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-[#F4F1DE] font-mono">
+                    <h2 className="text-2xl font-bold text-[#1F2933]">
                       CLEARANCE LEVEL INSUFFICIENT
                     </h2>
-                    <p className="text-xs sm:text-sm text-[#B8B5A3] max-w-md mx-auto">
+                    <p className="text-xs sm:text-sm text-[#667085] max-w-md mx-auto">
                       Your active persona ({roleMeta?.name || role}) does not have security authorization to access{' '}
-                      <code className="text-[#FFD700] bg-[#1C2541] px-1.5 py-0.5 rounded font-mono">{pathname}</code>.
+                      <code className="text-[#8a6d1a] bg-[#F7F8F6] px-1.5 py-0.5 rounded">{pathname}</code>.
                     </p>
                   </div>
 
                   {role === 'security' && (
-                    <div className="bg-[#131C38] border border-[#243356] rounded-xl p-3.5 text-xs text-left max-w-md text-[#B8B5A3] space-y-1 font-mono">
-                      <div className="font-bold text-[#FFD700] flex items-center gap-1.5">
+                    <div className="bg-[#F7F8F6] border border-[#D6D8D5] rounded-xl p-3.5 text-xs text-left max-w-md text-[#667085] space-y-1">
+                      <div className="font-bold text-[#8a6d1a] flex items-center gap-1.5">
                         <UserCheck className="h-4 w-4" />
                         <span>Security Officer Protocol Notice:</span>
                       </div>
@@ -109,21 +111,21 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       variant="outline"
                       size="sm"
                       onClick={() => router.back()}
-                      className="text-xs gap-1.5 border-[#243356]"
+                      className="text-xs gap-1.5"
                     >
                       <ArrowLeft className="h-3.5 w-3.5" />
                       <span>Go Back</span>
                     </Button>
 
                     {role === 'security' ? (
-                      <Button asChild size="sm" className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs gap-1.5">
+                      <Button asChild size="sm" className="gap-1.5">
                         <Link href="/security">
                           <Radio className="h-3.5 w-3.5" />
                           <span>Open Security Desk</span>
                         </Link>
                       </Button>
                     ) : (
-                      <Button asChild size="sm" className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs gap-1.5">
+                      <Button asChild size="sm" className="gap-1.5">
                         <Link href={roleMeta?.defaultPath || '/safety/sos'}>
                           <HeartPulse className="h-3.5 w-3.5" />
                           <span>Return to Authorized Portal</span>

@@ -382,72 +382,72 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          'fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#C5A059] to-[#FFD700] px-4 py-3 text-xs font-bold text-[#0B132B] shadow-2xl shadow-[#D4AF37]/30 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-[#FFD700]/80 group',
+          'fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#EAB308] via-[#D4AF37] to-[#C5A059] px-4 py-3 text-xs font-bold text-white shadow-lg shadow-[#D4AF37]/30 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-[#EAB308]/80',
           isOpen ? 'hidden' : 'flex'
         )}
         aria-label="Open CampusShield AI Copilot"
       >
-        <div className="relative flex h-6 w-6 items-center justify-center rounded-full bg-[#0B132B] text-[#FFD700]">
+        <div className="relative flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#B45309]">
           <Sparkles className="h-3.5 w-3.5 animate-pulse" />
-          <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-[#0B132B]" />
+          <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-[#10B981] ring-2 ring-white" />
         </div>
         <div className="flex flex-col text-left">
-          <span className="font-mono tracking-wider font-extrabold text-[11px] leading-tight">
+          <span className="tracking-wider font-extrabold text-[11px] leading-tight text-[#202226]">
             CAMPUSSHIELD COPILOT
           </span>
-          <span className="text-[9px] font-sans opacity-80 font-semibold">
+          <span className="text-[9px] font-sans opacity-80 font-semibold text-[#202226]">
             Gemini 3.7 Flash • RBAC Guard
           </span>
         </div>
-        <kbd className="hidden lg:inline-flex items-center gap-0.5 rounded bg-[#0B132B]/20 px-1.5 py-0.5 text-[9px] font-mono font-bold text-[#0B132B]">
+        <kbd className="hidden lg:inline-flex items-center gap-0.5 rounded bg-white/80 px-1.5 py-0.5 text-[9px] font-bold text-[#202226]">
           ⌘K
         </kbd>
       </button>
 
       {/* Slide-over Drawer / Copilot Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end sm:p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end sm:p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-200">
           <div
             className={cn(
-              'flex flex-col bg-[#0B132B] border border-[#D4AF37]/40 shadow-2xl rounded-t-2xl sm:rounded-2xl text-[#F4F1DE] transition-all duration-300 w-full overflow-hidden',
+              'flex flex-col bg-white border border-[#D0D1D6] shadow-2xl rounded-t-2xl sm:rounded-2xl text-[#202226] transition-all duration-300 w-full overflow-hidden',
               isExpanded
                 ? 'sm:w-[900px] h-[92vh]'
                 : 'sm:w-[540px] h-[85vh] max-h-[750px]'
             )}
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between border-b border-[#243356] bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-3.5 sm:px-5">
+            <div className="flex items-center justify-between border-b border-[#D0D1D6] bg-gradient-to-r from-[#FEFCE8] via-white to-white p-3.5 sm:px-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#FFD700] shadow-md shadow-[#D4AF37]/10">
-                  <Sparkles className="h-5 w-5 text-[#FFD700]" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#EAB308]/15 border border-[#EAB308]/40 text-[#B45309]">
+                  <Sparkles className="h-5 w-5 text-[#B45309]" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-mono font-bold text-sm text-[#F4F1DE] tracking-wide">
-                      CAMPUSSHIELD AI COPILOT
+                    <h3 className="font-bold text-sm text-[#202226] tracking-wide">
+                      CampusShield AI Copilot
                     </h3>
-                    <span className="inline-flex items-center gap-1 rounded bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2 py-0.5 text-[10px] font-mono font-bold text-[#FFD700]">
+                    <span className="inline-flex items-center gap-1 rounded bg-[#FEF3C7] border border-[#EAB308]/40 px-2 py-0.5 text-[10px] font-bold text-[#B45309]">
                       <Cpu className="h-2.5 w-2.5" />
                       Gemini 3.7 Flash
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-[10px] text-[#B8B5A3] font-mono mt-0.5">
-                    <span className="flex items-center gap-1 text-emerald-400 font-bold">
+                  <div className="flex items-center gap-2 text-[10px] text-[#555960] mt-0.5">
+                    <span className="flex items-center gap-1 text-[#067a4f] font-bold">
                       <ShieldCheck className="h-3 w-3" />
                       Server RBAC Enforced
                     </span>
                     <span>•</span>
-                    <span className="text-[#C5A059]">Zero Arbitrary SQL</span>
+                    <span className="text-[#555960]">Zero Arbitrary SQL</span>
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center gap-1">
                 {/* Active Persona Pill */}
-                <div className="hidden sm:flex items-center gap-1.5 rounded-lg bg-[#1C2541] border border-[#243356] px-2.5 py-1 text-[11px] font-mono">
-                  <span className="h-2 w-2 rounded-full bg-[#FFD700]" />
-                  <span className="text-[#B8B5A3]">Role:</span>
-                  <span className="font-bold text-[#FFD700] uppercase">
+                <div className="hidden sm:flex items-center gap-1.5 rounded-lg bg-[#E7E8EB] border border-[#D0D1D6] px-2.5 py-1 text-[11px]">
+                  <span className="h-2 w-2 rounded-full bg-[#EAB308]" />
+                  <span className="text-[#555960]">Role:</span>
+                  <span className="font-bold text-[#B45309] uppercase">
                     {roleMeta?.label || role}
                   </span>
                 </div>
@@ -455,7 +455,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                 {/* Expand / Minimize Window */}
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="hidden sm:flex h-8 w-8 items-center justify-center rounded-lg text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] transition-colors"
+                  className="hidden sm:flex h-8 w-8 items-center justify-center rounded-lg text-[#555960] hover:bg-[#E7E8EB] hover:text-[#202226] transition-colors"
                   aria-label={isExpanded ? 'Minimize' : 'Expand'}
                 >
                   {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
@@ -464,7 +464,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                 {/* Close Button */}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-[#B8B5A3] hover:bg-red-950 hover:text-red-400 hover:border hover:border-red-500/40 transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg text-[#555960] hover:bg-[#FEE2E2] hover:text-[#DC2626] hover:border hover:border-[#DC2626]/40 transition-colors"
                   aria-label="Close"
                 >
                   <X className="h-4 w-4" />
@@ -473,14 +473,14 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
             </div>
 
             {/* Navigation Tabs (Chat vs Security Sandbox Tests) */}
-            <div className="flex items-center border-b border-[#243356] bg-[#0F1026] px-4 text-xs font-mono">
+            <div className="flex items-center border-b border-[#D0D1D6] bg-white px-4 text-xs font-bold">
               <button
                 onClick={() => setActiveTab('chat')}
                 className={cn(
-                  'flex items-center gap-2 py-2.5 px-3 border-b-2 font-bold transition-all cursor-pointer',
+                  'flex items-center gap-2 py-2.5 px-3 border-b-2 transition-all cursor-pointer',
                   activeTab === 'chat'
-                    ? 'border-[#FFD700] text-[#FFD700]'
-                    : 'border-transparent text-[#B8B5A3] hover:text-[#F4F1DE]'
+                    ? 'border-[#EAB308] text-[#B45309]'
+                    : 'border-transparent text-[#555960] hover:text-[#202226]'
                 )}
               >
                 <Terminal className="h-3.5 w-3.5" />
@@ -490,15 +490,15 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
               <button
                 onClick={() => setActiveTab('tests')}
                 className={cn(
-                  'flex items-center gap-2 py-2.5 px-3 border-b-2 font-bold transition-all cursor-pointer',
+                  'flex items-center gap-2 py-2.5 px-3 border-b-2 transition-all cursor-pointer',
                   activeTab === 'tests'
-                    ? 'border-[#FFD700] text-[#FFD700]'
-                    : 'border-transparent text-[#B8B5A3] hover:text-[#F4F1DE]'
+                    ? 'border-[#EAB308] text-[#B45309]'
+                    : 'border-transparent text-[#555960] hover:text-[#202226]'
                 )}
               >
-                <ShieldAlert className="h-3.5 w-3.5 text-amber-400" />
+                <ShieldAlert className="h-3.5 w-3.5 text-[#B7791F]" />
                 <span>Security Clearance Tests (RBAC Sandbox)</span>
-                <span className="rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 px-1.5 py-0.2 text-[9px]">
+                <span className="rounded-full bg-[#FEF3C7] text-[#B45309] border border-[#EAB308]/40 px-1.5 py-0.2 text-[9px]">
                   {TEST_PRESETS.length}
                 </span>
               </button>
@@ -518,21 +518,21 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                       )}
                     >
                       {/* Caller Header */}
-                      <div className="flex items-center gap-2 text-[10px] font-mono text-[#B8B5A3] px-1">
+                      <div className="flex items-center gap-2 text-[10px] text-[#555960] px-1">
                         {msg.role === 'user' ? (
                           <>
                             <span>{msg.timestamp}</span>
-                            <span className="text-[#FFD700] font-bold">
+                            <span className="text-[#B45309] font-bold">
                               YOU ({msg.simulatedRole?.toUpperCase() || role?.toUpperCase()})
                             </span>
-                            <User className="h-3 w-3 text-[#C5A059]" />
+                            <User className="h-3 w-3 text-[#555960]" />
                           </>
                         ) : (
                           <>
-                            <Sparkles className="h-3 w-3 text-[#FFD700]" />
-                            <span className="text-[#FFD700] font-bold">CAMPUSSHIELD AI</span>
+                            <Sparkles className="h-3 w-3 text-[#B45309]" />
+                            <span className="text-[#B45309] font-bold">CAMPUSSHIELD AI</span>
                             {msg.executionTimeMs && (
-                              <span className="text-[9px] text-[#7A786B]">
+                              <span className="text-[9px] text-[#8A9199]">
                                 ({msg.executionTimeMs}ms • Gemini 3.7 Flash)
                               </span>
                             )}
@@ -543,10 +543,10 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                       {/* Message Bubble */}
                       <div
                         className={cn(
-                          'max-w-[90%] rounded-2xl p-3.5 text-xs leading-relaxed whitespace-pre-wrap font-sans',
+                          'max-w-[90%] rounded-2xl p-3.5 text-xs leading-relaxed whitespace-pre-wrap',
                           msg.role === 'user'
-                            ? 'bg-[#1C2541] border border-[#D4AF37]/40 text-[#F4F1DE] rounded-tr-none'
-                            : 'bg-[#131C38] border border-[#243356] text-[#F4F1DE] rounded-tl-none shadow-lg'
+                            ? 'bg-[#E7E8EB] border border-[#D0D1D6] text-[#202226] rounded-tr-none'
+                            : 'bg-white border border-[#D0D1D6] text-[#202226] rounded-tl-none shadow-sm'
                         )}
                       >
                         {msg.content}
@@ -554,68 +554,68 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
 
                       {/* Tool Execution & RBAC Visualizer Trace (If tool was called) */}
                       {msg.toolTrace && (
-                        <div className="w-full max-w-[90%] mt-1.5 rounded-xl border border-[#243356] bg-[#0F1026] p-3 text-[11px] font-mono space-y-2">
+                        <div className="w-full max-w-[90%] mt-1.5 rounded-xl border border-[#D0D1D6] bg-white p-3 text-[11px] space-y-2">
                           <button
                             onClick={() =>
                               setExpandedTraceId(
                                 expandedTraceId === msg.id ? null : msg.id
                               )
                             }
-                            className="w-full flex items-center justify-between text-left cursor-pointer hover:text-[#FFD700] transition-colors"
+                            className="w-full flex items-center justify-between text-left cursor-pointer hover:text-[#202226] transition-colors"
                           >
                             <div className="flex items-center gap-2">
                               {msg.toolTrace.authorized ? (
-                                <div className="flex items-center gap-1 text-emerald-400 font-bold">
+                                <div className="flex items-center gap-1 text-[#067a4f] font-bold">
                                   <CheckCircle2 className="h-3.5 w-3.5" />
                                   <span>SERVER AUTHORIZATION: GRANTED</span>
                                 </div>
                               ) : (
-                                <div className="flex items-center gap-1 text-red-400 font-bold">
+                                <div className="flex items-center gap-1 text-[#DC2626] font-bold">
                                   <XCircle className="h-3.5 w-3.5" />
                                   <span>SERVER AUTHORIZATION: REJECTED (HTTP 403)</span>
                                 </div>
                               )}
-                              <span className="text-[#7A786B]">|</span>
-                              <span className="text-[#FFD700] font-bold">
+                              <span className="text-[#8A9199]">|</span>
+                              <span className="text-[#B45309] font-bold">
                                 {msg.toolTrace.toolName}()
                               </span>
                             </div>
                             {expandedTraceId === msg.id ? (
-                              <ChevronUp className="h-3.5 w-3.5 text-[#B8B5A3]" />
+                              <ChevronUp className="h-3.5 w-3.5 text-[#8A9199]" />
                             ) : (
-                              <ChevronDown className="h-3.5 w-3.5 text-[#B8B5A3]" />
+                              <ChevronDown className="h-3.5 w-3.5 text-[#8A9199]" />
                             )}
                           </button>
 
                           {/* Expanded 5-Step Architecture Trace */}
                           {expandedTraceId === msg.id && (
-                            <div className="pt-2 border-t border-[#243356] space-y-2 text-[10px] text-[#B8B5A3]">
+                            <div className="pt-2 border-t border-[#D0D1D6] space-y-2 text-[10px] text-[#555960]">
                               <div className="grid grid-cols-1 gap-1.5">
-                                <div className="flex items-start gap-2 bg-[#0B132B] p-2 rounded border border-[#243356]">
-                                  <span className="font-bold text-[#FFD700] shrink-0">1. User Query:</span>
-                                  <span className="text-[#F4F1DE]">Verified session as {msg.simulatedRole?.toUpperCase() || role}</span>
+                                <div className="flex items-start gap-2 bg-[#F4F5F6] p-2 rounded border border-[#D0D1D6]">
+                                  <span className="font-bold text-[#B45309] shrink-0">1. User Query:</span>
+                                  <span className="text-[#202226]">Verified session as {msg.simulatedRole?.toUpperCase() || role}</span>
                                 </div>
 
-                                <div className="flex items-start gap-2 bg-[#0B132B] p-2 rounded border border-[#243356]">
-                                  <span className="font-bold text-[#FFD700] shrink-0">2. Gemini Tool:</span>
-                                  <code className="text-[#C5A059]">{msg.toolTrace.toolName}()</code>
+                                <div className="flex items-start gap-2 bg-[#F4F5F6] p-2 rounded border border-[#D0D1D6]">
+                                  <span className="font-bold text-[#B45309] shrink-0">2. Gemini Tool:</span>
+                                  <code className="text-[#555960]">{msg.toolTrace.toolName}()</code>
                                 </div>
 
-                                <div className="flex items-start gap-2 bg-[#0B132B] p-2 rounded border border-[#243356]">
-                                  <span className="font-bold text-[#FFD700] shrink-0">3. Server RBAC:</span>
-                                  <span className={msg.toolTrace.authorized ? 'text-emerald-400 font-bold' : 'text-red-400 font-bold'}>
+                                <div className="flex items-start gap-2 bg-[#F4F5F6] p-2 rounded border border-[#D0D1D6]">
+                                  <span className="font-bold text-[#B45309] shrink-0">3. Server RBAC:</span>
+                                  <span className={msg.toolTrace.authorized ? 'text-[#067a4f] font-bold' : 'text-[#DC2626] font-bold'}>
                                     {msg.toolTrace.authorized ? 'PASSED — Role & Entity Authorized' : msg.toolTrace.error}
                                   </span>
                                 </div>
 
-                                <div className="flex items-start gap-2 bg-[#0B132B] p-2 rounded border border-[#243356]">
-                                  <span className="font-bold text-[#FFD700] shrink-0">4. Data Query:</span>
-                                  <span className="text-[#B8B5A3]">Controlled Application Data Function (Zero SQL)</span>
+                                <div className="flex items-start gap-2 bg-[#F4F5F6] p-2 rounded border border-[#D0D1D6]">
+                                  <span className="font-bold text-[#B45309] shrink-0">4. Data Query:</span>
+                                  <span className="text-[#555960]">Controlled Application Data Function (Zero SQL)</span>
                                 </div>
 
-                                <div className="flex items-start gap-2 bg-[#0B132B] p-2 rounded border border-[#243356]">
-                                  <span className="font-bold text-[#FFD700] shrink-0">5. Synthesis:</span>
-                                  <span className="text-[#F4F1DE]">Grounded Gemini 3.7 Flash Natural Language Synthesis</span>
+                                <div className="flex items-start gap-2 bg-[#F4F5F6] p-2 rounded border border-[#D0D1D6]">
+                                  <span className="font-bold text-[#B45309] shrink-0">5. Synthesis:</span>
+                                  <span className="text-[#202226]">Grounded Gemini 3.7 Flash Natural Language Synthesis</span>
                                 </div>
                               </div>
                             </div>
@@ -626,7 +626,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                   ))}
 
                   {isLoading && (
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#FFD700] animate-pulse p-2 bg-[#131C38] rounded-xl border border-[#243356] w-fit">
+                    <div className="flex items-center gap-2 text-xs text-[#B45309] animate-pulse p-2 bg-[#FEFCE8] rounded-xl border border-[#EAB308]/40 w-fit">
                       <Sparkles className="h-3.5 w-3.5 animate-spin" />
                       <span>Gemini 3.7 Flash evaluating tool calling &amp; server authorization...</span>
                     </div>
@@ -636,15 +636,15 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                 </div>
 
                 {/* Quick Suggestion Chips */}
-                <div className="border-t border-[#243356] bg-[#0F1026]/90 p-2.5">
+                <div className="border-t border-[#D0D1D6] bg-white p-2.5">
                   <div className="flex items-center justify-between mb-1.5 px-1">
-                    <span className="text-[10px] font-mono text-[#C5A059] uppercase font-bold flex items-center gap-1">
+                    <span className="text-[10px] text-[#555960] uppercase font-bold flex items-center gap-1">
                       <HelpCircle className="h-3 w-3" />
                       Suggested Prompts ({roleMeta?.label || role}):
                     </span>
                     <button
                       onClick={() => setMessages([messages[0]])}
-                      className="text-[10px] font-mono text-[#B8B5A3] hover:text-[#FFD700] flex items-center gap-1"
+                      className="text-[10px] text-[#555960] hover:text-[#202226] flex items-center gap-1"
                     >
                       <RotateCcw className="h-2.5 w-2.5" />
                       Clear Chat
@@ -655,7 +655,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                       <button
                         key={idx}
                         onClick={() => handleSendMessage(prompt)}
-                        className="shrink-0 rounded-lg border border-[#243356] bg-[#131C38] px-2.5 py-1 text-[11px] text-[#B8B5A3] hover:border-[#D4AF37] hover:text-[#FFD700] hover:bg-[#1C2541] transition-all cursor-pointer text-left"
+                        className="shrink-0 rounded-lg border border-[#D0D1D6] bg-white px-2.5 py-1 text-[11px] text-[#555960] hover:border-[#EAB308] hover:text-[#B45309] hover:bg-[#FEFCE8] transition-all cursor-pointer text-left"
                       >
                         {prompt}
                       </button>
@@ -664,7 +664,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                 </div>
 
                 {/* Input Bar */}
-                <div className="border-t border-[#243356] bg-[#0B132B] p-3">
+                <div className="border-t border-[#D0D1D6] bg-white p-3">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -677,12 +677,12 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                       onChange={(e) => setInputQuery(e.target.value)}
                       placeholder={`Ask CampusShield AI (${roleMeta?.label || role} clearance)...`}
                       disabled={isLoading}
-                      className="h-10 bg-[#0F1026] border-[#243356] text-xs text-[#F4F1DE] focus:border-[#D4AF37] placeholder:text-[#7A786B]"
+                      className="h-10 bg-white border-[#D0D1D6] text-xs text-[#202226] focus:border-[#EAB308] placeholder:text-[#8A9199]"
                     />
                     <Button
                       type="submit"
                       disabled={isLoading || !inputQuery.trim()}
-                      className="h-10 bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold px-4 gap-1.5 shrink-0"
+                      className="h-10 bg-[#EAB308] hover:bg-[#D4AF37] text-[#202226] font-bold px-4 gap-1.5 shrink-0"
                     >
                       <Send className="h-3.5 w-3.5" />
                       <span className="hidden sm:inline">Ask</span>
@@ -695,13 +695,13 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
             {/* TAB 2: RBAC Security Sandbox Tests */}
             {activeTab === 'tests' && (
               <div className="flex flex-col flex-1 overflow-hidden p-4 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#243356] pb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D0D1D6] pb-3">
                   <div>
-                    <h4 className="font-mono font-bold text-sm text-[#F4F1DE] flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-[#FFD700]" />
+                    <h4 className="font-bold text-sm text-[#202226] flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-[#B45309]" />
                       <span>Zero-Trust RBAC Verification Test Runner</span>
                     </h4>
-                    <p className="text-[11px] text-[#B8B5A3]">
+                    <p className="text-[11px] text-[#555960]">
                       Execute simulated security boundary tests across Student, Parent, Security, and Administrator roles.
                     </p>
                   </div>
@@ -710,7 +710,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                     onClick={runAllSecurityTests}
                     disabled={isRunningAllTests}
                     size="sm"
-                    className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs gap-1.5"
+                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#202226] font-bold text-xs gap-1.5"
                   >
                     <Play className="h-3.5 w-3.5" />
                     <span>{isRunningAllTests ? 'Running Suite...' : 'Run All Tests'}</span>
@@ -729,28 +729,28 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                         className={cn(
                           'rounded-xl border p-3.5 space-y-2 transition-all',
                           isDeniedType
-                            ? 'border-red-500/30 bg-red-950/10'
-                            : 'border-emerald-500/30 bg-emerald-950/10'
+                            ? 'border-[#DC2626]/30 bg-[#FEF2F2]'
+                            : 'border-[#10B981]/30 bg-[#F0FDF9]'
                         )}
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="space-y-1">
-                            <div className="flex items-center gap-2 font-mono text-[10px]">
+                            <div className="flex items-center gap-2 text-[10px]">
                               <span
                                 className={cn(
                                   'px-2 py-0.5 rounded font-bold uppercase',
                                   isDeniedType
-                                    ? 'bg-red-500/20 text-red-400 border border-red-500/40'
-                                    : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                                    ? 'bg-[#FEE2E2] text-[#DC2626] border border-[#DC2626]/40'
+                                    : 'bg-[#D1FAE5] text-[#067a4f] border border-[#10B981]/40'
                                 )}
                               >
                                 {test.category}
                               </span>
-                              <span className="text-[#B8B5A3]">
-                                Caller Persona: <strong className="text-[#FFD700] uppercase">{test.simulatedRole}</strong>
+                              <span className="text-[#555960]">
+                                Caller Persona: <strong className="text-[#B45309] uppercase">{test.simulatedRole}</strong>
                               </span>
                             </div>
-                            <h5 className="font-bold text-xs text-[#F4F1DE] font-mono">
+                            <h5 className="font-bold text-xs text-[#202226]">
                               {test.title}
                             </h5>
                           </div>
@@ -759,43 +759,43 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
                             onClick={() => runTestPreset(test)}
                             size="sm"
                             variant="outline"
-                            className="border-[#243356] hover:border-[#D4AF37] hover:text-[#FFD700] text-[11px] gap-1 h-7 font-mono shrink-0"
+                            className="border-[#D0D1D6] hover:border-[#EAB308] hover:text-[#B45309] text-[11px] gap-1 h-7 shrink-0"
                           >
-                            <Play className="h-3 w-3 text-[#FFD700]" />
+                            <Play className="h-3 w-3 text-[#B45309]" />
                             <span>Test in Chat</span>
                           </Button>
                         </div>
 
-                        <div className="bg-[#0B132B] rounded-lg p-2.5 border border-[#243356] font-mono text-[11px] text-[#F4F1DE]">
-                          <span className="text-[#C5A059] block text-[10px] uppercase">Query:</span>
+                        <div className="bg-[#F4F5F6] rounded-lg p-2.5 border border-[#D0D1D6] text-[11px] text-[#202226]">
+                          <span className="text-[#555960] block text-[10px] uppercase">Query:</span>
                           &ldquo;{test.prompt}&rdquo;
                         </div>
 
-                        <div className="flex items-center justify-between text-[10px] text-[#B8B5A3] font-mono">
-                          <span>Target Entity: <code className="text-[#FFD700]">{test.testEntity}</code></span>
-                          <span>Expected Outcome: <strong className={isDeniedType ? 'text-red-400' : 'text-emerald-400'}>{test.expectedOutcome}</strong></span>
+                        <div className="flex items-center justify-between text-[10px] text-[#555960]">
+                          <span>Target Entity: <code className="text-[#B45309]">{test.testEntity}</code></span>
+                          <span>Expected Outcome: <strong className={isDeniedType ? 'text-[#DC2626]' : 'text-[#067a4f]'}>{test.expectedOutcome}</strong></span>
                         </div>
 
                         {result && (
                           <div
                             className={cn(
-                              'mt-2 p-2 rounded border font-mono text-[10px] flex items-center justify-between',
+                              'mt-2 p-2 rounded border text-[10px] flex items-center justify-between',
                               result.passed
-                                ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300'
-                                : 'bg-red-950/40 border-red-500/40 text-red-300'
+                                ? 'bg-[#D1FAE5] border-[#10B981]/40 text-[#067a4f]'
+                                : 'bg-[#FEE2E2] border-[#DC2626]/40 text-[#DC2626]'
                             )}
                           >
                             <div className="flex items-center gap-1.5">
                               {result.passed ? (
-                                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                                <CheckCircle2 className="h-3.5 w-3.5 text-[#10B981]" />
                               ) : (
-                                <XCircle className="h-3.5 w-3.5 text-red-400" />
+                                <XCircle className="h-3.5 w-3.5 text-[#DC2626]" />
                               )}
                               <span>
                                 {result.passed ? 'TEST PASSED — Server Boundary Strictly Enforced' : 'TEST FAILED'}
                               </span>
                             </div>
-                            <span className="text-[9px] text-[#B8B5A3] truncate max-w-[200px]">
+                            <span className="text-[9px] text-[#555960] truncate max-w-[200px]">
                               {result.output}
                             </span>
                           </div>

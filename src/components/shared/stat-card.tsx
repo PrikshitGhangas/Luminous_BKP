@@ -25,35 +25,35 @@ export function StatCard({
   className,
 }: StatCardProps) {
   const variantStyles = {
-    default: 'border-[#243356] bg-[#131C38]/90 hover:border-[#D4AF37]/40',
-    critical: 'border-l-4 border-l-red-500 border-[#243356] bg-gradient-to-br from-[#131C38] to-red-950/20',
-    warning: 'border-l-4 border-l-amber-500 border-[#243356] bg-gradient-to-br from-[#131C38] to-amber-950/20',
-    success: 'border-l-4 border-l-emerald-500 border-[#243356] bg-gradient-to-br from-[#131C38] to-emerald-950/20',
-    info: 'border-l-4 border-l-blue-500 border-[#243356] bg-gradient-to-br from-[#131C38] to-blue-950/20',
-    primary: 'border-l-4 border-l-[#D4AF37] border-[#243356] bg-gradient-to-br from-[#131C38] to-[#1C2541]',
+    default: 'border-[#D6D8D5] bg-white hover:border-[#EAB308]/50',
+    critical: 'border-l-4 border-l-[#C94C4C] border-[#D6D8D5] bg-white',
+    warning: 'border-l-4 border-l-[#B7791F] border-[#D6D8D5] bg-white',
+    success: 'border-l-4 border-l-[#3F8F68] border-[#D6D8D5] bg-white',
+    info: 'border-l-4 border-l-[#2563EB] border-[#D6D8D5] bg-white',
+    primary: 'border-l-4 border-l-[#D4AF37] border-[#D6D8D5] bg-white',
   };
 
   const iconContainerStyles = {
-    default: 'bg-[#1C2541] text-[#C5A059] border border-[#243356]',
-    critical: 'bg-red-950/60 text-red-400 border border-red-800/60',
-    warning: 'bg-amber-950/60 text-amber-400 border border-amber-800/60',
-    success: 'bg-emerald-950/60 text-emerald-400 border border-emerald-800/60',
-    info: 'bg-blue-950/60 text-blue-400 border border-blue-800/60',
-    primary: 'bg-[#D4AF37]/15 text-[#FFD700] border border-[#D4AF37]/40 shadow-sm shadow-[#D4AF37]/15',
+    default: 'bg-[#F0F1EF] text-[#8a6d1a] border border-[#D6D8D5]',
+    critical: 'bg-[#C94C4C]/10 text-[#C94C4C] border border-[#C94C4C]/30',
+    warning: 'bg-[#B7791F]/10 text-[#B7791F] border border-[#B7791F]/30',
+    success: 'bg-[#3F8F68]/10 text-[#3F8F68] border border-[#3F8F68]/30',
+    info: 'bg-[#2563EB]/10 text-[#2563EB] border border-[#2563EB]/30',
+    primary: 'bg-[#EAB308]/15 text-[#8a6d1a] border border-[#EAB308]/40',
   };
 
   return (
-    <Card className={cn('overflow-hidden transition-all duration-200 hover:shadow-xl hover:shadow-black/40', variantStyles[variant], className)}>
+    <Card className={cn('overflow-hidden transition-all duration-200 hover:shadow-md', variantStyles[variant], className)}>
       <CardContent className="p-4 sm:p-5">
         <div className="flex items-center justify-between gap-2">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#B8B5A3] font-mono truncate">{title}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#667085] truncate">{title}</p>
           <div className={cn('p-2 rounded-lg flex items-center justify-center shrink-0', iconContainerStyles[variant])}>
             {icon}
           </div>
         </div>
 
         <div className="mt-2.5">
-          <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#F4F1DE] font-mono">
+          <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#1F2933]">
             {value}
           </div>
 
@@ -62,15 +62,15 @@ export function StatCard({
               {trend && (
                 <span
                   className={cn(
-                    'font-medium font-mono shrink-0',
-                    trend.isPositive ? 'text-emerald-400' : 'text-red-400'
+                    'font-medium shrink-0',
+                    trend.isPositive ? 'text-[#3F8F68]' : 'text-[#C94C4C]'
                   )}
                 >
                   {trend.isPositive ? '↑' : '↓'} {trend.value}
                 </span>
               )}
               {description && (
-                <span className="text-[#B8B5A3] text-[11px] truncate font-sans">{description}</span>
+                <span className="text-[#8A9199] text-[11px] truncate">{description}</span>
               )}
             </div>
           )}

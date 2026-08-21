@@ -93,13 +93,13 @@ export default function AttendancePage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
-            <CalendarCheck className="h-6 w-6 text-[#FFD700]" />
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
+            <CalendarCheck className="h-6 w-6 text-[#B45309]" />
             <span>ACADEMIC ATTENDANCE ROSTER</span>
           </h1>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-sans">
+          <p className="text-xs text-[#555960] mt-1 font-sans">
             Real-time daily class attendance, batch submission, attendance warnings, and parent observer logs
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function AttendancePage() {
           <Button
             onClick={() => setIsMarkingModalOpen(true)}
             size="sm"
-            className="bg-gradient-to-r from-[#D4AF37] to-[#C5A059] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+            className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
           >
             <Plus className="h-4 w-4" />
             <span>Submit Attendance Session</span>
@@ -118,10 +118,10 @@ export default function AttendancePage() {
 
       {/* Overview Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-mono text-[#C5A059] uppercase tracking-wider">Campus Attendance Rate</p>
+              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Campus Attendance Rate</p>
               <h3 className="text-xl font-bold font-mono mt-0.5 text-emerald-400">{overallAvgAttendance}%</h3>
             </div>
             <div className="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
@@ -130,11 +130,11 @@ export default function AttendancePage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-mono text-[#C5A059] uppercase tracking-wider">Submissions Logged</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#F4F1DE]">{totalSubmissions} Sessions</h3>
+              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Submissions Logged</p>
+              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{totalSubmissions} Sessions</h3>
             </div>
             <div className="h-9 w-9 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
               <History className="h-5 w-5" />
@@ -142,10 +142,10 @@ export default function AttendancePage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-mono text-[#C5A059] uppercase tracking-wider">Attendance Defaulters</p>
+              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Attendance Defaulters</p>
               <h3 className="text-xl font-bold font-mono mt-0.5 text-red-400">{defaultersCount} Students (&lt;75%)</h3>
             </div>
             <div className="h-9 w-9 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
@@ -154,13 +154,13 @@ export default function AttendancePage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-mono text-[#C5A059] uppercase tracking-wider">Weekly Velocity</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#FFD700]">+2.4% vs last week</h3>
+              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Weekly Velocity</p>
+              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#B45309]">+2.4% vs last week</h3>
             </div>
-            <div className="h-9 w-9 rounded-lg bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center text-[#FFD700]">
+            <div className="h-9 w-9 rounded-lg bg-[#EAB308]/10 border border-[#EAB308]/30 flex items-center justify-center text-[#B45309]">
               <TrendingUp className="h-5 w-5" />
             </div>
           </CardContent>
@@ -168,9 +168,9 @@ export default function AttendancePage() {
       </div>
 
       {/* Attendance Trend Chart */}
-      <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-        <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/60">
-          <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
+      <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+        <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/60">
+          <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
             <span>7-Day Aggregated Campus Attendance Trend</span>
           </CardTitle>
@@ -191,23 +191,23 @@ export default function AttendancePage() {
 
       {/* Attendance History Roster Sessions */}
       <div className="space-y-4">
-        <h3 className="text-xs font-mono font-bold text-[#FFD700] uppercase tracking-wider">
+        <h3 className="text-xs font-mono font-bold text-[#B45309] uppercase tracking-wider">
           Submitted Lecture Attendance Sessions
         </h3>
 
         {attendanceRecords.map((record) => (
-          <Card key={record.id} className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 pb-3 border-b border-[#243356] bg-[#131C38]/50 flex flex-row items-center justify-between">
+          <Card key={record.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 pb-3 border-b border-[#D0D1D6] bg-white/50 flex flex-row items-center justify-between">
               <div>
                 <div className="flex items-center gap-2">
-                  <Badge className="bg-[#D4AF37]/20 text-[#FFD700] border-[#D4AF37]/40 font-mono text-[10px]">
+                  <Badge className="bg-[#EAB308]/20 text-[#B45309] border-[#EAB308]/40 font-mono text-[10px]">
                     {record.courseCode}
                   </Badge>
-                  <CardTitle className="text-sm font-bold font-mono text-[#F4F1DE]">
+                  <CardTitle className="text-sm font-bold font-mono text-[#202226]">
                     {record.courseName}
                   </CardTitle>
                 </div>
-                <p className="text-[11px] text-[#B8B5A3] font-mono mt-1">
+                <p className="text-[11px] text-[#555960] font-mono mt-1">
                   Batch: {record.batch} · Marked by: {record.markedBy}
                 </p>
               </div>
@@ -216,7 +216,7 @@ export default function AttendancePage() {
                 <Badge className="bg-emerald-500/15 text-emerald-300 border-emerald-500/30">
                   {record.status}
                 </Badge>
-                <p className="text-[10px] text-[#B8B5A3] mt-1">{record.date}</p>
+                <p className="text-[10px] text-[#555960] mt-1">{record.date}</p>
               </div>
             </CardHeader>
 
@@ -225,13 +225,13 @@ export default function AttendancePage() {
                 {record.studentLogs.map((log, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3.5 hover:bg-[#131C38]/40 transition-colors"
+                    className="flex items-center justify-between p-3.5 hover:bg-white/40 transition-colors"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-[#B8B5A3] text-[11px]">#{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
+                      <span className="font-mono text-[#555960] text-[11px]">#{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
                       <div>
-                        <p className="font-bold text-[#F4F1DE]">{log.studentName}</p>
-                        <p className="text-[#B8B5A3] font-mono text-[11px]">{log.rollNumber}</p>
+                        <p className="font-bold text-[#202226]">{log.studentName}</p>
+                        <p className="text-[#555960] font-mono text-[11px]">{log.rollNumber}</p>
                       </div>
                     </div>
 
@@ -262,9 +262,9 @@ export default function AttendancePage() {
       {/* Modal: Interactive Attendance Marking */}
       {isMarkingModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-xl bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-xl bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
                 <CalendarCheck className="h-4 w-4" />
                 <span>Mark Attendance Session</span>
               </CardTitle>
@@ -272,7 +272,7 @@ export default function AttendancePage() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMarkingModalOpen(false)}
-                className="h-6 w-6 text-[#B8B5A3] hover:text-white"
+                className="h-6 w-6 text-[#555960] hover:text-white"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -281,11 +281,11 @@ export default function AttendancePage() {
             <CardContent className="p-4 space-y-4">
               <form onSubmit={handleSaveAttendance} className="space-y-4">
                 <div>
-                  <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Select Course Section</label>
+                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Select Course Section</label>
                   <select
                     value={selectedCourseCode}
                     onChange={(e) => setSelectedCourseCode(e.target.value)}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE] font-mono"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226] font-mono"
                   >
                     {courses.map((c) => (
                       <option key={c.code} value={c.code}>
@@ -300,11 +300,11 @@ export default function AttendancePage() {
                   {studentLogs.map((log, index) => (
                     <div
                       key={log.studentId}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 bg-[#131C38] rounded-lg border border-[#243356] text-xs gap-2"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 bg-white rounded-lg border border-[#D0D1D6] text-xs gap-2"
                     >
                       <div>
-                        <span className="font-bold text-[#F4F1DE]">{log.studentName}</span>
-                        <span className="text-[10px] text-[#B8B5A3] font-mono block">{log.rollNumber}</span>
+                        <span className="font-bold text-[#202226]">{log.studentName}</span>
+                        <span className="text-[10px] text-[#555960] font-mono block">{log.rollNumber}</span>
                       </div>
 
                       <div className="flex items-center gap-1">
@@ -314,7 +314,7 @@ export default function AttendancePage() {
                           className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all ${
                             log.status === 'present'
                               ? 'bg-emerald-500 text-[#0B132B]'
-                              : 'bg-[#1C2541] text-[#B8B5A3] hover:text-white'
+                              : 'bg-[#E7E8EB] text-[#555960] hover:text-white'
                           }`}
                         >
                           PRESENT
@@ -325,7 +325,7 @@ export default function AttendancePage() {
                           className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all ${
                             log.status === 'absent'
                               ? 'bg-red-500 text-white'
-                              : 'bg-[#1C2541] text-[#B8B5A3] hover:text-white'
+                              : 'bg-[#E7E8EB] text-[#555960] hover:text-white'
                           }`}
                         >
                           ABSENT
@@ -336,7 +336,7 @@ export default function AttendancePage() {
                           className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all ${
                             log.status === 'late'
                               ? 'bg-amber-500 text-[#0B132B]'
-                              : 'bg-[#1C2541] text-[#B8B5A3] hover:text-white'
+                              : 'bg-[#E7E8EB] text-[#555960] hover:text-white'
                           }`}
                         >
                           LATE
@@ -346,18 +346,18 @@ export default function AttendancePage() {
                   ))}
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#243356]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setIsMarkingModalOpen(false)}
-                    className="text-xs border-[#243356]"
+                    className="text-xs border-[#D0D1D6]"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold text-xs"
+                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
                   >
                     Save &amp; Submit Attendance
                   </Button>

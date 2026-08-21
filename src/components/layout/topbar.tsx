@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { useRole } from '@/lib/hooks/use-role';
 import { useSafety } from '@/lib/context/safety-context';
+import { useAuth } from '@/lib/context/auth-context';
 import { NotificationPanel } from '../shared/notification-panel';
 import {
   Bell,
@@ -12,6 +13,10 @@ import {
   Menu,
   Sparkles,
   HeartPulse,
+  LayoutDashboard,
+  Settings,
+  LogOut,
+  ChevronDown,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -21,9 +26,38 @@ interface TopbarProps {
 
 export function Topbar({ onToggleMobileMenu }: TopbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const { role, user, roleMeta } = useRole();
+  const { logout } = useAuth();
   const { unreadNotificationsCount } = useSafety();
   const [isNotifOpen, setIsNotifOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!profileOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+    }
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setProfileOpen(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [profileOpen]);
+
+  const handleLogout = async () => {
+    setProfileOpen(false);
+    await logout();
+    router.push('/login');
+    router.refresh();
+  };
 
   const segments = pathname.split('/').filter(Boolean);
   const breadcrumbTitle =
@@ -35,23 +69,23 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
           .join(' ');
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-[#243356] bg-[#0B132B]/95 px-4 backdrop-blur-md text-[#F4F1DE]">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-[#D6D8D5] bg-white/95 px-4 backdrop-blur-md text-[#1F2933]">
       {/* Left: Mobile Toggle & Breadcrumb */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleMobileMenu}
-          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#243356] text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] md:hidden"
+          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#D6D8D5] text-[#667085] hover:bg-[#E8E9E7] hover:text-[#1F2933] md:hidden"
           aria-label="Toggle Navigation"
         >
           <Menu className="h-5 w-5" />
         </button>
 
-        <nav className="flex items-center gap-1.5 text-xs text-[#B8B5A3]">
-          <Link href="/" className="hover:text-[#FFD700] font-semibold tracking-wider font-mono">
+        <nav className="flex items-center gap-1.5 text-xs text-[#667085]">
+          <Link href="/" className="hover:text-[#1F2933] font-semibold tracking-wider">
             Luminous AI
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-[#C5A059]" />
-          <span className="font-bold text-[#FFD700] font-mono">
+          <ChevronRight className="h-3.5 w-3.5 text-[#8a9199]" />
+          <span className="font-bold text-[#8a6d1a]">
             {breadcrumbTitle}
           </span>
         </nav>
@@ -60,17 +94,17 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
       {/* Center: Search & Live Security Ping */}
       <div className="hidden lg:flex items-center gap-4">
         <div className="relative w-72">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#C5A059]" />
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#8a9199]" />
           <input
             type="text"
             placeholder="Search incidents, intelligence, records..."
-            className="h-9 w-full rounded-lg border border-[#243356] bg-[#0F1026] pl-9 pr-3 text-xs text-[#F4F1DE] placeholder:text-[#7A786B] focus:border-[#D4AF37] focus:outline-none focus:ring-1 focus:ring-[#D4AF37]"
+            className="h-9 w-full rounded-lg border border-[#D6D8D5] bg-[#F7F8F6] pl-9 pr-3 text-xs text-[#1F2933] placeholder:text-[#8A9199] focus:border-[#EAB308] focus:outline-none focus:ring-1 focus:ring-[#EAB308]"
           />
         </div>
 
-        <div className="flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-3 py-1 text-[11px] font-bold text-[#FFD700] font-mono">
-          <span className="h-2 w-2 rounded-full bg-[#FFD700] animate-pulse" />
-          <span>LUMINOUS REALTIME ACTIVE</span>
+        <div className="flex items-center gap-2 rounded-full border border-[#EAB308]/40 bg-[#EAB308]/10 px-3 py-1 text-[11px] font-bold text-[#8a6d1a]">
+          <span className="h-2 w-2 rounded-full bg-[#3F8F68] animate-pulse" />
+          <span>SYSTEM OPERATIONAL</span>
         </div>
       </div>
 
@@ -80,7 +114,7 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
         {role && ['student', 'faculty', 'super_admin', 'admin'].includes(role) && (
           <Link
             href="/sos"
-            className="flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white shadow-md shadow-red-600/30 hover:bg-red-700 transition-colors animate-pulse border border-red-400 font-mono"
+            className="flex items-center gap-1.5 rounded-lg bg-[#C94C4C] px-3 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-[#b84343] transition-colors animate-pulse border border-red-400"
           >
             <HeartPulse className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">EMERGENCY SOS</span>
@@ -90,9 +124,9 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
         {/* AI Copilot Quick Access */}
         <Link
           href="/copilot"
-          className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-[#FFD700] bg-[#1C2541] hover:bg-[#243356] hover:border-[#D4AF37] px-2.5 py-1 rounded-md border border-[#243356] font-mono transition-colors shadow-sm"
+          className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-[#8a6d1a] bg-[#F7F8F6] hover:bg-[#EAEBE9] hover:border-[#EAB308] px-2.5 py-1 rounded-md border border-[#D6D8D5] transition-colors shadow-sm"
         >
-          <Sparkles className="h-3.5 w-3.5 text-[#FFD700] animate-pulse" />
+          <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />
           <span>Gemini 3.7 Copilot</span>
         </Link>
 
@@ -100,12 +134,12 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
         <div className="relative">
           <button
             onClick={() => setIsNotifOpen(!isNotifOpen)}
-            className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-[#243356] bg-[#131C38] text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] hover:border-[#D4AF37]/50 transition-colors cursor-pointer"
+            className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-[#D6D8D5] bg-white text-[#667085] hover:bg-[#E8E9E7] hover:text-[#1F2933] hover:border-[#EAB308]/50 transition-colors cursor-pointer"
             aria-label="Notifications"
           >
-            <Bell className="h-4 w-4 text-[#C5A059]" />
+            <Bell className="h-4 w-4 text-[#667085]" />
             {unreadNotificationsCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#D4AF37] text-[10px] font-bold text-[#0B132B] ring-2 ring-[#0B132B]">
+              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#EAB308] text-[10px] font-bold text-[#111827] ring-2 ring-white">
                 {unreadNotificationsCount}
               </span>
             )}
@@ -113,23 +147,83 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
           <NotificationPanel isOpen={isNotifOpen} onClose={() => setIsNotifOpen(false)} />
         </div>
 
-        {/* Role Badge & Profile */}
+        {/* Profile Menu */}
         {user && (
-          <div className="flex items-center gap-2.5 pl-2 border-l border-[#243356]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={user.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
-              alt={user.full_name}
-              className="h-8 w-8 rounded-full border border-[#D4AF37]/60 object-cover"
-            />
-            <div className="hidden md:flex flex-col text-left">
-              <span className="text-xs font-bold text-[#F4F1DE] truncate max-w-[120px]">
-                {user.full_name.split(' ')[0]}
-              </span>
-              <span className="text-[10px] font-mono font-bold text-[#FFD700]">
-                {roleMeta?.label}
-              </span>
-            </div>
+          <div className="relative" ref={profileRef}>
+            <button
+              onClick={() => setProfileOpen((o) => !o)}
+              aria-haspopup="menu"
+              aria-expanded={profileOpen}
+              aria-label="Account menu"
+              className="flex items-center gap-2 rounded-lg px-1.5 py-1 transition-colors hover:bg-[#F0F1EF] cursor-pointer"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={user.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
+                alt={user.full_name}
+                className="h-8 w-8 rounded-full border border-[#EAB308]/60 object-cover"
+              />
+              <div className="hidden md:flex flex-col text-left">
+                <span className="text-xs font-bold text-[#1F2933] truncate max-w-[110px]">
+                  {user.full_name.split(' ')[0]}
+                </span>
+                <span className="text-[10px] font-bold text-[#8a6d1a]">
+                  {roleMeta?.label}
+                </span>
+              </div>
+              <ChevronDown className="hidden md:block h-3.5 w-3.5 text-[#8A9199]" />
+            </button>
+
+            {profileOpen && (
+              <div
+                role="menu"
+                className="absolute right-0 top-full z-40 mt-1.5 w-64 rounded-xl border border-[#D6D8D5] bg-white p-1 shadow-lg shadow-black/10"
+              >
+                <div className="border-b border-[#D6D8D5] px-3 py-3">
+                  <p className="truncate text-sm font-bold text-[#1F2933]">{user.full_name}</p>
+                  <p className="truncate text-xs text-[#667085]">{user.email}</p>
+                  <span className="mt-1.5 inline-block rounded px-1.5 py-0.5 text-[10px] font-bold text-[#8a6d1a] bg-[#EAB308]/15 border border-[#EAB308]/30">
+                    {roleMeta?.name}
+                  </span>
+                </div>
+
+                <div className="py-1">
+                  <button
+                    role="menuitem"
+                    onClick={() => {
+                      setProfileOpen(false);
+                      router.push(roleMeta?.defaultPath || '/');
+                    }}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-[#1F2933] hover:bg-[#F0F1EF] cursor-pointer"
+                  >
+                    <LayoutDashboard className="h-4 w-4 text-[#667085]" />
+                    Dashboard
+                  </button>
+                  <button
+                    role="menuitem"
+                    onClick={() => {
+                      setProfileOpen(false);
+                      router.push('/settings');
+                    }}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-[#1F2933] hover:bg-[#F0F1EF] cursor-pointer"
+                  >
+                    <Settings className="h-4 w-4 text-[#667085]" />
+                    Settings
+                  </button>
+                </div>
+
+                <div className="border-t border-[#D6D8D5] py-1">
+                  <button
+                    role="menuitem"
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-medium text-[#C94C4C] hover:bg-[#C94C4C]/10 cursor-pointer"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

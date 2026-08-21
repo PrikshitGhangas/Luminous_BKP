@@ -71,22 +71,22 @@ export default function RiskIntelligencePage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#FFD700]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#EAB308]/20 border border-[#EAB308]/40 text-[#B45309]">
               <Sparkles className="h-5 w-5" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono">
               AI-ASSISTED RISK INTELLIGENCE &amp; PATTERN MINING
             </h1>
           </div>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-mono">
+          <p className="text-xs text-[#555960] mt-1 font-mono">
             Recurring issue clustering, grounded evidence telemetry, and operational safety directives
           </p>
         </div>
 
-        <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#243356] hover:border-[#D4AF37] text-[#FFD700] gap-1.5 self-start sm:self-auto">
+        <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#D0D1D6] hover:border-[#EAB308] text-[#B45309] gap-1.5 self-start sm:self-auto">
           <Link href="/analytics/safety">
             <span>Safety Analytics Overview</span>
             <ArrowRight className="h-3.5 w-3.5" />
@@ -103,11 +103,11 @@ export default function RiskIntelligencePage() {
       </div>
 
       {/* Campus Risk Score & Category Gauge Bar */}
-      <div className="rounded-2xl border border-[#D4AF37]/40 bg-gradient-to-br from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl space-y-4">
+      <div className="rounded-2xl border border-[#EAB308]/40 bg-gradient-to-br from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono font-bold text-[#C5A059] uppercase tracking-wider">
+              <span className="text-xs font-mono font-bold text-[#B45309] uppercase tracking-wider">
                 Overall Campus Risk Score
               </span>
               <span className="rounded bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
@@ -115,10 +115,10 @@ export default function RiskIntelligencePage() {
               </span>
             </div>
             <div className="flex items-baseline gap-3">
-              <span className="text-4xl font-extrabold font-mono text-[#FFD700]">
+              <span className="text-4xl font-extrabold font-mono text-[#B45309]">
                 {report.campusRiskScore}
               </span>
-              <span className="text-xs text-[#B8B5A3] font-mono">/ 100 max vulnerability</span>
+              <span className="text-xs text-[#555960] font-mono">/ 100 max vulnerability</span>
               <span className="text-xs font-mono text-red-400 font-bold flex items-center gap-1">
                 <TrendingUp className="h-3.5 w-3.5" />
                 {report.scoreDeltaVsPriorMonth} vs 30-day baseline
@@ -131,16 +131,16 @@ export default function RiskIntelligencePage() {
             {report.categoryList.map((cat) => (
               <div
                 key={cat.category}
-                className="bg-[#0B132B] p-2 rounded-xl border border-[#243356] text-center space-y-1"
+                className="bg-white p-2 rounded-xl border border-[#D0D1D6] text-center space-y-1"
               >
-                <div className="flex items-center justify-center gap-1 text-[10px] font-mono text-[#B8B5A3] font-bold">
+                <div className="flex items-center justify-center gap-1 text-[10px] font-mono text-[#555960] font-bold">
                   {getCategoryIcon(cat.category)}
                   <span>{cat.category}</span>
                 </div>
-                <div className="text-sm font-bold font-mono text-[#FFD700]">
+                <div className="text-sm font-bold font-mono text-[#B45309]">
                   {cat.riskScore}
                 </div>
-                <div className="text-[9px] font-mono text-[#7A786B] uppercase">
+                <div className="text-[9px] font-mono text-[#8A9199] uppercase">
                   {cat.riskLevel}
                 </div>
               </div>
@@ -151,19 +151,19 @@ export default function RiskIntelligencePage() {
 
       {/* Main Feature: Recurring Issues & Operational Directives */}
       <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#243356] pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D0D1D6] pb-3">
           <div>
-            <h2 className="text-base font-bold font-mono text-[#F4F1DE] uppercase tracking-wide flex items-center gap-2">
+            <h2 className="text-base font-bold font-mono text-[#202226] uppercase tracking-wide flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-amber-400" />
               <span>Historical Pattern Clusters &amp; Operational Recommendations</span>
             </h2>
-            <p className="text-xs text-[#B8B5A3] font-mono mt-0.5">
+            <p className="text-xs text-[#555960] font-mono mt-0.5">
               Identifies recurring issues and produces actionable preventative interventions
             </p>
           </div>
 
           {/* Category Filter */}
-          <div className="flex items-center gap-1 bg-[#0F1026] border border-[#243356] p-1 rounded-lg text-[11px] font-mono self-start sm:self-auto">
+          <div className="flex items-center gap-1 bg-[#F4F5F6] border border-[#D0D1D6] p-1 rounded-lg text-[11px] font-mono self-start sm:self-auto">
             {['all', 'Infrastructure', 'Security', 'Crowding', 'Hostel'].map((c) => (
               <button
                 key={c}
@@ -171,8 +171,8 @@ export default function RiskIntelligencePage() {
                 className={cn(
                   'px-2.5 py-1 rounded transition-colors cursor-pointer capitalize font-bold',
                   filterCategory === c
-                    ? 'bg-[#D4AF37] text-[#0B132B]'
-                    : 'text-[#B8B5A3] hover:text-[#FFD700]'
+                    ? 'bg-[#EAB308] text-[#0B132B]'
+                    : 'text-[#555960] hover:text-[#B45309]'
                 )}
               >
                 {c}
@@ -191,16 +191,16 @@ export default function RiskIntelligencePage() {
               <Card
                 key={cluster.id}
                 className={cn(
-                  'border bg-[#0F1026] text-[#F4F1DE] shadow-xl overflow-hidden transition-all',
+                  'border bg-[#F4F5F6] text-[#202226] shadow-xl overflow-hidden transition-all',
                   cluster.severity === 'CRITICAL'
                     ? 'border-red-500/50 shadow-red-950/20'
                     : cluster.severity === 'HIGH'
                     ? 'border-amber-500/40 shadow-amber-950/20'
-                    : 'border-[#243356]'
+                    : 'border-[#D0D1D6]'
                 )}
               >
                 {/* Cluster Card Header */}
-                <CardHeader className="p-5 pb-3 border-b border-[#243356] bg-gradient-to-r from-[#131C38] to-[#0F1026]">
+                <CardHeader className="p-5 pb-3 border-b border-[#D0D1D6] bg-gradient-to-r from-[#131C38] to-[#0F1026]">
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2 font-mono text-[10px]">
@@ -214,22 +214,22 @@ export default function RiskIntelligencePage() {
                         >
                           {cluster.severity} RECURRING PATTERN
                         </span>
-                        <span className="flex items-center gap-1 text-[#FFD700] font-bold">
+                        <span className="flex items-center gap-1 text-[#B45309] font-bold">
                           {getCategoryIcon(cluster.category)}
                           {cluster.category}
                         </span>
-                        <span className="text-[#B8B5A3]">•</span>
-                        <span className="text-[#B8B5A3]">
-                          Location: <strong className="text-[#F4F1DE]">{cluster.locationName}</strong>
+                        <span className="text-[#555960]">•</span>
+                        <span className="text-[#555960]">
+                          Location: <strong className="text-[#202226]">{cluster.locationName}</strong>
                         </span>
-                        <span className="text-[#B8B5A3]">•</span>
+                        <span className="text-[#555960]">•</span>
                         <span className="text-emerald-400 font-bold">
                           {Math.round(cluster.historicalPatternConfidence * 100)}% Pattern Confidence
                         </span>
                       </div>
 
                       {/* Main Grounded Finding Highlight */}
-                      <h3 className="text-base sm:text-lg font-bold font-mono text-[#FFD700]">
+                      <h3 className="text-base sm:text-lg font-bold font-mono text-[#B45309]">
                         &ldquo;{cluster.summary}&rdquo;
                       </h3>
                     </div>
@@ -239,7 +239,7 @@ export default function RiskIntelligencePage() {
                         onClick={() =>
                           setExpandedClusterId(isExpanded ? null : cluster.id)
                         }
-                        className="flex items-center gap-1 text-xs font-mono text-[#B8B5A3] hover:text-[#FFD700] border border-[#243356] bg-[#0B132B] px-3 py-1.5 rounded-lg cursor-pointer transition-colors"
+                        className="flex items-center gap-1 text-xs font-mono text-[#555960] hover:text-[#B45309] border border-[#D0D1D6] bg-white px-3 py-1.5 rounded-lg cursor-pointer transition-colors"
                       >
                         <span>{isExpanded ? 'Hide Evidence' : `View ${cluster.incidentCount} Grounded Incidents`}</span>
                         {isExpanded ? (
@@ -254,45 +254,45 @@ export default function RiskIntelligencePage() {
 
                 <CardContent className="p-5 space-y-4 text-xs font-sans">
                   {/* Root Cause Analysis Description */}
-                  <div className="bg-[#0B132B] rounded-xl p-4 border border-[#243356] space-y-1.5">
-                    <span className="text-[10px] font-mono text-[#C5A059] uppercase font-bold block">
+                  <div className="bg-white rounded-xl p-4 border border-[#D0D1D6] space-y-1.5">
+                    <span className="text-[10px] font-mono text-[#B45309] uppercase font-bold block">
                       AI-Assisted Root Cause Diagnosis (Historical Pattern Analysis):
                     </span>
-                    <p className="text-xs text-[#F4F1DE] leading-relaxed">
+                    <p className="text-xs text-[#202226] leading-relaxed">
                       {cluster.rootCauseAnalysis}
                     </p>
                   </div>
 
                   {/* Operational Recommendation Box (Hero Requirement) */}
-                  <div className="rounded-xl border border-[#D4AF37]/40 bg-gradient-to-br from-[#1C2541] via-[#131C38] to-[#0F1026] p-4.5 space-y-3 shadow-lg">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#243356] pb-2.5">
+                  <div className="rounded-xl border border-[#EAB308]/40 bg-gradient-to-br from-[#1C2541] via-[#131C38] to-[#0F1026] p-4.5 space-y-3 shadow-lg">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D0D1D6] pb-2.5">
                       <div className="flex items-center gap-2">
-                        <Wrench className="h-4 w-4 text-[#FFD700]" />
-                        <span className="font-mono font-bold text-xs text-[#FFD700] uppercase tracking-wide">
+                        <Wrench className="h-4 w-4 text-[#B45309]" />
+                        <span className="font-mono font-bold text-xs text-[#B45309] uppercase tracking-wide">
                           Operational Recommendation:
                         </span>
                       </div>
                       <div className="flex items-center gap-2 font-mono text-[10px]">
-                        <span className="text-[#B8B5A3]">Priority: <strong className="text-red-400 uppercase">{cluster.operationalRecommendation.priority}</strong></span>
+                        <span className="text-[#555960]">Priority: <strong className="text-red-400 uppercase">{cluster.operationalRecommendation.priority}</strong></span>
                         <span>•</span>
-                        <span className="text-[#B8B5A3]">Assignee: <strong className="text-[#F4F1DE]">{cluster.operationalRecommendation.assignedDepartment}</strong></span>
+                        <span className="text-[#555960]">Assignee: <strong className="text-[#202226]">{cluster.operationalRecommendation.assignedDepartment}</strong></span>
                       </div>
                     </div>
 
                     {/* Recommendation Directive */}
-                    <div className="text-sm font-bold font-mono text-[#F4F1DE] bg-[#0B132B]/80 p-3 rounded-lg border border-[#D4AF37]/30">
+                    <div className="text-sm font-bold font-mono text-[#202226] bg-white/80 p-3 rounded-lg border border-[#EAB308]/30">
                       &ldquo;{cluster.operationalRecommendation.directive}&rdquo;
                     </div>
 
                     {/* Action Directives Checklist */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-mono text-[#C5A059] uppercase font-bold block">
+                      <span className="text-[10px] font-mono text-[#B45309] uppercase font-bold block">
                         Actionable Directives:
                       </span>
-                      <ul className="space-y-1 font-mono text-[11px] text-[#B8B5A3]">
+                      <ul className="space-y-1 font-mono text-[11px] text-[#555960]">
                         {cluster.operationalRecommendation.actionSteps.map((step, idx) => (
                           <li key={idx} className="flex items-start gap-2">
-                            <span className="text-[#FFD700] font-bold shrink-0">[{idx + 1}]</span>
+                            <span className="text-[#B45309] font-bold shrink-0">[{idx + 1}]</span>
                             <span>{step}</span>
                           </li>
                         ))}
@@ -300,7 +300,7 @@ export default function RiskIntelligencePage() {
                     </div>
 
                     {/* Footer Execution Trigger */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#243356]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#D0D1D6]">
                       <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                         <CheckCircle2 className="h-3.5 w-3.5" />
                         {cluster.operationalRecommendation.estimatedImpact}
@@ -315,7 +315,7 @@ export default function RiskIntelligencePage() {
                         <Button
                           onClick={() => handleApplyDirective(cluster.id)}
                           size="sm"
-                          className="bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-bold font-mono text-xs gap-1.5 h-8"
+                          className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold font-mono text-xs gap-1.5 h-8"
                         >
                           <Send className="h-3 w-3" />
                           <span>Execute Directive &amp; Schedule Inspection</span>
@@ -326,24 +326,24 @@ export default function RiskIntelligencePage() {
 
                   {/* Collapsible Grounded Evidence Explorer (7 Incidents List) */}
                   {isExpanded && (
-                    <div className="rounded-xl border border-[#243356] bg-[#0B132B] p-4 space-y-3 animate-in fade-in duration-200">
-                      <div className="flex items-center justify-between border-b border-[#243356] pb-2 font-mono text-xs">
-                        <span className="font-bold text-[#FFD700] uppercase flex items-center gap-1.5">
+                    <div className="rounded-xl border border-[#D0D1D6] bg-white p-4 space-y-3 animate-in fade-in duration-200">
+                      <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2 font-mono text-xs">
+                        <span className="font-bold text-[#B45309] uppercase flex items-center gap-1.5">
                           <Layers className="h-3.5 w-3.5" />
                           Grounded Incident Evidence Stream ({cluster.groundedIncidents.length} Records)
                         </span>
-                        <span className="text-[10px] text-[#B8B5A3]">Timeframe: Last {cluster.timeWindowDays} Days</span>
+                        <span className="text-[10px] text-[#555960]">Timeframe: Last {cluster.timeWindowDays} Days</span>
                       </div>
 
                       <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
                         {cluster.groundedIncidents.map((inc, i) => (
                           <div
                             key={inc.id}
-                            className="p-3 rounded-lg bg-[#0F1026] border border-[#243356] space-y-1 font-mono text-[11px]"
+                            className="p-3 rounded-lg bg-[#F4F5F6] border border-[#D0D1D6] space-y-1 font-mono text-[11px]"
                           >
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
-                                <span className="text-[#FFD700] font-bold">
+                                <span className="text-[#B45309] font-bold">
                                   #{i + 1} [{inc.incident_number}]
                                 </span>
                                 <span
@@ -357,7 +357,7 @@ export default function RiskIntelligencePage() {
                                   {inc.severity}
                                 </span>
                               </div>
-                              <span className="text-[10px] text-[#7A786B]">
+                              <span className="text-[10px] text-[#8A9199]">
                                 {new Date(inc.timestamp).toLocaleDateString([], {
                                   month: 'short',
                                   day: 'numeric',
@@ -367,14 +367,14 @@ export default function RiskIntelligencePage() {
                               </span>
                             </div>
 
-                            <div className="font-bold text-[#F4F1DE]">
+                            <div className="font-bold text-[#202226]">
                               {inc.title}
                             </div>
-                            <p className="text-[10px] text-[#B8B5A3] font-sans">
+                            <p className="text-[10px] text-[#555960] font-sans">
                               {inc.description}
                             </p>
                             {inc.root_cause && (
-                              <div className="text-[9px] text-[#C5A059]">
+                              <div className="text-[9px] text-[#B45309]">
                                 Root Cause: {inc.root_cause}
                               </div>
                             )}
@@ -391,20 +391,20 @@ export default function RiskIntelligencePage() {
       </div>
 
       {/* Campus Location Risk Topology Ranking */}
-      <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE] shadow-xl overflow-hidden">
-        <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38] flex flex-row items-center justify-between">
+      <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226] shadow-xl overflow-hidden">
+        <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-[#FFD700]" />
-            <CardTitle className="text-xs font-mono font-bold uppercase text-[#F4F1DE]">
+            <MapPin className="h-4 w-4 text-[#B45309]" />
+            <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226]">
               Campus Location Risk Matrix (All 10 Zones)
             </CardTitle>
           </div>
-          <span className="text-[10px] font-mono text-[#B8B5A3]">Ranked by AI-Generated Risk Indicator</span>
+          <span className="text-[10px] font-mono text-[#555960]">Ranked by AI-Generated Risk Indicator</span>
         </CardHeader>
 
         <CardContent className="p-0 overflow-x-auto">
           <table className="w-full text-xs font-mono text-left">
-            <thead className="bg-[#0B132B] text-[#B8B5A3] border-b border-[#243356] text-[10px] uppercase">
+            <thead className="bg-white text-[#555960] border-b border-[#D0D1D6] text-[10px] uppercase">
               <tr>
                 <th className="p-3">Rank / Building</th>
                 <th className="p-3">Sector</th>
@@ -417,13 +417,13 @@ export default function RiskIntelligencePage() {
             </thead>
             <tbody className="divide-y divide-[#243356]/60">
               {report.locationPatterns.map((loc, idx) => (
-                <tr key={loc.locationId} className="hover:bg-[#131C38]/40 transition-colors">
-                  <td className="p-3 font-bold text-[#F4F1DE] flex items-center gap-2">
-                    <span className="text-[#C5A059]">#{idx + 1}</span>
+                <tr key={loc.locationId} className="hover:bg-white/40 transition-colors">
+                  <td className="p-3 font-bold text-[#202226] flex items-center gap-2">
+                    <span className="text-[#B45309]">#{idx + 1}</span>
                     <span>{loc.locationName}</span>
-                    <span className="text-[10px] text-[#7A786B]">({loc.locationCode})</span>
+                    <span className="text-[10px] text-[#8A9199]">({loc.locationCode})</span>
                   </td>
-                  <td className="p-3 text-[#B8B5A3]">{loc.sector}</td>
+                  <td className="p-3 text-[#555960]">{loc.sector}</td>
                   <td className="p-3">
                     <span
                       className={cn(
@@ -438,9 +438,9 @@ export default function RiskIntelligencePage() {
                       {loc.riskLevel}
                     </span>
                   </td>
-                  <td className="p-3 font-bold text-[#FFD700]">{loc.riskScore} / 100</td>
-                  <td className="p-3 text-[#F4F1DE]">{loc.incidentCount30d} incidents</td>
-                  <td className="p-3 text-[#B8B5A3] text-[11px] max-w-xs truncate" title={loc.primaryRiskFactor}>
+                  <td className="p-3 font-bold text-[#B45309]">{loc.riskScore} / 100</td>
+                  <td className="p-3 text-[#202226]">{loc.incidentCount30d} incidents</td>
+                  <td className="p-3 text-[#555960] text-[11px] max-w-xs truncate" title={loc.primaryRiskFactor}>
                     {loc.primaryRiskFactor}
                   </td>
                   <td className="p-3 font-bold text-xs text-amber-400">

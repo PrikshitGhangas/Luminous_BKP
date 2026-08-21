@@ -46,7 +46,7 @@ export function SeverityBadge({
       )}
     >
       {isAiClassified ? (
-        <Sparkles className={size === 'sm' ? 'w-3 h-3 text-[#FFD700]' : 'w-3.5 h-3.5 text-[#FFD700]'} />
+        <Sparkles className={size === 'sm' ? 'w-3 h-3 text-[#B45309]' : 'w-3.5 h-3.5 text-[#B45309]'} />
       ) : (
         getIcon()
       )}

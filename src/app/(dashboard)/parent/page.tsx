@@ -38,11 +38,11 @@ export default function ParentPage() {
   return (
     <div className="space-y-6">
       {/* Privacy & Linked Student Header */}
-      <div className="bg-[#0F1026] border border-[#243356] p-5 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-[#F4F5F6] border border-[#D0D1D6] p-5 rounded-2xl shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
-              <UserCheck className="h-6 w-6 text-[#FFD700]" />
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
+              <UserCheck className="h-6 w-6 text-[#B45309]" />
               <span>PARENT &amp; GUARDIAN OBSERVER PORTAL</span>
             </h1>
             <Badge className="bg-teal-500/15 text-teal-300 border-teal-500/30 text-[10px] font-mono gap-1">
@@ -50,14 +50,14 @@ export default function ParentPage() {
               <span>STRICTLY SCOPED TO LINKED WARD</span>
             </Badge>
           </div>
-          <p className="text-xs text-[#B8B5A3] mt-1.5 font-mono">
-            Linked Ward: <strong className="text-[#F4F1DE] text-sm">{linkedWard.name}</strong> ({linkedWard.department} · Roll: {linkedWard.rollNumber})
+          <p className="text-xs text-[#555960] mt-1.5 font-mono">
+            Linked Ward: <strong className="text-[#202226] text-sm">{linkedWard.name}</strong> ({linkedWard.department} · Roll: {linkedWard.rollNumber})
           </p>
         </div>
 
-        <div className="bg-[#131C38] px-3.5 py-2.5 rounded-xl border border-[#243356] font-mono text-xs text-[#B8B5A3]">
-          <span>Verified Guardian: <strong className="text-[#F4F1DE]">{linkedWard.guardianName}</strong></span>
-          <p className="text-[10px] text-[#C5A059] mt-0.5">Contact Line: {linkedWard.guardianPhone}</p>
+        <div className="bg-white px-3.5 py-2.5 rounded-xl border border-[#D0D1D6] font-mono text-xs text-[#555960]">
+          <span>Verified Guardian: <strong className="text-[#202226]">{linkedWard.guardianName}</strong></span>
+          <p className="text-[10px] text-[#B45309] mt-0.5">Contact Line: {linkedWard.guardianPhone}</p>
         </div>
       </div>
 
@@ -89,23 +89,23 @@ export default function ParentPage() {
       {/* Linked Student Details Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Academic Roster & Attendance */}
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-          <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]/60">
-            <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+          <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60">
+            <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
               <CalendarCheck className="h-4 w-4" />
               <span>Ward Academic Attendance &amp; Enrolled Roster</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-3 text-xs font-mono">
-            <div className="flex justify-between py-2 border-b border-[#243356]">
+            <div className="flex justify-between py-2 border-b border-[#D0D1D6]">
               <span>Distributed Systems (CS301)</span>
               <span className="text-emerald-400 font-bold">Present (98% Attendance)</span>
             </div>
-            <div className="flex justify-between py-2 border-b border-[#243356]">
+            <div className="flex justify-between py-2 border-b border-[#D0D1D6]">
               <span>AI &amp; Robotics Lab (CS304)</span>
               <span className="text-emerald-400 font-bold">Present (95% Attendance)</span>
             </div>
-            <div className="flex justify-between py-2 border-b border-[#243356]">
+            <div className="flex justify-between py-2 border-b border-[#D0D1D6]">
               <span>Database Systems Core (CS302)</span>
               <span className="text-emerald-400 font-bold">Present (96% Attendance)</span>
             </div>
@@ -113,29 +113,29 @@ export default function ParentPage() {
         </Card>
 
         {/* Hostel & Curfew Status */}
-        <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-          <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]/60">
-            <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
-              <Building2 className="h-4 w-4 text-[#FFD700]" />
+        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+          <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60">
+            <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
+              <Building2 className="h-4 w-4 text-[#B45309]" />
               <span>Hostel Residence &amp; Biometric Gate Log</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-3 text-xs font-mono">
             {wardHostelRoom && (
-              <div className="bg-[#131C38] p-3 rounded-lg border border-[#243356] space-y-1">
-                <span className="font-bold text-[#F4F1DE]">Hostel Residence Assignment</span>
-                <p className="text-[11px] text-[#B8B5A3]">
+              <div className="bg-white p-3 rounded-lg border border-[#D0D1D6] space-y-1">
+                <span className="font-bold text-[#202226]">Hostel Residence Assignment</span>
+                <p className="text-[11px] text-[#555960]">
                   {wardHostelRoom.buildingCode} — Room {wardHostelRoom.roomNumber} ({wardHostelRoom.type} Occupancy)
                 </p>
               </div>
             )}
 
             <div className="space-y-2">
-              <div className="flex justify-between py-1.5 border-b border-[#243356]">
+              <div className="flex justify-between py-1.5 border-b border-[#D0D1D6]">
                 <span>Biometric Gate Check-In: Hostel Block B</span>
-                <span className="text-[#FFD700]">Yesterday, 09:42 PM (Verified)</span>
+                <span className="text-[#B45309]">Yesterday, 09:42 PM (Verified)</span>
               </div>
-              <div className="flex justify-between py-1.5 border-b border-[#243356]">
+              <div className="flex justify-between py-1.5 border-b border-[#D0D1D6]">
                 <span>Night-In Curfew Clearance</span>
                 <span className="text-emerald-400 font-bold">In-Time Compliant</span>
               </div>

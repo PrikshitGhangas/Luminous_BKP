@@ -43,25 +43,25 @@ export default function WellbeingPage() {
 
   const getMoodEmoji = (mood: number) => {
     switch (mood) {
-      case 5: return { emoji: '🌟 Great', text: 'Feeling Energized & Confident', color: 'text-[#FFD700]' };
+      case 5: return { emoji: '🌟 Great', text: 'Feeling Energized & Confident', color: 'text-[#B45309]' };
       case 4: return { emoji: '🙂 Good', text: 'Balanced & Focused', color: 'text-emerald-400' };
-      case 3: return { emoji: '😐 Okay', text: 'Managing Day-to-Day', color: 'text-[#C5A059]' };
+      case 3: return { emoji: '😐 Okay', text: 'Managing Day-to-Day', color: 'text-[#B45309]' };
       case 2: return { emoji: '🙁 Stressed', text: 'Experiencing Heavy Load', color: 'text-amber-400' };
       case 1: return { emoji: '😫 Exhausted', text: 'Feeling Overwhelmed', color: 'text-red-400' };
-      default: return { emoji: '🙂 Good', text: 'Balanced', color: 'text-[#FFD700]' };
+      default: return { emoji: '🙂 Good', text: 'Balanced', color: 'text-[#B45309]' };
     }
   };
 
   return (
     <div className="space-y-6">
       {/* Disclaimer Banner - NON DIAGNOSIS COMPLIANCE */}
-      <div className="bg-[#131C38] border-2 border-[#D4AF37]/50 p-4 rounded-xl flex items-start gap-3 text-xs font-mono text-[#F4F1DE]">
-        <Info className="h-5 w-5 text-[#FFD700] shrink-0 mt-0.5" />
+      <div className="bg-white border-2 border-[#EAB308]/50 p-4 rounded-xl flex items-start gap-3 text-xs font-mono text-[#202226]">
+        <Info className="h-5 w-5 text-[#B45309] shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <span className="font-bold text-[#FFD700] uppercase tracking-wider block">
+          <span className="font-bold text-[#B45309] uppercase tracking-wider block">
             INSTITUTIONAL WELLBEING &amp; PRIVACY GUARANTEE
           </span>
-          <p className="text-[#B8B5A3] leading-relaxed">
+          <p className="text-[#555960] leading-relaxed">
             This tool is designed strictly for voluntary personal self-reflection and institutional support routing.{' '}
             <strong className="text-white">This system does NOT diagnose, treat, or evaluate medical or mental health conditions.</strong>{' '}
             All individual check-in records are protected by strict privacy scoping. Administrators only receive anonymized, department-level aggregated wellness index metrics.
@@ -70,13 +70,13 @@ export default function WellbeingPage() {
       </div>
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#243356] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono flex items-center gap-2.5">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
             <Heart className="h-6 w-6 text-rose-400" />
             <span>STUDENT &amp; STAFF WELLBEING HUB</span>
           </h1>
-          <p className="text-xs text-[#B8B5A3] mt-1 font-sans">
+          <p className="text-xs text-[#555960] mt-1 font-sans">
             Optional daily self-reflection check-in, 24/7 counseling helpline, and privacy-aware wellness support
           </p>
         </div>
@@ -91,27 +91,27 @@ export default function WellbeingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left Column (2 Cols): Check-in Form & History */}
         <div className="lg:col-span-2 space-y-5">
-          <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]/60 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
+          <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
                 <Sparkles className="h-4 w-4" />
                 <span>Optional Daily Wellness Check-In</span>
               </CardTitle>
-              <span className="text-[10px] font-mono text-[#C5A059]">Voluntary Self-Reflection</span>
+              <span className="text-[10px] font-mono text-[#B45309]">Voluntary Self-Reflection</span>
             </CardHeader>
             <CardContent className="p-5 space-y-5">
               {submittedCheckIn ? (
-                <div className="bg-[#131C38] p-5 rounded-xl border border-[#D4AF37]/40 text-center space-y-3 font-mono">
+                <div className="bg-white p-5 rounded-xl border border-[#EAB308]/40 text-center space-y-3 font-mono">
                   <CheckCircle2 className="h-10 w-10 text-emerald-400 mx-auto" />
-                  <h3 className="font-bold text-sm text-[#F4F1DE]">Check-In Logged Successfully</h3>
-                  <p className="text-xs text-[#B8B5A3] max-w-sm mx-auto">
+                  <h3 className="font-bold text-sm text-[#202226]">Check-In Logged Successfully</h3>
+                  <p className="text-xs text-[#555960] max-w-sm mx-auto">
                     Thank you for checking in today. Your entry is private. Remember, campus counseling services are available 24/7 whenever you need support.
                   </p>
                   <Button
                     size="sm"
                     onClick={() => setSubmittedCheckIn(false)}
                     variant="outline"
-                    className="text-xs border-[#243356] text-[#FFD700]"
+                    className="text-xs border-[#D0D1D6] text-[#B45309]"
                   >
                     Log Another Reflection
                   </Button>
@@ -120,7 +120,7 @@ export default function WellbeingPage() {
                 <form onSubmit={handleCheckInSubmit} className="space-y-4 text-xs font-mono">
                   {/* Mood Selector */}
                   <div className="space-y-2">
-                    <label className="text-[11px] font-bold text-[#C5A059] uppercase block">
+                    <label className="text-[11px] font-bold text-[#B45309] uppercase block">
                       How are you feeling today? (Mood Rating)
                     </label>
                     <div className="grid grid-cols-5 gap-2">
@@ -134,8 +134,8 @@ export default function WellbeingPage() {
                             onClick={() => setSelectedMood(m)}
                             className={`p-3 rounded-xl border text-center transition-all ${
                               isSelected
-                                ? 'bg-[#D4AF37] text-[#0B132B] font-bold border-[#FFD700] shadow-md shadow-[#D4AF37]/30 scale-105'
-                                : 'bg-[#131C38] text-[#B8B5A3] border-[#243356] hover:text-white'
+                                ? 'bg-[#EAB308] text-[#0B132B] font-bold border-[#EAB308] shadow-md shadow-[#D4AF37]/30 scale-105'
+                                : 'bg-white text-[#555960] border-[#D0D1D6] hover:text-white'
                             }`}
                           >
                             <span className="text-sm font-bold block">{m}</span>
@@ -152,11 +152,11 @@ export default function WellbeingPage() {
                   {/* Stress Factor Dropdown */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Primary Focus / Stress Area</label>
+                      <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Primary Focus / Stress Area</label>
                       <select
                         value={stressFactor}
                         onChange={(e) => setStressFactor(e.target.value as typeof stressFactor)}
-                        className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                        className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                       >
                         <option value="None">None / Balanced</option>
                         <option value="Academics">Academics &amp; Coursework</option>
@@ -168,11 +168,11 @@ export default function WellbeingPage() {
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Energy Level (1-5)</label>
+                      <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Energy Level (1-5)</label>
                       <select
                         value={selectedEnergy}
                         onChange={(e) => setSelectedEnergy(Number(e.target.value) as 1 | 2 | 3 | 4 | 5)}
-                        className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                        className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                       >
                         <option value={5}>5 — Peak Energy</option>
                         <option value={4}>4 — Moderate Energy</option>
@@ -185,19 +185,19 @@ export default function WellbeingPage() {
 
                   {/* Optional Reflective Notes */}
                   <div>
-                    <label className="text-[10px] font-mono text-[#C5A059] uppercase block mb-1">Optional Personal Reflection Notes</label>
+                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Optional Personal Reflection Notes</label>
                     <textarea
                       rows={2}
                       placeholder="Write notes for your personal reflection (optional)..."
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="w-full rounded-md bg-[#131C38] border border-[#243356] p-2 text-xs text-[#F4F1DE]"
+                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
                     />
                   </div>
 
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-[#D4AF37] to-[#C5A059] hover:opacity-90 text-[#0B132B] font-bold text-xs py-2.5"
+                    className="w-full bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs py-2.5"
                   >
                     Save Reflection Entry
                   </Button>
@@ -208,14 +208,14 @@ export default function WellbeingPage() {
 
           {/* ADMIN AGGREGATED METRICS VIEW */}
           {isAdmin && (
-            <Card className="bg-[#0F1026] border-[#243356] text-[#F4F1DE]">
-              <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]/60 flex flex-row items-center justify-between">
+            <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
+              <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60 flex flex-row items-center justify-between">
                 <div>
-                  <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
+                  <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
                     <Users className="h-4 w-4" />
                     <span>Administrators Aggregated Department Wellness Index</span>
                   </CardTitle>
-                  <p className="text-[10px] text-[#B8B5A3] font-mono mt-0.5">De-identified aggregate metrics only. No raw PII stored.</p>
+                  <p className="text-[10px] text-[#555960] font-mono mt-0.5">De-identified aggregate metrics only. No raw PII stored.</p>
                 </div>
                 <Badge className="bg-purple-500/15 text-purple-300 border-purple-500/30 text-[10px] font-mono">
                   ADMIN CLEARANCE
@@ -223,19 +223,19 @@ export default function WellbeingPage() {
               </CardHeader>
               <CardContent className="p-4 space-y-3 text-xs font-mono">
                 {wellbeingAggregated.map((agg) => (
-                  <div key={agg.department} className="bg-[#131C38] p-3 rounded-lg border border-[#243356] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div key={agg.department} className="bg-white p-3 rounded-lg border border-[#D0D1D6] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                      <span className="font-bold text-[#F4F1DE]">{agg.department}</span>
-                      <p className="text-[10px] text-[#B8B5A3]">Top Reported Stress Factor: <strong className="text-[#FFD700]">{agg.topStressFactor}</strong></p>
+                      <span className="font-bold text-[#202226]">{agg.department}</span>
+                      <p className="text-[10px] text-[#555960]">Top Reported Stress Factor: <strong className="text-[#B45309]">{agg.topStressFactor}</strong></p>
                     </div>
                     <div className="flex items-center gap-3 text-right">
                       <div>
-                        <span className="text-[10px] text-[#C5A059] block">AVG MOOD</span>
+                        <span className="text-[10px] text-[#B45309] block">AVG MOOD</span>
                         <span className="font-bold text-emerald-400 text-sm">{agg.avgMood} / 5.0</span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-[#C5A059] block">CHECK-INS</span>
-                        <span className="font-bold text-[#FFD700] text-sm">{agg.checkInCount}</span>
+                        <span className="text-[10px] text-[#B45309] block">CHECK-INS</span>
+                        <span className="font-bold text-[#B45309] text-sm">{agg.checkInCount}</span>
                       </div>
                     </div>
                   </div>
@@ -247,23 +247,23 @@ export default function WellbeingPage() {
 
         {/* Right Column (1 Col): Counselor Directory & Support Helpline */}
         <div className="space-y-4">
-          <Card className="bg-[#0F1026] border-2 border-[#D4AF37] text-[#F4F1DE]">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]">
-              <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#FFD700] flex items-center gap-2">
+          <Card className="bg-[#F4F5F6] border-2 border-[#EAB308] text-[#202226]">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white">
+              <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
                 <Phone className="h-4 w-4" />
                 <span>24/7 Counselor &amp; Crisis Support Helpline</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-4 text-xs font-mono">
               {counselors.map((csl) => (
-                <div key={csl.id} className="bg-[#131C38] p-3 rounded-xl border border-[#243356] space-y-2">
+                <div key={csl.id} className="bg-white p-3 rounded-xl border border-[#D0D1D6] space-y-2">
                   <div>
-                    <h4 className="font-bold text-[#F4F1DE] text-sm font-sans">{csl.name}</h4>
-                    <p className="text-[10px] text-[#FFD700]">{csl.designation}</p>
-                    <p className="text-[10px] text-[#B8B5A3] mt-0.5">{csl.specialty}</p>
+                    <h4 className="font-bold text-[#202226] text-sm font-sans">{csl.name}</h4>
+                    <p className="text-[10px] text-[#B45309]">{csl.designation}</p>
+                    <p className="text-[10px] text-[#555960] mt-0.5">{csl.specialty}</p>
                   </div>
 
-                  <div className="space-y-1 text-[10px] text-[#B8B5A3] pt-1 border-t border-[#243356]">
+                  <div className="space-y-1 text-[10px] text-[#555960] pt-1 border-t border-[#D0D1D6]">
                     <p>📍 {csl.officeLocation}</p>
                     <p>🕒 {csl.availabilityHours}</p>
                     <p className="text-emerald-400 font-bold">📞 Phone: {csl.phone}</p>

@@ -257,11 +257,13 @@ interface SidebarProps {
 }
 
 import { useSafety } from '@/lib/context/safety-context';
+import { useAuth } from '@/lib/context/auth-context';
 
 export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
   const pathname = usePathname();
-  const { role, user, roleMeta, switchRole } = useRole();
+  const { role, user, roleMeta } = useRole();
   const { incidents, alerts } = useSafety();
+  const { isDemoMode, logout } = useAuth();
 
   if (!role) return null;
 
@@ -273,22 +275,22 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-50 flex h-screen flex-col border-r border-[#243356] bg-[#0F1026] text-[#F4F1DE] transition-all duration-300 select-none shadow-2xl shadow-black/50',
+        'fixed left-0 top-0 z-50 flex h-screen flex-col border-r border-[#D6D8D5] bg-white text-[#1F2933] transition-all duration-300 select-none shadow-md shadow-black/5',
         isCollapsed ? 'w-16' : 'w-64'
       )}
     >
       {/* Header with Luminous AI Branding */}
-      <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#243356] px-3.5 bg-[#0B132B]/80">
+      <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#D6D8D5] px-3.5 bg-white">
         <Link href="/" className="flex items-center gap-2.5 overflow-hidden">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#FFD700] via-[#D4AF37] to-[#C5A059] shadow-lg shadow-[#D4AF37]/25 text-[#0B132B]">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#F4C430] via-[#EAB308] to-[#D4AF37] shadow-sm shadow-[#D4AF37]/30 text-[#111827]">
             <Sparkles className="h-5 w-5 font-bold" />
           </div>
           {!isCollapsed && (
             <div className="flex flex-col">
-              <span className="font-bold text-sm tracking-tight text-[#F4F1DE] flex items-center gap-1.5 font-mono">
-                Luminous <span className="text-[#FFD700] font-bold text-xs">AI</span>
+              <span className="font-bold text-sm tracking-tight text-[#1F2933] flex items-center gap-1.5">
+                Luminous <span className="text-[#8a6d1a] font-bold text-xs">AI</span>
               </span>
-              <span className="text-[10px] text-[#C5A059] font-mono uppercase tracking-widest">
+              <span className="text-[10px] text-[#667085] uppercase tracking-widest">
                 Smart ERP &amp; Safety
               </span>
             </div>
@@ -297,7 +299,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
         <button
           onClick={onToggleCollapse}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] transition-colors"
+          className="flex h-7 w-7 items-center justify-center rounded-md text-[#8A9199] hover:bg-[#E8E9E7] hover:text-[#1F2933] transition-colors"
           title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
@@ -306,46 +308,30 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
       {/* User & Role Badge */}
       {!isCollapsed && user && (
-        <div className="border-b border-[#243356] bg-[#131C38]/90 p-3">
+        <div className="border-b border-[#D6D8D5] bg-[#F7F8F6] p-3">
           <div className="flex items-center gap-2.5">
             <div className="relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={user.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
                 alt={user.full_name}
-                className="h-8 w-8 rounded-full border border-[#D4AF37]/50 object-cover"
+                className="h-8 w-8 rounded-full border border-[#EAB308]/50 object-cover"
               />
-              <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-[#FFD700] ring-2 ring-[#0F1026]" />
+              <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-[#3F8F68] ring-2 ring-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="truncate text-xs font-bold text-[#F4F1DE]">{user.full_name}</p>
+              <p className="truncate text-xs font-bold text-[#1F2933]">{user.full_name}</p>
               <div className="mt-0.5 flex items-center gap-1">
-                <span className="inline-block px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#D4AF37]/15 text-[#FFD700] border border-[#D4AF37]/30 font-mono">
+                <span className="inline-block px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#EAB308]/15 text-[#8a6d1a] border border-[#EAB308]/30">
                   {roleMeta?.label}
                 </span>
+                {isDemoMode && (
+                  <span className="inline-block px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#B7791F]/10 text-[#8a5a14] border border-[#B7791F]/30">
+                    DEMO
+                  </span>
+                )}
               </div>
             </div>
-          </div>
-
-          {/* Quick Demo Role Switcher */}
-          <div className="mt-2.5">
-            <label className="text-[10px] uppercase font-mono text-[#C5A059] block mb-1">
-              Switch Persona:
-            </label>
-            <select
-              value={role}
-              onChange={(e) => switchRole(e.target.value as UserRole)}
-              className="w-full rounded-md bg-[#0F1026] border border-[#243356] text-[#F4F1DE] text-xs px-2 py-1 focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] cursor-pointer font-mono"
-            >
-              <option value="super_admin">Super Admin</option>
-              <option value="admin">Campus Admin</option>
-              <option value="security">Security Officer</option>
-              <option value="faculty">Faculty</option>
-              <option value="student">Student</option>
-              <option value="parent">Parent</option>
-              <option value="warden">Hostel Warden</option>
-              <option value="placement_officer">Placement Officer</option>
-            </select>
           </div>
         </div>
       )}
@@ -359,7 +345,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
           return (
             <div key={section.title} className="space-y-1">
               {!isCollapsed && (
-                <p className="px-2.5 text-[10px] font-bold tracking-widest text-[#C5A059] font-mono">
+                <p className="px-2.5 text-[10px] font-bold tracking-widest text-[#8A9199]">
                   {section.title}
                 </p>
               )}
@@ -385,9 +371,9 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
                       className={cn(
                         'group flex items-center gap-3 rounded-lg px-2.5 py-2 text-xs font-medium transition-all',
                         isActive
-                          ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold shadow-md shadow-[#D4AF37]/20'
-                          : 'text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700]',
-                        item.highlight && !isActive && 'text-[#FFD700] hover:text-white',
+                          ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#111827] font-bold shadow-sm'
+                          : 'text-[#667085] hover:bg-[#F0F1EF] hover:text-[#1F2933]',
+                        item.highlight && !isActive && 'text-[#8a6d1a] hover:text-[#1F2933]',
                         isCollapsed && 'justify-center px-0 py-2.5'
                       )}
                       title={isCollapsed ? item.title : undefined}
@@ -395,8 +381,8 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
                       <Icon
                         className={cn(
                           'h-4 w-4 shrink-0 transition-colors',
-                          isActive ? 'text-[#0B132B]' : 'text-[#C5A059] group-hover:text-[#FFD700]',
-                          item.highlight && !isActive && 'text-[#FFD700]'
+                          isActive ? 'text-[#111827]' : 'text-[#8A9199] group-hover:text-[#1F2933]',
+                          item.highlight && !isActive && 'text-[#D4AF37]'
                         )}
                       />
                       {!isCollapsed && (
@@ -405,10 +391,10 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
                           {itemBadge !== undefined && (
                             <span
                               className={cn(
-                                'rounded px-1.5 py-0.2 text-[10px] font-bold font-mono',
+                                'rounded px-1.5 py-0.2 text-[10px] font-bold',
                                 isActive
-                                  ? 'bg-[#0B132B] text-[#FFD700]'
-                                  : 'bg-[#1C2541] text-[#C5A059] border border-[#243356]'
+                                  ? 'bg-[#111827] text-[#F4C430]'
+                                  : 'bg-[#F0F1EF] text-[#667085] border border-[#D6D8D5]'
                               )}
                             >
                               {itemBadge}
@@ -426,18 +412,18 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       </div>
 
       {/* Footer / Logout */}
-      <div className="shrink-0 border-t border-[#243356] p-2 bg-[#0B132B]/80">
-        <Link
-          href="/login"
+      <div className="shrink-0 border-t border-[#D6D8D5] p-2 bg-white">
+        <button
+          onClick={() => logout()}
           className={cn(
-            'flex items-center gap-3 rounded-lg px-2.5 py-2 text-xs font-medium text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] transition-colors',
+            'flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-xs font-medium text-[#667085] hover:bg-[#F0F1EF] hover:text-[#1F2933] transition-colors cursor-pointer',
             isCollapsed && 'justify-center px-0'
           )}
-          title="Sign Out / Switch User"
+          title="Sign Out"
         >
-          <LogOut className="h-4 w-4 shrink-0 text-[#C5A059]" />
-          {!isCollapsed && <span>Switch Account / Sign Out</span>}
-        </Link>
+          <LogOut className="h-4 w-4 shrink-0 text-[#8A9199]" />
+          {!isCollapsed && <span>Sign Out</span>}
+        </button>
       </div>
     </aside>
   );

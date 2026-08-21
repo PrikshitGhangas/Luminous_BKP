@@ -49,33 +49,33 @@ export function IncidentCharts({ timeFilter }: IncidentChartsProps) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Chart 1: Incident Trends Over Time */}
-      <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE] shadow-xl overflow-hidden flex flex-col justify-between">
-        <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/60 flex flex-row items-center justify-between">
+      <Card className="border-[#AEB0B7] bg-white text-[#202226] shadow-sm overflow-hidden flex flex-col justify-between">
+        <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-[#F4F5F6] flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
-            <BarChart3 className="h-4 w-4 text-[#FFD700]" />
-            <CardTitle className="text-xs font-bold font-mono text-[#F4F1DE] tracking-wider uppercase">
+            <BarChart3 className="h-4 w-4 text-[#B45309]" />
+            <CardTitle className="text-xs font-bold text-[#202226] tracking-wider uppercase">
               Incident Severity Velocity ({timeFilter.toUpperCase()})
             </CardTitle>
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-mono">
+          <div className="flex items-center gap-2 text-[10px]">
             <span className="flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-red-500" />
-              <span className="text-red-400">Critical</span>
+              <span className="h-2 w-2 rounded-full bg-[#DC2626]" />
+              <span className="text-[#DC2626]">Critical</span>
             </span>
             <span className="flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-amber-500" />
-              <span className="text-amber-400">High</span>
+              <span className="h-2 w-2 rounded-full bg-[#F59E0B]" />
+              <span className="text-[#B45309]">High</span>
             </span>
             <span className="flex items-center gap-1">
-              <span className="h-2 w-2 rounded-full bg-[#D4AF37]" />
-              <span className="text-[#FFD700]">Med/Low</span>
+              <span className="h-2 w-2 rounded-full bg-[#EAB308]" />
+              <span className="text-[#B45309]">Med/Low</span>
             </span>
           </div>
         </CardHeader>
 
         <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-4">
           {/* Custom SVG Responsive Multi-Series Bar/Area Chart */}
-          <div className="relative h-44 w-full flex items-end justify-between gap-3 pt-6 pb-2 px-2 border-b border-[#243356]/60">
+          <div className="relative h-44 w-full flex items-end justify-between gap-3 pt-6 pb-2 px-2 border-b border-[#D0D1D6]">
             {trendData.map((d, index) => {
               const total = d.critical + d.high + d.medium + d.low;
               const maxVal = timeFilter === '30days' ? 30 : timeFilter === '7days' ? 12 : 6;
@@ -92,7 +92,7 @@ export function IncidentCharts({ timeFilter }: IncidentChartsProps) {
                 >
                   {/* Tooltip on Hover */}
                   {isHovered && (
-                    <div className="absolute -top-10 z-30 whitespace-nowrap rounded-lg bg-[#131C38] border border-[#D4AF37] px-2 py-1 text-[10px] font-mono shadow-xl text-[#FFD700]">
+                    <div className="absolute -top-10 z-30 whitespace-nowrap rounded-lg bg-[#202226] border border-[#EAB308] px-2 py-1 text-[10px] shadow-lg text-white">
                       {d.label}: {d.critical} Crit · {d.high} High · {d.medium + d.low} Med/Low
                     </div>
                   )}
@@ -101,32 +101,32 @@ export function IncidentCharts({ timeFilter }: IncidentChartsProps) {
                   <div
                     style={{ height: `${Math.max(heightPercent, 12)}%` }}
                     className={`w-full max-w-[36px] rounded-t-md flex flex-col overflow-hidden transition-all duration-300 ${
-                      isHovered ? 'ring-2 ring-[#FFD700] brightness-125' : ''
+                      isHovered ? 'ring-2 ring-[#EAB308] brightness-110' : ''
                     }`}
                   >
                     {d.critical > 0 && (
                       <div
                         style={{ flex: d.critical }}
-                        className="bg-gradient-to-t from-red-600 to-red-500 border-b border-red-900"
+                        className="bg-gradient-to-t from-[#DC2626] to-[#EF4444] border-b border-[#991B1B]"
                         title={`Critical: ${d.critical}`}
                       />
                     )}
                     {d.high > 0 && (
                       <div
                         style={{ flex: d.high }}
-                        className="bg-gradient-to-t from-amber-600 to-amber-500 border-b border-amber-900"
+                        className="bg-gradient-to-t from-[#F59E0B] to-[#FBBF24] border-b border-[#B45309]"
                         title={`High: ${d.high}`}
                       />
                     )}
                     <div
                       style={{ flex: Math.max(d.medium + d.low, 1) }}
-                      className="bg-gradient-to-t from-[#C5A059] to-[#D4AF37]"
+                      className="bg-gradient-to-t from-[#D4AF37] to-[#EAB308]"
                       title={`Med/Low: ${d.medium + d.low}`}
                     />
                   </div>
 
                   {/* Label */}
-                  <span className="text-[10px] font-mono text-[#B8B5A3] mt-2 group-hover:text-[#FFD700] transition-colors">
+                  <span className="text-[10px] text-[#555960] mt-2 group-hover:text-[#B45309] transition-colors">
                     {d.label}
                   </span>
                 </div>
@@ -134,8 +134,8 @@ export function IncidentCharts({ timeFilter }: IncidentChartsProps) {
             })}
           </div>
 
-          <div className="flex items-center justify-between text-xs text-[#B8B5A3] font-mono">
-            <span className="flex items-center gap-1 text-emerald-400">
+          <div className="flex items-center justify-between text-xs text-[#555960]">
+            <span className="flex items-center gap-1 text-[#067a4f]">
               <TrendingUp className="h-3.5 w-3.5" />
               <span>SLA Response Rate: 94.6%</span>
             </span>
@@ -145,15 +145,15 @@ export function IncidentCharts({ timeFilter }: IncidentChartsProps) {
       </Card>
 
       {/* Chart 2: Response-Time Charts & SLA Breakdown */}
-      <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE] shadow-xl overflow-hidden flex flex-col justify-between">
-        <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/60 flex flex-row items-center justify-between">
+      <Card className="border-[#AEB0B7] bg-white text-[#202226] shadow-sm overflow-hidden flex flex-col justify-between">
+        <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-[#F4F5F6] flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-[#FFD700]" />
-            <CardTitle className="text-xs font-bold font-mono text-[#F4F1DE] tracking-wider uppercase">
+            <Clock className="h-4 w-4 text-[#B45309]" />
+            <CardTitle className="text-xs font-bold text-[#202226] tracking-wider uppercase">
               Average First-Responder Response Times
             </CardTitle>
           </div>
-          <span className="rounded bg-[#D4AF37]/20 border border-[#D4AF37]/40 px-2 py-0.5 text-[10px] font-mono text-[#FFD700] font-bold">
+          <span className="rounded bg-[#FEF3C7] border border-[#EAB308]/40 px-2 py-0.5 text-[10px] text-[#B45309] font-bold">
             Target &lt; 4.0m
           </span>
         </CardHeader>
@@ -162,32 +162,32 @@ export function IncidentCharts({ timeFilter }: IncidentChartsProps) {
           {responseTimeData.map((item) => (
             <div key={item.department} className="space-y-1 text-xs">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-[#F4F1DE]">{item.department}</span>
-                <div className="flex items-center gap-3 font-mono text-[11px]">
-                  <span className="font-bold text-[#FFD700]">{item.avgTime}</span>
-                  <span className="text-[#B8B5A3] hidden sm:inline">({item.compliance} SLA)</span>
+                <span className="font-semibold text-[#202226]">{item.department}</span>
+                <div className="flex items-center gap-3 text-[11px]">
+                  <span className="font-bold text-[#B45309]">{item.avgTime}</span>
+                  <span className="text-[#555960] hidden sm:inline">({item.compliance} SLA)</span>
                 </div>
               </div>
 
               {/* Progress Bar Gauge */}
-              <div className="h-2 w-full rounded-full bg-[#1C2541] overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-[#E7E8EB] overflow-hidden">
                 <div
                   style={{ width: item.barWidth }}
                   className={`h-full rounded-full transition-all duration-500 ${
                     item.status === 'optimal'
-                      ? 'bg-gradient-to-r from-emerald-500 to-[#FFD700]'
+                      ? 'bg-gradient-to-r from-[#10B981] to-[#EAB308]'
                       : item.status === 'good'
-                      ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059]'
-                      : 'bg-gradient-to-r from-amber-500 to-amber-400'
+                      ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37]'
+                      : 'bg-gradient-to-r from-[#F59E0B] to-[#FBBF24]'
                   }`}
                 />
               </div>
             </div>
           ))}
 
-          <div className="pt-2 border-t border-[#243356] flex items-center justify-between text-[11px] font-mono text-[#C5A059]">
-            <span>Average Campus Dispatch Latency: <strong className="text-[#FFD700]">2.8 min</strong></span>
-            <span className="text-emerald-400 font-bold">▲ 18% Faster vs MoM</span>
+          <div className="pt-2 border-t border-[#D0D1D6] flex items-center justify-between text-[11px] text-[#555960]">
+            <span>Average Campus Dispatch Latency: <strong className="text-[#B45309]">2.8 min</strong></span>
+            <span className="text-[#067a4f] font-bold">▲ 18% Faster vs MoM</span>
           </div>
         </CardContent>
       </Card>

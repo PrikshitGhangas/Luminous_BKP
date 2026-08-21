@@ -215,10 +215,10 @@ export default function SecurityDashboardPage() {
         <div className="flex items-start gap-3">
           <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
           <div className="text-xs space-y-0.5">
-            <span className="font-bold uppercase tracking-wider font-mono text-[#FFD700]">
+            <span className="font-bold uppercase tracking-wider font-mono text-[#B45309]">
               Campus Security Operations Desk • Training &amp; Demo System:
             </span>
-            <p className="text-[#F4F1DE] opacity-90 leading-relaxed">
+            <p className="text-[#202226] opacity-90 leading-relaxed">
               Real-time operational dashboard for on-duty security officers. RBAC active: Security officers have tactical response clearance and no administrative governance privileges. Simulated internal dispatch only.
             </p>
           </div>
@@ -235,27 +235,27 @@ export default function SecurityDashboardPage() {
       </div>
 
       {/* Security Posture Bar & Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#243356] pb-4 bg-[#0F1026] p-4 rounded-xl border">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#D0D1D6] pb-4 bg-[#F4F5F6] p-4 rounded-xl border">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-6 w-6 text-[#FFD700]" />
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F4F1DE] font-mono">
+            <ShieldCheck className="h-6 w-6 text-[#B45309]" />
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono">
               SECURITY OPERATIONS DESK &amp; DISPATCH QUEUE
             </h1>
           </div>
-          <p className="text-xs text-[#B8B5A3] font-mono">
-            Active Duty Officer: <span className="text-[#FFD700] font-bold">Capt. Vikram Sharma</span> • Sector Patrol Unit Alpha
+          <p className="text-xs text-[#555960] font-mono">
+            Active Duty Officer: <span className="text-[#B45309] font-bold">Capt. Vikram Sharma</span> • Sector Patrol Unit Alpha
           </p>
         </div>
 
         {/* Threat Level & Action Hub */}
         <div className="flex flex-wrap items-center gap-2.5">
-          <div className="flex items-center gap-2 bg-[#131C38] px-3 py-1.5 rounded-lg border border-[#243356]">
-            <span className="text-[10px] font-mono uppercase text-[#C5A059] font-bold">Campus Threat Level:</span>
+          <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-lg border border-[#D0D1D6]">
+            <span className="text-[10px] font-mono uppercase text-[#B45309] font-bold">Campus Threat Level:</span>
             <select
               value={threatLevel}
               onChange={(e) => setThreatLevel(e.target.value as ThreatLevel)}
-              className="bg-[#0F1026] text-xs font-mono font-bold px-2 py-0.5 rounded border border-[#243356] text-[#FFD700] focus:outline-none"
+              className="bg-[#F4F5F6] text-xs font-mono font-bold px-2 py-0.5 rounded border border-[#D0D1D6] text-[#B45309] focus:outline-none"
             >
               <option value="NORMAL">NORMAL</option>
               <option value="ELEVATED">ELEVATED</option>
@@ -278,9 +278,9 @@ export default function SecurityDashboardPage() {
           <Button
             size="sm"
             onClick={() => setIsVisitorPassModalOpen(true)}
-            className="bg-[#1C2541] hover:bg-[#243356] text-[#F4F1DE] border border-[#243356] font-bold text-xs gap-1.5 font-mono"
+            className="bg-[#E7E8EB] hover:bg-[#243356] text-[#202226] border border-[#D0D1D6] font-bold text-xs gap-1.5 font-mono"
           >
-            <Plus className="h-3.5 w-3.5 text-[#FFD700]" />
+            <Plus className="h-3.5 w-3.5 text-[#B45309]" />
             <span>Issue Visitor Pass</span>
           </Button>
         </div>
@@ -340,17 +340,17 @@ export default function SecurityDashboardPage() {
                   setSelectedIncident(inc);
                   setIsDetailsModalOpen(true);
                 }}
-                className="p-3 rounded-lg bg-[#0F1026] border border-red-500/40 hover:border-red-400 transition-all cursor-pointer space-y-2"
+                className="p-3 rounded-lg bg-[#F4F5F6] border border-red-500/40 hover:border-red-400 transition-all cursor-pointer space-y-2"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xs text-[#FFD700] font-mono">{inc.incident_number}</span>
+                  <span className="font-bold text-xs text-[#B45309] font-mono">{inc.incident_number}</span>
                   <SeverityBadge severity="critical" size="sm" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#F4F1DE]">{inc.title}</h4>
-                  <p className="text-[11px] text-[#B8B5A3] mt-0.5 line-clamp-1">{inc.description}</p>
+                  <h4 className="text-xs font-bold text-[#202226]">{inc.title}</h4>
+                  <p className="text-[11px] text-[#555960] mt-0.5 line-clamp-1">{inc.description}</p>
                 </div>
-                <div className="flex items-center justify-between pt-1 text-[10px] font-mono text-[#C5A059] border-t border-[#243356]">
+                <div className="flex items-center justify-between pt-1 text-[10px] font-mono text-[#B45309] border-t border-[#D0D1D6]">
                   <span className="flex items-center gap-1">
                     <MapPin className="h-3 w-3 text-red-400" />
                     <span>{inc.location_name}</span>
@@ -381,13 +381,13 @@ export default function SecurityDashboardPage() {
       {/* Main Operational Console Tabs */}
       <div className="space-y-4">
         {/* Tab Headers */}
-        <div className="flex flex-wrap items-center gap-2 border-b border-[#243356] pb-2">
+        <div className="flex flex-wrap items-center gap-2 border-b border-[#D0D1D6] pb-2">
           <button
             onClick={() => setActiveTab('queue')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'queue'
-                ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] shadow-md'
-                : 'bg-[#131C38] text-[#B8B5A3] hover:text-[#FFD700]'
+                ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] shadow-md'
+                : 'bg-white text-[#555960] hover:text-[#B45309]'
             }`}
           >
             <Radio className="h-3.5 w-3.5" />
@@ -398,8 +398,8 @@ export default function SecurityDashboardPage() {
             onClick={() => setActiveTab('assigned')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'assigned'
-                ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] shadow-md'
-                : 'bg-[#131C38] text-[#B8B5A3] hover:text-[#FFD700]'
+                ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] shadow-md'
+                : 'bg-white text-[#555960] hover:text-[#B45309]'
             }`}
           >
             <Shield className="h-3.5 w-3.5" />
@@ -410,8 +410,8 @@ export default function SecurityDashboardPage() {
             onClick={() => setActiveTab('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'all'
-                ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] shadow-md'
-                : 'bg-[#131C38] text-[#B8B5A3] hover:text-[#FFD700]'
+                ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] shadow-md'
+                : 'bg-white text-[#555960] hover:text-[#B45309]'
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
@@ -422,8 +422,8 @@ export default function SecurityDashboardPage() {
             onClick={() => setActiveTab('visitors')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'visitors'
-                ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] shadow-md'
-                : 'bg-[#131C38] text-[#B8B5A3] hover:text-[#FFD700]'
+                ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] shadow-md'
+                : 'bg-white text-[#555960] hover:text-[#B45309]'
             }`}
           >
             <Users className="h-3.5 w-3.5" />
@@ -434,8 +434,8 @@ export default function SecurityDashboardPage() {
             onClick={() => setActiveTab('sectors')}
             className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
               activeTab === 'sectors'
-                ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] shadow-md'
-                : 'bg-[#131C38] text-[#B8B5A3] hover:text-[#FFD700]'
+                ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] shadow-md'
+                : 'bg-white text-[#555960] hover:text-[#B45309]'
             }`}
           >
             <Activity className="h-3.5 w-3.5" />
@@ -445,50 +445,50 @@ export default function SecurityDashboardPage() {
 
         {/* Tab 1: Response Queue */}
         {activeTab === 'queue' && (
-          <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE]">
-            <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/80 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs font-bold font-mono uppercase text-[#F4F1DE] flex items-center gap-2">
-                <Radio className="h-4 w-4 text-[#FFD700]" />
+          <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226]">
+            <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/80 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-bold font-mono uppercase text-[#202226] flex items-center gap-2">
+                <Radio className="h-4 w-4 text-[#B45309]" />
                 <span>Priority Response Queue • Pending Dispatch ({responseQueueIncidents.length})</span>
               </CardTitle>
-              <span className="text-[10px] font-mono text-[#C5A059]">SLA TIMER ACTIVE (&lt;5 MIN)</span>
+              <span className="text-[10px] font-mono text-[#B45309]">SLA TIMER ACTIVE (&lt;5 MIN)</span>
             </CardHeader>
             <CardContent className="p-4 space-y-4">
               {responseQueueIncidents.length === 0 ? (
-                <div className="py-12 text-center text-xs text-[#B8B5A3] font-mono">
+                <div className="py-12 text-center text-xs text-[#555960] font-mono">
                   All incidents dispatched and assigned. Queue is clear.
                 </div>
               ) : (
                 responseQueueIncidents.map((incident) => (
                   <div
                     key={incident.id}
-                    className="p-4 rounded-xl border border-[#243356] bg-[#131C38]/90 space-y-3 transition-all hover:border-[#D4AF37]/50"
+                    className="p-4 rounded-xl border border-[#D0D1D6] bg-white/90 space-y-3 transition-all hover:border-[#EAB308]/50"
                   >
                     {/* Header */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#FFD700]">
+                        <span className="font-mono text-xs font-bold text-[#B45309]">
                           {incident.incident_number}
                         </span>
                         <SeverityBadge severity={incident.severity} size="sm" isAiClassified />
-                        <span className="rounded bg-[#1C2541] border border-[#243356] px-2 py-0.5 text-[9px] font-mono uppercase text-[#C5A059]">
+                        <span className="rounded bg-[#E7E8EB] border border-[#D0D1D6] px-2 py-0.5 text-[9px] font-mono uppercase text-[#B45309]">
                           STATUS: {incident.status}
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] text-[#C5A059]">
+                      <span className="font-mono text-[10px] text-[#B45309]">
                         Reported {formatTimeAgo(incident.created_at)}
                       </span>
                     </div>
 
                     {/* Title & Description */}
                     <div>
-                      <h4 className="text-sm font-bold text-[#F4F1DE]">{incident.title}</h4>
-                      <p className="text-xs text-[#B8B5A3] mt-1">{incident.description}</p>
+                      <h4 className="text-sm font-bold text-[#202226]">{incident.title}</h4>
+                      <p className="text-xs text-[#555960] mt-1">{incident.description}</p>
                     </div>
 
                     {/* 7-Stage Timeline Visualizer */}
-                    <div className="pt-2 pb-1 border-t border-[#243356]">
-                      <span className="text-[10px] font-bold font-mono text-[#C5A059] uppercase block mb-1.5">
+                    <div className="pt-2 pb-1 border-t border-[#D0D1D6]">
+                      <span className="text-[10px] font-bold font-mono text-[#B45309] uppercase block mb-1.5">
                         Incident Progression Lifecycle:
                       </span>
                       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 text-[10px] font-mono">
@@ -500,14 +500,14 @@ export default function SecurityDashboardPage() {
                               className={`p-1.5 rounded text-center border transition-all ${
                                 isDone
                                   ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-300 font-bold'
-                                  : 'bg-[#0B132B] border-[#243356] text-[#7A786B]'
+                                  : 'bg-white border-[#D0D1D6] text-[#8A9199]'
                               }`}
                             >
                               <div className="flex items-center justify-center gap-1">
                                 {isDone ? (
                                   <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
                                 ) : (
-                                  <span className="h-2 w-2 rounded-full bg-[#243356] shrink-0" />
+                                  <span className="h-2 w-2 rounded-full bg-[#AEB0B7] shrink-0" />
                                 )}
                                 <span className="truncate">{step}</span>
                               </div>
@@ -518,9 +518,9 @@ export default function SecurityDashboardPage() {
                     </div>
 
                     {/* Action Bar */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#243356]">
-                      <span className="flex items-center gap-1 text-xs font-mono text-[#C5A059]">
-                        <MapPin className="h-3.5 w-3.5 text-[#FFD700]" />
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#D0D1D6]">
+                      <span className="flex items-center gap-1 text-xs font-mono text-[#B45309]">
+                        <MapPin className="h-3.5 w-3.5 text-[#B45309]" />
                         <span>{incident.location_name}</span>
                       </span>
 
@@ -528,7 +528,7 @@ export default function SecurityDashboardPage() {
                         <Button
                           size="sm"
                           onClick={() => acknowledgeIncident(incident.id)}
-                          className="h-7 text-xs bg-[#1C2541] hover:bg-[#243356] text-[#FFD700] border border-[#243356] font-mono font-bold"
+                          className="h-7 text-xs bg-[#E7E8EB] hover:bg-[#D4D5DA] text-[#B45309] border border-[#D0D1D6] font-mono font-bold"
                         >
                           <CheckCircle className="h-3 w-3 mr-1" />
                           <span>Acknowledge</span>
@@ -546,7 +546,7 @@ export default function SecurityDashboardPage() {
                         <Button
                           size="sm"
                           onClick={() => setDispatchModalIncident(incident)}
-                          className="h-7 text-xs bg-[#D4AF37] hover:bg-[#C5A059] text-[#0B132B] font-mono font-bold"
+                          className="h-7 text-xs bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-mono font-bold"
                         >
                           <Send className="h-3 w-3 mr-1" />
                           <span>Dispatch Unit</span>
@@ -559,7 +559,7 @@ export default function SecurityDashboardPage() {
                             setIsDetailsModalOpen(true);
                           }}
                           variant="outline"
-                          className="h-7 text-xs border-[#243356] text-[#F4F1DE] font-mono"
+                          className="h-7 text-xs border-[#D0D1D6] text-[#202226] font-mono"
                         >
                           <span>Full Details</span>
                         </Button>
@@ -574,28 +574,28 @@ export default function SecurityDashboardPage() {
 
         {/* Tab 2: Assigned to My Squad */}
         {activeTab === 'assigned' && (
-          <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE]">
-            <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/80 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs font-bold font-mono uppercase text-[#F4F1DE] flex items-center gap-2">
-                <Shield className="h-4 w-4 text-[#FFD700]" />
+          <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226]">
+            <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/80 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-bold font-mono uppercase text-[#202226] flex items-center gap-2">
+                <Shield className="h-4 w-4 text-[#B45309]" />
                 <span>My Unit Active Deployments ({assignedToMeIncidents.length})</span>
               </CardTitle>
               <span className="text-[10px] font-mono text-emerald-400 font-bold">UNIT ALPHA ON SCENE</span>
             </CardHeader>
             <CardContent className="p-4 space-y-4">
               {assignedToMeIncidents.length === 0 ? (
-                <div className="py-12 text-center text-xs text-[#B8B5A3] font-mono">
+                <div className="py-12 text-center text-xs text-[#555960] font-mono">
                   No active incidents currently assigned to Capt. Vikram Sharma.
                 </div>
               ) : (
                 assignedToMeIncidents.map((incident) => (
                   <div
                     key={incident.id}
-                    className="p-4 rounded-xl border border-indigo-500/40 bg-[#131C38]/90 space-y-3"
+                    className="p-4 rounded-xl border border-indigo-500/40 bg-white/90 space-y-3"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#FFD700]">
+                        <span className="font-mono text-xs font-bold text-[#B45309]">
                           {incident.incident_number}
                         </span>
                         <SeverityBadge severity={incident.severity} size="sm" />
@@ -603,18 +603,18 @@ export default function SecurityDashboardPage() {
                           ASSIGNED: {incident.assigned_officer_name}
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] text-[#C5A059]">
+                      <span className="font-mono text-[10px] text-[#B45309]">
                         {formatTimeAgo(incident.created_at)}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-bold text-[#F4F1DE]">{incident.title}</h4>
-                      <p className="text-xs text-[#B8B5A3] mt-1">{incident.description}</p>
+                      <h4 className="text-sm font-bold text-[#202226]">{incident.title}</h4>
+                      <p className="text-xs text-[#555960] mt-1">{incident.description}</p>
                     </div>
 
                     {/* Timeline */}
-                    <div className="pt-2 pb-1 border-t border-[#243356]">
+                    <div className="pt-2 pb-1 border-t border-[#D0D1D6]">
                       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 text-[10px] font-mono">
                         {TIMELINE_STEPS.map((step) => {
                           const isDone = getTimelineStepStatus(step, incident);
@@ -624,14 +624,14 @@ export default function SecurityDashboardPage() {
                               className={`p-1.5 rounded text-center border ${
                                 isDone
                                   ? 'bg-emerald-950/60 border-emerald-500/60 text-emerald-300 font-bold'
-                                  : 'bg-[#0B132B] border-[#243356] text-[#7A786B]'
+                                  : 'bg-white border-[#D0D1D6] text-[#8A9199]'
                               }`}
                             >
                               <div className="flex items-center justify-center gap-1">
                                 {isDone ? (
                                   <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
                                 ) : (
-                                  <span className="h-2 w-2 rounded-full bg-[#243356] shrink-0" />
+                                  <span className="h-2 w-2 rounded-full bg-[#AEB0B7] shrink-0" />
                                 )}
                                 <span className="truncate">{step}</span>
                               </div>
@@ -642,9 +642,9 @@ export default function SecurityDashboardPage() {
                     </div>
 
                     {/* Quick Stage Progression Buttons */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#243356]">
-                      <span className="text-xs font-mono text-[#C5A059] flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5 text-[#FFD700]" />
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#D0D1D6]">
+                      <span className="text-xs font-mono text-[#B45309] flex items-center gap-1">
+                        <MapPin className="h-3.5 w-3.5 text-[#B45309]" />
                         <span>{incident.location_name}</span>
                       </span>
 
@@ -679,28 +679,28 @@ export default function SecurityDashboardPage() {
 
         {/* Tab 3: All Active Incidents */}
         {activeTab === 'all' && (
-          <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE]">
-            <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/80">
+          <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226]">
+            <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/80">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <CardTitle className="text-xs font-bold font-mono uppercase text-[#F4F1DE]">
+                <CardTitle className="text-xs font-bold font-mono uppercase text-[#202226]">
                   All Active Incidents Feed ({activeIncidents.length})
                 </CardTitle>
 
                 {/* Filters */}
                 <div className="flex items-center gap-2">
                   <div className="relative">
-                    <Search className="h-3.5 w-3.5 text-[#7A786B] absolute left-2.5 top-2.5" />
+                    <Search className="h-3.5 w-3.5 text-[#8A9199] absolute left-2.5 top-2.5" />
                     <Input
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search incident..."
-                      className="h-8 pl-8 text-xs bg-[#0F1026] border-[#243356] font-mono w-40"
+                      className="h-8 pl-8 text-xs bg-[#F4F5F6] border-[#D0D1D6] font-mono w-40"
                     />
                   </div>
                   <select
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
-                    className="h-8 bg-[#0F1026] border border-[#243356] rounded-md px-2 text-xs font-mono text-[#F4F1DE]"
+                    className="h-8 bg-[#F4F5F6] border border-[#D0D1D6] rounded-md px-2 text-xs font-mono text-[#202226]"
                   >
                     <option value="all">All Categories</option>
                     <option value="fire">Fire &amp; Hazard</option>
@@ -729,31 +729,31 @@ export default function SecurityDashboardPage() {
                       setSelectedIncident(incident);
                       setIsDetailsModalOpen(true);
                     }}
-                    className="p-3.5 rounded-xl border border-[#243356] bg-[#131C38]/80 hover:bg-[#131C38] hover:border-[#D4AF37]/40 transition-all cursor-pointer space-y-2"
+                    className="p-3.5 rounded-xl border border-[#D0D1D6] bg-white/80 hover:bg-white hover:border-[#EAB308]/40 transition-all cursor-pointer space-y-2"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#FFD700]">
+                        <span className="font-mono text-xs font-bold text-[#B45309]">
                           {incident.incident_number}
                         </span>
                         <SeverityBadge severity={incident.severity} size="sm" isAiClassified />
-                        <span className="rounded bg-[#1C2541] border border-[#243356] px-2 py-0.5 text-[9px] font-mono uppercase text-[#C5A059]">
+                        <span className="rounded bg-[#E7E8EB] border border-[#D0D1D6] px-2 py-0.5 text-[9px] font-mono uppercase text-[#B45309]">
                           {incident.status}
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] text-[#C5A059]">
+                      <span className="font-mono text-[10px] text-[#B45309]">
                         {formatTimeAgo(incident.created_at)}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="text-xs font-bold text-[#F4F1DE]">{incident.title}</h4>
-                      <p className="text-[11px] text-[#B8B5A3] mt-0.5">{incident.description}</p>
+                      <h4 className="text-xs font-bold text-[#202226]">{incident.title}</h4>
+                      <p className="text-[11px] text-[#555960] mt-0.5">{incident.description}</p>
                     </div>
 
-                    <div className="flex items-center justify-between text-[10px] font-mono text-[#C5A059] pt-1.5 border-t border-[#243356]">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-[#B45309] pt-1.5 border-t border-[#D0D1D6]">
                       <span className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3 text-[#FFD700]" />
+                        <MapPin className="h-3 w-3 text-[#B45309]" />
                         <span>{incident.location_name}</span>
                       </span>
                       <span>Handler: {incident.assigned_officer_name || 'Unassigned'}</span>
@@ -766,16 +766,16 @@ export default function SecurityDashboardPage() {
 
         {/* Tab 4: Visitors Desk */}
         {activeTab === 'visitors' && (
-          <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE]">
-            <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/80 flex flex-row items-center justify-between">
-              <CardTitle className="text-xs font-bold font-mono uppercase text-[#F4F1DE] flex items-center gap-2">
-                <Users className="h-4 w-4 text-[#FFD700]" />
+          <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226]">
+            <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/80 flex flex-row items-center justify-between">
+              <CardTitle className="text-xs font-bold font-mono uppercase text-[#202226] flex items-center gap-2">
+                <Users className="h-4 w-4 text-[#B45309]" />
                 <span>Visitor Gate Pass &amp; Entry Log ({visitors.length})</span>
               </CardTitle>
               <Button
                 size="sm"
                 onClick={() => setIsVisitorPassModalOpen(true)}
-                className="h-7 text-xs bg-[#D4AF37] text-[#0B132B] font-bold font-mono"
+                className="h-7 text-xs bg-[#EAB308] text-[#0B132B] font-bold font-mono"
               >
                 <Plus className="h-3 w-3 mr-1" />
                 <span>New Visitor Pass</span>
@@ -785,26 +785,26 @@ export default function SecurityDashboardPage() {
               {visitors.map((pass) => (
                 <div
                   key={pass.id}
-                  className="p-3.5 rounded-xl border border-[#243356] bg-[#131C38]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-white/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-[#1C2541] border border-[#243356] text-[#FFD700]">
+                    <div className="p-2 rounded-lg bg-[#E7E8EB] border border-[#D0D1D6] text-[#B45309]">
                       <QrCode className="h-5 w-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#F4F1DE]">{pass.visitor_name}</span>
-                        <span className="font-mono text-[10px] bg-[#0B132B] border border-[#243356] px-1.5 py-0.2 rounded text-[#FFD700]">
+                        <span className="font-bold text-[#202226]">{pass.visitor_name}</span>
+                        <span className="font-mono text-[10px] bg-white border border-[#D0D1D6] px-1.5 py-0.2 rounded text-[#B45309]">
                           {pass.pass_number}
                         </span>
                         {pass.visitor_company && (
-                          <span className="text-[10px] text-[#B8B5A3]">({pass.visitor_company})</span>
+                          <span className="text-[10px] text-[#555960]">({pass.visitor_company})</span>
                         )}
                       </div>
-                      <p className="text-[#B8B5A3] text-[11px] mt-0.5">
-                        Visiting: <strong className="text-[#F4F1DE]">{pass.host_name}</strong> • Purpose: {pass.purpose}
+                      <p className="text-[#555960] text-[11px] mt-0.5">
+                        Visiting: <strong className="text-[#202226]">{pass.host_name}</strong> • Purpose: {pass.purpose}
                       </p>
-                      <p className="text-[10px] font-mono text-[#C5A059] mt-0.5">
+                      <p className="text-[10px] font-mono text-[#B45309] mt-0.5">
                         Badge ID: {pass.badge_id} • Destination: {pass.destination_building}
                       </p>
                     </div>
@@ -817,7 +817,7 @@ export default function SecurityDashboardPage() {
                           ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
                           : pass.status === 'expected'
                           ? 'bg-blue-950 text-blue-300 border border-blue-800'
-                          : 'bg-[#1C2541] text-[#B8B5A3]'
+                          : 'bg-[#E7E8EB] text-[#555960]'
                       }`}
                     >
                       {pass.status.replace('_', ' ')}
@@ -853,9 +853,9 @@ export default function SecurityDashboardPage() {
         {/* Tab 5: Campus Sectors & Guards */}
         {activeTab === 'sectors' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE]">
-              <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/80">
-                <CardTitle className="text-xs font-bold font-mono uppercase text-[#F4F1DE]">
+            <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226]">
+              <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/80">
+                <CardTitle className="text-xs font-bold font-mono uppercase text-[#202226]">
                   Sector Surveillance Readiness
                 </CardTitle>
               </CardHeader>
@@ -863,13 +863,13 @@ export default function SecurityDashboardPage() {
                 {SECTORS_STATUS.map((sec) => (
                   <div
                     key={sec.code}
-                    className="p-3 rounded-lg bg-[#131C38] border border-[#243356] flex items-center justify-between text-xs font-mono"
+                    className="p-3 rounded-lg bg-white border border-[#D0D1D6] flex items-center justify-between text-xs font-mono"
                   >
                     <div>
-                      <div className="font-bold text-[#F4F1DE]">
+                      <div className="font-bold text-[#202226]">
                         {sec.name} ({sec.code})
                       </div>
-                      <p className="text-[11px] text-[#B8B5A3] mt-0.5">
+                      <p className="text-[11px] text-[#555960] mt-0.5">
                         Stationed: {sec.guard} • {sec.cameras} CCTV Feeds Live
                       </p>
                     </div>
@@ -887,9 +887,9 @@ export default function SecurityDashboardPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-[#243356] bg-[#0F1026] text-[#F4F1DE]">
-              <CardHeader className="p-4 pb-2 border-b border-[#243356] bg-[#131C38]/80">
-                <CardTitle className="text-xs font-bold font-mono uppercase text-[#F4F1DE]">
+            <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226]">
+              <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/80">
+                <CardTitle className="text-xs font-bold font-mono uppercase text-[#202226]">
                   Active Patrol Roster &amp; GPS Trackers
                 </CardTitle>
               </CardHeader>
@@ -897,22 +897,22 @@ export default function SecurityDashboardPage() {
                 {patrolLogs.map((patrol) => (
                   <div
                     key={patrol.id}
-                    className="p-3 rounded-lg bg-[#131C38] border border-[#243356] flex items-center justify-between text-xs font-mono"
+                    className="p-3 rounded-lg bg-white border border-[#D0D1D6] flex items-center justify-between text-xs font-mono"
                   >
                     <div className="flex items-center gap-3">
                       <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
                       <div>
-                        <div className="font-bold text-[#F4F1DE]">
+                        <div className="font-bold text-[#202226]">
                           {patrol.officer_name} ({patrol.unit})
                         </div>
-                        <p className="text-[11px] text-[#B8B5A3]">{patrol.location_name}</p>
+                        <p className="text-[11px] text-[#555960]">{patrol.location_name}</p>
                       </div>
                     </div>
                     <div className="text-right">
                       <span className="text-emerald-400 font-bold uppercase text-[10px]">
                         {patrol.status}
                       </span>
-                      <p className="text-[10px] text-[#7A786B]">Checked in 2m ago</p>
+                      <p className="text-[10px] text-[#8A9199]">Checked in 2m ago</p>
                     </div>
                   </div>
                 ))}
@@ -925,9 +925,9 @@ export default function SecurityDashboardPage() {
       {/* Assign Officer Modal */}
       {assignModalIncident && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-md bg-[#0F1026] border-[#243356] text-[#F4F1DE] shadow-2xl animate-in zoom-in-95 duration-200">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]">
-              <CardTitle className="text-xs font-bold font-mono uppercase text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-md bg-[#F4F5F6] border-[#D0D1D6] text-[#202226] shadow-2xl animate-in zoom-in-95 duration-200">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white">
+              <CardTitle className="text-xs font-bold font-mono uppercase text-[#B45309] flex items-center gap-2">
                 <UserCheck className="h-4 w-4" />
                 <span>Assign Incident Officer: {assignModalIncident.incident_number}</span>
               </CardTitle>
@@ -935,11 +935,11 @@ export default function SecurityDashboardPage() {
             <CardContent className="p-4">
               <form onSubmit={handleAssignSubmit} className="space-y-3 text-xs font-mono">
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Select On-Duty Officer / Unit:</label>
+                  <label className="text-[#B45309]">Select On-Duty Officer / Unit:</label>
                   <select
                     value={selectedOfficerToAssign}
                     onChange={(e) => setSelectedOfficerToAssign(e.target.value)}
-                    className="w-full h-9 rounded-md bg-[#131C38] border border-[#243356] text-[#F4F1DE] px-2"
+                    className="w-full h-9 rounded-md bg-white border border-[#D0D1D6] text-[#202226] px-2"
                   >
                     {ON_DUTY_OFFICERS.map((off) => (
                       <option key={off.name} value={off.name}>
@@ -950,13 +950,13 @@ export default function SecurityDashboardPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Special Assignment Directives (Optional):</label>
+                  <label className="text-[#B45309]">Special Assignment Directives (Optional):</label>
                   <textarea
                     value={assignNotes}
                     onChange={(e) => setAssignNotes(e.target.value)}
                     placeholder="e.g. Bring breathalyzer kit, secure rear stairwell..."
                     rows={2}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] text-[#F4F1DE] p-2 text-xs"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] text-[#202226] p-2 text-xs"
                   />
                 </div>
 
@@ -966,14 +966,14 @@ export default function SecurityDashboardPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setAssignModalIncident(null)}
-                    className="border-[#243356] text-xs"
+                    className="border-[#D0D1D6] text-xs"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     size="sm"
-                    className="bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
+                    className="bg-[#EAB308] text-[#0B132B] font-bold text-xs"
                   >
                     Confirm Assignment
                   </Button>
@@ -987,8 +987,8 @@ export default function SecurityDashboardPage() {
       {/* Dispatch Modal */}
       {dispatchModalIncident && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-md bg-[#0F1026] border-red-500/40 text-[#F4F1DE] shadow-2xl animate-in zoom-in-95 duration-200">
-            <CardHeader className="p-4 border-b border-[#243356] bg-red-950/40">
+          <Card className="w-full max-w-md bg-[#F4F5F6] border-red-500/40 text-[#202226] shadow-2xl animate-in zoom-in-95 duration-200">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-red-950/40">
               <CardTitle className="text-xs font-bold font-mono uppercase text-red-300 flex items-center gap-2">
                 <Send className="h-4 w-4 animate-pulse" />
                 <span>Deploy Rapid Dispatch: {dispatchModalIncident.incident_number}</span>
@@ -996,17 +996,17 @@ export default function SecurityDashboardPage() {
             </CardHeader>
             <CardContent className="p-4">
               <form onSubmit={handleDispatchSubmit} className="space-y-3 text-xs font-mono">
-                <div className="p-2.5 rounded bg-[#131C38] border border-[#243356] text-[11px]">
-                  <p className="font-bold text-[#FFD700]">{dispatchModalIncident.title}</p>
-                  <p className="text-[#B8B5A3] mt-0.5">Location: {dispatchModalIncident.location_name}</p>
+                <div className="p-2.5 rounded bg-white border border-[#D0D1D6] text-[11px]">
+                  <p className="font-bold text-[#B45309]">{dispatchModalIncident.title}</p>
+                  <p className="text-[#555960] mt-0.5">Location: {dispatchModalIncident.location_name}</p>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Deploying Unit:</label>
+                  <label className="text-[#B45309]">Deploying Unit:</label>
                   <select
                     value={selectedDispatchUnit}
                     onChange={(e) => setSelectedDispatchUnit(e.target.value)}
-                    className="w-full h-9 rounded-md bg-[#131C38] border border-[#243356] text-[#F4F1DE] px-2"
+                    className="w-full h-9 rounded-md bg-white border border-[#D0D1D6] text-[#202226] px-2"
                   >
                     <option value="Rapid Unit Alpha">Rapid Unit Alpha (Lead Cruiser #1)</option>
                     <option value="Patrol Beta Vehicle">Patrol Beta (Vehicle #4)</option>
@@ -1016,22 +1016,22 @@ export default function SecurityDashboardPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Lead Dispatch Officer:</label>
+                  <label className="text-[#B45309]">Lead Dispatch Officer:</label>
                   <Input
                     value={dispatchOfficerName}
                     onChange={(e) => setDispatchOfficerName(e.target.value)}
-                    className="bg-[#131C38] border-[#243356] text-xs h-9"
+                    className="bg-white border-[#D0D1D6] text-xs h-9"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Dispatch Instructions:</label>
+                  <label className="text-[#B45309]">Dispatch Instructions:</label>
                   <textarea
                     value={dispatchNotes}
                     onChange={(e) => setDispatchNotes(e.target.value)}
                     placeholder="e.g. Sirens active, approach via South Gate ramp..."
                     rows={2}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] text-[#F4F1DE] p-2 text-xs"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] text-[#202226] p-2 text-xs"
                   />
                 </div>
 
@@ -1041,7 +1041,7 @@ export default function SecurityDashboardPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setDispatchModalIncident(null)}
-                    className="border-[#243356] text-xs"
+                    className="border-[#D0D1D6] text-xs"
                   >
                     Cancel
                   </Button>
@@ -1062,8 +1062,8 @@ export default function SecurityDashboardPage() {
       {/* Resolve Incident Modal */}
       {resolveModalIncident && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-md bg-[#0F1026] border-emerald-500/40 text-[#F4F1DE] shadow-2xl animate-in zoom-in-95 duration-200">
-            <CardHeader className="p-4 border-b border-[#243356] bg-emerald-950/40">
+          <Card className="w-full max-w-md bg-[#F4F5F6] border-emerald-500/40 text-[#202226] shadow-2xl animate-in zoom-in-95 duration-200">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-emerald-950/40">
               <CardTitle className="text-xs font-bold font-mono uppercase text-emerald-300 flex items-center gap-2">
                 <CheckCircle className="h-4 w-4" />
                 <span>Resolve Incident: {resolveModalIncident.incident_number}</span>
@@ -1072,13 +1072,13 @@ export default function SecurityDashboardPage() {
             <CardContent className="p-4">
               <form onSubmit={handleResolveSubmit} className="space-y-3 text-xs font-mono">
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Resolution Debrief &amp; Root Cause Notes:</label>
+                  <label className="text-[#B45309]">Resolution Debrief &amp; Root Cause Notes:</label>
                   <textarea
                     value={resolveNotes}
                     onChange={(e) => setResolveNotes(e.target.value)}
                     placeholder="e.g. Area thoroughly secured, ventilation restored, student escorted to safety with zero injuries."
                     rows={3}
-                    className="w-full rounded-md bg-[#131C38] border border-[#243356] text-[#F4F1DE] p-2 text-xs"
+                    className="w-full rounded-md bg-white border border-[#D0D1D6] text-[#202226] p-2 text-xs"
                     required
                   />
                 </div>
@@ -1089,7 +1089,7 @@ export default function SecurityDashboardPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setResolveModalIncident(null)}
-                    className="border-[#243356] text-xs"
+                    className="border-[#D0D1D6] text-xs"
                   >
                     Cancel
                   </Button>
@@ -1110,9 +1110,9 @@ export default function SecurityDashboardPage() {
       {/* Visitor Pass Creation Modal */}
       {isVisitorPassModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-md bg-[#0F1026] border-[#243356] text-[#F4F1DE] shadow-2xl animate-in zoom-in-95 duration-200">
-            <CardHeader className="p-4 border-b border-[#243356] bg-[#131C38]">
-              <CardTitle className="text-xs font-bold font-mono uppercase text-[#FFD700] flex items-center gap-2">
+          <Card className="w-full max-w-md bg-[#F4F5F6] border-[#D0D1D6] text-[#202226] shadow-2xl animate-in zoom-in-95 duration-200">
+            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white">
+              <CardTitle className="text-xs font-bold font-mono uppercase text-[#B45309] flex items-center gap-2">
                 <QrCode className="h-4 w-4" />
                 <span>Issue Digital Visitor Pass</span>
               </CardTitle>
@@ -1120,66 +1120,66 @@ export default function SecurityDashboardPage() {
             <CardContent className="p-4">
               <form onSubmit={handleCreateVisitorPass} className="space-y-3 text-xs font-mono">
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Visitor Full Name:</label>
+                  <label className="text-[#B45309]">Visitor Full Name:</label>
                   <Input
                     value={visitorName}
                     onChange={(e) => setVisitorName(e.target.value)}
                     placeholder="e.g. Prof. David Miller"
                     required
-                    className="bg-[#131C38] border-[#243356] text-xs h-9"
+                    className="bg-white border-[#D0D1D6] text-xs h-9"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1">
-                    <label className="text-[#C5A059]">Visitor Phone:</label>
+                    <label className="text-[#B45309]">Visitor Phone:</label>
                     <Input
                       value={visitorPhone}
                       onChange={(e) => setVisitorPhone(e.target.value)}
                       placeholder="+1 (555) 019-3388"
-                      className="bg-[#131C38] border-[#243356] text-xs h-9"
+                      className="bg-white border-[#D0D1D6] text-xs h-9"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[#C5A059]">Organization:</label>
+                    <label className="text-[#B45309]">Organization:</label>
                     <Input
                       value={visitorCompany}
                       onChange={(e) => setVisitorCompany(e.target.value)}
                       placeholder="e.g. MIT Labs"
-                      className="bg-[#131C38] border-[#243356] text-xs h-9"
+                      className="bg-white border-[#D0D1D6] text-xs h-9"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1">
-                    <label className="text-[#C5A059]">Host Staff / Faculty:</label>
+                    <label className="text-[#B45309]">Host Staff / Faculty:</label>
                     <Input
                       value={visitorHost}
                       onChange={(e) => setVisitorHost(e.target.value)}
                       placeholder="e.g. Prof. Sarah Jenkins"
                       required
-                      className="bg-[#131C38] border-[#243356] text-xs h-9"
+                      className="bg-white border-[#D0D1D6] text-xs h-9"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[#C5A059]">Destination Complex:</label>
+                    <label className="text-[#B45309]">Destination Complex:</label>
                     <Input
                       value={visitorDestination}
                       onChange={(e) => setVisitorDestination(e.target.value)}
                       placeholder="e.g. CS Lab 2"
-                      className="bg-[#131C38] border-[#243356] text-xs h-9"
+                      className="bg-white border-[#D0D1D6] text-xs h-9"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[#C5A059]">Purpose of Campus Entry:</label>
+                  <label className="text-[#B45309]">Purpose of Campus Entry:</label>
                   <Input
                     value={visitorPurpose}
                     onChange={(e) => setVisitorPurpose(e.target.value)}
                     placeholder="e.g. Guest Lecture & Lab Evaluation"
-                    className="bg-[#131C38] border-[#243356] text-xs h-9"
+                    className="bg-white border-[#D0D1D6] text-xs h-9"
                   />
                 </div>
 
@@ -1189,14 +1189,14 @@ export default function SecurityDashboardPage() {
                     variant="outline"
                     size="sm"
                     onClick={() => setIsVisitorPassModalOpen(false)}
-                    className="border-[#243356] text-xs"
+                    className="border-[#D0D1D6] text-xs"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     size="sm"
-                    className="bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
+                    className="bg-[#EAB308] text-[#0B132B] font-bold text-xs"
                   >
                     Generate Visitor Pass
                   </Button>
