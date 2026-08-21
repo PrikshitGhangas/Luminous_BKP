@@ -25,6 +25,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Demo mode is a client-only persona and should never be gated by the
   // real Supabase session loading state.
@@ -36,7 +41,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     );
   }
 
-  const isAllowed = canAccess(pathname);
+  const isAllowed = !mounted || canAccess(pathname);
 
   return (
     <AcademicProvider>

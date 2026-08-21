@@ -60,9 +60,9 @@ Deno.serve(async (req) => {
       )
     }
 
-    if (incident.status !== 'reported') {
+    if (incident.status !== 'reported' && incident.status !== 'assigned') {
       return new Response(
-        JSON.stringify({ error: `Cannot escalate incident with status '${incident.status}'. Expected 'reported'.` }),
+        JSON.stringify({ error: `Cannot escalate incident with status '${incident.status}'. Expected 'reported' or 'assigned'.` }),
         { status: 409, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }

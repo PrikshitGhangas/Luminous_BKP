@@ -30,11 +30,8 @@ Deno.serve(async (req) => {
       )
     }
 
-    const userClient = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY') ?? serviceRoleKey, {
-      global: { headers: { Authorization: authHeader } },
-    })
-
-    const { data: { user }, error: authError } = await userClient.auth.getUser()
+    const token = authHeader.replace('Bearer ', '').trim()
+    const { data: { user }, error: authError } = await adminClient.auth.getUser(token)
     if (authError || !user) {
       return new Response(
         JSON.stringify({ error: 'Unauthorized', details: authError?.message }),
@@ -63,28 +60,38 @@ Tip text: "${text}"
 
 Return a JSON object with exactly two fields: "category" and "severity".`
 
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { responseMimeType: 'application/json' },
-        }),
+    // Call Gemini API with model fallback for high availability
+    const callGemini = async (promptText: string): Promise<string> => {
+      const candidateModels = ['gemini-3.1-flash-lite-preview', 'gemini-flash-latest'];
+      let lastErr = '';
+      for (const m of candidateModels) {
+        try {
+          const r = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${geminiApiKey}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{ parts: [{ text: promptText }] }],
+                generationConfig: { responseMimeType: 'application/json' },
+              }),
+            }
+          );
+          if (r.ok) {
+            const data = await r.json();
+            const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (raw) return raw;
+          } else {
+            lastErr = `${m} (${r.status}): ${await r.text()}`;
+          }
+        } catch (e) {
+          lastErr = `${m}: ${e instanceof Error ? e.message : 'network error'}`;
+        }
       }
-    )
+      throw new Error(`Gemini models unavailable: ${lastErr}`);
+    };
 
-    if (!geminiResponse.ok) {
-      const errBody = await geminiResponse.text()
-      throw new Error(`Gemini API error (${geminiResponse.status}): ${errBody}`)
-    }
-
-    const geminiData = await geminiResponse.json()
-    const rawText = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text
-    if (!rawText) {
-      throw new Error('Empty response from Gemini API')
-    }
+    const rawText = await callGemini(prompt);
 
     let classification: { category: string; severity: string }
     try {
