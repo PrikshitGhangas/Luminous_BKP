@@ -111,12 +111,6 @@ const NAV_SECTIONS: NavSection[] = [
         roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer'],
       },
       {
-        title: 'Visitor Passes',
-        href: '/visitors',
-        icon: Users,
-        roles: ['super_admin', 'admin', 'security', 'student', 'faculty', 'warden'],
-      },
-      {
         title: 'Safety Analytics',
         href: '/analytics/safety',
         icon: BarChart3,

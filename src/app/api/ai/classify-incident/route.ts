@@ -14,7 +14,18 @@ const RequestSchema = z.object({
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-    const validatedInput = RequestSchema.parse(json);
+    const parseResult = RequestSchema.safeParse(json);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Validation failed',
+          details: parseResult.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+    const validatedInput = parseResult.data;
 
     // Call server-side analyzeIncident()
     const classification = await analyzeIncident(validatedInput);
@@ -31,12 +42,12 @@ export async function POST(request: Request) {
   } catch (error: unknown) {
     console.error('Error in /api/ai/classify-incident:', error);
 
-    if (error instanceof z.ZodError) {
+    if (error instanceof z.ZodError || (error && typeof error === 'object' && ('issues' in error || (error as { name?: string }).name === 'ZodError'))) {
       return NextResponse.json(
         {
           success: false,
           error: 'Validation failed',
-          details: error.issues,
+          details: (error as { issues?: unknown }).issues,
         },
         { status: 400 }
       );

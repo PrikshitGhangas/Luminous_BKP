@@ -12,7 +12,18 @@ const RequestSchema = z.object({
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-    const validatedInput = RequestSchema.parse(json);
+    const parseResult = RequestSchema.safeParse(json);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Validation failed',
+          details: parseResult.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+    const validatedInput = parseResult.data;
 
     const classification = await analyzeComplaint(validatedInput);
     const validatedOutput = AIComplaintOutputSchema.parse(classification);
