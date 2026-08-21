@@ -1,0 +1,444 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useRole } from '@/lib/hooks/use-role';
+import { cn } from '@/lib/utils';
+import {
+  Heart,
+  HeartPulse,
+  User,
+  Sparkles,
+  Radio,
+  Flame,
+  MapPin,
+  Bell,
+  BarChart3,
+  Users,
+  ShieldCheck,
+  GraduationCap,
+  Briefcase,
+  CalendarCheck,
+  FileSpreadsheet,
+  Clock,
+  Building2,
+  Bus,
+  MessageSquareWarning,
+  Award,
+  Megaphone,
+  UserCheck,
+  ScrollText,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  LogOut,
+  BookOpen,
+  Landmark,
+} from 'lucide-react';
+import { UserRole } from '@/lib/types';
+
+interface NavItem {
+  title: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  roles: UserRole[];
+  badge?: string | number;
+  highlight?: boolean;
+}
+
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+const NAV_SECTIONS: NavSection[] = [
+  {
+    title: 'SAFETY & EMERGENCY',
+    items: [
+      {
+        title: 'Hackathon Demo Hub',
+        href: '/demo',
+        icon: Sparkles,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
+        highlight: true,
+        badge: 'DEMO',
+      },
+      {
+        title: 'CampusShield Copilot',
+        href: '/copilot',
+        icon: Sparkles,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
+        highlight: true,
+        badge: 'AI',
+      },
+      {
+        title: 'Security Operations',
+        href: '/security',
+        icon: ShieldCheck,
+        roles: ['security', 'super_admin', 'admin'],
+        highlight: true,
+      },
+      {
+        title: 'Emergency SOS',
+        href: '/safety/sos',
+        icon: HeartPulse,
+        roles: ['student', 'faculty', 'super_admin', 'admin', 'warden', 'security', 'parent', 'placement_officer'],
+        highlight: true,
+      },
+      {
+        title: 'Emergency Alerts',
+        href: '/safety/emergency',
+        icon: Bell,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'warden'],
+      },
+      {
+        title: 'Command Center',
+        href: '/safety/command-center',
+        icon: Radio,
+        roles: ['super_admin', 'admin', 'security'],
+      },
+      {
+        title: 'Incidents Queue',
+        href: '/incidents',
+        icon: Flame,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer'],
+      },
+      {
+        title: 'Campus Map',
+        href: '/campus-map',
+        icon: MapPin,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer'],
+      },
+      {
+        title: 'Visitor Passes',
+        href: '/visitors',
+        icon: Users,
+        roles: ['super_admin', 'admin', 'security', 'student', 'faculty', 'warden'],
+      },
+      {
+        title: 'Safety Analytics',
+        href: '/analytics/safety',
+        icon: BarChart3,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
+      },
+      {
+        title: 'Risk Intelligence',
+        href: '/safety/risk-intelligence',
+        icon: Sparkles,
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'warden'],
+        highlight: true,
+      },
+    ],
+  },
+  {
+    title: 'STUDENT & ACADEMIC ERP',
+    items: [
+      {
+        title: 'Student Dashboard',
+        href: '/student',
+        icon: User,
+        roles: ['student', 'super_admin', 'admin', 'faculty', 'parent'],
+        highlight: true,
+      },
+      {
+        title: 'Attendance',
+        href: '/attendance',
+        icon: CalendarCheck,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent'],
+      },
+      {
+        title: 'Timetable',
+        href: '/timetable',
+        icon: Clock,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent', 'warden'],
+      },
+      {
+        title: 'Exams & Grades',
+        href: '/exams',
+        icon: FileSpreadsheet,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent'],
+      },
+      {
+        title: 'Courses Catalog',
+        href: '/courses',
+        icon: BookOpen,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent'],
+      },
+      {
+        title: 'Departments',
+        href: '/departments',
+        icon: Landmark,
+        roles: ['super_admin', 'admin', 'faculty', 'student'],
+      },
+      {
+        title: 'Students Directory',
+        href: '/students',
+        icon: GraduationCap,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent'],
+      },
+      {
+        title: 'Faculty Directory',
+        href: '/faculty',
+        icon: Briefcase,
+        roles: ['super_admin', 'admin', 'faculty', 'student'],
+      },
+    ],
+  },
+  {
+    title: 'SECONDARY CAMPUS SERVICES',
+    items: [
+      {
+        title: 'Hostel Quarters',
+        href: '/hostel',
+        icon: Building2,
+        roles: ['super_admin', 'admin', 'warden', 'student', 'faculty', 'parent'],
+      },
+      {
+        title: 'Transport Routes',
+        href: '/transport',
+        icon: Bus,
+        roles: ['super_admin', 'admin', 'student', 'parent', 'faculty', 'warden'],
+      },
+      {
+        title: 'Placements Portal',
+        href: '/placement',
+        icon: Award,
+        roles: ['super_admin', 'admin', 'placement_officer', 'student'],
+      },
+      {
+        title: 'Complaints Redressal',
+        href: '/complaints',
+        icon: MessageSquareWarning,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'warden', 'placement_officer'],
+      },
+      {
+        title: 'Parent Portal',
+        href: '/parent',
+        icon: UserCheck,
+        roles: ['parent', 'super_admin', 'admin'],
+      },
+      {
+        title: 'Student Wellbeing',
+        href: '/wellbeing',
+        icon: Heart,
+        roles: ['student', 'faculty', 'super_admin', 'admin', 'warden', 'parent'],
+      },
+    ],
+  },
+  {
+    title: 'COMMUNICATION & ADMIN',
+    items: [
+      {
+        title: 'Announcements',
+        href: '/announcements',
+        icon: Megaphone,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent', 'warden', 'placement_officer', 'security'],
+      },
+      {
+        title: 'Audit Logs',
+        href: '/audit-logs',
+        icon: ScrollText,
+        roles: ['super_admin', 'admin'],
+      },
+      {
+        title: 'Settings',
+        href: '/settings',
+        icon: Settings,
+        roles: ['super_admin', 'admin', 'faculty', 'student', 'parent', 'security', 'warden', 'placement_officer'],
+      },
+    ],
+  },
+];
+
+interface SidebarProps {
+  isCollapsed: boolean;
+  onToggleCollapse: () => void;
+}
+
+import { useSafety } from '@/lib/context/safety-context';
+
+export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
+  const pathname = usePathname();
+  const { role, user, roleMeta, switchRole } = useRole();
+  const { incidents, alerts } = useSafety();
+
+  if (!role) return null;
+
+  const activeIncidentsCount = incidents.filter(
+    (i) => i.status !== 'resolved' && i.status !== 'closed'
+  ).length;
+  const activeAlertsCount = alerts.filter((a) => a.is_active).length;
+
+  return (
+    <aside
+      className={cn(
+        'fixed left-0 top-0 z-50 flex h-screen flex-col border-r border-[#243356] bg-[#0F1026] text-[#F4F1DE] transition-all duration-300 select-none shadow-2xl shadow-black/50',
+        isCollapsed ? 'w-16' : 'w-64'
+      )}
+    >
+      {/* Header with Luminous AI Branding */}
+      <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#243356] px-3.5 bg-[#0B132B]/80">
+        <Link href="/" className="flex items-center gap-2.5 overflow-hidden">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#FFD700] via-[#D4AF37] to-[#C5A059] shadow-lg shadow-[#D4AF37]/25 text-[#0B132B]">
+            <Sparkles className="h-5 w-5 font-bold" />
+          </div>
+          {!isCollapsed && (
+            <div className="flex flex-col">
+              <span className="font-bold text-sm tracking-tight text-[#F4F1DE] flex items-center gap-1.5 font-mono">
+                Luminous <span className="text-[#FFD700] font-bold text-xs">AI</span>
+              </span>
+              <span className="text-[10px] text-[#C5A059] font-mono uppercase tracking-widest">
+                Smart ERP &amp; Safety
+              </span>
+            </div>
+          )}
+        </Link>
+
+        <button
+          onClick={onToggleCollapse}
+          className="flex h-7 w-7 items-center justify-center rounded-md text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] transition-colors"
+          title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+        >
+          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        </button>
+      </div>
+
+      {/* User & Role Badge */}
+      {!isCollapsed && user && (
+        <div className="border-b border-[#243356] bg-[#131C38]/90 p-3">
+          <div className="flex items-center gap-2.5">
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={user.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100'}
+                alt={user.full_name}
+                className="h-8 w-8 rounded-full border border-[#D4AF37]/50 object-cover"
+              />
+              <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-[#FFD700] ring-2 ring-[#0F1026]" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="truncate text-xs font-bold text-[#F4F1DE]">{user.full_name}</p>
+              <div className="mt-0.5 flex items-center gap-1">
+                <span className="inline-block px-1.5 py-0.2 text-[9px] font-bold rounded bg-[#D4AF37]/15 text-[#FFD700] border border-[#D4AF37]/30 font-mono">
+                  {roleMeta?.label}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Demo Role Switcher */}
+          <div className="mt-2.5">
+            <label className="text-[10px] uppercase font-mono text-[#C5A059] block mb-1">
+              Switch Persona:
+            </label>
+            <select
+              value={role}
+              onChange={(e) => switchRole(e.target.value as UserRole)}
+              className="w-full rounded-md bg-[#0F1026] border border-[#243356] text-[#F4F1DE] text-xs px-2 py-1 focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] cursor-pointer font-mono"
+            >
+              <option value="super_admin">Super Admin</option>
+              <option value="admin">Campus Admin</option>
+              <option value="security">Security Officer</option>
+              <option value="faculty">Faculty</option>
+              <option value="student">Student</option>
+              <option value="parent">Parent</option>
+              <option value="warden">Hostel Warden</option>
+              <option value="placement_officer">Placement Officer</option>
+            </select>
+          </div>
+        </div>
+      )}
+
+      {/* Navigation Links */}
+      <div className="flex-1 overflow-y-auto px-2 py-3 space-y-5">
+        {NAV_SECTIONS.map((section) => {
+          const visibleItems = section.items.filter((item) => item.roles.includes(role));
+          if (visibleItems.length === 0) return null;
+
+          return (
+            <div key={section.title} className="space-y-1">
+              {!isCollapsed && (
+                <p className="px-2.5 text-[10px] font-bold tracking-widest text-[#C5A059] font-mono">
+                  {section.title}
+                </p>
+              )}
+              <div className="space-y-0.5">
+                {visibleItems.map((item) => {
+                  const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+                  const Icon = item.icon;
+                  const itemBadge =
+                    item.href === '/incidents'
+                      ? activeIncidentsCount > 0
+                        ? activeIncidentsCount
+                        : undefined
+                      : item.href === '/alerts'
+                      ? activeAlertsCount > 0
+                        ? activeAlertsCount
+                        : undefined
+                      : item.badge;
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        'group flex items-center gap-3 rounded-lg px-2.5 py-2 text-xs font-medium transition-all',
+                        isActive
+                          ? 'bg-gradient-to-r from-[#D4AF37] to-[#C5A059] text-[#0B132B] font-bold shadow-md shadow-[#D4AF37]/20'
+                          : 'text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700]',
+                        item.highlight && !isActive && 'text-[#FFD700] hover:text-white',
+                        isCollapsed && 'justify-center px-0 py-2.5'
+                      )}
+                      title={isCollapsed ? item.title : undefined}
+                    >
+                      <Icon
+                        className={cn(
+                          'h-4 w-4 shrink-0 transition-colors',
+                          isActive ? 'text-[#0B132B]' : 'text-[#C5A059] group-hover:text-[#FFD700]',
+                          item.highlight && !isActive && 'text-[#FFD700]'
+                        )}
+                      />
+                      {!isCollapsed && (
+                        <div className="flex flex-1 items-center justify-between overflow-hidden">
+                          <span className="truncate">{item.title}</span>
+                          {itemBadge !== undefined && (
+                            <span
+                              className={cn(
+                                'rounded px-1.5 py-0.2 text-[10px] font-bold font-mono',
+                                isActive
+                                  ? 'bg-[#0B132B] text-[#FFD700]'
+                                  : 'bg-[#1C2541] text-[#C5A059] border border-[#243356]'
+                              )}
+                            >
+                              {itemBadge}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer / Logout */}
+      <div className="shrink-0 border-t border-[#243356] p-2 bg-[#0B132B]/80">
+        <Link
+          href="/login"
+          className={cn(
+            'flex items-center gap-3 rounded-lg px-2.5 py-2 text-xs font-medium text-[#B8B5A3] hover:bg-[#1C2541] hover:text-[#FFD700] transition-colors',
+            isCollapsed && 'justify-center px-0'
+          )}
+          title="Sign Out / Switch User"
+        >
+          <LogOut className="h-4 w-4 shrink-0 text-[#C5A059]" />
+          {!isCollapsed && <span>Switch Account / Sign Out</span>}
+        </Link>
+      </div>
+    </aside>
+  );
+}

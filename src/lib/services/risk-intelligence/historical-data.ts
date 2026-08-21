@@ -1,0 +1,451 @@
+import { IncidentSeverity } from '@/lib/types';
+
+export type RiskCategory =
+  | 'Fire'
+  | 'Security'
+  | 'Infrastructure'
+  | 'Crowding'
+  | 'Hostel'
+  | 'Transport';
+
+export interface HistoricalIncident {
+  id: string;
+  incident_number: string;
+  title: string;
+  description: string;
+  category: RiskCategory;
+  severity: IncidentSeverity;
+  location_id: string;
+  location_name: string;
+  timestamp: string; // ISO date string within last 90 days
+  response_time_minutes: number; // Triage/acknowledgment to arrival
+  resolution_time_minutes: number; // Total resolution time
+  department: string;
+  status: 'resolved' | 'closed' | 'investigating' | 'responding';
+  is_recurring?: boolean;
+  recurring_cluster_id?: string;
+  root_cause?: string;
+}
+
+// Fixed reference date: 2026-08-21T12:00:00.000Z
+const NOW = new Date('2026-08-21T12:00:00.000Z').getTime();
+const DAY_MS = 24 * 60 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
+
+export const HISTORICAL_INCIDENTS: HistoricalIncident[] = [
+  // =========================================================================
+  // HERO TEST CASE CLUSTER: 7 Infrastructure Incidents in Block D (Last 30 Days)
+  // =========================================================================
+  {
+    id: 'inc-hist-d01',
+    incident_number: 'INC-20260818-0091',
+    title: 'Fume Hood Electrical Short Circuit in Organic Lab 302',
+    description: 'Electrical spark and circuit breaker trip on lab exhaust fume hood causing chemical smoke discharge.',
+    category: 'Infrastructure',
+    severity: 'critical',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 3 * DAY_MS - 2 * HOUR_MS).toISOString(), // 3 days ago, 14:00
+    response_time_minutes: 2.4,
+    resolution_time_minutes: 45,
+    department: 'Facility & Maintenance',
+    status: 'responding',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Aging electrical wiring and transformer load spike during peak afternoon lab hours',
+  },
+  {
+    id: 'inc-hist-d02',
+    incident_number: 'INC-20260814-0078',
+    title: 'Transformer Substation Coil Overheat in Block D Basement',
+    description: 'Thermal monitoring sensor alerted high temperature (88°C) on Block D secondary transformer unit.',
+    category: 'Infrastructure',
+    severity: 'high',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 7 * DAY_MS - 4 * HOUR_MS).toISOString(), // 7 days ago, 15:30
+    response_time_minutes: 4.1,
+    resolution_time_minutes: 85,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Heavy concurrent power draw from High-Voltage & Robotics Labs',
+  },
+  {
+    id: 'inc-hist-d03',
+    incident_number: 'INC-20260809-0062',
+    title: 'Main Distribution Breaker Tripping on 2nd Floor Block D',
+    description: 'Sudden localized power cut affecting Computer Science Labs 201-206 during semester practical exams.',
+    category: 'Infrastructure',
+    severity: 'high',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 12 * DAY_MS - 1 * HOUR_MS).toISOString(), // 12 days ago, 11:00
+    response_time_minutes: 3.8,
+    resolution_time_minutes: 35,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Circuit breaker overload caused by uncalibrated high-draw compute servers',
+  },
+  {
+    id: 'inc-hist-d04',
+    incident_number: 'INC-20260805-0044',
+    title: 'HVAC Air Exhaust Duct Fan Bearing Failure in Lab 308',
+    description: 'Loud grinding vibration and smoke warning tripped in Block D 3rd floor central ventilation exhaust.',
+    category: 'Infrastructure',
+    severity: 'medium',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 16 * DAY_MS - 6 * HOUR_MS).toISOString(), // 16 days ago, 16:15
+    response_time_minutes: 5.2,
+    resolution_time_minutes: 60,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Exhaust motor bearing wear and lack of scheduled lubrication',
+  },
+  {
+    id: 'inc-hist-d05',
+    incident_number: 'INC-20260801-0031',
+    title: 'Robotics Bay 1 High-Voltage Power Line Drop',
+    description: '3-phase AC power fluctuated below 190V causing automated robotic arm emergency stops in Bay 1.',
+    category: 'Infrastructure',
+    severity: 'medium',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 20 * DAY_MS - 3 * HOUR_MS).toISOString(), // 20 days ago, 14:45
+    response_time_minutes: 4.5,
+    resolution_time_minutes: 50,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Distribution substation voltage regulator lag under peak lab load',
+  },
+  {
+    id: 'inc-hist-d06',
+    incident_number: 'INC-20260728-0019',
+    title: 'Capacitor Bank Voltage Surge in Power Electronics Lab',
+    description: 'Surge suppressor ignited small spark near test bench #04 during transient voltage testing.',
+    category: 'Infrastructure',
+    severity: 'high',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 24 * DAY_MS - 5 * HOUR_MS).toISOString(), // 24 days ago, 15:10
+    response_time_minutes: 3.0,
+    resolution_time_minutes: 40,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Insufficient grounding resistance on transient lab benches',
+  },
+  {
+    id: 'inc-hist-d07',
+    incident_number: 'INC-20260724-0008',
+    title: 'Distribution Panel Spark & Odor on Ground Floor Block D',
+    description: 'Smell of burning insulation reported near North stairwell electrical conduit duct.',
+    category: 'Infrastructure',
+    severity: 'medium',
+    location_id: 'loc-eng',
+    location_name: 'Engineering Block (Block D)',
+    timestamp: new Date(NOW - 28 * DAY_MS - 8 * HOUR_MS).toISOString(), // 28 days ago, 19:30
+    response_time_minutes: 4.8,
+    resolution_time_minutes: 55,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-block-d-infra',
+    root_cause: 'Loose terminal screw on phase 2 distribution bus bar',
+  },
+
+  // =========================================================================
+  // FIRE INCIDENTS (Campus-Wide Historical)
+  // =========================================================================
+  {
+    id: 'inc-hist-fire-01',
+    incident_number: 'INC-20260819-0095',
+    title: 'Cafeteria Commercial Kitchen Grease Smoke Alert',
+    description: 'Heavy grease vapor triggered optical smoke detector over commercial fryer bank. Extinguisher deployed.',
+    category: 'Fire',
+    severity: 'medium',
+    location_id: 'loc-cafe',
+    location_name: 'Cafeteria',
+    timestamp: new Date(NOW - 2 * DAY_MS - 1 * HOUR_MS).toISOString(),
+    response_time_minutes: 2.1,
+    resolution_time_minutes: 25,
+    department: 'Safety & Hazmat Response',
+    status: 'resolved',
+    root_cause: 'Grease trap cleaning interval overdue',
+  },
+  {
+    id: 'inc-hist-fire-02',
+    incident_number: 'INC-20260810-0066',
+    title: 'Trash Dumpster Smolder near North Parking Perimeter',
+    description: 'Discarded heat source caused smoldering paper fire inside heavy refuse bin. Extinguished via hose line.',
+    category: 'Fire',
+    severity: 'low',
+    location_id: 'loc-parking',
+    location_name: 'Parking',
+    timestamp: new Date(NOW - 11 * DAY_MS - 10 * HOUR_MS).toISOString(),
+    response_time_minutes: 3.5,
+    resolution_time_minutes: 20,
+    department: 'Safety & Hazmat Response',
+    status: 'resolved',
+  },
+  {
+    id: 'inc-hist-fire-03',
+    incident_number: 'INC-20260715-0012',
+    title: 'Hostel A Laundry Dryer Thermal Cutout Activation',
+    description: 'Lint buildup on dryer heater coil generated burning smell. Automatic thermal switch cut power.',
+    category: 'Fire',
+    severity: 'low',
+    location_id: 'loc-hostel-a',
+    location_name: 'Hostel A',
+    timestamp: new Date(NOW - 37 * DAY_MS).toISOString(),
+    response_time_minutes: 4.0,
+    resolution_time_minutes: 30,
+    department: 'Safety & Hazmat Response',
+    status: 'resolved',
+  },
+
+  // =========================================================================
+  // SECURITY INCIDENTS (Access Control, Perimeter, Patrol)
+  // =========================================================================
+  {
+    id: 'inc-hist-sec-01',
+    incident_number: 'INC-20260821-0039',
+    title: 'Unauthorized Entry Attempt at Server Room B',
+    description: 'Repeated badge rejection on electronic biometric lock at 02:15 AM near main server core.',
+    category: 'Security',
+    severity: 'high',
+    location_id: 'loc-admin',
+    location_name: 'Administrative Block',
+    timestamp: new Date(NOW - 10 * HOUR_MS).toISOString(),
+    response_time_minutes: 2.8,
+    resolution_time_minutes: 90,
+    department: 'Campus Security',
+    status: 'investigating',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-admin-security',
+    root_cause: 'Unregistered RFID card repeated attempts during late-night shift',
+  },
+  {
+    id: 'inc-hist-sec-02',
+    incident_number: 'INC-20260812-0071',
+    title: 'Server Room Outer Corridor Tamper Switch Alarm',
+    description: 'Door contact magnetic sensor reported intermittent open status at 02:40 AM.',
+    category: 'Security',
+    severity: 'medium',
+    location_id: 'loc-admin',
+    location_name: 'Administrative Block',
+    timestamp: new Date(NOW - 9 * DAY_MS - 9 * HOUR_MS).toISOString(),
+    response_time_minutes: 3.1,
+    resolution_time_minutes: 45,
+    department: 'Campus Security',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-admin-security',
+    root_cause: 'Misaligned magnetic contact bracket',
+  },
+  {
+    id: 'inc-hist-sec-03',
+    incident_number: 'INC-20260807-0051',
+    title: 'Perimeter West Fence Sensor Trigger & Tailgating Attempt',
+    description: 'Motion beam crossed along West boundary adjacent to Sports Complex. Patrol dispatched.',
+    category: 'Security',
+    severity: 'medium',
+    location_id: 'loc-sports',
+    location_name: 'Sports Complex',
+    timestamp: new Date(NOW - 14 * DAY_MS - 2 * HOUR_MS).toISOString(),
+    response_time_minutes: 3.4,
+    resolution_time_minutes: 30,
+    department: 'Campus Security',
+    status: 'resolved',
+    root_cause: 'Off-campus contractor attempting shortcut to sports grounds',
+  },
+  {
+    id: 'inc-hist-sec-04',
+    incident_number: 'INC-20260720-0015',
+    title: 'Unregistered Vehicle Tailgating at North Gate EV Barrier',
+    description: 'Vehicle closely followed staff car through automatic RFID barrier without scanning visitor badge.',
+    category: 'Security',
+    severity: 'medium',
+    location_id: 'loc-parking',
+    location_name: 'Parking',
+    timestamp: new Date(NOW - 32 * DAY_MS).toISOString(),
+    response_time_minutes: 2.0,
+    resolution_time_minutes: 25,
+    department: 'Campus Security',
+    status: 'resolved',
+    root_cause: 'Delivery driver lacked advance visitor pass registration',
+  },
+
+  // =========================================================================
+  // CROWDING & BOTTLENECK INCIDENTS
+  // =========================================================================
+  {
+    id: 'inc-hist-crowd-01',
+    incident_number: 'INC-20260817-0086',
+    title: 'Central Cafeteria Stairwell Bottleneck during Peak Lunch Hour',
+    description: 'Congestion on 1st-floor exit stairwell between 12:45 PM and 01:15 PM slowing student egress.',
+    category: 'Crowding',
+    severity: 'medium',
+    location_id: 'loc-cafe',
+    location_name: 'Cafeteria',
+    timestamp: new Date(NOW - 4 * DAY_MS).toISOString(),
+    response_time_minutes: 4.2,
+    resolution_time_minutes: 30,
+    department: 'Campus Security',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-cafe-crowd',
+    root_cause: 'Simultaneous class dismissal for 1,200 students across CSE & AI departments',
+  },
+  {
+    id: 'inc-hist-crowd-02',
+    incident_number: 'INC-20260803-0038',
+    title: 'Cafeteria Food Counter Quad Queue Spillover',
+    description: 'Line for main hot meal counters extended across primary walkway blocking wheelchair access.',
+    category: 'Crowding',
+    severity: 'low',
+    location_id: 'loc-cafe',
+    location_name: 'Cafeteria',
+    timestamp: new Date(NOW - 18 * DAY_MS).toISOString(),
+    response_time_minutes: 5.0,
+    resolution_time_minutes: 25,
+    department: 'Campus Security',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-cafe-crowd',
+    root_cause: 'Point of sale terminal network slowdown',
+  },
+  {
+    id: 'inc-hist-crowd-03',
+    incident_number: 'INC-20260730-0024',
+    title: 'Main Block Auditorium Foyer Egress Delay during Career Talk',
+    description: 'High student density in ground-floor lobby following Tier-1 tech recruitment talk.',
+    category: 'Crowding',
+    severity: 'low',
+    location_id: 'loc-main',
+    location_name: 'Main Block',
+    timestamp: new Date(NOW - 22 * DAY_MS).toISOString(),
+    response_time_minutes: 3.6,
+    resolution_time_minutes: 20,
+    department: 'Campus Security',
+    status: 'resolved',
+    root_cause: 'Only two of four double-doors unlocked for post-event egress',
+  },
+
+  // =========================================================================
+  // HOSTEL INCIDENTS (Residential Quarters, Curfew, Maintenance)
+  // =========================================================================
+  {
+    id: 'inc-hist-hst-01',
+    incident_number: 'INC-20260816-0082',
+    title: 'Hostel B Courtyard Noise Curfew Dispute at 11:30 PM',
+    description: 'Loud music and group gathering reported in East Courtyard past 10:30 PM quiet hours.',
+    category: 'Hostel',
+    severity: 'low',
+    location_id: 'loc-hostel-b',
+    location_name: 'Hostel B',
+    timestamp: new Date(NOW - 5 * DAY_MS - 11 * HOUR_MS).toISOString(),
+    response_time_minutes: 3.9,
+    resolution_time_minutes: 15,
+    department: 'Hostel Administration',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-hostel-curfew',
+    root_cause: 'Inter-department cultural fest celebration prep',
+  },
+  {
+    id: 'inc-hist-hst-02',
+    incident_number: 'INC-20260808-0057',
+    title: 'Hostel B Late Entry Turnstile Biometric Lag',
+    description: 'Biometric fingerprint reader stalled during 10:00 PM curfew rush causing queue of 45 students.',
+    category: 'Hostel',
+    severity: 'medium',
+    location_id: 'loc-hostel-b',
+    location_name: 'Hostel B',
+    timestamp: new Date(NOW - 13 * DAY_MS - 10 * HOUR_MS).toISOString(),
+    response_time_minutes: 4.3,
+    resolution_time_minutes: 25,
+    department: 'Hostel Administration',
+    status: 'resolved',
+    is_recurring: true,
+    recurring_cluster_id: 'cluster-hostel-curfew',
+    root_cause: 'Turnstile local controller database sync delay',
+  },
+  {
+    id: 'inc-hist-hst-03',
+    incident_number: 'INC-20260802-0035',
+    title: 'Hostel A 3rd Floor Plumbing Water Pressure Drop',
+    description: 'Overhead hydro-pneumatic pump tripped causing temporary water loss in Block A North Wing.',
+    category: 'Hostel',
+    severity: 'medium',
+    location_id: 'loc-hostel-a',
+    location_name: 'Hostel A',
+    timestamp: new Date(NOW - 19 * DAY_MS).toISOString(),
+    response_time_minutes: 6.8,
+    resolution_time_minutes: 90,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    root_cause: 'Pressure sensor relay switch stuck',
+  },
+
+  // =========================================================================
+  // TRANSPORT INCIDENTS (Buses, Routes, Parking Bays)
+  // =========================================================================
+  {
+    id: 'inc-hist-tr-01',
+    incident_number: 'INC-20260815-0080',
+    title: 'Bus #04 Brake Pad Sensor Warning during Morning Route 3',
+    description: 'Electronic dashboard alert indicated brake lining threshold. Driver safely rerouted passengers to reserve bus.',
+    category: 'Transport',
+    severity: 'medium',
+    location_id: 'loc-parking',
+    location_name: 'Parking',
+    timestamp: new Date(NOW - 6 * DAY_MS - 4 * HOUR_MS).toISOString(),
+    response_time_minutes: 5.5,
+    resolution_time_minutes: 45,
+    department: 'Campus Transport Operations',
+    status: 'resolved',
+    root_cause: 'Scheduled brake overhaul delayed by 3 days',
+  },
+  {
+    id: 'inc-hist-tr-02',
+    incident_number: 'INC-20260806-0048',
+    title: 'South Parking EV Fast Charger Level 3 Overheat Cutoff',
+    description: 'EV charging stall #02 automatically deactivated due to 65°C internal connector temperature.',
+    category: 'Transport',
+    severity: 'low',
+    location_id: 'loc-parking',
+    location_name: 'Parking',
+    timestamp: new Date(NOW - 15 * DAY_MS).toISOString(),
+    response_time_minutes: 7.2,
+    resolution_time_minutes: 60,
+    department: 'Facility & Maintenance',
+    status: 'resolved',
+    root_cause: 'Cooling fan vent blocked by road dust accumulation',
+  },
+  {
+    id: 'inc-hist-tr-03',
+    incident_number: 'INC-20260722-0017',
+    title: 'Route 1 Bus Departure Delay due to Arterial Road Construction',
+    description: 'Metro line civil work outside Gate 2 caused 25-minute delay in evening campus departure schedule.',
+    category: 'Transport',
+    severity: 'low',
+    location_id: 'loc-parking',
+    location_name: 'Parking',
+    timestamp: new Date(NOW - 30 * DAY_MS).toISOString(),
+    response_time_minutes: 8.0,
+    resolution_time_minutes: 40,
+    department: 'Campus Transport Operations',
+    status: 'resolved',
+    root_cause: 'External municipal road diversion',
+  },
+];
