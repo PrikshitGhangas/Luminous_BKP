@@ -18,7 +18,14 @@ const SosSchema = z.object({
 export async function POST(request: Request) {
   try {
     const rawBody = await request.json();
-    const validated = SosSchema.parse(rawBody);
+    const parseResult = SosSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { success: false, error: 'Validation failed', details: parseResult.error.issues },
+        { status: 400 }
+      );
+    }
+    const validated = parseResult.data;
 
     const sosEvent = {
       id: `sos-${Date.now()}`,

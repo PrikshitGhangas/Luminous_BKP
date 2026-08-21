@@ -26,7 +26,18 @@ const RequestSchema = z.object({
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-    const validated = RequestSchema.parse(json);
+    const parseResult = RequestSchema.safeParse(json);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Validation failed',
+          details: parseResult.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+    const validated = parseResult.data;
 
     // Resolve user context with fail-secure defaults
     let activeUser = validated.userContext;

@@ -67,7 +67,18 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const rawBody = await request.json();
-    const validated = CreateIncidentSchema.parse(rawBody);
+    const parseResult = CreateIncidentSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Validation failed',
+          details: parseResult.error.issues,
+        },
+        { status: 400 }
+      );
+    }
+    const validated = parseResult.data;
 
     const normalizedSeverity = (validated.severity.toLowerCase()) as IncidentSeverity;
     const normalizedCategory = (validated.category.toLowerCase()) as IncidentCategory;
@@ -196,12 +207,12 @@ export async function POST(request: Request) {
     );
   } catch (error: unknown) {
     console.error('Failed to create incident:', error);
-    if (error instanceof z.ZodError) {
+    if (error instanceof z.ZodError || (error && typeof error === 'object' && ('issues' in error || (error as { name?: string }).name === 'ZodError'))) {
       return NextResponse.json(
         {
           success: false,
           error: 'Validation failed',
-          details: error.issues,
+          details: (error as { issues?: unknown }).issues,
         },
         { status: 400 }
       );

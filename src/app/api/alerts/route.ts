@@ -24,7 +24,14 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const validated = CreateAlertSchema.parse(body);
+    const parseResult = CreateAlertSchema.safeParse(body);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { success: false, error: 'Validation failed', details: parseResult.error.issues },
+        { status: 400 }
+      );
+    }
+    const validated = parseResult.data;
 
     // RBAC Authorization Check: Only Admin and Security personnel may broadcast emergency alerts
     const senderRole = validated.sender_role as UserRole | undefined;
