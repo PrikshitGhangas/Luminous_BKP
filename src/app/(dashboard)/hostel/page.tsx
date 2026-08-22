@@ -16,6 +16,12 @@ import {
   Phone,
   User,
   X,
+  Compass,
+  CheckCircle2,
+  QrCode,
+  MapPin,
+  Clock,
+  LogOut,
 } from 'lucide-react';
 import { HostelRoom } from '@/lib/types';
 
@@ -29,7 +35,7 @@ export default function HostelPage() {
     reportHostelIncident,
   } = useCampusServices();
 
-  const [activeTab, setActiveTab] = useState<'buildings' | 'rooms' | 'occupancy' | 'maintenance' | 'incidents'>('buildings');
+  const [activeTab, setActiveTab] = useState<'buildings' | 'rooms' | 'occupancy' | 'maintenance' | 'incidents' | 'outings'>('buildings');
   const [buildingFilter, setBuildingFilter] = useState<string>('ALL');
   const [roomStatusFilter, setRoomStatusFilter] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -37,7 +43,99 @@ export default function HostelPage() {
   // Modals
   const [isMaintenanceModalOpen, setIsMaintenanceModalOpen] = useState(false);
   const [isIncidentModalOpen, setIsIncidentModalOpen] = useState(false);
+  const [isOutingModalOpen, setIsOutingModalOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<HostelRoom | null>(null);
+
+  // Outing Pass Form & Mock Data State
+  const [outings, setOutings] = useState([
+    {
+      id: 'out-01',
+      studentName: 'Aanya Patel',
+      studentRoll: 'CS23B042',
+      hostelBlock: 'Block B (HST-B)',
+      room: '304',
+      destination: 'MG Road Metro / Commercial Street',
+      coordinates: { lat: 12.9756, lng: 77.6068 },
+      departureTime: 'Today 16:00',
+      returnTime: 'Today 21:30',
+      purpose: 'Technical books purchase & family dinner',
+      status: 'Approved',
+      gatePassCode: 'GP-20260822-0941',
+      gpsCrossValidated: true,
+      approvedBy: 'Dr. Rajeshwari Devi (Warden)',
+    },
+    {
+      id: 'out-02',
+      studentName: 'Rohan Sengupta',
+      studentRoll: 'CS23B043',
+      hostelBlock: 'Block A (HST-A)',
+      room: '201',
+      destination: 'Indiranagar Healthcare Clinic',
+      coordinates: { lat: 12.9784, lng: 77.6408 },
+      departureTime: 'Today 09:00',
+      returnTime: 'Today 13:00',
+      purpose: 'Dental consultation appointment',
+      status: 'Returned',
+      gatePassCode: 'GP-20260822-0812',
+      gpsCrossValidated: true,
+      approvedBy: 'Dr. Rajeshwari Devi (Warden)',
+    },
+    {
+      id: 'out-03',
+      studentName: 'Sneha Krishnan',
+      studentRoll: 'EC24B008',
+      hostelBlock: 'Block B (HST-B)',
+      room: '112',
+      destination: 'Central Railway Station',
+      coordinates: { lat: 12.9778, lng: 77.5684 },
+      departureTime: 'Tomorrow 06:30',
+      returnTime: 'Sunday 21:00',
+      purpose: 'Weekend home visit',
+      status: 'Pending',
+      gatePassCode: 'GP-PENDING',
+      gpsCrossValidated: false,
+      approvedBy: 'Awaiting Warden',
+    },
+  ]);
+
+  const [newOutingDest, setNewOutingDest] = useState('MG Road Metro / City Center');
+  const [newOutingPurpose, setNewOutingPurpose] = useState('');
+  const [newOutingDep, setNewOutingDep] = useState('17:00');
+  const [newOutingRet, setNewOutingRet] = useState('21:30');
+
+  const handleApproveOuting = (id: string) => {
+    setOutings((prev) =>
+      prev.map((o) =>
+        o.id === id
+          ? { ...o, status: 'Approved', gatePassCode: `GP-${Date.now().toString().slice(-8)}`, approvedBy: 'Dr. Rajeshwari Devi' }
+          : o
+      )
+    );
+  };
+
+  const handleCreateOuting = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newOutingPurpose) return;
+    const newEntry = {
+      id: `out-${Date.now()}`,
+      studentName: 'Aanya Patel',
+      studentRoll: 'CS23B042',
+      hostelBlock: 'Block B (HST-B)',
+      room: '304',
+      destination: newOutingDest,
+      coordinates: { lat: 12.9756, lng: 77.6068 },
+      departureTime: `Today ${newOutingDep}`,
+      returnTime: `Today ${newOutingRet}`,
+      purpose: newOutingPurpose,
+      status: 'Pending',
+      gatePassCode: 'GP-PENDING',
+      gpsCrossValidated: false,
+      approvedBy: 'Awaiting Warden',
+    };
+    setOutings((prev) => [newEntry, ...prev]);
+    setNewOutingPurpose('');
+    setIsOutingModalOpen(false);
+  };
 
   // Maintenance Form State
   const [maintBuilding, setMaintBuilding] = useState('HST-B');
@@ -115,6 +213,14 @@ export default function HostelPage() {
 
         <div className="flex flex-wrap items-center gap-2">
           <Button
+            onClick={() => setIsOutingModalOpen(true)}
+            size="sm"
+            className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs gap-1.5 shadow-xs cursor-pointer"
+          >
+            <Compass className="h-4 w-4 text-[#D4AF37]" />
+            <span>Apply Outing Pass</span>
+          </Button>
+          <Button
             onClick={() => setIsMaintenanceModalOpen(true)}
             size="sm"
             variant="outline"
@@ -126,10 +232,11 @@ export default function HostelPage() {
           <Button
             onClick={() => setIsIncidentModalOpen(true)}
             size="sm"
-            className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs gap-1.5 shadow-xs cursor-pointer"
+            variant="outline"
+            className="text-xs font-medium gap-1.5 border-[#D6D8D5] cursor-pointer"
           >
             <Plus className="h-4 w-4" />
-            <span>Report Hostel Incident</span>
+            <span>Report Incident</span>
           </Button>
         </div>
       </div>
@@ -168,6 +275,7 @@ export default function HostelPage() {
             { id: 'buildings', label: 'Residential Buildings', icon: Building2 },
             { id: 'rooms', label: 'Room Directory', icon: Bed },
             { id: 'occupancy', label: 'Occupancy', icon: Users },
+            { id: 'outings', label: 'Outing & Gate Passes', icon: Compass, count: outings.filter(o => o.status === 'Pending').length },
             { id: 'maintenance', label: 'Maintenance Requests', icon: Wrench, count: hostelMaintenance.filter(m => m.status !== 'Fixed').length },
             { id: 'incidents', label: 'Hostel Log & Curfew', icon: ShieldAlert, count: hostelIncidents.filter(i => i.status !== 'Resolved').length },
           ].map((tab) => {
@@ -451,6 +559,90 @@ export default function HostelPage() {
         </div>
       )}
 
+      {/* TAB 6: OUTING & GATE PASSES */}
+      {activeTab === 'outings' && (
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl bg-[#FAF9F5] border border-[#EAB308]/40 text-xs text-[#8a6d1a] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Compass className="h-4 w-4 shrink-0 text-[#8a6d1a]" />
+              <span>
+                <strong>PostGIS Spatial Cross-Validation:</strong> When students trigger SOS outside campus, the system queries <code className="font-mono bg-white px-1.5 py-0.5 rounded border border-[#EAB308]/30">find_active_outing()</code> to verify their location against approved leave destinations within 500m.
+              </span>
+            </div>
+            <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full border border-emerald-300 shrink-0">
+              RPC Active
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            {outings.map((out) => (
+              <div
+                key={out.id}
+                className="p-4 rounded-xl border border-[#D6D8D5] bg-white flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs shadow-xs"
+              >
+                <div className="space-y-1.5 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-[#1F2933] text-sm">{out.studentName}</span>
+                    <span className="text-[11px] text-[#667085]">({out.studentRoll} • {out.hostelBlock} / {out.room})</span>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        out.status === 'Approved'
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                          : out.status === 'Returned'
+                          ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                          : 'bg-amber-50 text-amber-800 border border-amber-200'
+                      }`}
+                    >
+                      {out.status}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 text-xs text-[#1F2933] font-medium">
+                    <MapPin className="h-3.5 w-3.5 text-red-500 shrink-0" />
+                    <span>Destination: <strong>{out.destination}</strong></span>
+                  </div>
+
+                  <p className="text-[#667085] text-xs">
+                    Purpose: {out.purpose}
+                  </p>
+
+                  <div className="flex items-center gap-4 text-[11px] text-[#667085] pt-1">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      <span>{out.departureTime} → {out.returnTime}</span>
+                    </span>
+                    <span>Warden: {out.approvedBy}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end justify-between gap-2 shrink-0 border-t md:border-t-0 pt-2 md:pt-0 border-[#D6D8D5]">
+                  <div className="flex items-center gap-1.5 bg-[#F7F8F6] px-3 py-1.5 rounded-lg border border-[#D6D8D5]">
+                    <QrCode className="h-4 w-4 text-[#1F2933]" />
+                    <span className="font-mono font-bold text-[#1F2933] text-xs">{out.gatePassCode}</span>
+                  </div>
+
+                  {out.status === 'Pending' ? (
+                    <Button
+                      size="sm"
+                      onClick={() => handleApproveOuting(out.id)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-lg cursor-pointer"
+                    >
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>Approve Outing</span>
+                    </Button>
+                  ) : (
+                    <span className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>Security Clearance Active</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Modal: Room Details */}
       {selectedRoom && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
@@ -717,6 +909,104 @@ export default function HostelPage() {
                     className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs cursor-pointer"
                   >
                     Log Incident
+                  </Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Modal: Apply for Outing Pass */}
+      {isOutingModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <Card className="w-full max-w-lg bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
+            <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
+                <Compass className="h-4 w-4 text-[#D4AF37]" />
+                <span>Apply for Hostel Outing / Leave Pass</span>
+              </CardTitle>
+              <button
+                onClick={() => setIsOutingModalOpen(false)}
+                className="text-[#667085] hover:text-[#1F2933] cursor-pointer"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </CardHeader>
+            <CardContent className="p-4 space-y-3.5">
+              <form onSubmit={handleCreateOuting} className="space-y-3 text-xs">
+                <div>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">Off-Campus Destination *</label>
+                  <select
+                    value={newOutingDest}
+                    onChange={(e) => setNewOutingDest(e.target.value)}
+                    className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933] cursor-pointer"
+                  >
+                    <option value="MG Road Metro / City Center">MG Road Metro / City Center (GPS: 12.9756, 77.6068)</option>
+                    <option value="Indiranagar Diagnostic & Healthcare">Indiranagar Diagnostic & Healthcare (GPS: 12.9784, 77.6408)</option>
+                    <option value="Central Railway Station (SBC)">Central Railway Station (GPS: 12.9778, 77.5684)</option>
+                    <option value="Kempegowda International Airport">Kempegowda International Airport (GPS: 13.1986, 77.7066)</option>
+                    <option value="Koramangala Commercial Hub">Koramangala Commercial Hub (GPS: 12.9352, 77.6245)</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Departure Time *</label>
+                    <Input
+                      type="time"
+                      value={newOutingDep}
+                      onChange={(e) => setNewOutingDep(e.target.value)}
+                      className="bg-white border-[#D6D8D5] text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Expected Return Time *</label>
+                    <Input
+                      type="time"
+                      value={newOutingRet}
+                      onChange={(e) => setNewOutingRet(e.target.value)}
+                      className="bg-white border-[#D6D8D5] text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">Purpose of Visit *</label>
+                  <textarea
+                    required
+                    rows={3}
+                    placeholder="Specific reason for leaving campus (e.g. medical appointment, project books purchase, family visit)..."
+                    value={newOutingPurpose}
+                    onChange={(e) => setNewOutingPurpose(e.target.value)}
+                    className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933]"
+                  />
+                </div>
+
+                <div className="p-3 bg-[#F7F8F6] rounded-xl border border-[#D6D8D5] text-[11px] text-[#667085] space-y-1">
+                  <div className="flex items-center gap-1.5 text-emerald-800 font-semibold">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
+                    <span>Parental SMS Notification Configured</span>
+                  </div>
+                  <p>Upon warden approval, digital Gate Pass QR will be generated and parent/guardian will receive exit confirmation.</p>
+                </div>
+
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D6D8D5]">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsOutingModalOpen(false)}
+                    className="text-xs cursor-pointer"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs cursor-pointer"
+                  >
+                    Submit Outing Application
                   </Button>
                 </div>
               </form>

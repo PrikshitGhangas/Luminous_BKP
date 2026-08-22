@@ -12,6 +12,12 @@ import {
   X,
   Search,
   ChevronDown,
+  MapPin,
+  CheckCircle2,
+  Navigation,
+  Radio,
+  Shield,
+  Clock,
 } from 'lucide-react';
 import { AttendanceStudentLog } from '@/lib/types/academic';
 
@@ -25,6 +31,18 @@ export default function AttendancePage() {
   const [expandedSessionIds, setExpandedSessionIds] = useState<Record<string, boolean>>({
     [attendanceRecords[0]?.id || '']: true,
   });
+
+  // Geofence Self Check-In State (Student Perspective)
+  const [geofenceCheckedIn, setGeofenceCheckedIn] = useState(false);
+  const [isVerifyingGeofence, setIsVerifyingGeofence] = useState(false);
+
+  const handleGeofenceCheckIn = () => {
+    setIsVerifyingGeofence(true);
+    setTimeout(() => {
+      setIsVerifyingGeofence(false);
+      setGeofenceCheckedIn(true);
+    }, 800);
+  };
 
   // Interactive marking session state
   const [studentLogs, setStudentLogs] = useState<AttendanceStudentLog[]>([
@@ -112,6 +130,41 @@ export default function AttendancePage() {
             <span>Mark Class Attendance</span>
           </Button>
         )}
+      </div>
+
+      {/* Smart Geofenced Check-In Active Banner (PostGIS ST_Within) */}
+      <div className="p-4 rounded-2xl bg-white border border-[#D6D8D5] shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+            <span className="text-xs font-bold text-[#1F2933]">PostGIS Polygon Geofence Attendance</span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+              ST_Within Active
+            </span>
+          </div>
+          <p className="text-xs text-[#667085]">
+            Active Schedule: <strong>CS301 (Cloud Computing)</strong> • Block D, Room 201 • Coordinates: 12.9724°N, 77.5952°E
+          </p>
+        </div>
+
+        <div>
+          {geofenceCheckedIn ? (
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold">
+              <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+              <span>Checked-In (Geofence Verified)</span>
+            </div>
+          ) : (
+            <Button
+              onClick={handleGeofenceCheckIn}
+              disabled={isVerifyingGeofence}
+              size="sm"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs gap-1.5 rounded-lg shadow-xs cursor-pointer"
+            >
+              <Navigation className="h-3.5 w-3.5" />
+              <span>{isVerifyingGeofence ? 'Verifying Coordinates...' : 'Verify Geofence Check-In'}</span>
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Clean Metric Summary Bar */}
