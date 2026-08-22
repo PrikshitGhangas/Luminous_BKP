@@ -215,23 +215,23 @@ export function analyzeRiskIntelligence(
     let topCat: RiskCategory = 'Infrastructure';
     let primaryFactor = 'Routine campus operations baseline';
 
-    if (loc.id === 'loc-eng') {
+    if (loc.id === 'loc-block-f') {
       riskScore = 92;
       topCat = 'Infrastructure';
       primaryFactor = '7 electrical/lab infrastructure alerts in past 30 days';
-    } else if (loc.id === 'loc-admin') {
+    } else if (loc.id === 'loc-block-d') {
       riskScore = 78;
       topCat = 'Security';
       primaryFactor = 'Nighttime biometric badge anomalies at Server Room B';
-    } else if (loc.id === 'loc-cafe') {
+    } else if (loc.id === 'loc-ab3-north') {
       riskScore = 58;
       topCat = 'Crowding';
       primaryFactor = 'Midday egress stairwell congestion during peak lunch rush';
-    } else if (loc.id === 'loc-hostel-b') {
+    } else if (loc.id === 'loc-block-b') {
       riskScore = 55;
       topCat = 'Hostel';
       primaryFactor = 'Curfew queue delays at biometric entrance turnstile';
-    } else if (loc.id === 'loc-parking') {
+    } else if (loc.id === 'loc-block-e') {
       riskScore = 48;
       topCat = 'Transport';
       primaryFactor = 'EV fast charging stall thermal cutout and tailgating alerts';
@@ -252,7 +252,7 @@ export function analyzeRiskIntelligence(
       topCategory: topCat,
       primaryRiskFactor: primaryFactor,
       activeHazardsCount: loc.activeIncidentsCount,
-      trendVsPriorPeriod: loc.id === 'loc-eng' ? '+38% incident velocity' : '+4%',
+      trendVsPriorPeriod: loc.id === 'loc-block-f' ? '+38% incident velocity' : '+4%',
     };
   }).sort((a, b) => b.riskScore - a.riskScore);
 
