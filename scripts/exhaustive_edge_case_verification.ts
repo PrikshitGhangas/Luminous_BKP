@@ -16,14 +16,14 @@ const results: EdgeResult[] = [];
 
 function record(group: string, name: string, passed: boolean, details: string) {
   results.push({ group, name, passed, details });
-  const icon = passed ? '✅ [PASS]' : '❌ [FAIL]';
+  const icon = passed ? '[PASS] [PASS]' : '[FAIL] [FAIL]';
   console.log(`${icon} [${group}] ${name}`);
   console.log(`   ↳ ${details}\n`);
 }
 
 async function runExhaustiveSuite() {
   console.log('================================================================================');
-  console.log('🧪 LUMINOUS ADVANCED FRONTEND & API EXHAUSTIVE EDGE CASE SUITE');
+  console.log(' LUMINOUS ADVANCED FRONTEND & API EXHAUSTIVE EDGE CASE SUITE');
   console.log(`   Target Server: ${BASE_URL}`);
   console.log(`   Timestamp: ${new Date().toISOString()}`);
   console.log('================================================================================\n');
@@ -31,7 +31,7 @@ async function runExhaustiveSuite() {
   // ---------------------------------------------------------------------------
   // GROUP 1: ROLE-BASED ACCESS CONTROL (RBAC) & PERMISSION INTEGRITY
   // ---------------------------------------------------------------------------
-  console.log('🛡️ GROUP 1: RBAC & Permission Boundaries');
+  console.log(' GROUP 1: RBAC & Permission Boundaries');
 
   // Edge 1.1: Student attempting to broadcast institutional emergency alert
   try {
@@ -126,7 +126,7 @@ async function runExhaustiveSuite() {
   // ---------------------------------------------------------------------------
   // GROUP 2: INPUT VALIDATION & ADVERSARIAL PAYLOADS
   // ---------------------------------------------------------------------------
-  console.log('\n🔒 GROUP 2: Input Validation & Adversarial Payloads');
+  console.log('\n GROUP 2: Input Validation & Adversarial Payloads');
 
   // Edge 2.1: Out-of-bounds Latitude (>90)
   try {
@@ -264,7 +264,7 @@ async function runExhaustiveSuite() {
   // ---------------------------------------------------------------------------
   // GROUP 3: AI COPILOT ZERO-TRUST ADVERSARIAL ATTACKS
   // ---------------------------------------------------------------------------
-  console.log('\n🤖 GROUP 3: AI Copilot Zero-Trust & Adversarial Defenses');
+  console.log('\n GROUP 3: AI Copilot Zero-Trust & Adversarial Defenses');
 
   // Edge 3.1: System Prompt Leak Injection
   const student = DEMO_USERS.student;
@@ -346,7 +346,7 @@ async function runExhaustiveSuite() {
   // ---------------------------------------------------------------------------
   // GROUP 4: EMERGENCY SOS & SAFETY PIPELINE RESILIENCE
   // ---------------------------------------------------------------------------
-  console.log('\n⚡ GROUP 4: Emergency SOS & Pipeline Concurrency');
+  console.log('\n GROUP 4: Emergency SOS & Pipeline Concurrency');
 
   // Edge 4.1: SOS Category Defaults & Geolocation Fallback
   try {
@@ -428,11 +428,11 @@ async function runExhaustiveSuite() {
   console.log('================================================================================');
   const passedCount = results.filter((r) => r.passed).length;
   const totalCount = results.length;
-  console.log(`🛡️ EXHAUSTIVE EDGE CASE RESULTS: ${passedCount} / ${totalCount} PASSED (${Math.round((passedCount / totalCount) * 100)}%)`);
+  console.log(` EXHAUSTIVE EDGE CASE RESULTS: ${passedCount} / ${totalCount} PASSED (${Math.round((passedCount / totalCount) * 100)}%)`);
   console.log('================================================================================');
 
   if (passedCount === totalCount) {
-    console.log('🎉 ALL ADVANCED EDGE CASES, ADVERSARIAL ATTACKS & BOUNDARIES FULLY MITIGATED!\n');
+    console.log(' ALL ADVANCED EDGE CASES, ADVERSARIAL ATTACKS & BOUNDARIES FULLY MITIGATED!\n');
   } else {
     process.exit(1);
   }

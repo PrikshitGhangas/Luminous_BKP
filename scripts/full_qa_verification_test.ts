@@ -18,7 +18,7 @@ const results: TestResult[] = [];
 function record(category: string, testName: string, pass: boolean, details: string) {
   const status: 'PASS' | 'FAIL' = pass ? 'PASS' : 'FAIL';
   results.push({ category, testName, status, details });
-  const icon = pass ? '✅ [PASS]' : '❌ [FAIL]';
+  const icon = pass ? '[PASS] [PASS]' : '[FAIL] [FAIL]';
   console.log(`${icon} [${category}] ${testName}`);
   console.log(`   ${details}\n`);
 }

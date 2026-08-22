@@ -14,21 +14,21 @@ const results: SecTestResult[] = [];
 
 function record(category: string, name: string, passed: boolean, details: string) {
   results.push({ category, name, passed, details });
-  const icon = passed ? '✅ [PASS]' : '❌ [FAIL]';
+  const icon = passed ? '[PASS] [PASS]' : '[FAIL] [FAIL]';
   console.log(`${icon} [${category}] ${name}`);
   console.log(`   ↳ ${details}\n`);
 }
 
 async function runSecurityHardeningSuite() {
   console.log('================================================================================');
-  console.log('🛡️ LUMINOUS SECURITY HARDENING & DEFENSE-IN-DEPTH VERIFICATION SUITE');
+  console.log(' LUMINOUS SECURITY HARDENING & DEFENSE-IN-DEPTH VERIFICATION SUITE');
   console.log(`   Timestamp: ${new Date().toISOString()}`);
   console.log('================================================================================\n');
 
   // ---------------------------------------------------------------------------
   // 1. CRYPTOGRAPHIC UUID GENERATION
   // ---------------------------------------------------------------------------
-  console.log('🔑 1. Cryptographic ID & Tracking Number Generator');
+  console.log(' 1. Cryptographic ID & Tracking Number Generator');
 
   const incId1 = generateSecureId('inc');
   const incId2 = generateSecureId('inc');
@@ -62,7 +62,7 @@ async function runSecurityHardeningSuite() {
   // ---------------------------------------------------------------------------
   // 2. SLIDING-WINDOW RATE LIMITER
   // ---------------------------------------------------------------------------
-  console.log('\n⏱️ 2. High-Performance Sliding-Window Rate Limiter');
+  console.log('\n[TIME] 2. High-Performance Sliding-Window Rate Limiter');
 
   const testKey = 'test-client-ip-123';
   resetRateLimit(testKey);
@@ -94,7 +94,7 @@ async function runSecurityHardeningSuite() {
   // ---------------------------------------------------------------------------
   // 3. CSRF & CROSS-ORIGIN VERIFICATION
   // ---------------------------------------------------------------------------
-  console.log('\n🌐 3. CSRF / Origin Header Verification');
+  console.log('\n 3. CSRF / Origin Header Verification');
 
   // Same-origin POST request
   const reqSameOrigin = new Request('http://localhost:3000/api/sos', {
@@ -146,7 +146,7 @@ async function runSecurityHardeningSuite() {
   // ---------------------------------------------------------------------------
   // 4. DENY-BY-DEFAULT ROUTE AUTHORIZATION
   // ---------------------------------------------------------------------------
-  console.log('\n🚪 4. Deny-by-Default Route Authorization Policy');
+  console.log('\n 4. Deny-by-Default Route Authorization Policy');
 
   // Public routes allowed for any role
   const publicAllowed = PUBLIC_ROUTES.every((r) => isRouteAllowed(r, 'student') && isRouteAllowed(r, 'other'));
@@ -183,7 +183,7 @@ async function runSecurityHardeningSuite() {
   console.log('================================================================================');
   const passedCount = results.filter((r) => r.passed).length;
   const totalCount = results.length;
-  console.log(`🎯 SECURITY HARDENING VERIFICATION: ${passedCount} / ${totalCount} TESTS PASSED (100% SUCCESS)`);
+  console.log(`[TARGET] SECURITY HARDENING VERIFICATION: ${passedCount} / ${totalCount} TESTS PASSED (100% SUCCESS)`);
   console.log('================================================================================\n');
 
   if (passedCount !== totalCount) {

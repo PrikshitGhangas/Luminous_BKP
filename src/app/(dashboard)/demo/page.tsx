@@ -187,7 +187,7 @@ export default function HackathonDemoPage() {
       switchRole('admin');
       setActiveStep(5);
       applyInsightAction('insight-1');
-      showToast('🎉 Full 5-Step Hackathon Story Flow Executed Successfully!');
+      showToast('Full 5-Step System Flow Executed Successfully');
     }, 3600);
   };
 
@@ -641,42 +641,42 @@ export default function HackathonDemoPage() {
                 name: DEMO_USERS.student.full_name,
                 email: DEMO_USERS.student.email,
                 desc: 'Student',
-                icon: '🎓',
+                icon: 'STU',
               },
               {
                 roleKey: 'security' as UserRole,
                 name: DEMO_USERS.security.full_name,
                 email: DEMO_USERS.security.email,
                 desc: 'Security Dispatcher',
-                icon: '🛡️',
+                icon: 'SEC',
               },
               {
                 roleKey: 'faculty' as UserRole,
                 name: DEMO_USERS.faculty.full_name,
                 email: DEMO_USERS.faculty.email,
                 desc: 'Faculty Professor',
-                icon: '📚',
+                icon: 'FAC',
               },
               {
                 roleKey: 'admin' as UserRole,
                 name: DEMO_USERS.admin.full_name,
                 email: DEMO_USERS.admin.email,
                 desc: 'Campus Safety Admin',
-                icon: '🏛️',
+                icon: 'ADM',
               },
               {
                 roleKey: 'super_admin' as UserRole,
                 name: DEMO_USERS.super_admin.full_name,
                 email: DEMO_USERS.super_admin.email,
                 desc: 'Super Administrator',
-                icon: '👑',
+                icon: 'DIR',
               },
               {
                 roleKey: 'parent' as UserRole,
                 name: DEMO_USERS.parent.full_name,
                 email: DEMO_USERS.parent.email,
                 desc: 'Parent / Guardian',
-                icon: '👨‍👩‍👧',
+                icon: 'PAR',
               },
             ].map((usr) => (
               <div

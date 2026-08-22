@@ -36,16 +36,16 @@ Real exploitable **CRITICAL** and **HIGH** severity vulnerabilities were identif
 
 | # | Vulnerability Title | Severity | Area | Status |
 |---|---|---|---|---|
-| 1 | **Copilot API Privilege Escalation via Unauthenticated Super-Admin Fallback** | 🔴 **CRITICAL** | AI Copilot & Auth | **FIXED** |
-| 2 | **Unauthorized Campus Emergency Alert Broadcast & Mass Assignment** | 🔴 **CRITICAL** | API Routes & RBAC | **FIXED** |
-| 3 | **Unprotected Incident Tactical Actions in Client UI** | 🟠 **HIGH** | Authorization / UI | **FIXED** |
-| 4 | **FERPA Student PII & Academic Record Exposure in Directory** | 🟠 **HIGH** | Data Isolation | **FIXED** |
-| 5 | **Potential Gemini API Key Leakage via `NEXT_PUBLIC_` Prefix Fallbacks** | 🟠 **HIGH** | Secret Management | **FIXED** |
-| 6 | **PostgreSQL Search Path Hijacking in RLS SECURITY DEFINER Functions** | 🟠 **HIGH** | Supabase RLS | **FIXED** |
-| 7 | **Unsanitized Evidence URLs & Unvalidated SOS Payloads** | 🟡 **MEDIUM** | Input Validation | **FIXED** |
-| 8 | **Whistleblower / Anonymous Reporter Identity Leakage** | 🟡 **MEDIUM** | Incident Privacy | **FIXED** |
-| 9 | **Missing Security Headers & Role Cookie Manipulation in Proxy/Middleware** | 🟡 **MEDIUM** | Network / Routing | **FIXED** |
-| 10 | **AI Prompt Injection Risk & Instruction Hijacking Surface** | 🟡 **MEDIUM** | Gemini Layer | **FIXED** |
+| 1 | **Copilot API Privilege Escalation via Unauthenticated Super-Admin Fallback** |  **CRITICAL** | AI Copilot & Auth | **FIXED** |
+| 2 | **Unauthorized Campus Emergency Alert Broadcast & Mass Assignment** |  **CRITICAL** | API Routes & RBAC | **FIXED** |
+| 3 | **Unprotected Incident Tactical Actions in Client UI** |  **HIGH** | Authorization / UI | **FIXED** |
+| 4 | **FERPA Student PII & Academic Record Exposure in Directory** |  **HIGH** | Data Isolation | **FIXED** |
+| 5 | **Potential Gemini API Key Leakage via `NEXT_PUBLIC_` Prefix Fallbacks** |  **HIGH** | Secret Management | **FIXED** |
+| 6 | **PostgreSQL Search Path Hijacking in RLS SECURITY DEFINER Functions** |  **HIGH** | Supabase RLS | **FIXED** |
+| 7 | **Unsanitized Evidence URLs & Unvalidated SOS Payloads** |  **MEDIUM** | Input Validation | **FIXED** |
+| 8 | **Whistleblower / Anonymous Reporter Identity Leakage** |  **MEDIUM** | Incident Privacy | **FIXED** |
+| 9 | **Missing Security Headers & Role Cookie Manipulation in Proxy/Middleware** |  **MEDIUM** | Network / Routing | **FIXED** |
+| 10 | **AI Prompt Injection Risk & Instruction Hijacking Surface** |  **MEDIUM** | Gemini Layer | **FIXED** |
 
 ---
 

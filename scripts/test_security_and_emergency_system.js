@@ -255,7 +255,7 @@ function runSosPipelineTests() {
   };
 
   const securityNotification = {
-    title: `🚨 EMERGENCY SOS: ${user.full_name}`,
+    title: `[ALERT] EMERGENCY SOS: ${user.full_name}`,
     message: `Women's Safety SOS at ${location}. Patrol Unit Alpha dispatched!`,
     type: 'emergency',
     link: '/security',

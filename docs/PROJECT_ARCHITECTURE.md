@@ -79,7 +79,7 @@ smart-edu/
 │   │   │   ├── layout.tsx         # Sidebar + topbar layout
 │   │   │   ├── page.tsx           # Role-based dashboard redirect
 │   │   │   │
-│   │   │   ├── command-center/    # 🔴 HERO: Safety Command Center
+│   │   │   ├── command-center/    #  HERO: Safety Command Center
 │   │   │   │   └── page.tsx
 │   │   │   │
 │   │   │   ├── incidents/         # Incident management
@@ -269,29 +269,29 @@ smart-edu/
 | Route | Access | Priority | Purpose |
 |-------|--------|----------|---------|
 | `/` | All | — | Redirect to role dashboard |
-| `/command-center` | Admin, Security | 🔴 HERO | Live safety command center |
-| `/incidents` | All | 🔴 Core | Incident list |
-| `/incidents/new` | Student, Faculty, Staff | 🔴 Core | AI-assisted incident report |
-| `/incidents/[id]` | Varies (owner, admin, security) | 🔴 Core | Incident detail + timeline |
-| `/campus-map` | All | 🔴 Core | Live incident map |
-| `/alerts` | All | 🟡 High | Emergency alerts feed |
-| `/safety-analytics` | Admin, Security | 🟡 High | AI safety insights + charts |
-| `/sos` | Student, Faculty | 🟡 High | SOS panic button + tracking |
-| `/visitors` | Admin, Security, Reception | 🟢 Medium | Visitor management |
-| `/security` | Security | 🟢 Medium | Security operations dashboard |
-| `/audit-logs` | Admin | 🟢 Medium | System audit trail |
-| `/students` | Admin, Faculty | 🔵 ERP | Student management |
-| `/faculty` | Admin | 🔵 ERP | Faculty management |
-| `/attendance` | Admin, Faculty | 🔵 ERP | Attendance tracking |
-| `/exams` | Admin, Faculty | 🔵 ERP | Exam management |
-| `/timetable` | All | 🔵 ERP | Schedule viewer |
-| `/hostel` | Admin, Warden | 🔵 ERP | Hostel management |
-| `/transport` | Admin | 🔵 ERP | Transport management |
-| `/complaints` | All | 🔵 ERP | General complaints |
-| `/placements` | Admin, Student | 🔵 ERP | Placement portal |
-| `/communication` | All | 🔵 ERP | Announcements |
-| `/parent-portal` | Parent | 🔵 ERP | Parent access view |
-| `/settings` | All | 🔵 ERP | Account settings |
+| `/command-center` | Admin, Security |  HERO | Live safety command center |
+| `/incidents` | All |  Core | Incident list |
+| `/incidents/new` | Student, Faculty, Staff |  Core | AI-assisted incident report |
+| `/incidents/[id]` | Varies (owner, admin, security) |  Core | Incident detail + timeline |
+| `/campus-map` | All |  Core | Live incident map |
+| `/alerts` | All |  High | Emergency alerts feed |
+| `/safety-analytics` | Admin, Security |  High | AI safety insights + charts |
+| `/sos` | Student, Faculty |  High | SOS panic button + tracking |
+| `/visitors` | Admin, Security, Reception |  Medium | Visitor management |
+| `/security` | Security |  Medium | Security operations dashboard |
+| `/audit-logs` | Admin |  Medium | System audit trail |
+| `/students` | Admin, Faculty |  ERP | Student management |
+| `/faculty` | Admin |  ERP | Faculty management |
+| `/attendance` | Admin, Faculty |  ERP | Attendance tracking |
+| `/exams` | Admin, Faculty |  ERP | Exam management |
+| `/timetable` | All |  ERP | Schedule viewer |
+| `/hostel` | Admin, Warden |  ERP | Hostel management |
+| `/transport` | Admin |  ERP | Transport management |
+| `/complaints` | All |  ERP | General complaints |
+| `/placements` | Admin, Student |  ERP | Placement portal |
+| `/communication` | All |  ERP | Announcements |
+| `/parent-portal` | Parent |  ERP | Parent access view |
+| `/settings` | All |  ERP | Account settings |
 
 ---
 
@@ -302,7 +302,7 @@ smart-edu/
 ```
 ┌──────────────────┐     ┌──────────────────────┐
 │ auth.users       │     │ profiles              │
-│ (Supabase Auth)  │────▶│ id (FK auth.users)    │
+│ (Supabase Auth)  │────>│ id (FK auth.users)    │
 │                  │     │ full_name             │
 │                  │     │ role                  │
 │                  │     │ department            │
@@ -666,27 +666,27 @@ super_admin          ← Full platform control
 
 | Resource | super_admin | admin | security | faculty | student | parent | warden | receptionist |
 |----------|:-----------:|:-----:|:--------:|:-------:|:-------:|:------:|:------:|:------------:|
-| Command Center | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Create Incident | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| View All Incidents | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| View Own Incidents | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| Manage Incidents | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Emergency Alerts (send) | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Emergency Alerts (view) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| SOS Trigger | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ |
-| SOS Respond | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Campus Map | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| Safety Analytics | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Visitor Mgmt | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Audit Logs | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Student CRUD | ✅ | ✅ | ❌ | R | Self | R | ❌ | ❌ |
-| Faculty CRUD | ✅ | ✅ | ❌ | Self | ❌ | ❌ | ❌ | ❌ |
-| Attendance | ✅ | ✅ | ❌ | CRU | R | R | ❌ | ❌ |
-| Timetable | ✅ | ✅ | ❌ | R | R | R | ❌ | ❌ |
-| Hostel | ✅ | ✅ | ❌ | ❌ | R | ❌ | CRU | ❌ |
-| Transport | ✅ | ✅ | ❌ | R | R | R | ❌ | ❌ |
-| Placements | ✅ | ✅ | ❌ | R | R | R | ❌ | ❌ |
-| Settings | ✅ | ✅ | Self | Self | Self | Self | Self | Self |
+| Command Center | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Create Incident | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [FAIL] | [PASS] | [PASS] |
+| View All Incidents | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| View Own Incidents | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [FAIL] | [PASS] | [PASS] |
+| Manage Incidents | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Emergency Alerts (send) | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Emergency Alerts (view) | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] |
+| SOS Trigger | [PASS] | [PASS] | [FAIL] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] |
+| SOS Respond | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Campus Map | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [FAIL] | [PASS] | [PASS] |
+| Safety Analytics | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Visitor Mgmt | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [PASS] |
+| Audit Logs | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Student CRUD | [PASS] | [PASS] | [FAIL] | R | Self | R | [FAIL] | [FAIL] |
+| Faculty CRUD | [PASS] | [PASS] | [FAIL] | Self | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Attendance | [PASS] | [PASS] | [FAIL] | CRU | R | R | [FAIL] | [FAIL] |
+| Timetable | [PASS] | [PASS] | [FAIL] | R | R | R | [FAIL] | [FAIL] |
+| Hostel | [PASS] | [PASS] | [FAIL] | [FAIL] | R | [FAIL] | CRU | [FAIL] |
+| Transport | [PASS] | [PASS] | [FAIL] | R | R | R | [FAIL] | [FAIL] |
+| Placements | [PASS] | [PASS] | [FAIL] | R | R | R | [FAIL] | [FAIL] |
+| Settings | [PASS] | [PASS] | Self | Self | Self | Self | Self | Self |
 
 ### Implementation
 
@@ -815,31 +815,31 @@ SEVERITY LEVELS:
   STUDENT                    AI ENGINE               BACKEND                SECURITY/ADMIN
     │                            │                      │                       │
     │ 1. Report Incident         │                      │                       │
-    │──────────────────────────▶│                      │                       │
+    │──────────────────────────>│                      │                       │
     │                            │ 2. Classify           │                       │
-    │                            │─────────────────────▶│                       │
+    │                            │─────────────────────>│                       │
     │                            │                      │ 3. Validate AI output │
     │                            │                      │ 4. Check auth         │
     │                            │                      │ 5. Create incident    │
     │                            │                      │ 6. Create timeline    │
     │                            │                      │ 7. Route to dept      │
-    │                            │                      │──────────────────────▶│
+    │                            │                      │──────────────────────>│
     │                            │                      │ 8. Emit realtime      │
     │                            │                      │    event              │
     │ 9. Confirmation            │                      │                       │
-    │◀──────────────────────────│                      │                       │
+    │<──────────────────────────│                      │                       │
     │                            │                      │                       │
     │                            │                      │         10. Ack       │
-    │                            │                      │◀──────────────────────│
+    │                            │                      │<──────────────────────│
     │                            │                      │                       │
     │                            │                      │       11. Respond     │
-    │                            │                      │◀──────────────────────│
+    │                            │                      │<──────────────────────│
     │                            │                      │                       │
     │                            │                      │       12. Resolve     │
-    │                            │                      │◀──────────────────────│
+    │                            │                      │<──────────────────────│
     │ 13. Resolution             │                      │                       │
     │    notification            │                      │                       │
-    │◀──────────────────────────│                      │                       │
+    │<──────────────────────────│                      │                       │
 ```
 
 ### Realtime Event Architecture (Supabase Realtime)
@@ -1063,7 +1063,7 @@ STEP 2: Report Incident
 STEP 3: AI Classification (visible in real-time)
   → Loading state: "AI is analyzing your report..."
   → AI returns:
-    Category: Fire 🔥
+    Category: Fire 
     Severity: CRITICAL
     Confidence: 0.95
     Department: Security + Fire Department
@@ -1072,7 +1072,7 @@ STEP 3: AI Classification (visible in real-time)
 
 STEP 4: Backend Processing (shown in timeline)
   → Incident created with ID
-  → AI classification validated ✓
+  → AI classification validated 
   → Assigned to Security Department
   → Emergency alert generated
 

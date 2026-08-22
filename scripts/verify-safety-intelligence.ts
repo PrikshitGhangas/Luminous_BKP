@@ -13,10 +13,10 @@ async function runSafetyIntelligenceVerification() {
     total++;
     if (condition) {
       passed++;
-      console.log(`✅ [PASS] ${name}`);
+      console.log(`[PASS] [PASS] ${name}`);
       console.log(`   Details: ${detail}\n`);
     } else {
-      console.error(`❌ [FAIL] ${name}`);
+      console.error(`[FAIL] [FAIL] ${name}`);
       console.error(`   Details: ${detail}\n`);
     }
   }

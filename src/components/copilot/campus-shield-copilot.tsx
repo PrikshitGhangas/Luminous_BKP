@@ -166,7 +166,7 @@ export function CampusShieldCopilot() {
     {
       id: 'welcome-msg',
       role: 'assistant',
-      content: `### 🛡️ CampusShield AI Copilot Online
+      content: `### CampusShield AI Copilot Online
 **Powered by Gemini 3.7 Flash** • Zero-Trust Server RBAC Active
 
 Hello! I am your AI campus safety and operational copilot. Every request is verified through strict server-side authorization boundaries with **zero arbitrary SQL generation**.
@@ -301,7 +301,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
           {
             id: `err-${Date.now()}`,
             role: 'assistant',
-            content: `⚠️ Error executing copilot request: ${data.error || 'Server error'}`,
+            content: `[Error] Error executing copilot request: ${data.error || 'Server error'}`,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           },
         ]);
@@ -313,7 +313,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
         {
           id: `err-${Date.now()}`,
           role: 'assistant',
-          content: '⚠️ Network or server exception communicating with CampusShield AI Copilot.',
+          content: '[Error] Network or server exception communicating with CampusShield AI Copilot.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
@@ -386,7 +386,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
           isOpen ? 'hidden' : 'flex'
         )}
         aria-label="Open CampusShield AI Copilot"
-        title="AI Assistant (⌘K)"
+        title="AI Assistant (Cmd+K)"
       >
         <Sparkles className="h-5 w-5 text-[#EAB308]" />
       </button>

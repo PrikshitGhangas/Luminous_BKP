@@ -290,7 +290,7 @@ export default function PlacementPage() {
                     // Student Action: Check & Apply
                     isApplied ? (
                       <span className="px-3 py-1 rounded-full text-xs font-semibold bg-purple-50 text-purple-800 border border-purple-200">
-                        ✓ Application Submitted
+                         Application Submitted
                       </span>
                     ) : (
                       <Button
@@ -679,8 +679,8 @@ export default function PlacementPage() {
 
               <div className="space-y-1 text-xs text-[#667085]">
                 <p className="text-[#1F2933] font-semibold">Eligibility Verification:</p>
-                <p>• Min Required CGPA: {selectedDrive.minCgpa} (Your CGPA: <strong className="text-emerald-700">{activeStudent.cgpa}</strong> ✓)</p>
-                <p>• Max Backlogs: {selectedDrive.maxBacklogs} (Your Backlogs: <strong className="text-emerald-700">{activeStudent.activeBacklogs || 0}</strong> ✓)</p>
+                <p>• Min Required CGPA: {selectedDrive.minCgpa} (Your CGPA: <strong className="text-emerald-700">{activeStudent.cgpa}</strong> )</p>
+                <p>• Max Backlogs: {selectedDrive.maxBacklogs} (Your Backlogs: <strong className="text-emerald-700">{activeStudent.activeBacklogs || 0}</strong> )</p>
               </div>
 
               <div className="flex justify-end gap-2 pt-2 border-t border-[#D6D8D5]">

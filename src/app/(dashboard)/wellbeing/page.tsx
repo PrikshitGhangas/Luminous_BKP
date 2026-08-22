@@ -219,10 +219,10 @@ export default function WellbeingPage() {
                     <p className="text-[11px] text-[#667085] mt-0.5">{csl.specialty}</p>
                   </div>
                   <div className="pt-1.5 border-t border-[#D6D8D5] text-[11px] text-[#667085] space-y-0.5">
-                    <p>📍 {csl.officeLocation}</p>
-                    <p>🕒 {csl.availabilityHours}</p>
+                    <p>Location: {csl.officeLocation}</p>
+                    <p>Hours: {csl.availabilityHours}</p>
                     <p>
-                      📞 Phone:{' '}
+                      Phone:{' '}
                       <a href={`tel:${csl.phone.replace(/[^0-9+]/g, '')}`} className="font-semibold text-[#1F2933] hover:underline">
                         {csl.phone}
                       </a>

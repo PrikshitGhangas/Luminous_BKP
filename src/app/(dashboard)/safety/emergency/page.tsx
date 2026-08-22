@@ -234,7 +234,7 @@ export default function SafetyEmergencyPage() {
               onClick={() => setIsBroadcastModalOpen(false)}
               className="text-xs text-[#667085] hover:text-[#1F2933] h-7 px-2 cursor-pointer"
             >
-              ✕ Close
+               Close
             </Button>
           </CardHeader>
           <CardContent className="p-5 space-y-4">

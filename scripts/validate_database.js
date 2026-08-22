@@ -72,10 +72,10 @@ let tablesPassed = 0;
 for (const table of expectedTables) {
     const tableRegex = new RegExp(`CREATE\\s+TABLE\\s+(IF\\s+NOT\\s+EXISTS\\s+)?${table}\\s*\\(`, 'i');
     if (tableRegex.test(combinedMigrationSQL)) {
-        console.log(`  ✅ Table '${table}' is properly defined`);
+        console.log(`  [PASS] Table '${table}' is properly defined`);
         tablesPassed++;
     } else {
-        console.error(`  ❌ Table '${table}' is MISSING in migrations!`);
+        console.error(`  [FAIL] Table '${table}' is MISSING in migrations!`);
     }
 }
 
@@ -87,15 +87,15 @@ for (const table of expectedTables) {
     if (rlsRegex.test(combinedMigrationSQL)) {
         rlsPassed++;
     } else {
-        console.warn(`  ⚠️ RLS not explicitly enabled for '${table}'`);
+        console.warn(`  [WARN] RLS not explicitly enabled for '${table}'`);
     }
 }
-console.log(`  ✅ ${rlsPassed}/${expectedTables.length} tables have Row Level Security enabled`);
+console.log(`  [PASS] ${rlsPassed}/${expectedTables.length} tables have Row Level Security enabled`);
 
 // 4. Validate Indexes
 console.log("\n--- Checking Performance Indexes ---");
 const indexMatches = combinedMigrationSQL.match(/CREATE\s+INDEX\s+(IF\s+NOT\s+EXISTS\s+)?([a-zA-Z0-9_]+)\s+ON\s+([a-zA-Z0-9_]+)/gi) || [];
-console.log(`  ✅ Found ${indexMatches.length} explicit performance and lookup indexes`);
+console.log(`  [PASS] Found ${indexMatches.length} explicit performance and lookup indexes`);
 
 // 5. Validate Seed Data Counts
 console.log("\n--- Checking Seed Data Volume & Requirements ---");
@@ -148,16 +148,16 @@ const checks = [
 let allPassed = true;
 for (const c of checks) {
     if (c.passed) {
-        console.log(`  ✅ ${c.name} (${c.val})`);
+        console.log(`  [PASS] ${c.name} (${c.val})`);
     } else {
-        console.error(`  ❌ FAILED: ${c.name} (${c.val})`);
+        console.error(`  [FAIL] FAILED: ${c.name} (${c.val})`);
         allPassed = false;
     }
 }
 
 if (allPassed && tablesPassed === expectedTables.length && rlsPassed === expectedTables.length) {
-    console.log("\n🎯 ALL DATABASE SCHEMA & SEED REQUIREMENTS ARE 100% SATISFIED AND VERIFIED!");
+    console.log("\n[TARGET] ALL DATABASE SCHEMA & SEED REQUIREMENTS ARE 100% SATISFIED AND VERIFIED!");
 } else {
-    console.error("\n❌ Some requirements were not satisfied.");
+    console.error("\n[FAIL] Some requirements were not satisfied.");
     process.exit(1);
 }

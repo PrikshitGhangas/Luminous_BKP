@@ -6,7 +6,7 @@ This guide provides self-contained, step-by-step instructions for hackathon judg
 
 ---
 
-## 🎯 Core Demonstration Story Arc
+## [TARGET] Core Demonstration Story Arc
 
 Our story demonstrates how an emergency is reported by a student, evaluated autonomously by **Gemini 3.7 Flash**, dispatched to security, reflected live on geospatial maps and command centers, and synthesized into long-term preventative risk directives for administrators:
 
@@ -26,28 +26,28 @@ Our story demonstrates how an emergency is reported by a student, evaluated auto
 
 ---
 
-## 🔑 Demo Accounts & Pre-Configured Personas
+##  Demo Accounts & Pre-Configured Personas
 
 You can switch personas at any time using the **Quick Persona Switcher** in the sidebar or top bar on `/demo`.
 
 | Persona Role | User Name | Email Credential | Primary Responsibilities |
 | :--- | :--- | :--- | :--- |
-| 🎓 **Student** | Aanya Patel | `student@luminous.edu` | Emergency SOS trigger, incident reporting, academic ERP |
-| 🛡️ **Security Officer** | Capt. Vikram Sharma | `security@luminous.edu` | Real-time dispatch, incident acknowledgment, visitor clearance |
-| 🏛️ **Campus Admin** | Marcus Chen | `admin@luminous.edu` | Risk intelligence, SOP directives, institutional safety posture |
-| 👑 **Super Admin** | Dr. Evelyn Vance | `superadmin@luminous.edu` | Full system clearance, audit trail governance, campus oversight |
+|  **Student** | Aanya Patel | `student@luminous.edu` | Emergency SOS trigger, incident reporting, academic ERP |
+|  **Security Officer** | Capt. Vikram Sharma | `security@luminous.edu` | Real-time dispatch, incident acknowledgment, visitor clearance |
+|  **Campus Admin** | Marcus Chen | `admin@luminous.edu` | Risk intelligence, SOP directives, institutional safety posture |
+|  **Super Admin** | Dr. Evelyn Vance | `superadmin@luminous.edu` | Full system clearance, audit trail governance, campus oversight |
 
 ---
 
-## ⏱️ Option A: 3-Minute Express Demo Script (Quick Judging)
+## [TIME] Option A: 3-Minute Express Demo Script (Quick Judging)
 
 Use this script for a rapid 3-minute walkthrough of the core story arc.
 
-### 📍 Step 1: Open the Demo Control Hub
+###  Step 1: Open the Demo Control Hub
 1. Navigate to `/demo` using the sidebar link **"Hackathon Demo Hub"**.
 2. Click **`Reset Demo State`** (top right) to ensure a clean initial environment.
 
-### 📍 Step 2: Student Reports Hero Incident
+###  Step 2: Student Reports Hero Incident
 1. Select the **Student Persona** (Aanya Patel).
 2. Click **`Trigger Hero Test Case`** (or open the incident modal at `/incidents`).
 3. **Exact Inputs Used**:
@@ -60,7 +60,7 @@ Use this script for a rapid 3-minute walkthrough of the core story arc.
    - Incident `INC-20260821-xxxx` is generated.
    - Stepper progresses to **Stage 2 (Gemini AI Triage)**.
 
-### 📍 Step 3: Observe Gemini AI Triage Output
+###  Step 3: Observe Gemini AI Triage Output
 1. Review the generated **Gemini 3.7 Flash Triage Card**:
    - **Severity**: `CRITICAL` (Red Badge with AI Sparkle icon)
    - **Confidence**: `98%`
@@ -71,14 +71,14 @@ Use this script for a rapid 3-minute walkthrough of the core story arc.
      - *Initiate Level 1 localized building evacuation*
    - **Routed Departments**: `Security`, `Maintenance`, `Administration`
 
-### 📍 Step 4: Security Officer Acknowledges & Dispatches
+###  Step 4: Security Officer Acknowledges & Dispatches
 1. Click **`Acknowledge & Dispatch Unit Alpha`** (or switch to Security persona and visit `/security`).
 2. **Expected UI Changes**:
    - Incident status transitions to `dispatched`.
    - Security officer **Capt. Vikram Sharma** is assigned to lead response.
    - Immutable audit trail logs `OFFICER_DISPATCHED`.
 
-### 📍 Step 5: Verify Live Map & Command Center
+###  Step 5: Verify Live Map & Command Center
 1. Click **`Open Geospatial Map (/campus-map)`**.
 2. **Expected UI Changes**:
    - **Engineering Block (ENG-D)** displays a pulsing red radar wave animation.
@@ -87,14 +87,14 @@ Use this script for a rapid 3-minute walkthrough of the core story arc.
 
 ---
 
-## ⏳ Option B: 5-Minute Deep-Dive Demo Script (Complete Feature Set)
+##  Option B: 5-Minute Deep-Dive Demo Script (Complete Feature Set)
 
 Use this script to explore AI Risk Intelligence, AI Copilot, and full role-based governance.
 
-### 📍 Steps 1-5: Complete the 3-Minute Express Script Above
+###  Steps 1-5: Complete the 3-Minute Express Script Above
 Follow Steps 1 through 5 from the 3-Minute script.
 
-### 📍 Step 6: Admin AI Risk Pattern Intelligence
+###  Step 6: Admin AI Risk Pattern Intelligence
 1. Switch persona to **Campus Admin** (`admin@luminous.edu` / Marcus Chen).
 2. Navigate to **`/safety/risk-intelligence`**.
 3. **Observe AI Pattern Clustering**:
@@ -106,7 +106,7 @@ Follow Steps 1 through 5 from the 3-Minute script.
    - Status updates to **"Directive Applied & Work Order Dispatched"**.
    - Audit trail records `AI_INSIGHT_RECOMMENDATION_EXECUTED`.
 
-### 📍 Step 7: Interact with CampusShield AI Copilot
+###  Step 7: Interact with CampusShield AI Copilot
 1. Click the floating **`Gemini 3.7 Copilot`** button in the bottom-right corner (or topbar).
 2. Type or select the quick query:
    - *"What is the active security situation at Block D?"*
@@ -115,7 +115,7 @@ Follow Steps 1 through 5 from the 3-Minute script.
 
 ---
 
-## 🤖 Predictable AI Triage & Fallback Behavior
+##  Predictable AI Triage & Fallback Behavior
 
 ### Live Gemini API Mode vs. Deterministic Fallback Engine
 
@@ -138,7 +138,7 @@ Luminous AI is engineered with dual-layer AI reliability:
 
 ---
 
-## 🔄 Demo Reset Functionality
+##  Demo Reset Functionality
 
 At any time during testing, click the **`Reset Demo State`** button on `/demo` or run `resetDemoData()` from the UI.
 
@@ -150,21 +150,21 @@ This operation:
 
 ---
 
-## 📋 Evaluation & Judging Checklist
+##  Evaluation & Judging Checklist
 
 | Feature Criteria | Verification Path | Status |
 | :--- | :--- | :--- |
-| **Student Incident Reporting** | `/demo` Step 1 or `/incidents` modal | ✅ Verified |
-| **Gemini AI Structured Triage** | `/api/ai/classify-incident` / Triage Card | ✅ Verified |
-| **Security Operations Desk** | `/security` (Acknowledge & Dispatch) | ✅ Verified |
-| **Geospatial Campus Map** | `/campus-map` (Pulsing hazard node) | ✅ Verified |
-| **Command Center & Threat Level** | `/safety/command-center` (HIGH_ALERT) | ✅ Verified |
-| **Emergency Alerts Broadcast** | `/safety/emergency` & Topbar Banner | ✅ Verified |
-| **AI Risk Pattern Mining** | `/safety/risk-intelligence` (Block D cluster) | ✅ Verified |
-| **Admin Directive Execution** | Work order dispatch on Risk Intelligence | ✅ Verified |
-| **Role-Based Clearance (RBAC)** | Persona Switcher in Sidebar / Topbar | ✅ Verified |
-| **Deterministic Fallback Engine** | Tested in Sandbox & Service layer | ✅ Verified |
-| **Clean Demo Reset** | `Reset Demo State` on `/demo` | ✅ Verified |
+| **Student Incident Reporting** | `/demo` Step 1 or `/incidents` modal | [PASS] Verified |
+| **Gemini AI Structured Triage** | `/api/ai/classify-incident` / Triage Card | [PASS] Verified |
+| **Security Operations Desk** | `/security` (Acknowledge & Dispatch) | [PASS] Verified |
+| **Geospatial Campus Map** | `/campus-map` (Pulsing hazard node) | [PASS] Verified |
+| **Command Center & Threat Level** | `/safety/command-center` (HIGH_ALERT) | [PASS] Verified |
+| **Emergency Alerts Broadcast** | `/safety/emergency` & Topbar Banner | [PASS] Verified |
+| **AI Risk Pattern Mining** | `/safety/risk-intelligence` (Block D cluster) | [PASS] Verified |
+| **Admin Directive Execution** | Work order dispatch on Risk Intelligence | [PASS] Verified |
+| **Role-Based Clearance (RBAC)** | Persona Switcher in Sidebar / Topbar | [PASS] Verified |
+| **Deterministic Fallback Engine** | Tested in Sandbox & Service layer | [PASS] Verified |
+| **Clean Demo Reset** | `Reset Demo State` on `/demo` | [PASS] Verified |
 
 ---
 

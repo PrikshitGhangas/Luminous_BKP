@@ -9,19 +9,19 @@
 
 | Symbol | Meaning |
 |--------|---------|
-| 🔴 | Critical path — blocks other tasks |
-| 🟡 | High priority — needed for demo |
-| 🟢 | Medium priority — enhances the product |
-| 🔵 | Low priority — nice to have, skip if short on time |
-| ⛓️ | Sequential — must wait for dependencies |
+|  | Critical path — blocks other tasks |
+|  | High priority — needed for demo |
+|  | Medium priority — enhances the product |
+|  | Low priority — nice to have, skip if short on time |
+|  | Sequential — must wait for dependencies |
 | ∥ | Parallelizable — can run alongside other tasks |
-| ⏱️ | Estimated time in minutes |
+| [TIME] | Estimated time in minutes |
 
 ---
 
 ## Phase 0: Foundation
 
-### TASK-001 🔴 ⛓️ ⏱️15m
+### TASK-001   [TIME]15m
 **Initialize Next.js Project**
 - Run `npx create-next-app@latest` with TypeScript, Tailwind, App Router, src/ directory
 - Verify `npm run dev` works
@@ -29,14 +29,14 @@
 - **Depends on**: Nothing
 - **Blocks**: Everything
 
-### TASK-002 🔴 ⛓️ ⏱️20m
+### TASK-002   [TIME]20m
 **Configure shadcn/ui**
 - Run `npx shadcn@latest init`
 - Install core components: `button`, `card`, `input`, `label`, `table`, `dialog`, `sheet`, `badge`, `alert`, `tabs`, `tooltip`, `toast`, `skeleton`, `dropdown-menu`, `form`, `select`, `textarea`, `separator`, `avatar`, `popover`, `command`
 - **Depends on**: TASK-001
 - **Blocks**: All UI tasks
 
-### TASK-003 🔴 ∥ ⏱️15m
+### TASK-003  ∥ [TIME]15m
 **Set Up Supabase Project**
 - Create Supabase project in dashboard
 - Note down: Project URL, Anon Key, Service Role Key
@@ -44,7 +44,7 @@
 - **Depends on**: Nothing (can run in parallel with TASK-001)
 - **Blocks**: TASK-005, TASK-006
 
-### TASK-004 🔴 ⛓️ ⏱️10m
+### TASK-004   [TIME]10m
 **Configure Environment Variables**
 - Create `.env.local` with:
   ```
@@ -58,7 +58,7 @@
 - **Depends on**: TASK-001, TASK-003
 - **Blocks**: TASK-005
 
-### TASK-005 🔴 ⛓️ ⏱️30m
+### TASK-005   [TIME]30m
 **Supabase Client Helpers**
 - Install `@supabase/supabase-js` and `@supabase/ssr`
 - Create `src/lib/supabase/client.ts` (browser client)
@@ -68,7 +68,7 @@
 - **Depends on**: TASK-004
 - **Blocks**: TASK-008, all API tasks
 
-### TASK-006 🔴 ⛓️ ⏱️30m
+### TASK-006   [TIME]30m
 **Database Migrations — Core Safety Tables**
 - Create `supabase/migrations/001_auth_profiles.sql`
   - `profiles` table with trigger on auth.users
@@ -78,14 +78,14 @@
 - **Depends on**: TASK-003
 - **Blocks**: All API tasks
 
-### TASK-007 🔴 ⛓️ ⏱️20m
+### TASK-007   [TIME]20m
 **Database Migrations — ERP Tables**
 - Create `supabase/migrations/003_erp_tables.sql`
   - `students`, `faculty`, `attendance`, `timetable`, `hostel_rooms`, `transport_routes`, `complaints`, `placements`, `announcements`
 - **Depends on**: TASK-006
 - **Blocks**: ERP API tasks
 
-### TASK-008 🔴 ⛓️ ⏱️30m
+### TASK-008   [TIME]30m
 **Database Migrations — RLS Policies**
 - Create `supabase/migrations/004_rls_policies.sql`
 - Enable RLS on all tables
@@ -93,7 +93,7 @@
 - **Depends on**: TASK-006, TASK-007
 - **Blocks**: Nothing (can be refined later)
 
-### TASK-009 🔴 ⛓️ ⏱️30m
+### TASK-009   [TIME]30m
 **Project Structure + Layout Shells**
 - Create all folder directories per architecture
 - Create placeholder `page.tsx` for each route (just returning the page name)
@@ -102,7 +102,7 @@
 - **Depends on**: TASK-001, TASK-002
 - **Blocks**: All page tasks
 
-### TASK-010 🔴 ⛓️ ⏱️30m
+### TASK-010   [TIME]30m
 **Next.js Auth Middleware**
 - Create `src/middleware.ts`
 - Implement session refresh on every request
@@ -111,7 +111,7 @@
 - **Depends on**: TASK-005
 - **Blocks**: All authenticated pages
 
-### TASK-011 🟡 ⛓️ ⏱️20m
+### TASK-011   [TIME]20m
 **Seed Demo Data**
 - Create `supabase/seed.sql`
 - Insert demo users (student, admin, security, faculty, parent)
@@ -124,7 +124,7 @@
 
 ## Phase 1: Auth + Layout
 
-### TASK-101 🔴 ∥ ⏱️45m
+### TASK-101  ∥ [TIME]45m
 **Login Page UI**
 - Create `src/app/(auth)/login/page.tsx`
 - Create `src/app/(auth)/layout.tsx` (centered card layout)
@@ -135,14 +135,14 @@
 - **Depends on**: TASK-009
 - **Can parallel with**: TASK-103, TASK-105
 
-### TASK-102 🔴 ⛓️ ⏱️30m
+### TASK-102   [TIME]30m
 **Register Page UI**
 - Create `src/app/(auth)/register/page.tsx`
 - Name, email, password, role selection (dropdown)
 - Form validation with Zod
 - **Depends on**: TASK-101 (shared layout)
 
-### TASK-103 🔴 ∥ ⏱️45m
+### TASK-103  ∥ [TIME]45m
 **Auth API Integration**
 - Implement `signInWithPassword` in login page
 - Implement `signUp` in register page
@@ -151,14 +151,14 @@
 - **Depends on**: TASK-005
 - **Can parallel with**: TASK-101
 
-### TASK-104 🔴 ⛓️ ⏱️20m
+### TASK-104   [TIME]20m
 **Profile Creation Trigger**
 - Create PostgreSQL function + trigger on `auth.users` INSERT
 - Auto-create `profiles` row with default role from user metadata
 - Test trigger works on signup
 - **Depends on**: TASK-006
 
-### TASK-105 🔴 ∥ ⏱️60m
+### TASK-105  ∥ [TIME]60m
 **Dashboard Layout (Sidebar + Topbar)**
 - Create `src/app/(dashboard)/layout.tsx`
 - Create `src/components/layout/sidebar.tsx`
@@ -171,7 +171,7 @@
 - **Depends on**: TASK-009, TASK-002
 - **Can parallel with**: TASK-101, TASK-103
 
-### TASK-106 🟡 ⛓️ ⏱️30m
+### TASK-106   [TIME]30m
 **Role-Based Sidebar Navigation**
 - Define `ROUTE_PERMISSIONS` in `src/lib/constants/roles.ts`
 - Filter sidebar links based on user role
@@ -179,14 +179,14 @@
 - Highlight active route
 - **Depends on**: TASK-105, TASK-107
 
-### TASK-107 🔴 ⛓️ ⏱️30m
+### TASK-107   [TIME]30m
 **Auth Context + Hooks**
 - Create `src/hooks/use-auth.ts` — provides user + profile
 - Create auth context provider wrapping the dashboard layout
 - Handle loading state while session resolves
 - **Depends on**: TASK-103
 
-### TASK-108 🔴 ⛓️ ⏱️30m
+### TASK-108   [TIME]30m
 **RBAC Hook + Middleware Enhancement**
 - Create `src/hooks/use-role.ts` — provides `hasPermission()`, `requireRole()`
 - Enhance middleware to check role-based route access
@@ -196,9 +196,9 @@
 
 ---
 
-## Phase 2: 🔴 HERO — AI Incident System
+## Phase 2:  HERO — AI Incident System
 
-### TASK-201 🔴 ∥ ⏱️45m
+### TASK-201  ∥ [TIME]45m
 **Gemini Client Setup**
 - Install `@google/generative-ai`
 - Create `src/lib/ai/gemini.ts` — initialize Gemini client
@@ -207,7 +207,7 @@
 - **Depends on**: TASK-004
 - **Can parallel with**: TASK-203
 
-### TASK-202 🔴 ⛓️ ⏱️30m
+### TASK-202   [TIME]30m
 **AI Output Schemas**
 - Create `src/lib/ai/schemas.ts` — Zod schemas for:
   - `IncidentClassification` (category, severity, confidence, summary, recommended_department, recommended_actions, risk_factors, requires_immediate_response)
@@ -216,7 +216,7 @@
   - `IncidentUpdateInput` (status, assigned_to, notes)
 - **Depends on**: TASK-201
 
-### TASK-203 🔴 ∥ ⏱️90m
+### TASK-203  ∥ [TIME]90m
 **Incident Report Form UI**
 - Create `src/app/(dashboard)/incidents/new/page.tsx`
 - Create `src/components/safety/incident-form.tsx`
@@ -231,7 +231,7 @@
 - **Depends on**: TASK-009, TASK-002
 - **Can parallel with**: TASK-201
 
-### TASK-204 🔴 ⛓️ ⏱️60m
+### TASK-204   [TIME]60m
 **AI Classification Endpoint**
 - Create `src/app/api/ai/classify-incident/route.ts`
 - Accepts: `{ description: string, location?: string }`
@@ -242,7 +242,7 @@
 - Includes error handling + fallback
 - **Depends on**: TASK-201, TASK-202
 
-### TASK-205 🟡 ⛓️ ⏱️60m
+### TASK-205   [TIME]60m
 **AI Classification Display**
 - Create `src/components/safety/ai-classification-display.tsx`
 - Shows: category (with icon), severity (color-coded badge), confidence (progress bar)
@@ -251,7 +251,7 @@
 - "Looks correct" / "Modify classification" buttons
 - **Depends on**: TASK-203, TASK-204
 
-### TASK-206 🔴 ⛓️ ⏱️60m
+### TASK-206   [TIME]60m
 **Incident Create API**
 - Create `src/app/api/incidents/route.ts` (POST handler)
 - Auth check → RBAC check → validate input
@@ -266,7 +266,7 @@
 - Return created incident
 - **Depends on**: TASK-204, TASK-006, TASK-005
 
-### TASK-207 🔴 ∥ ⏱️30m
+### TASK-207  ∥ [TIME]30m
 **Incident List API**
 - Add GET handler to `src/app/api/incidents/route.ts`
 - Filter by role (admin/security see all, others see own)
@@ -275,7 +275,7 @@
 - **Depends on**: TASK-006, TASK-005
 - **Can parallel with**: TASK-206
 
-### TASK-208 🟡 ⛓️ ⏱️45m
+### TASK-208   [TIME]45m
 **Incident List Page**
 - Create `src/app/(dashboard)/incidents/page.tsx`
 - Create `src/components/safety/incident-card.tsx`
@@ -286,7 +286,7 @@
 - Show: title, severity badge, category icon, time ago, status
 - **Depends on**: TASK-207
 
-### TASK-209 🟡 ∥ ⏱️60m
+### TASK-209  ∥ [TIME]60m
 **Incident Detail Page**
 - Create `src/app/(dashboard)/incidents/[id]/page.tsx`
 - Create GET handler in `src/app/api/incidents/[id]/route.ts`
@@ -297,7 +297,7 @@
 - **Depends on**: TASK-207
 - **Can parallel with**: TASK-206
 
-### TASK-210 🟡 ⛓️ ⏱️45m
+### TASK-210   [TIME]45m
 **Incident Status Update API**
 - Create PATCH handler in `src/app/api/incidents/[id]/route.ts`
 - Auth + RBAC (only admin/security can update)
@@ -306,7 +306,7 @@
 - Create audit log
 - **Depends on**: TASK-206
 
-### TASK-211 🟡 ∥ ⏱️45m
+### TASK-211  ∥ [TIME]45m
 **Supabase Realtime Subscriptions**
 - Create `src/hooks/use-realtime.ts` — generic realtime hook
 - Create `src/hooks/use-incidents.ts` — incidents-specific hook
@@ -316,7 +316,7 @@
 - **Depends on**: TASK-206
 - **Can parallel with**: TASK-208
 
-### TASK-212 🟡 ⛓️ ⏱️30m
+### TASK-212   [TIME]30m
 **Integration Test: Full Incident Flow**
 - Manually test OR write a test script:
   1. Login as student
@@ -333,7 +333,7 @@
 
 ## Phase 3: Command Center + Campus Map
 
-### TASK-301 🟡 ∥ ⏱️90m
+### TASK-301  ∥ [TIME]90m
 **Command Center Layout**
 - Create `src/app/(dashboard)/command-center/page.tsx`
 - Create `src/components/safety/command-center-grid.tsx`
@@ -347,7 +347,7 @@
 - **Depends on**: Phase 2 complete
 - **Can parallel with**: TASK-304
 
-### TASK-302 🟡 ⛓️ ⏱️45m
+### TASK-302   [TIME]45m
 **Live Incident Feed Widget**
 - Create `src/components/safety/live-feed.tsx`
 - Realtime list of recent incidents
@@ -357,7 +357,7 @@
 - Pulsing indicator for CRITICAL
 - **Depends on**: TASK-211, TASK-301
 
-### TASK-303 🟡 ⛓️ ⏱️30m
+### TASK-303   [TIME]30m
 **Command Center Stats**
 - Create `src/components/shared/stat-card.tsx`
 - Cards: Total active, Critical count, Avg response time, Today's count
@@ -365,7 +365,7 @@
 - Color-coded by severity
 - **Depends on**: TASK-207
 
-### TASK-304 🟡 ∥ ⏱️90m
+### TASK-304  ∥ [TIME]90m
 **SVG Campus Map Component**
 - Create `src/components/safety/campus-map-view.tsx`
 - Create `public/campus-map.svg` (simple campus layout)
@@ -374,7 +374,7 @@
 - **Depends on**: Phase 2 complete
 - **Can parallel with**: TASK-301
 
-### TASK-305 🟡 ⛓️ ⏱️45m
+### TASK-305   [TIME]45m
 **Incident Pins on Map**
 - Plot active incidents as pins on the SVG map
 - Color by severity (red/orange/yellow/blue)
@@ -382,13 +382,13 @@
 - Cluster if multiple incidents at same location
 - **Depends on**: TASK-304, TASK-207
 
-### TASK-306 🟡 ⛓️ ⏱️30m
+### TASK-306   [TIME]30m
 **Map Pin Click → Detail Popup**
 - Click pin → show popover/dialog with incident summary
 - Quick actions: Acknowledge, View full, Assign
 - **Depends on**: TASK-305
 
-### TASK-307 🟡 ∥ ⏱️30m
+### TASK-307  ∥ [TIME]30m
 **Emergency Alert API**
 - Create `src/app/api/alerts/route.ts`
 - POST: create alert (admin/security only)
@@ -397,7 +397,7 @@
 - **Depends on**: TASK-005, TASK-006
 - **Can parallel with**: TASK-301
 
-### TASK-308 🟡 ⛓️ ⏱️30m
+### TASK-308   [TIME]30m
 **Emergency Alert Banner**
 - Create `src/components/safety/alert-banner.tsx`
 - Fixed banner at top of dashboard
@@ -406,14 +406,14 @@
 - Auto-show on realtime INSERT to `emergency_alerts`
 - **Depends on**: TASK-307
 
-### TASK-309 🟡 ⛓️ ⏱️30m
+### TASK-309   [TIME]30m
 **Realtime Alert Notifications**
 - Toast notification when new emergency alert arrives
 - Sound effect (optional, time permitting)
 - Badge counter on notification bell in topbar
 - **Depends on**: TASK-307, TASK-211
 
-### TASK-310 🟡 ⛓️ ⏱️30m
+### TASK-310   [TIME]30m
 **Command Center Realtime Integration**
 - Wire all command center widgets to realtime channels
 - Incident feed auto-updates
@@ -421,7 +421,7 @@
 - Stats auto-recalculate
 - **Depends on**: TASK-301, TASK-302, TASK-305, TASK-211
 
-### TASK-311 🟢 ⛓️ ⏱️30m
+### TASK-311   [TIME]30m
 **Department Routing Display**
 - Show which department the incident was routed to
 - Visual indicator of notification status
@@ -432,7 +432,7 @@
 
 ## Phase 4: Safety Features
 
-### TASK-401 🟡 ∥ ⏱️45m
+### TASK-401  ∥ [TIME]45m
 **SOS Panic Button UI**
 - Create `src/app/(dashboard)/sos/page.tsx`
 - Create `src/components/safety/sos-button.tsx`
@@ -444,7 +444,7 @@
 - **Depends on**: TASK-105
 - **Can parallel with**: TASK-404
 
-### TASK-402 🟡 ∥ ⏱️45m
+### TASK-402  ∥ [TIME]45m
 **SOS API**
 - Create `src/app/api/sos/route.ts`
 - POST: trigger SOS (student/faculty only)
@@ -454,7 +454,7 @@
 - **Depends on**: TASK-006
 - **Can parallel with**: TASK-401
 
-### TASK-403 🟡 ⛓️ ⏱️30m
+### TASK-403   [TIME]30m
 **SOS on Command Center**
 - Add SOS alerts panel to command center
 - Realtime updates when SOS triggered
@@ -462,7 +462,7 @@
 - Quick respond action
 - **Depends on**: TASK-402, TASK-310
 
-### TASK-404 🟡 ∥ ⏱️45m
+### TASK-404  ∥ [TIME]45m
 **Safety Analytics Page Layout**
 - Create `src/app/(dashboard)/safety-analytics/page.tsx`
 - Tab layout: Overview, Trends, AI Insights, Locations
@@ -470,7 +470,7 @@
 - **Depends on**: TASK-105
 - **Can parallel with**: TASK-401
 
-### TASK-405 🟡 ∥ ⏱️60m
+### TASK-405  ∥ [TIME]60m
 **AI Safety Insights Endpoint**
 - Create `src/app/api/ai/safety-insights/route.ts`
 - Fetch incident statistics from DB (aggregated, no PII)
@@ -480,7 +480,7 @@
 - **Depends on**: TASK-201, TASK-206
 - **Can parallel with**: TASK-404
 
-### TASK-406 🟡 ⛓️ ⏱️45m
+### TASK-406   [TIME]45m
 **Recharts: Incident Trends**
 - Create `src/components/charts/incident-trend.tsx`
 - Area chart showing incidents over time (last 30 days)
@@ -488,20 +488,20 @@
 - Responsive container
 - **Depends on**: TASK-404, TASK-207
 
-### TASK-407 🟡 ⛓️ ⏱️30m
+### TASK-407   [TIME]30m
 **Recharts: Severity Distribution**
 - Create `src/components/charts/severity-distribution.tsx`
 - Donut/pie chart: Critical, High, Medium, Low
 - Color-matched to severity palette
 - **Depends on**: TASK-404, TASK-207
 
-### TASK-408 🟡 ⛓️ ⏱️30m
+### TASK-408   [TIME]30m
 **Recharts: Location Analysis**
 - Create `src/components/charts/heatmap.tsx`
 - Horizontal bar chart of top incident locations
 - **Depends on**: TASK-404, TASK-207
 
-### TASK-409 🟡 ⛓️ ⏱️30m
+### TASK-409   [TIME]30m
 **AI Insight Cards**
 - Create `src/components/safety/ai-insight-card.tsx`
 - Display AI-generated insights as cards
@@ -509,7 +509,7 @@
 - Loading skeleton while AI processes
 - **Depends on**: TASK-405
 
-### TASK-410 🟢 ∥ ⏱️45m
+### TASK-410  ∥ [TIME]45m
 **Visitor Management UI**
 - Create `src/app/(dashboard)/visitors/page.tsx`
 - Table with: name, phone, purpose, host, check-in time, status
@@ -518,7 +518,7 @@
 - **Depends on**: TASK-105
 - **Can parallel with**: TASK-405
 
-### TASK-411 🟢 ∥ ⏱️30m
+### TASK-411  ∥ [TIME]30m
 **Visitor Management API**
 - Create `src/app/api/visitors/route.ts`
 - POST: register visitor
@@ -527,14 +527,14 @@
 - **Depends on**: TASK-006
 - **Can parallel with**: TASK-410
 
-### TASK-412 🟢 ∥ ⏱️45m
+### TASK-412  ∥ [TIME]45m
 **Security Operations Dashboard**
 - Create `src/app/(dashboard)/security/page.tsx`
 - Similar to command center but focused on security officer's workflow
 - My assigned incidents, active SOS, visitor log, patrol schedule (mock)
 - **Depends on**: TASK-301
 
-### TASK-413 🟢 ∥ ⏱️45m
+### TASK-413  ∥ [TIME]45m
 **Audit Logs Page + API**
 - Create `src/app/(dashboard)/audit-logs/page.tsx`
 - Create API: GET with pagination + filters
@@ -547,7 +547,7 @@
 
 ## Phase 5: ERP Features
 
-### TASK-501 🟢 ⛓️ ⏱️45m
+### TASK-501   [TIME]45m
 **Shared DataTable Component**
 - Create `src/components/shared/data-table.tsx`
 - Based on shadcn DataTable recipe
@@ -556,7 +556,7 @@
 - Reusable across ALL ERP pages
 - **Depends on**: TASK-002
 
-### TASK-502 🟢 ∥ ⏱️45m
+### TASK-502  ∥ [TIME]45m
 **Students Page**
 - Create `src/app/(dashboard)/students/page.tsx`
 - DataTable: enrollment no, name, course, semester, section, actions
@@ -564,14 +564,14 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-503
 
-### TASK-503 🟢 ∥ ⏱️45m
+### TASK-503  ∥ [TIME]45m
 **Faculty Page**
 - Create `src/app/(dashboard)/faculty/page.tsx`
 - DataTable: employee ID, name, department, designation, actions
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-502
 
-### TASK-504 🟢 ∥ ⏱️45m
+### TASK-504  ∥ [TIME]45m
 **Students + Faculty API**
 - Create `src/app/api/erp/students/route.ts`
 - Create `src/app/api/erp/faculty/route.ts`
@@ -579,7 +579,7 @@
 - **Depends on**: TASK-007
 - **Can parallel with**: TASK-502, TASK-503
 
-### TASK-505 🟢 ⛓️ ⏱️60m
+### TASK-505   [TIME]60m
 **Attendance Page**
 - Create `src/app/(dashboard)/attendance/page.tsx`
 - Date picker + class selector
@@ -588,7 +588,7 @@
 - View mode: attendance percentage per student
 - **Depends on**: TASK-504
 
-### TASK-506 🟢 ∥ ⏱️30m
+### TASK-506  ∥ [TIME]30m
 **Attendance API**
 - Create `src/app/api/erp/attendance/route.ts`
 - POST: bulk mark attendance
@@ -596,7 +596,7 @@
 - **Depends on**: TASK-007
 - **Can parallel with**: TASK-505
 
-### TASK-507 🟢 ∥ ⏱️45m
+### TASK-507  ∥ [TIME]45m
 **Timetable Page**
 - Create `src/app/(dashboard)/timetable/page.tsx`
 - Weekly grid view (Mon-Sat, periods 1-8)
@@ -604,7 +604,7 @@
 - **Depends on**: TASK-105
 - **Can parallel with**: TASK-505
 
-### TASK-508 🔵 ∥ ⏱️45m
+### TASK-508  ∥ [TIME]45m
 **Exams Page**
 - Create `src/app/(dashboard)/exams/page.tsx`
 - Exam schedule table
@@ -613,7 +613,7 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-507
 
-### TASK-509 🔵 ∥ ⏱️30m
+### TASK-509  ∥ [TIME]30m
 **Hostel Page**
 - Create `src/app/(dashboard)/hostel/page.tsx`
 - Room grid with occupancy status
@@ -621,7 +621,7 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-508
 
-### TASK-510 🔵 ∥ ⏱️30m
+### TASK-510  ∥ [TIME]30m
 **Transport Page**
 - Create `src/app/(dashboard)/transport/page.tsx`
 - Route list with stops
@@ -629,7 +629,7 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-509
 
-### TASK-511 🟢 ∥ ⏱️45m
+### TASK-511  ∥ [TIME]45m
 **Complaints Page**
 - Create `src/app/(dashboard)/complaints/page.tsx`
 - Similar to incidents but for general complaints
@@ -638,7 +638,7 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-510
 
-### TASK-512 🔵 ∥ ⏱️30m
+### TASK-512  ∥ [TIME]30m
 **Placements Page**
 - Create `src/app/(dashboard)/placements/page.tsx`
 - Placement drive cards
@@ -647,7 +647,7 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-511
 
-### TASK-513 🔵 ∥ ⏱️30m
+### TASK-513  ∥ [TIME]30m
 **Communication/Announcements Page**
 - Create `src/app/(dashboard)/communication/page.tsx`
 - Announcement feed (card-based)
@@ -656,14 +656,14 @@
 - **Depends on**: TASK-501
 - **Can parallel with**: TASK-512
 
-### TASK-514 🔵 ⛓️ ⏱️30m
+### TASK-514   [TIME]30m
 **Parent Portal**
 - Create `src/app/(dashboard)/parent-portal/page.tsx`
 - Read-only view: child's attendance, exams, timetable
 - Link to parent's child via guardian_id in students table
 - **Depends on**: TASK-504, TASK-505
 
-### TASK-515 🟢 ∥ ⏱️60m
+### TASK-515  ∥ [TIME]60m
 **ERP API Routes (Batch)**
 - Create remaining API routes:
   - `/api/erp/timetable/route.ts`
@@ -680,7 +680,7 @@
 
 ## Phase 6: Polish + Demo
 
-### TASK-601 🟡 ∥ ⏱️60m
+### TASK-601  ∥ [TIME]60m
 **Role-Based Dashboard Landing Pages**
 - `/` page redirects to role-specific dashboard:
   - **Admin**: Key stats, recent incidents, quick actions
@@ -691,7 +691,7 @@
 - **Depends on**: All phases
 - **Can parallel with**: TASK-602
 
-### TASK-602 🟢 ∥ ⏱️45m
+### TASK-602  ∥ [TIME]45m
 **Mobile Responsive Pass**
 - Check all pages on mobile viewport
 - Fix sidebar collapse
@@ -700,21 +700,21 @@
 - **Depends on**: All phases
 - **Can parallel with**: TASK-601
 
-### TASK-603 🟢 ⛓️ ⏱️30m
+### TASK-603   [TIME]30m
 **Loading States + Skeletons**
 - Add `<Skeleton>` components to all data-heavy pages
 - Loading spinner on form submissions
 - Suspense boundaries where needed
 - **Depends on**: All phases
 
-### TASK-604 🟢 ⛓️ ⏱️30m
+### TASK-604   [TIME]30m
 **Error Handling + Toasts**
 - Toast notifications for: success, error, info
 - Try/catch all API calls in UI
 - Meaningful error messages
 - **Depends on**: All phases
 
-### TASK-605 🟡 ⛓️ ⏱️30m
+### TASK-605   [TIME]30m
 **Refresh Demo Seed Data**
 - Ensure seed data tells a compelling story:
   - Recent critical incident (fire in lab)
@@ -725,32 +725,32 @@
   - Visitor log for today
 - **Depends on**: All phases
 
-### TASK-606 🟢 ⏱️15m
+### TASK-606  [TIME]15m
 **Performance Check**
 - Run Lighthouse audit
 - Check bundle size
 - Ensure no obvious performance issues
 - **Depends on**: All phases
 
-### TASK-607 🟡 ⏱️60m
+### TASK-607  [TIME]60m
 **Bug Fixes**
 - Allocated time for fixing issues found during testing
 - **Depends on**: All phases
 
-### TASK-608 🟡 ⏱️30m
+### TASK-608  [TIME]30m
 **Demo Script**
 - Write step-by-step demo script
 - Prepare talking points for judges
 - Identify 3-5 "wow" moments to highlight
 - **Depends on**: All phases
 
-### TASK-609 🟢 ⏱️30m
+### TASK-609  [TIME]30m
 **Backup Demo Video**
 - Screen record the full demo flow
 - In case of technical issues during live demo
 - **Depends on**: TASK-608
 
-### TASK-610 🟡 ⏱️15m
+### TASK-610  [TIME]15m
 **Deploy to Vercel**
 - Connect GitHub repo to Vercel
 - Configure environment variables
@@ -798,13 +798,13 @@ TASK-003 → TASK-006 → TASK-007 → TASK-008                │
 ## Skip List (If Running Out of Time)
 
 Cut these first, in order:
-1. TASK-514 (Parent Portal) 🔵
-2. TASK-510 (Transport) 🔵
-3. TASK-509 (Hostel) 🔵
-4. TASK-512 (Placements) 🔵
-5. TASK-508 (Exams) 🔵
-6. TASK-513 (Communication) 🔵
-7. TASK-602 (Mobile Responsive) 🟢
-8. TASK-412 (Security Dashboard) 🟢
+1. TASK-514 (Parent Portal) 
+2. TASK-510 (Transport) 
+3. TASK-509 (Hostel) 
+4. TASK-512 (Placements) 
+5. TASK-508 (Exams) 
+6. TASK-513 (Communication) 
+7. TASK-602 (Mobile Responsive) 
+8. TASK-412 (Security Dashboard) 
 
 **NEVER skip**: Phase 2 (Incidents + AI), Phase 3 (Command Center + Map), TASK-401-403 (SOS), TASK-404-409 (Analytics)

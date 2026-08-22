@@ -251,7 +251,7 @@ export default function ComplaintsPage() {
                     <div className="text-xs text-[#667085] space-y-1 pt-1">
                       <p className="text-[#1F2933] font-medium">Recommended Action Steps:</p>
                       {selectedTicket.aiRecommendedActions.map((act, idx) => (
-                        <p key={idx} className="text-xs text-[#667085]">✓ {act}</p>
+                        <p key={idx} className="text-xs text-[#667085]"> {act}</p>
                       ))}
                     </div>
                   )}

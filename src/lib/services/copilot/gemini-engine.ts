@@ -197,7 +197,7 @@ function formatToolResultToSpeech(
 ): string {
   // If authorization was denied by the server
   if (!toolResult.authorized) {
-    return `### 🛑 Security Authorization Refusal (HTTP 403 Forbidden)
+    return `### Security Authorization Refusal (HTTP 403 Forbidden)
 
 **Access Clearance Required:** \`${toolResult.clearanceRequired}\`  
 **Active Caller Role:** \`${user.role.toUpperCase()}\` (${user.full_name})
@@ -207,7 +207,7 @@ function formatToolResultToSpeech(
 
 ${
   toolResult.securityNotice
-    ? `> ⚠️ **Security Audit Flag:** ${toolResult.securityNotice}`
+    ? `> **[Security Audit Flag]** ${toolResult.securityNotice}`
     : ''
 }
 
@@ -221,17 +221,17 @@ ${
       const critical = d.critical_incidents_this_month;
       const active = d.active_critical_incidents;
       const resolved = Number(critical) - Number(active);
-      return `### 📊 Monthly Incident Intelligence Report
+      return `### Monthly Incident Intelligence Report
 
 **Timeframe:** Current Month (Past 30 Days)  
 **Total Incidents Logged:** ${d.total_incidents_in_period}  
 **Critical Incidents:** **${critical}**
 
 #### Severity Breakdown:
-- 🔴 **Critical:** ${critical} (${active} active, ${resolved} resolved)
-- 🟠 **High:** ${d.high_severity_count}
-- 🟡 **Medium:** ${d.medium_severity_count}
-- 🟢 **Low:** ${d.low_severity_count}
+- **Critical:** ${critical} (${active} active, ${resolved} resolved)
+- **High:** ${d.high_severity_count}
+- **Medium:** ${d.medium_severity_count}
+- **Low:** ${d.low_severity_count}
 
 #### Active Critical Situations:
 1. **INC-20260821-0042** — *Chemical Fume Discharge in Organic Lab 302* (Engineering Block, Status: \`responding\`)
@@ -243,9 +243,9 @@ All data verified via approved server telemetry. Zero arbitrary SQL executed.`;
       const count = d.active_count;
       const incidents = d.incidents as Array<Record<string, unknown>>;
       if (!incidents || incidents.length === 0) {
-        return `### 🛡️ Active Incident Status\n\nThere are currently **0 critical incidents active** on campus. All previous emergency events have been contained.`;
+        return `### Active Incident Status\n\nThere are currently **0 critical incidents active** on campus. All previous emergency events have been contained.`;
       }
-      return `### 🚨 Live Active Critical Incidents (${count})
+      return `### Live Active Critical Incidents (${count})
 
 Currently active emergency and tactical response operations:
 
@@ -253,7 +253,7 @@ ${incidents
   .map(
     (inc, idx) => `#### ${idx + 1}. [${inc.incident_number}] ${inc.title}
 - **Location:** ${inc.location}
-- **Category:** \`${inc.category}\` | **Severity:** 🔴 \`${String(inc.severity).toUpperCase()}\`
+- **Category:** \`${inc.category}\` | **Severity:**  \`${String(inc.severity).toUpperCase()}\`
 - **Current Status:** \`${String(inc.status).toUpperCase()}\`
 - **Assigned Officer:** ${inc.assigned_officer}
 - **Reported By:** ${inc.reporter}
@@ -266,7 +266,7 @@ ${incidents
 
     case 'get_student_attendance': {
       const courses = d.enrolled_courses as Array<Record<string, unknown>>;
-      return `### 📚 Student Attendance Record
+      return `### Student Attendance Record
 
 **Student Name:** ${d.student_name}  
 **Roll Number:** \`${d.roll_number}\`  
@@ -283,20 +283,20 @@ ${courses
 
 ${
   Number(d.overall_attendance_percentage) >= 75
-    ? '✅ Attendance is above the mandatory 75% university examination threshold.'
-    : '⚠️ **Attendance Warning:** Attendance is below 75%. Please contact your department coordinator.'
+    ? 'Attendance is above the mandatory 75% university examination threshold.'
+    : '**[Attendance Warning]** Attendance is below 75%. Please contact your department coordinator.'
 }`;
     }
 
     case 'get_location_risk_analytics': {
       const top = d.highest_incident_rate_location as Record<string, unknown>;
-      return `### 🗺️ Campus Location Risk & Incident Rate Analysis
+      return `### Campus Location Risk & Incident Rate Analysis
 
 The location with the **highest incident rate** on campus is:
 
-### 📍 **${top.name}** (\`${top.code}\`)
+### **${top.name}** (\`${top.code}\`)
 - **Campus Sector:** ${top.sector}
-- **Risk Classification:** 🔴 **${top.risk_level}**
+- **Risk Classification:**  **${top.risk_level}**
 - **Active Incidents:** ${top.active_incidents}
 - **Assigned Security Unit:** ${top.assigned_unit}
 
@@ -312,7 +312,7 @@ ${(top.risk_factors as string[]).map((f) => `- ${f}`).join('\n')}
 
     case 'get_safety_action_priorities': {
       const actions = d.prioritized_actions as Array<Record<string, unknown>>;
-      return `### 🎯 Prioritized Institutional Safety Directives
+      return `### Prioritized Institutional Safety Directives
 
 ${d.executive_summary}
 
@@ -334,7 +334,7 @@ ${(act.directives as string[]).map((dir) => `  - ${dir}`).join('\n')}
 
     case 'get_audit_logs': {
       const logs = d.logs as Array<Record<string, unknown>>;
-      return `### 🛡️ Institutional Governance Audit Trails (Admin Clearance)
+      return `### Institutional Governance Audit Trails (Admin Clearance)
 
 Total entries in ledger: **${d.total_entries}** (showing latest ${d.returned_entries}):
 

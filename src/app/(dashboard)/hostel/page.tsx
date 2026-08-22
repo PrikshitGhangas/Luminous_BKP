@@ -245,7 +245,7 @@ export default function HostelPage() {
                 <div className="flex flex-wrap gap-1.5">
                   {b.amenities.map((am) => (
                     <span key={am} className="px-2 py-0.5 rounded text-xs bg-[#F0F1EF] border border-[#D6D8D5] text-[#1F2933]">
-                      ✓ {am}
+                       {am}
                     </span>
                   ))}
                 </div>

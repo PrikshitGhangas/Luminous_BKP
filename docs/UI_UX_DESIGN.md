@@ -70,14 +70,14 @@ The UI must fluidly serve three emotional registers:
 
 ### Anti-Patterns (Strictly Avoided)
 
-- ❌ Glassmorphism cards with backdrop blur everywhere
-- ❌ Gradient backgrounds as primary surfaces
-- ❌ Decorative illustrations that dilute information density
-- ❌ Generic Bootstrap-style cards and layouts
-- ❌ Heavy drop shadows on every element
-- ❌ Colorful sidebars that compete with data
-- ❌ Generic icon-heavy hero sections
-- ❌ Footer-heavy marketing layout patterns
+- [FAIL] Glassmorphism cards with backdrop blur everywhere
+- [FAIL] Gradient backgrounds as primary surfaces
+- [FAIL] Decorative illustrations that dilute information density
+- [FAIL] Generic Bootstrap-style cards and layouts
+- [FAIL] Heavy drop shadows on every element
+- [FAIL] Colorful sidebars that compete with data
+- [FAIL] Generic icon-heavy hero sections
+- [FAIL] Footer-heavy marketing layout patterns
 
 ---
 
@@ -386,7 +386,7 @@ Position: sticky top-0, z-50
 
 Structure:
 ┌─────────────────────────────────────────────────────────────┐
-│  [Breadcrumb: Home / Command Center]    [Search]  [🔔3] [?] │
+│  [Breadcrumb: Home / Command Center]    [Search]  [3] [?] │
 │                                                             │
 │                              │──────────│  [Avatar] Harsh ▾ │
 └─────────────────────────────────────────────────────────────┘
@@ -471,10 +471,10 @@ Anatomy:
 │  Fire at Chemistry Laboratory, 2nd Floor                   │
 │  Sciences Block · Reported by Priya S. (Student)           │
 │  ──────────────────────────────────────────────────────── │
-│  AI Confidence: ●●●●● 95%                 🤖 AI Classified │
+│  AI Confidence: ●●●●● 95%                  AI Classified │
 │  Assigned: Officer Sharma (Security Ops)                   │
 │  ──────────────────────────────────────────────────────── │
-│  [📍 Sciences Block]  [🕐 2 min ago]  [RESPONDING →]      │
+│  [ Sciences Block]  [ 2 min ago]  [RESPONDING →]      │
 └────────────────────────────────────────────────────────────┘
 
 Critical variant: red-50 tinted background, pulsing left border
@@ -498,7 +498,7 @@ Typography: 11px, 600 weight, 0.04em letter-spacing, uppercase
 Border-radius: --radius-full
 Padding: 2px 8px (sm), 3px 10px (md), 4px 12px (lg)
 
-AI Classified variant: adds robot icon prefix [🤖 CRITICAL]
+AI Classified variant: adds robot icon prefix [ CRITICAL]
 ```
 
 ### 6.7 Data Table
@@ -995,7 +995,7 @@ LEFT:
 ┌─────────────────────────────────────────────────┐
 │  Today's Timetable — Thursday, Aug 21           │
 │  ─────────────────────────────────────────────  │
-│  09:00-10:00  Mathematics III    Room 301 ✓past │
+│  09:00-10:00  Mathematics III    Room 301 past │
 │  10:00-11:00  Data Structures    Lab 204  ← NOW │
 │  11:00-12:00  Computer Networks  Room 205       │
 │  [Timeline-style, current slot highlighted blue] │
@@ -1006,7 +1006,7 @@ LEFT:
 │  [Progress bars per subject, color by ≥75%]     │
 │  Mathematics     ████████░░  82%               │
 │  Data Structures ██████████  96%               │
-│  Networks        ██████░░░░  71% [amber ⚠]    │
+│  Networks        ██████░░░░  71% [amber ]    │
 └─────────────────────────────────────────────────┘
 
 RIGHT:
@@ -1035,7 +1035,7 @@ ROW 3: ANNOUNCEMENTS
 ┌─────────────────────────────────────────────────────────────┐
 │  Campus Announcements                       [All →]         │
 │  ─────────────────────────────────────────────────────────  │
-│  [📌 URGENT] Mid-term exam schedule released · Admin · 1h  │
+│  [ URGENT] Mid-term exam schedule released · Admin · 1h  │
 │  [Normal] Sports day on Saturday — Register by 5PM · 4h    │
 │  [Normal] Library extended hours this week · Library · 1d  │
 └─────────────────────────────────────────────────────────────┘
@@ -1052,7 +1052,7 @@ FLOATING SOS BUTTON: Fixed bottom-right (red circle, 56px)
 
 ```
 PAGE HEADER:
-  Security Operations                [🔴 LIVE]
+  Security Operations                [ LIVE]
   Shift: Morning (06:00-14:00) · Officer Sharma · Sector: North Zone
   Right: [New Incident] [Dispatch →] [Command Center ↗]
 
@@ -1072,7 +1072,7 @@ ROW 1: SECURITY STATS (5-column, compact)
 ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
 │Active SOS│ │Open INC  │ │Visitors  │ │On Duty   │ │Avg Resp  │
 │    0     │ │   24     │ │   12     │ │    6     │ │  4.2 min │
-│[green ✓] │ │[amber ⚠] │ │[blue]    │ │[slate]   │ │[green]   │
+│[green ] │ │[amber ] │ │[blue]    │ │[slate]   │ │[green]   │
 └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘
 
 ─────────────────────────────────────────────────────────────────
@@ -1297,7 +1297,7 @@ UPCOMING DRIVES (card grid, 3-col):
 │  ₹7.5 LPA            │
 │  Drive: Aug 24, 2026  │
 │  B.Tech CSE/IT · CGPA≥7.0│
-│  [✓ You're eligible] │
+│  [ You're eligible] │
 │  [Register →]        │
 └──────────────────────┘
 
@@ -1366,9 +1366,9 @@ SECTION 2: Classification (pre-filled by AI, user can override)
 ┌─────────────────────────────────────────────────────────────┐
 │  Category (AI Suggested: Fire)                              │
 │  [Category picker, 6-column icon grid]                     │
-│  🔥Fire  🏥Medical  💊Substance  🔨Vandalism               │
-│  🚨Assault  😰Harassment  🕵️Suspicious  🌊Natural           │
-│  🏗️Infrastructure  🚗Traffic  💻Cybercrime  📁Other          │
+│  Fire  Medical  Substance  Vandalism               │
+│  [ALERT]Assault  Harassment  Suspicious  Natural           │
+│  Infrastructure  Traffic  Cybercrime  Other          │
 │                                                             │
 │  Severity (AI Suggested: Critical)                         │
 │  ○ Low  ○ Medium  ● Critical [pre-selected]               │
@@ -1380,7 +1380,7 @@ SECTION 3: Evidence & Privacy
 │  [Dropzone: "Drop files or click to upload"]               │
 │  Supported: JPG, PNG, MP4, PDF · Max 50MB                  │
 │                                                             │
-│  ☐  Report anonymously                                      │
+│    Report anonymously                                      │
 │     Your name will not be shown to anyone except admins    │
 └─────────────────────────────────────────────────────────────┘
 
@@ -1432,7 +1432,7 @@ INCIDENT OVERVIEW CARD:
 │   evacuating the building."                                 │
 │  ─────────────────────────────────────────────────────────  │
 │  Location: Sciences Block, 2nd Floor, Chemistry Lab        │
-│  [📍 Map preview, 200px, shows pin on campus map]           │
+│  [ Map preview, 200px, shows pin on campus map]           │
 └─────────────────────────────────────────────────────────────┘
 
 AI ANALYSIS CARD:
@@ -1458,7 +1458,7 @@ AI ANALYSIS CARD:
 EVIDENCE:
 ┌─────────────────────────────────────────────────────────────┐
 │  Evidence (2 files)                                         │
-│  [image thumbnail] fire_photo.jpg  [🔒 Admin/Security only] │
+│  [image thumbnail] fire_photo.jpg  [ Admin/Security only] │
 │  [document icon]  evacuation_report.pdf                     │
 │  [+ Add Evidence] (if authorized)                           │
 └─────────────────────────────────────────────────────────────┘
@@ -1502,7 +1502,7 @@ ACTIONS (role-dependent):
 
 REPORTER INFO (admin/security only):
 ┌────────────────────────────┐
-│  Reporter [🔒 Restricted]  │
+│  Reporter [ Restricted]  │
 │  Priya Sharma              │
 │  B.Tech CSE · Student      │
 │  Phone: +91-XXXXXXXX       │
@@ -1534,22 +1534,22 @@ PAGE HEADER:
 
 FILTER BAR:
 ┌─────────────────────────────────────────────────────────────┐
-│  [🔍 Search incidents, locations, IDs...]                   │
+│  [ Search incidents, locations, IDs...]                   │
 │  [Status ▾] [Severity ▾] [Category ▾] [Date Range ▾] [Dept ▾]│
 │  [Active Filters: status:open × ] [Clear All]               │
 └─────────────────────────────────────────────────────────────┘
 
-VIEW TOGGLE: [≡ List] [⊞ Grid] [🗺 Map]  (right side)
+VIEW TOGGLE: [≡ List] [⊞ Grid] [ Map]  (right side)
 
 ─── LIST VIEW ────────────────────────────────────────────────────
 
 TABLE COLUMNS:
-  ☐ | Incident # | Title | Category | Severity | Location | Status | Assigned | Time | →
+   | Incident # | Title | Category | Severity | Location | Status | Assigned | Time | →
 
 ┌────┬──────────────┬─────────────────────┬───────┬──────────┬──────────┬────────────┬──────────┬────────┬──┐
-│ ☐  │ INC-0042     │ Fire — Chem Lab      │ 🔥Fire│ CRITICAL │ Sci Blk  │ RESPONDING │ O.Sharma │ 5m ago │→ │
-│ ☐  │ INC-0041     │ Theft — Library     │ 💊Theft│ HIGH    │ Library  │ INVESTIG.  │ O.Kumar  │ 1h ago │→ │
-│ ☐  │ INC-0040     │ Vandalism — Parking │ 🔨Vand│ MEDIUM  │ Parking  │ REPORTED   │ Unassign │ 2h ago │→ │
+│   │ INC-0042     │ Fire — Chem Lab      │ Fire│ CRITICAL │ Sci Blk  │ RESPONDING │ O.Sharma │ 5m ago │→ │
+│   │ INC-0041     │ Theft — Library     │ Theft│ HIGH    │ Library  │ INVESTIG.  │ O.Kumar  │ 1h ago │→ │
+│   │ INC-0040     │ Vandalism — Parking │ Vand│ MEDIUM  │ Parking  │ REPORTED   │ Unassign │ 2h ago │→ │
 └────┴──────────────┴─────────────────────┴───────┴──────────┴──────────┴────────────┴──────────┴────────┴──┘
 
 ROW ACTIONS (on hover, right-aligned icon group):
@@ -1586,12 +1586,12 @@ TOPBAR (command center variant, dark):
 │  ← Dashboard  CampusShield AI — Safety Command Center          │
 │                         [●LIVE] 08:47 AM, Thu Aug 21, 2026    │
 │  CAMPUS STATUS: ████ ALL SYSTEMS ACTIVE  [6 CRITICAL] [18 OPEN]│
-│  Right: [Full Screen ⛶] [🔔 Alerts 3] [Settings]              │
+│  Right: [Full Screen ] [ Alerts 3] [Settings]              │
 └─────────────────────────────────────────────────────────────────┘
 
 EMERGENCY BANNER (conditionally rendered, red, full-width):
 ┌─────────────────────────────────────────────────────────────────┐
-│  🔴 ACTIVE ALERT: FIRE — SCIENCES BLOCK · Evacuate immediately  │
+│   ACTIVE ALERT: FIRE — SCIENCES BLOCK · Evacuate immediately  │
 │  Incident INC-0042 · Issued 5 min ago  [Manage Alert →]        │
 └─────────────────────────────────────────────────────────────────┘
 
@@ -1614,7 +1614,7 @@ gap: 2px (tight, cinematic feel)
 │  ┌───────────┐│  │   [Animated pins]      │ ││ ─────────── ││
 │  │ HIGH      ││  │                        │ ││ SOS ALERTS  ││
 │  │   10      ││  │   [Red: Chem Lab ●]    │ ││ 0 ACTIVE    ││
-│  │[amber]    ││  │   [Amber: Library ●]   │ ││ [green ✓]   ││
+│  │[amber]    ││  │   [Amber: Library ●]   │ ││ [green ]   ││
 │  └───────────┘│  │                        │ ││             ││
 │  ┌───────────┐│  │   [Blue pins: medium]  │ ││ ─────────── ││
 │  │ MEDIUM    ││  │                        │ ││ AI INSIGHTS ││
@@ -1702,10 +1702,10 @@ LAYOUT: 2-panel (sidebar 320px + map fills remaining)
 
 ─── LEFT SIDEBAR ─────────────────────────────────────────────────
 ┌─────────────────────────────────────────────────────────────┐
-│  🔍 Search location...                                       │
+│   Search location...                                       │
 │  ─────────────────────────────────────────────────────────  │
 │  SEVERITY FILTER                                            │
-│  ☑ Critical (6)  ☑ High (10)  ☑ Medium (8)  ☑ Low (23)   │
+│   Critical (6)   High (10)   Medium (8)   Low (23)   │
 │  ─────────────────────────────────────────────────────────  │
 │  ACTIVE INCIDENTS (6 critical)                              │
 │  ─────────────────────────────────────────────────────────  │
@@ -1733,8 +1733,8 @@ SVG campus map with:
 MAP CONTROLS (bottom-right):
   [+] Zoom in
   [−] Zoom out
-  [⌖] Reset view
-  [⛶] Fullscreen
+  [] Reset view
+  [] Fullscreen
 
 INCIDENT DETAIL PANEL (slide-in from right, 360px):
   Opens on pin click
@@ -1761,7 +1761,7 @@ ACTIVE ALERTS (if any — prominent at top):
 ┌─────────────────────────────────────────────────────────────┐
 │  ACTIVE ALERT — CRITICAL                          [Manage]  │
 │  ───────────────────────────────────────────────────────    │
-│  🔴 FIRE — Sciences Block                                   │
+│   FIRE — Sciences Block                                   │
 │  Evacuate Sciences Block immediately. Do not use elevators. │
 │  Contact emergency services if needed.                      │
 │  ─────────────────────────────────────────────────────────  │
@@ -1783,7 +1783,7 @@ ISSUE ALERT FORM (Admin/Security, collapsible panel or modal):
 │  Title:    [────────────────────────────────────────────]  │
 │  Message:  [── textarea ─────────────────────────────────] │
 │  Severity: ○ Critical  ○ High  ○ Medium  ○ Low            │
-│  Target:   ☑ Students  ☑ Faculty  ☑ Security  ☑ Parents  │
+│  Target:    Students   Faculty   Security   Parents  │
 │  Duration: [1h] [4h] [Until manual dismiss]                │
 │  Link to incident: [INC number lookup ─────────────────]  │
 │  [Preview] [Issue Alert →]                                 │
@@ -1874,7 +1874,7 @@ FILE COMPLAINT FORM (collapsible, top of page for student):
 │  Subject: [────────────────────────────────────────────]   │
 │  Description: [── textarea ──────────────────────────────] │
 │  Priority: ○ Low  ○ Normal  ● High  ○ Urgent              │
-│  Anonymous: ☐ File this complaint anonymously              │
+│  Anonymous:  File this complaint anonymously              │
 │                                    [Submit Complaint →]    │
 └─────────────────────────────────────────────────────────────┘
 
@@ -1938,8 +1938,8 @@ PAGE HEADER:
 SUBJECT BREAKDOWN (cards or table):
   Subject | Total | Present | Absent | Percentage | Status
   [Progress bar per row, colored by threshold]
-  [⚠] If < 75%: red warning + "At risk of detention"
-  [✓] If ≥ 90%: green + "Good standing"
+  [] If < 75%: red warning + "At risk of detention"
+  [] If ≥ 90%: green + "Good standing"
 
 MONTH CALENDAR VIEW:
   Heatmap calendar showing present/absent days
@@ -2190,7 +2190,7 @@ PAGE HEADER:
 
 FILTER BAR:
 ┌─────────────────────────────────────────────────────────────┐
-│  [🔍 Search by user, action, entity...]                     │
+│  [ Search by user, action, entity...]                     │
 │  [User ▾] [Action Type ▾] [Entity ▾] [Date Range ▾]        │
 │  [From: Aug 21 00:00] [To: Aug 21 23:59]                   │
 └─────────────────────────────────────────────────────────────┘
@@ -2581,29 +2581,29 @@ All icons from **Lucide React** (consistent, professional, open-source).
 
 | Page | super_admin | admin | security | faculty | student | parent | warden | receptionist |
 |------|:-----------:|:-----:|:--------:|:-------:|:-------:|:------:|:------:|:------------:|
-| Landing | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Login | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Admin Dashboard | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Student Dashboard | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| Security Dashboard | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Faculty Dashboard | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-| Parent Dashboard | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
-| Hostel Dashboard | ✅ | ✅ | ❌ | ❌ | R | R | ✅ | ❌ |
-| Placement Portal | ✅ | ✅ | ❌ | R | ✅ | R | ❌ | ❌ |
-| Incident Reporting | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| Incident Details | ✅ | ✅ | ✅ | Own | Own | ❌ | Own | Own |
-| Incident Management | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Command Center | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Campus Map | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
-| Emergency Alerts (view) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Emergency Alerts (manage) | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Visitor Management | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ |
-| Complaints | ✅ | ✅ | R | R | ✅ | ❌ | ✅ | ✅ |
-| Attendance | ✅ | ✅ | ❌ | CRU | R | R | ❌ | ❌ |
-| Timetable | ✅ | ✅ | ❌ | R | R | R | ❌ | ❌ |
-| AI Analytics | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| AI Copilot | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| Audit Logs | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Landing | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] |
+| Login | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] |
+| Admin Dashboard | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Student Dashboard | [PASS] | [PASS] | [FAIL] | [FAIL] | [PASS] | [FAIL] | [FAIL] | [FAIL] |
+| Security Dashboard | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Faculty Dashboard | [PASS] | [PASS] | [FAIL] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Parent Dashboard | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [PASS] | [FAIL] | [FAIL] |
+| Hostel Dashboard | [PASS] | [PASS] | [FAIL] | [FAIL] | R | R | [PASS] | [FAIL] |
+| Placement Portal | [PASS] | [PASS] | [FAIL] | R | [PASS] | R | [FAIL] | [FAIL] |
+| Incident Reporting | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [FAIL] | [PASS] | [PASS] |
+| Incident Details | [PASS] | [PASS] | [PASS] | Own | Own | [FAIL] | Own | Own |
+| Incident Management | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Command Center | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Campus Map | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [FAIL] | [PASS] | [PASS] |
+| Emergency Alerts (view) | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] | [PASS] |
+| Emergency Alerts (manage) | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Visitor Management | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [PASS] |
+| Complaints | [PASS] | [PASS] | R | R | [PASS] | [FAIL] | [PASS] | [PASS] |
+| Attendance | [PASS] | [PASS] | [FAIL] | CRU | R | R | [FAIL] | [FAIL] |
+| Timetable | [PASS] | [PASS] | [FAIL] | R | R | R | [FAIL] | [FAIL] |
+| AI Analytics | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| AI Copilot | [PASS] | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
+| Audit Logs | [PASS] | [PASS] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] | [FAIL] |
 
 `R` = Read only · `CRU` = Create/Read/Update · `Own` = Own records only
 

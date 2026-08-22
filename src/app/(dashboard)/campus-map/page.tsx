@@ -524,7 +524,7 @@ export default function CampusMapPage() {
                           key={idx}
                           className="px-2 py-0.5 rounded-md bg-white border border-[#D6D8D5] text-[11px] text-[#667085]"
                         >
-                          ✓ {am}
+                           {am}
                         </span>
                       ))}
                     </div>

@@ -378,14 +378,14 @@ Immutable compliance logging recording every significant database mutation, elev
 | `incidents` | Reporter (Self), Admin, Security, Assigned Personnel | Any Authenticated User (`reporter_id = auth.uid()`) | Admin, Security, Assigned Staff | Admin only |
 | `incident_evidence` | Incident Stakeholders (Reporter, Admin, Security, Assigned) | Uploader, Admin, Security | Admin, Security | Admin only |
 | `incident_assignments` | Assigned Officer, Admin, Security | Admin, Security | Admin, Security | Admin only |
-| `incident_timeline` | Reporter (non-internal), Admin, Security, Assigned Personnel | System Trigger / Admin / Security | ❌ Disallowed (Append-Only) | ❌ Disallowed |
+| `incident_timeline` | Reporter (non-internal), Admin, Security, Assigned Personnel | System Trigger / Admin / Security | [FAIL] Disallowed (Append-Only) | [FAIL] Disallowed |
 | `sos_alerts` | Self (Caller), Admin, Security | Any Authenticated User (`user_id = auth.uid()`) | Security, Admin | Admin only |
 | `emergency_alerts` | All Authenticated Users (Active), Admin/Security (All) | Admin, Security | Admin, Security | Admin only |
 | `visitors` / `visitor_passes` | Host, Receptionist, Security, Admin | Host, Receptionist, Security, Admin | Host, Receptionist, Security, Admin | Admin only |
 | `complaints` | Complainant (Self), Assignee, Admin, Security | Any Authenticated User | Complainant, Assignee, Admin | Admin only |
 | `wellbeing_checkins` | Student (Self), Assigned Counselor, Admin | Student (Self) | Counselor, Admin | Admin only |
 | `ai_insights` | Admin, Security | AI Pipeline / Admin | Admin, Security | Admin only |
-| `audit_logs` | Super Admin, Admin | Service Role / Triggers | ❌ Disallowed (Immutable) | ❌ Disallowed |
+| `audit_logs` | Super Admin, Admin | Service Role / Triggers | [FAIL] Disallowed (Immutable) | [FAIL] Disallowed |
 
 ---
 

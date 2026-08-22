@@ -14,10 +14,10 @@ async function runTestSuite() {
     totalCount++;
     if (condition) {
       passedCount++;
-      console.log(`✅ [PASS] ${name}`);
+      console.log(`[PASS] [PASS] ${name}`);
       console.log(`   Details: ${details}\n`);
     } else {
-      console.error(`❌ [FAIL] ${name}`);
+      console.error(`[FAIL] [FAIL] ${name}`);
       console.error(`   Details: ${details}\n`);
     }
   }

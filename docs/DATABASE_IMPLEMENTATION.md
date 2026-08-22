@@ -40,23 +40,23 @@ The seed database script (`supabase/seed.sql`) contains **9,585 SQL statements**
 
 | Entity / Table | Seed Count | Requirement | Status | Key Characteristics |
 |---|---|---|---|---|
-| **Students** (`students`) | **520** | >= 500 | ✅ Exceeded | Realistic names, enrollments, blood groups, CGPAs (6.20 - 9.85), batch years (2022-2025) |
-| **Faculty** (`faculty`) | **55** | >= 50 | ✅ Exceeded | Professors, Deans, HODs with specializations across CSE, ECE, MECH, MGMT |
-| **Security & Admin Users** | **21** | >= 10 | ✅ Exceeded | Super Admin, Directors, Chief Security Officer, Wardens, Counselors, Doctors |
-| **Campus Locations** | **16** | >= 10 | ✅ Exceeded | Vector mapped with SVG (X,Y) coords + Lat/Lng, risk levels, and capacities |
-| **Safety Incidents** (`incidents`)| **110** | >= 100 | ✅ Exceeded | Fire, medical, harassment, cybercrime, theft; with Gemini AI classification JSON & confidence |
-| **Complaints** (`complaints`) | **55** | >= 50 | ✅ Exceeded | Hostel, mess, academics, maintenance tickets with status and resolution notes |
-| **Visitors & Passes** (`visitors`)| **35** / **35** | >= 30 | ✅ Exceeded | Masked Aadhaar/Passport, visit host, destination location, and gate badge codes |
-| **Attendance** (`attendance`) | **6,000** | Realistic Volume | ✅ Generated | Full daily matrices across courses, subjects, and dates (Present, Absent, Late) |
-| **Timetable Entries** (`timetable`) | **30** | Full Week | ✅ Generated | Complete Monday-Friday period schedules across lecture halls and faculty |
-| **Placement Drives & Apps** | **8** / **124** | Realistic Volume | ✅ Generated | Top tier firms (Google, Microsoft, CrowdStrike, AWS) with student applications |
-| **Notifications** (`notifications`)| **350** | Realistic Volume | ✅ Generated | User alerts across incident updates, SOS dispatches, and emergency alerts |
-| **Announcements** (`announcements`)| **25** | Realistic Volume | ✅ Generated | Pinned exams, hackathon alerts, security notices, and blood donation drives |
-| **SOS Alerts** (`sos_alerts`) | **15** | Realistic Volume | ✅ Generated | High urgency panic triggers with GPS coords, battery level, and response times |
-| **Emergency Broadcasts** | **4** | Realistic Volume | ✅ Generated | Evacuation, severe weather, and phishing security broadcasts |
-| **Wellbeing Checkins** | **80** | Realistic Volume | ✅ Generated | Student stress, sleep hours, mood, and counselor escalation flags |
-| **AI Predictive Insights** | **12** | Realistic Volume | ✅ Generated | Hotspot predictions, lab safety audit suggestions, and complaint trend analysis |
-| **Audit Logs** (`audit_logs`) | **150** | Realistic Volume | ✅ Generated | Mutation audit entries with IP addresses and user agents |
+| **Students** (`students`) | **520** | >= 500 | [PASS] Exceeded | Realistic names, enrollments, blood groups, CGPAs (6.20 - 9.85), batch years (2022-2025) |
+| **Faculty** (`faculty`) | **55** | >= 50 | [PASS] Exceeded | Professors, Deans, HODs with specializations across CSE, ECE, MECH, MGMT |
+| **Security & Admin Users** | **21** | >= 10 | [PASS] Exceeded | Super Admin, Directors, Chief Security Officer, Wardens, Counselors, Doctors |
+| **Campus Locations** | **16** | >= 10 | [PASS] Exceeded | Vector mapped with SVG (X,Y) coords + Lat/Lng, risk levels, and capacities |
+| **Safety Incidents** (`incidents`)| **110** | >= 100 | [PASS] Exceeded | Fire, medical, harassment, cybercrime, theft; with Gemini AI classification JSON & confidence |
+| **Complaints** (`complaints`) | **55** | >= 50 | [PASS] Exceeded | Hostel, mess, academics, maintenance tickets with status and resolution notes |
+| **Visitors & Passes** (`visitors`)| **35** / **35** | >= 30 | [PASS] Exceeded | Masked Aadhaar/Passport, visit host, destination location, and gate badge codes |
+| **Attendance** (`attendance`) | **6,000** | Realistic Volume | [PASS] Generated | Full daily matrices across courses, subjects, and dates (Present, Absent, Late) |
+| **Timetable Entries** (`timetable`) | **30** | Full Week | [PASS] Generated | Complete Monday-Friday period schedules across lecture halls and faculty |
+| **Placement Drives & Apps** | **8** / **124** | Realistic Volume | [PASS] Generated | Top tier firms (Google, Microsoft, CrowdStrike, AWS) with student applications |
+| **Notifications** (`notifications`)| **350** | Realistic Volume | [PASS] Generated | User alerts across incident updates, SOS dispatches, and emergency alerts |
+| **Announcements** (`announcements`)| **25** | Realistic Volume | [PASS] Generated | Pinned exams, hackathon alerts, security notices, and blood donation drives |
+| **SOS Alerts** (`sos_alerts`) | **15** | Realistic Volume | [PASS] Generated | High urgency panic triggers with GPS coords, battery level, and response times |
+| **Emergency Broadcasts** | **4** | Realistic Volume | [PASS] Generated | Evacuation, severe weather, and phishing security broadcasts |
+| **Wellbeing Checkins** | **80** | Realistic Volume | [PASS] Generated | Student stress, sleep hours, mood, and counselor escalation flags |
+| **AI Predictive Insights** | **12** | Realistic Volume | [PASS] Generated | Hotspot predictions, lab safety audit suggestions, and complaint trend analysis |
+| **Audit Logs** (`audit_logs`) | **150** | Realistic Volume | [PASS] Generated | Mutation audit entries with IP addresses and user agents |
 
 ---
 
@@ -210,14 +210,14 @@ ORDER BY high_severity_count DESC, total_incidents DESC;
 
 | Scenario | Tested Action | Expected Result | Policy Enforced |
 |---|---|---|---|
-| **Student viewing own grades** | `SELECT * FROM exam_results WHERE student_id = '...'` | ✅ Returned | `exam_results_view_policy` |
-| **Student attempting to view other student's grades** | `SELECT * FROM exam_results WHERE student_id = '<other_id>'` | 🚫 Blocked (0 rows) | `exam_results_view_policy` |
-| **Parent viewing linked child attendance** | `SELECT * FROM attendance WHERE student_id = '<linked_child>'` | ✅ Returned | `attendance_view_policy` |
-| **Parent viewing unlinked student attendance** | `SELECT * FROM attendance WHERE student_id = '<unlinked_child>'` | 🚫 Blocked (0 rows) | `is_parent_of_student()` check |
-| **Security officer viewing live incidents** | `SELECT * FROM incidents` | ✅ All 110 incidents returned | `is_admin_or_security()` |
-| **Student reporting an incident** | `INSERT INTO incidents (reporter_id, ...)` | ✅ Allowed when `reporter_id = auth.uid()` | `incidents_insert_policy` |
-| **Unauthorized user modifying an incident** | `UPDATE incidents SET status = 'resolved'` | 🚫 Blocked (0 rows affected) | `is_admin_or_security()` |
-| **Student querying audit logs** | `SELECT * FROM audit_logs` | 🚫 Blocked (0 rows) | `is_institution_admin()` |
+| **Student viewing own grades** | `SELECT * FROM exam_results WHERE student_id = '...'` | [PASS] Returned | `exam_results_view_policy` |
+| **Student attempting to view other student's grades** | `SELECT * FROM exam_results WHERE student_id = '<other_id>'` |  Blocked (0 rows) | `exam_results_view_policy` |
+| **Parent viewing linked child attendance** | `SELECT * FROM attendance WHERE student_id = '<linked_child>'` | [PASS] Returned | `attendance_view_policy` |
+| **Parent viewing unlinked student attendance** | `SELECT * FROM attendance WHERE student_id = '<unlinked_child>'` |  Blocked (0 rows) | `is_parent_of_student()` check |
+| **Security officer viewing live incidents** | `SELECT * FROM incidents` | [PASS] All 110 incidents returned | `is_admin_or_security()` |
+| **Student reporting an incident** | `INSERT INTO incidents (reporter_id, ...)` | [PASS] Allowed when `reporter_id = auth.uid()` | `incidents_insert_policy` |
+| **Unauthorized user modifying an incident** | `UPDATE incidents SET status = 'resolved'` |  Blocked (0 rows affected) | `is_admin_or_security()` |
+| **Student querying audit logs** | `SELECT * FROM audit_logs` |  Blocked (0 rows) | `is_institution_admin()` |
 | **Anonymous reporter protection** | Non-admin querying anonymous incident | `reporter_id` is protected via backend view masking | Role-aware presentation |
 
 ---
@@ -238,26 +238,26 @@ Found 6 migration files:
   - 006_row_level_security.sql (18.5 KB)
 
 --- Checking Table Definitions in Migrations ---
-  ✅ All 32 required tables are properly defined
+  [PASS] All 32 required tables are properly defined
 
 --- Checking Row Level Security (RLS) Enablement ---
-  ✅ 32/32 tables have Row Level Security enabled
+  [PASS] 32/32 tables have Row Level Security enabled
 
 --- Checking Performance Indexes ---
-  ✅ Found 68 explicit performance and lookup indexes
+  [PASS] Found 68 explicit performance and lookup indexes
 
 --- Checking Seed Data Volume & Requirements ---
-  ✅ Students count >= 500 (520)
-  ✅ Faculty count >= 50 (55)
-  ✅ Campus Locations >= 10 (16)
-  ✅ Incidents count >= 100 (110)
-  ✅ Complaints count >= 50 (55)
-  ✅ Visitors count >= 30 (35)
-  ✅ Attendance records present (6,000)
-  ✅ Timetable schedules present (30)
-  ✅ Placements present (8)
-  ✅ Notifications present (350)
-  ✅ Announcements present (25)
+  [PASS] Students count >= 500 (520)
+  [PASS] Faculty count >= 50 (55)
+  [PASS] Campus Locations >= 10 (16)
+  [PASS] Incidents count >= 100 (110)
+  [PASS] Complaints count >= 50 (55)
+  [PASS] Visitors count >= 30 (35)
+  [PASS] Attendance records present (6,000)
+  [PASS] Timetable schedules present (30)
+  [PASS] Placements present (8)
+  [PASS] Notifications present (350)
+  [PASS] Announcements present (25)
 
-🎯 ALL DATABASE SCHEMA & SEED REQUIREMENTS ARE 100% SATISFIED AND VERIFIED!
+[TARGET] ALL DATABASE SCHEMA & SEED REQUIREMENTS ARE 100% SATISFIED AND VERIFIED!
 ```

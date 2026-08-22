@@ -487,7 +487,7 @@ export function CampusMapInteractive({
             <p className="font-bold text-xs mt-1.5 text-[#202226]">{hoveredIncident.title}</p>
             <p className="text-[11px] text-[#555960] mt-0.5 line-clamp-2">{hoveredIncident.description}</p>
             <div className="mt-2 flex items-center justify-between text-[10px] text-[#555960] pt-1.5 border-t border-[#D0D1D6]">
-              <span>📍 {hoveredIncident.location_name}</span>
+              <span>{hoveredIncident.location_name}</span>
               <span className="text-[#B45309] font-bold">Click marker to inspect →</span>
             </div>
           </div>
@@ -505,7 +505,7 @@ export function CampusMapInteractive({
               )}
               {locationIncidentMap[hoveredLocation.id]?.length > 0 && (
                 <p className="text-red-600 font-semibold pt-0.5">
-                  🔴 {locationIncidentMap[hoveredLocation.id].length} Active Incident(s)
+                  [Active] {locationIncidentMap[hoveredLocation.id].length} Active Incident(s)
                 </p>
               )}
             </div>

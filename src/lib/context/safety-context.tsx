@@ -813,7 +813,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
 
       const notifSecurity: SystemNotification = {
         id: `notif-sec-${Date.now()}`,
-        title: `🚨 EMERGENCY SOS (${isPoliceLevel ? 'POLICE LEVEL 2' : 'CAMPUS LEVEL 1'}): ${callerName}`,
+        title: `EMERGENCY SOS (${isPoliceLevel ? 'POLICE LEVEL 2' : 'CAMPUS LEVEL 1'}): ${callerName}`, 
         message: `${categoryLabel} at ${locationName}. Response squad dispatched!`,
         type: 'emergency',
         read: false,
@@ -899,7 +899,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
 
     const notifAdmin: SystemNotification = {
       id: `notif-esc-${Date.now()}`,
-      title: `⚠️ INCIDENT ESCALATED TO ADMIN: ${targetInc?.incident_number || id}`,
+      title: `INCIDENT ESCALATED TO ADMIN: ${targetInc?.incident_number || id}`, 
       message: `No guard acknowledgement within 5 min at ${targetInc?.location_name || 'campus'}. Escalated to Police and Chancellor's office.`,
       type: 'emergency',
       read: false,

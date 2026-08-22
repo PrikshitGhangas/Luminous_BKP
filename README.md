@@ -1,8 +1,8 @@
 # Luminous — Comprehensive Technical Documentation
 
-> **Platform**: Luminous Campus Safety & Academic Governance Platform  
-> **Repository**: `PrikshitGhangas/Luminous_BKP`  
-> **Build Status**: ✅ Production-verified (Next.js 16.3.1, 0 errors, 48/48 static pages)
+> **Platform**: Luminous Campus Safety & Academic Governance Platform 
+> **Repository**: `PrikshitGhangas/Luminous_BKP` 
+> **Build Status**: Yes Production-verified (Next.js 16.3.1, 0 errors, 48/48 static pages)
 
 ---
 
@@ -111,13 +111,13 @@ Request → CSRF Check → Rate Limit → Auth Guard → Zod Validation → RBAC
 
 | Criterion | Next.js 16 (Chosen) | Create React App | Vite + React | Remix | Nuxt (Vue) |
 |:---|:---|:---|:---|:---|:---|
-| **SSR + SSG + ISR** | ✅ All three natively | ❌ CSR only | ❌ CSR only (SSR via plugins) | ✅ SSR only | ✅ All three |
-| **Edge Middleware** | ✅ Native `proxy.ts` | ❌ None | ❌ None | ⚠️ Limited | ⚠️ Limited |
-| **API Routes (Backend)** | ✅ Built-in Route Handlers | ❌ Separate backend required | ❌ Separate backend required | ✅ Loaders/Actions | ✅ Server routes |
-| **React 19 Support** | ✅ Day-one support | ❌ Deprecated | ⚠️ Community plugins | ⚠️ Partial | ❌ Vue ecosystem |
-| **Supabase SSR Integration** | ✅ `@supabase/ssr` designed for it | ❌ Manual cookie handling | ❌ Manual cookie handling | ⚠️ Requires adapters | ❌ Different ecosystem |
-| **Production Maturity** | ✅ Used by Vercel, Netflix, TikTok | ❌ Deprecated by React team | ⚠️ Growing ecosystem | ⚠️ Smaller ecosystem | ✅ Mature (Vue only) |
-| **Turbopack Build Speed** | ✅ 2.7s compile, 10.5s typecheck | ❌ Webpack (slow) | ✅ Fast (esbuild) | ⚠️ Moderate | ⚠️ Moderate |
+| **SSR + SSG + ISR** | Supported (Native) | No CSR only | No CSR only (SSR via plugins) | Yes SSR only | Supported |
+| **Edge Middleware** | Native `proxy.ts` | No None | No None | Partial Limited | Partial Limited |
+| **API Routes (Backend)** | Built-in Route Handlers | No Separate backend required | No Separate backend required | Yes Loaders/Actions | Yes Server routes |
+| **React 19 Support** | Supported (Day-one) | No Deprecated | Partial Community plugins | Partial Partial | No Vue ecosystem |
+| **Supabase SSR Integration** | Full Compatibility | No Manual cookie handling | No Manual cookie handling | Partial Requires adapters | No Different ecosystem |
+| **Production Maturity** | Enterprise Proven | No Deprecated by React team | Partial Growing ecosystem | Partial Smaller ecosystem | Yes Mature (Vue only) |
+| **Turbopack Build Speed** | 2.7s compile, 10.5s typecheck | No Webpack (slow) | Yes Fast (esbuild) | Partial Moderate | Partial Moderate |
 
 > **Verdict**: Next.js 16 is the only framework providing SSR + Edge Middleware + API Routes + React 19 + native Supabase SSR integration in a single unified architecture. CRA is deprecated, Vite lacks SSR/Edge middleware, Remix lacks the ecosystem breadth, and Nuxt requires an entirely different UI framework (Vue).
 
@@ -127,13 +127,13 @@ Request → CSRF Check → Rate Limit → Auth Guard → Zod Validation → RBAC
 
 | Criterion | Supabase (Chosen) | Firebase | AWS Amplify | Custom PostgreSQL |
 |:---|:---|:---|:---|:---|
-| **Database Engine** | ✅ PostgreSQL (SQL, joins, triggers) | ❌ Firestore (NoSQL, no joins) | ⚠️ DynamoDB (NoSQL) or Aurora | ✅ PostgreSQL |
-| **Row Level Security** | ✅ Native PostgreSQL RLS policies | ❌ Security Rules (different paradigm) | ⚠️ IAM policies (complex) | ✅ Manual implementation |
-| **Auth + JWT** | ✅ Built-in with `@supabase/ssr` | ✅ Firebase Auth | ✅ Cognito | ❌ Build from scratch |
-| **Realtime Subscriptions** | ✅ WebSocket channels | ✅ Firestore listeners | ⚠️ AppSync (GraphQL) | ❌ Build from scratch |
-| **Self-Hostable** | ✅ Open source, Docker-ready | ❌ Google Cloud only | ❌ AWS only | ✅ Full control |
-| **Cost at Scale** | ✅ Generous free tier, predictable pricing | ⚠️ Pay-per-read (unpredictable) | ⚠️ Complex pricing | ✅ Infrastructure cost only |
-| **SQL Compatibility** | ✅ Full SQL (complex queries, aggregations) | ❌ NoSQL only | ⚠️ Depends on service | ✅ Full SQL |
+| **Database Engine** | PostgreSQL (SQL, joins, triggers) | No Firestore (NoSQL, no joins) | Partial DynamoDB (NoSQL) or Aurora | Yes PostgreSQL |
+| **Row Level Security** | Native PostgreSQL RLS | No Security Rules (different paradigm) | Partial IAM policies (complex) | Yes Manual implementation |
+| **Auth + JWT** | Built-in with `@supabase/ssr` | Firebase Auth | AWS Cognito | No Build from scratch |
+| **Realtime Subscriptions** | WebSocket channels | Firestore listeners | Partial AppSync (GraphQL) | No Build from scratch |
+| **Self-Hostable** | Open source, Docker-ready | No Google Cloud only | No AWS only | Yes Full control |
+| **Cost at Scale** | Predictable Pricing | Partial Pay-per-read (unpredictable) | Partial Complex pricing | Yes Infrastructure cost only |
+| **SQL Compatibility** | Full SQL Support | No NoSQL only | Partial Depends on service | Full SQL Support |
 
 > **Verdict**: Supabase provides the relational power of PostgreSQL (essential for ERP joins across departments, students, courses, and incidents) with built-in Auth, RLS, and Realtime — all with first-class Next.js SSR cookie support via `@supabase/ssr`. Firebase's NoSQL model cannot efficiently handle the complex relational queries required by an academic ERP.
 
@@ -143,12 +143,12 @@ Request → CSRF Check → Rate Limit → Auth Guard → Zod Validation → RBAC
 
 | Criterion | Gemini 2.0/3.7 Flash (Chosen) | OpenAI GPT-4o | Anthropic Claude | No AI |
 |:---|:---|:---|:---|:---|
-| **Latency** | ✅ ~200ms (Flash models) | ⚠️ ~800ms-2s | ⚠️ ~500ms-1.5s | ✅ Instant |
-| **Cost per Token** | ✅ Extremely low (Flash tier) | ❌ 10-30x more expensive | ⚠️ 5-15x more expensive | ✅ Free |
-| **Incident Triage Accuracy** | ✅ 88-96% confidence with expert fallback | ✅ High accuracy | ✅ High accuracy | ❌ Manual classification only |
-| **Tool Calling** | ✅ Native function calling | ✅ Native function calling | ✅ Native tool use | ❌ N/A |
-| **Deterministic Fallback** | ✅ Built-in regex/keyword heuristic engine | ❌ Must build separately | ❌ Must build separately | ✅ All deterministic |
-| **Google Cloud Integration** | ✅ Same ecosystem as GCP/Firebase | ❌ Separate ecosystem | ❌ Separate ecosystem | ✅ No dependency |
+| **Latency** | ~200ms (Flash models) | Partial ~800ms-2s | Partial ~500ms-1.5s | Yes Instant |
+| **Cost per Token** | Ultra-low cost (Flash tier) | No 10-30x more expensive | Partial 5-15x more expensive | Yes Free |
+| **Incident Triage Accuracy** | 88-96% confidence with expert fallback | High accuracy | High accuracy | No Manual classification only |
+| **Tool Calling** | Native function calling | Native function calling | Native tool use | No N/A |
+| **Deterministic Fallback** | Built-in Heuristic Engine | No Must build separately | No Must build separately | Deterministic |
+| **Google Cloud Integration** | GCP Native | No Separate ecosystem | No Separate ecosystem | Yes No dependency |
 
 > **Verdict**: Gemini Flash provides sub-200ms AI triage at a fraction of GPT-4's cost — critical for real-time emergency incident classification where every second matters. The platform also includes a **deterministic expert rules fallback** that activates if the AI is unavailable, ensuring zero downtime in safety-critical scenarios.
 
@@ -158,11 +158,11 @@ Request → CSRF Check → Rate Limit → Auth Guard → Zod Validation → RBAC
 
 | Criterion | Tailwind CSS v4 (Chosen) | Bootstrap 5 | Material UI (MUI) | Styled Components |
 |:---|:---|:---|:---|:---|
-| **Bundle Size** | ✅ ~10KB (purged) | ❌ ~160KB | ❌ ~300KB+ | ⚠️ Runtime overhead |
-| **Design Customization** | ✅ Full design system via CSS tokens | ⚠️ Override-heavy | ⚠️ Theme overrides | ✅ Full control |
-| **Enterprise Gold Theme** | ✅ Native CSS custom properties | ❌ Blue/Bootstrap look | ❌ Material Design look | ✅ Possible but verbose |
-| **Performance** | ✅ Zero runtime JS | ❌ jQuery dependency | ❌ Runtime CSS-in-JS | ❌ Runtime CSS-in-JS |
-| **Responsive Design** | ✅ Mobile-first utilities | ✅ Grid system | ✅ Responsive | ⚠️ Manual media queries |
+| **Bundle Size** | ~10KB (purged) | No ~160KB | No ~300KB+ | Partial Runtime overhead |
+| **Design Customization** | Full Design System via CSS tokens | Partial Override-heavy | Partial Theme overrides | Yes Full control |
+| **Enterprise Gold Theme** | Native CSS custom properties | No Blue/Bootstrap look | No Material Design look | Yes Possible but verbose |
+| **Performance** | Zero runtime overhead | No jQuery dependency | No Runtime CSS-in-JS | No Runtime CSS-in-JS |
+| **Responsive Design** | Mobile-first utilities | Yes Grid system | Yes Responsive | Partial Manual media queries |
 
 > **Verdict**: Tailwind CSS v4 delivers the smallest bundle size, zero runtime overhead, and complete design freedom to implement Luminous's distinctive gold-and-silver enterprise aesthetic — impossible with Bootstrap's opinionated blue theme or MUI's Material Design constraints.
 
@@ -182,12 +182,12 @@ Luminous implements defense-in-depth across 7 distinct security layers:
 
 ```mermaid
 flowchart TD
-    A["🌐 Layer 1: Edge Security Headers"] --> B["🛡️ Layer 2: CSRF & Origin Verification"]
-    B --> C["⏱️ Layer 3: Sliding-Window Rate Limiting"]
-    C --> D["🔐 Layer 4: Session Authentication"]
-    D --> E["👤 Layer 5: Role-Based Access Control"]
-    E --> F["✅ Layer 6: Zod Input Validation"]
-    F --> G["🔒 Layer 7: Cryptographic ID Generation"]
+ A[" Layer 1: Edge Security Headers"] --> B[" Layer 2: CSRF & Origin Verification"]
+ B --> C[" Layer 3: Sliding-Window Rate Limiting"]
+ C --> D[" Layer 4: Session Authentication"]
+ D --> E[" Layer 5: Role-Based Access Control"]
+ E --> F["Yes Layer 6: Zod Input Validation"]
+ F --> G[" Layer 7: Cryptographic ID Generation"]
 ```
 
 #### Layer 1: Edge Security Headers (`src/proxy.ts`)
@@ -273,14 +273,14 @@ The SOS system is a **two-tier emergency distress beacon** accessible to every a
 
 ```mermaid
 flowchart LR
-    A["👆 3 Rapid Taps"] --> B["🟡 Level 1: Campus SOS"]
-    B --> C["⏱️ 5-Min SLA Timer Starts"]
-    C --> D{"Resolved in 5 min?"}
-    D -- No --> E["🔴 Auto-Escalate to Level 2"]
-    D -- Yes --> F["✅ Incident Closed"]
-    
-    G["👆 5 Rapid Taps / Hold"] --> E
-    E --> H["🚨 Multi-Squad + Police Dispatch"]
+ A["3 Rapid Taps"] --> B["[Warning] Level 1: Campus SOS"]
+ B --> C[" 5-Min SLA Timer Starts"]
+ C --> D{"Resolved in 5 min?"}
+ D -- No --> E["[Critical] Auto-Escalate to Level 2"]
+ D -- Yes --> F["Yes Incident Closed"]
+ 
+ G["5 Rapid Taps / Hold"] --> E
+ E --> H[" Multi-Squad + Police Dispatch"]
 ```
 
 | Feature | Level 1 (Campus SOS) | Level 2 (Police SOS) |
@@ -366,42 +366,42 @@ Luminous is a **unified Enterprise Resource Planning (ERP) platform** that conso
 
 ```mermaid
 flowchart TD
-    subgraph Academic["📚 Academic Governance"]
-        DEP["Departments"]
-        CRS["Courses & Curriculum"]
-        FAC["Faculty Management"]
-        STU["Student Records"]
-        ATT["Attendance Tracking"]
-        EXM["Examinations & Grades"]
-        TT["Timetable Scheduling"]
-    end
-    
-    subgraph Campus["🏛️ Campus Operations"]
-        HST["Hostel Management"]
-        CMP["Complaint Redressal"]
-        ANN["Announcements"]
-        PLC["Placement Services"]
-        WLB["Wellbeing & Counseling"]
-    end
-    
-    subgraph Safety["🛡️ Safety & Security"]
-        INC["Incident Management"]
-        SOS["SOS Emergency Beacon"]
-        CMD["Security Command Center"]
-        MAP["Interactive Campus Map"]
-        RSK["Risk Intelligence Engine"]
-        AUD["Audit Trail & Compliance"]
-    end
-    
-    subgraph AI["🤖 AI Intelligence Layer"]
-        COP["CampusShield AI Copilot"]
-        TRG["AI Incident Triage"]
-        CLF["AI Complaint Classification"]
-    end
-    
-    Academic --> AI
-    Campus --> AI
-    Safety --> AI
+ subgraph Academic[" Academic Governance"]
+ DEP["Departments"]
+ CRS["Courses & Curriculum"]
+ FAC["Faculty Management"]
+ STU["Student Records"]
+ ATT["Attendance Tracking"]
+ EXM["Examinations & Grades"]
+ TT["Timetable Scheduling"]
+ end
+ 
+ subgraph Campus[" Campus Operations"]
+ HST["Hostel Management"]
+ CMP["Complaint Redressal"]
+ ANN["Announcements"]
+ PLC["Placement Services"]
+ WLB["Wellbeing & Counseling"]
+ end
+ 
+ subgraph Safety[" Safety & Security"]
+ INC["Incident Management"]
+ SOS["SOS Emergency Beacon"]
+ CMD["Security Command Center"]
+ MAP["Interactive Campus Map"]
+ RSK["Risk Intelligence Engine"]
+ AUD["Audit Trail & Compliance"]
+ end
+ 
+ subgraph AI[" AI Intelligence Layer"]
+ COP["CampusShield AI Copilot"]
+ TRG["AI Incident Triage"]
+ CLF["AI Complaint Classification"]
+ end
+ 
+ Academic --> AI
+ Campus --> AI
+ Safety --> AI
 ```
 
 ### 4.2 Module Breakdown — 21 Integrated Modules

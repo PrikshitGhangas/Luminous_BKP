@@ -888,4 +888,4 @@ sql.push(`SET session_replication_role = 'origin';\n`);
 
 const outputPath = path.join(__dirname, '..', 'supabase', 'seed.sql');
 fs.writeFileSync(outputPath, sql.join('\n'), 'utf8');
-console.log(`✅ Successfully generated seed.sql at: ${outputPath} (${sql.length} SQL statements)`);
+console.log(`[PASS] Successfully generated seed.sql at: ${outputPath} (${sql.length} SQL statements)`);
