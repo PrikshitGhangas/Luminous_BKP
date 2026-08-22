@@ -21,12 +21,27 @@ import {
 } from 'lucide-react';
 
 export default function FacultyDashboardPage() {
-  const { user, roleMeta } = useRole();
+  const { user, role, roleMeta } = useRole();
   const { students } = useAcademic();
   const { incidents } = useSafety();
 
   const [studentDrawer, setStudentDrawer] = useState(false);
   const [scheduleDrawer, setScheduleDrawer] = useState(false);
+
+  const isAuthorized = role === 'faculty' || role === 'super_admin' || role === 'admin';
+  if (!isAuthorized) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 bg-[#F7F8F6] border border-[#D6D8D5] rounded-xl space-y-3">
+        <div className="h-10 w-10 rounded-full bg-[#F0F1EF] border border-[#D6D8D5] flex items-center justify-center text-[#1F2933]">
+          <GraduationCap className="h-5 w-5" />
+        </div>
+        <h2 className="text-base font-bold text-[#1F2933]">Faculty Clearance Required</h2>
+        <p className="text-xs text-[#667085] max-w-sm">
+          This portal is reserved for academic instructors, professors, and authorized administrators.
+        </p>
+      </div>
+    );
+  }
 
   const myStudents = students.slice(0, 6);
   const avgAttendance = students.length

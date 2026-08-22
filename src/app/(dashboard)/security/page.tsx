@@ -51,6 +51,8 @@ const SECTORS_STATUS = [
   { name: 'Sports Arena & Quads', code: 'SEC-E', status: 'Optimal', cameras: 18, guard: 'Station Post 3', alertCount: 0 },
 ];
 
+import { useRole } from '@/lib/hooks/use-role';
+
 export default function SecurityDashboardPage() {
   const {
     incidents,
@@ -65,7 +67,22 @@ export default function SecurityDashboardPage() {
     simulateIncomingIncident,
   } = useSafety();
 
-  const { user } = useAuth();
+  const { user, role, isSuperAdmin, isAdmin } = useRole();
+
+  const isAuthorized = isSuperAdmin || isAdmin || role === 'security';
+  if (!isAuthorized) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 bg-[#F7F8F6] border border-[#D6D8D5] rounded-xl space-y-3">
+        <div className="h-10 w-10 rounded-full bg-[#F0F1EF] border border-[#D6D8D5] flex items-center justify-center text-[#1F2933]">
+          <ShieldCheck className="h-5 w-5" />
+        </div>
+        <h2 className="text-base font-bold text-[#1F2933]">Security Operations Clearance Required</h2>
+        <p className="text-xs text-[#667085] max-w-sm">
+          This operations desk is restricted to campus security dispatchers, patrol squads, and system administrators.
+        </p>
+      </div>
+    );
+  }
 
   // Navigation & Filtering
   const [activeTab, setActiveTab] = useState<

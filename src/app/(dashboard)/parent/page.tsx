@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useAcademic } from '@/lib/context/academic-context';
 import { useCampusServices } from '@/lib/context/campus-services-context';
-import { useAuth } from '@/lib/hooks/use-auth';
+import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { StatCard } from '@/components/shared/stat-card';
-import { StudentSearchSelector } from '@/components/shared/student-search-selector';
 import {
   Users,
   ShieldCheck,
@@ -14,31 +13,49 @@ import {
   CalendarCheck,
   Building2,
   Phone,
-  Search,
+  UserCheck,
 } from 'lucide-react';
 
 export default function ParentPage() {
   const { students } = useAcademic();
   const { hostelRooms } = useCampusServices();
-  const { user, role } = useAuth();
+  const { user, role } = useRole();
 
-  const isStaff = role === 'super_admin' || role === 'admin' || role === 'faculty';
-  const [selectedStudentId, setSelectedStudentId] = useState(students[0]?.id || 'std-001');
+  // Strict role check: ONLY Parents are authorized to access Parent Portal
+  if (role !== 'parent') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 bg-[#F7F8F6] border border-[#D6D8D5] rounded-xl space-y-3">
+        <div className="h-10 w-10 rounded-full bg-[#F0F1EF] border border-[#D6D8D5] flex items-center justify-center text-[#1F2933]">
+          <UserCheck className="h-5 w-5" />
+        </div>
+        <h2 className="text-base font-bold text-[#1F2933]">Parent &amp; Guardian Access Only</h2>
+        <p className="text-xs text-[#667085] max-w-sm">
+          This portal is reserved exclusively for registered parents and legal guardians. Administrators should inspect student records via the Student Directory or Student Dashboard.
+        </p>
+      </div>
+    );
+  }
 
-  // If staff, let them inspect any student; if parent, scope to their ward
-  const currentStudent = students.find((s) => s.id === selectedStudentId) || students[0] || {
-    id: 'std-001',
-    name: 'Aanya Patel',
-    rollNumber: 'CS23B042',
-    department: 'Computer Science & Engineering',
-    semester: 6,
-    section: 'A',
-    cgpa: 9.28,
-    attendancePercentage: 96.2,
-    guardianName: 'Rajesh Patel',
-    guardianPhone: '+91 98454 15882',
-    guardianEmail: 'rajesh.patel@gmail.com',
-  };
+  // Resolve student ward linked to parent
+  const currentStudent =
+    students.find(
+      (s) =>
+        (user?.full_name && s.guardianName.toLowerCase().includes(user.full_name.toLowerCase())) ||
+        (user?.email && s.guardianEmail?.toLowerCase() === user.email.toLowerCase())
+    ) ||
+    students[0] || {
+      id: 'std-001',
+      name: 'Aanya Patel',
+      rollNumber: 'CS23B042',
+      department: 'Computer Science & Engineering',
+      semester: 6,
+      section: 'A',
+      cgpa: 9.28,
+      attendancePercentage: 96.2,
+      guardianName: 'Rajesh Patel',
+      guardianPhone: '+91 98454 15882',
+      guardianEmail: 'rajesh.patel@gmail.com',
+    };
 
   const wardHostelRoom = hostelRooms.find((r) =>
     r.occupants.some((o) => o.rollNumber === currentStudent.rollNumber)
@@ -49,27 +66,14 @@ export default function ParentPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933]">
-            {isStaff ? 'Parent & Guardian Portal' : 'Parent Portal'}
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <UserCheck className="h-6 w-6 text-[#1F2933]" />
+            <span>Parent &amp; Guardian Portal</span>
           </h1>
           <p className="text-xs text-[#667085] mt-0.5">
-            {isStaff
-              ? 'Administrator view: Search and inspect student ward records & guardian contacts.'
-              : `Viewing attendance, academic progress, and campus residency for ${currentStudent.name}.`}
+            Observing attendance, academic milestones, and campus residency for {currentStudent.name}.
           </p>
         </div>
-
-        {/* If Admin/Staff: Dynamic Student Search Selector */}
-        {isStaff && students.length > 0 && (
-          <div className="w-full sm:w-72">
-            <StudentSearchSelector
-              students={students}
-              selectedStudentId={selectedStudentId}
-              onSelectStudent={setSelectedStudentId}
-              placeholder="Search student by name or roll no..."
-            />
-          </div>
-        )}
       </div>
 
       {/* Student & Guardian Summary Card */}
