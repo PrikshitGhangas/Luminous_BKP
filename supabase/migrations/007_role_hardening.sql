@@ -49,11 +49,20 @@ DECLARE
     _role VARCHAR(50) := 'student';
     _requested_role VARCHAR(50);
     _allowlisted VARCHAR(50);
+    _dept_name TEXT;
+    _dept_id UUID := NULL;
 BEGIN
-    -- 1. Check the manual authorization allowlist first.
-    SELECT role INTO _allowlisted
-    FROM public.authorized_super_admins
-    WHERE email = NEW.email;
+    -- Ensure fallback 'student' role exists in public.roles to guarantee foreign key integrity
+    INSERT INTO public.roles (name, display_name, description, hierarchy_level, permissions)
+    VALUES ('student', 'Enrolled Student', 'Campus member, incident reporter, SOS user & learner', 100, '["student"]'::jsonb)
+    ON CONFLICT (name) DO NOTHING;
+
+    -- 1. Check the manual authorization allowlist first if table exists.
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'authorized_super_admins') THEN
+        SELECT role INTO _allowlisted
+        FROM public.authorized_super_admins
+        WHERE email = NEW.email;
+    END IF;
 
     IF _allowlisted IS NOT NULL THEN
         _role := _allowlisted;
@@ -74,22 +83,32 @@ BEGIN
         END IF;
     END IF;
 
+    _dept_name := NEW.raw_user_meta_data->>'department';
+    IF _dept_name IS NOT NULL AND _dept_name <> '' THEN
+        SELECT id INTO _dept_id FROM public.departments WHERE code = _dept_name OR name ILIKE _dept_name LIMIT 1;
+    END IF;
+
     INSERT INTO public.profiles (
-        id, email, full_name, role, is_active, created_at, updated_at
+        id, email, full_name, role, department_id, is_active, created_at, updated_at
     )
     VALUES (
         NEW.id,
         NEW.email,
         COALESCE(NEW.raw_user_meta_data->>'full_name', split_part(NEW.email, '@', 1)),
         _role,
+        _dept_id,
         true,
         clock_timestamp(),
         clock_timestamp()
     )
     ON CONFLICT (id) DO UPDATE
         SET email = EXCLUDED.email,
+            full_name = COALESCE(EXCLUDED.full_name, profiles.full_name),
             updated_at = clock_timestamp();
 
+    RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+    RAISE WARNING 'handle_new_user failed for %: %', NEW.email, SQLERRM;
     RETURN NEW;
 END;
 $$;

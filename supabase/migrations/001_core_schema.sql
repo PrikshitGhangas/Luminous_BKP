@@ -176,6 +176,23 @@ CREATE TABLE IF NOT EXISTS roles (
     created_at TIMESTAMPTZ NOT NULL DEFAULT clock_timestamp()
 );
 
+-- Seed core roles immediately so foreign key on profiles is satisfied
+INSERT INTO roles (name, display_name, description, hierarchy_level, permissions)
+VALUES
+    ('super_admin',       'Super Administrator',       'Full institutional & security control', 1,   '["admin"]'::jsonb),
+    ('admin',             'Institution Administrator', 'Campus operations and resource management', 10, '["admin"]'::jsonb),
+    ('security',          'Campus Security Officer',   'Live safety command, incident response & patrol', 20, '["security"]'::jsonb),
+    ('warden',            'Hostel Warden',             'Hostel discipline, resident safety and room allocation', 30, '["warden"]'::jsonb),
+    ('counselor',         'Counselor',                 'Student wellbeing and mental-health support', 35, '["counselor"]'::jsonb),
+    ('medical_staff',     'Medical Staff',             'On-campus medical and emergency care', 35, '["medical"]'::jsonb),
+    ('faculty',           'Faculty Member / Professor','Academic teaching, attendance and grade evaluations', 40, '["faculty"]'::jsonb),
+    ('placement_officer', 'Placement Officer',         'Career drives, internship and recruitment operations', 50, '["placement"]'::jsonb),
+    ('receptionist',      'Receptionist',              'Front desk, visitor registration and campus access', 60, '["reception"]'::jsonb),
+    ('parent',            'Parent / Guardian',         'Student safety, attendance and grade observation', 110, '["parent"]'::jsonb),
+    ('student',           'Enrolled Student',          'Campus member, incident reporter, SOS user & learner', 100, '["student"]'::jsonb),
+    ('other',             'Other Member',              'General campus user', 120, '["student"]'::jsonb)
+ON CONFLICT (name) DO NOTHING;
+
 -- 4. Departments Table
 CREATE TABLE IF NOT EXISTS departments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
