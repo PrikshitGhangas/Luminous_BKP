@@ -143,7 +143,7 @@ export default function AttendancePage() {
             </span>
           </div>
           <p className="text-xs text-[#667085]">
-            Active Schedule: <strong>CS301 (Cloud Computing)</strong> • Block D, Room 201 • Coordinates: 12.9724°N, 77.5952°E
+            Active Schedule: <strong>CS301 (Cloud Computing)</strong> • AB1, Lecture Hall 201 • Coordinates: 12.9724°N, 77.5952°E
           </p>
         </div>
 

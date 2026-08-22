@@ -28,7 +28,7 @@ export default function SafetySosPage() {
 
   const [isSosActive, setIsSosActive] = useState(false);
   const [activeSosIncident, setActiveSosIncident] = useState<Incident | null>(null);
-  const [locationName, setLocationName] = useState('Academic Quadrangle Corridor (GPS Verified ±2m)');
+  const [locationName, setLocationName] = useState('AB4 (Central Commons), Level 2 (GPS ±2m)');
   const [coordinates, setCoordinates] = useState({ lat: 12.9716, lng: 77.5946 });
 
   // Hold state for Police SOS
@@ -56,8 +56,8 @@ export default function SafetySosPage() {
   // Simulated GPS fetch
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLocationName('Academic Block D, 2nd Floor Corridor (GPS ±3m)');
-      setCoordinates({ lat: 12.9724, lng: 77.5952 });
+      setLocationName('AB4 (Central Commons), Level 2 Corridor (GPS ±3m)');
+      setCoordinates({ lat: 12.9716, lng: 77.5946 });
     }, 500);
     return () => clearTimeout(timer);
   }, []);
@@ -203,7 +203,7 @@ Student: ${studentName} (CSE-3A)
 Distress Level: LEVEL 1 (CAMPUS EMERGENCY)
 Location: ${locationName}
 GPS Link: https://maps.google.com/?q=${coordinates.lat},${coordinates.lng}
-Indoor Timetable Fallback: Block D, Room 201 (Chem Lab)
+Indoor Timetable Fallback: AB4 (Central Commons), Room 204 (Reference Wing)
 Medical: Blood Group B+, Asthmatic (Inhaler)
 Guardian: Rajesh Patel (+91 98454 15882)`;
 
