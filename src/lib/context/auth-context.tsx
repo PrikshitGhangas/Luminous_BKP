@@ -35,6 +35,7 @@ interface AuthContextType {
   signInWithProvider: (provider: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: string | null }>;
+  updatePassword: (newPassword: string) => Promise<{ error: string | null }>;
   launchDemo: (role: UserRole) => void;
   switchRole: (role: UserRole) => void;
   logout: () => Promise<void>;
@@ -172,10 +173,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             },
           },
         });
-        if (error) return { error: friendlyAuthMessage(error.message), needsEmailVerification: false };
+        if (error) {
+          // Log the raw message so the real cause is visible (UI shows a safe message).
+          console.error('[Luminous Auth] signUp error:', error.message, error.code, error.status);
+          return { error: friendlyAuthMessage(error.message), needsEmailVerification: false };
+        }
         const needsEmailVerification = !data.session; // Session null => email confirmation required.
         return { error: null, needsEmailVerification };
-      } catch {
+      } catch (e) {
+        console.error('[Luminous Auth] signUp exception:', e);
         return { error: 'Unable to create account. Please try again.', needsEmailVerification: false };
       }
     },
@@ -232,11 +238,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const client = await getBrowserClient();
       if (!client) return { error: 'Authentication is not configured.' };
-      const { error } = await client.auth.resetPasswordForEmail(email);
+      // redirectTo must match a configured app URL so Supabase can embed a working
+      // reset link into the recovery email (otherwise the email has no link).
+      const redirectTo = typeof window !== 'undefined'
+        ? `${window.location.origin}/reset-password`
+        : undefined;
+      const { error } = await client.auth.resetPasswordForEmail(email, {
+        redirectTo,
+      });
       if (error) return { error: friendlyAuthMessage(error.message) };
       return { error: null };
     } catch {
       return { error: 'Unable to send reset link. Please try again.' };
+    }
+  }, []);
+
+  /** Set a new password after following a password-recovery link. */
+  const updatePassword = useCallback(async (newPassword: string) => {
+    try {
+      const client = await getBrowserClient();
+      if (!client) return { error: 'Authentication is not configured.' };
+      const { error } = await client.auth.updateUser({ password: newPassword });
+      if (error) return { error: friendlyAuthMessage(error.message) };
+      return { error: null };
+    } catch {
+      return { error: 'Unable to update password. Please try again.' };
     }
   }, []);
 
@@ -305,6 +331,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signInWithProvider,
         signOut,
         resetPassword,
+        updatePassword,
         launchDemo,
         switchRole,
         logout,
@@ -333,6 +360,16 @@ function friendlyAuthMessage(message: string): string {
   }
   if (lower.includes('rate limit')) {
     return 'Too many attempts. Please wait a moment and try again.';
+  }
+  // Email-sending failure — the account may be created but the confirmation email
+  // could not be sent (SMTP/email provider misconfigured in the Supabase project).
+  if (lower.includes('error sending confirmation email') || lower.includes('sending confirmation') || lower.includes('unexpected_failure')) {
+    return 'Account created, but the confirmation email could not be sent. Check the email/SMTP settings in your Supabase project, or disable email confirmation for testing.';
+  }
+  // Trigger/database failures during account provisioning (e.g. profile row). The
+  // exact cause is logged to the browser console.
+  if (lower.includes('database error saving new user') || lower.includes('db error') || lower.includes('row-level security') || lower.includes('relation') || lower.includes('does not exist')) {
+    return 'Account could not be created (database setup issue). Check that the migrations were applied. See the browser console for details.';
   }
   return 'There was a problem with your request. Please try again.';
 }

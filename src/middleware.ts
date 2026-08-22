@@ -37,7 +37,7 @@ function isDemoSession(request: NextRequest): boolean {
 }
 
 function isPublic(pathname: string): boolean {
-  if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot-password') {
+  if (pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/forgot-password' || pathname === '/reset-password') {
     return true;
   }
   // OAuth callback must be reachable without an existing session to complete the code exchange.
