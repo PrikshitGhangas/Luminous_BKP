@@ -2,9 +2,13 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/lib/context/auth-context';
 import { SafetyProvider } from '@/lib/context/safety-context';
+import { RouteTitleSync } from '@/components/layout/route-title-sync';
 
 export const metadata: Metadata = {
-  title: 'CampusShield AI / Luminous — Intelligent Campus ERP & Safety Command Center',
+  title: {
+    default: 'Luminous AI',
+    template: '%s | Luminous AI',
+  },
   description:
     'Next-generation institutional AI-powered smart college ERP, safety command center, incident triage, and student safety platform.',
   icons: {
@@ -27,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body className="h-full min-h-screen bg-[#F1F2F0] text-[#1F2933] font-sans antialiased selection:bg-[#EAB308] selection:text-[#111827]">
+        <RouteTitleSync />
         <AuthProvider>
           <SafetyProvider>{children}</SafetyProvider>
         </AuthProvider>
