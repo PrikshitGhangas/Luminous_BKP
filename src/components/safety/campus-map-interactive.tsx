@@ -77,20 +77,39 @@ export function CampusMapInteractive({
     });
   }, [incidents, severityFilter, timeFilter]);
 
+  // Helper function for deterministic building matching
+  const normalizeBuildingMatch = (locId?: string, locName?: string) => {
+    if (!locId && !locName) return null;
+    // 1. Direct exact ID match
+    const byId = CAMPUS_LOCATIONS.find((l) => l.id === locId);
+    if (byId) return byId;
+
+    // 2. Strict normalized name match
+    const name = (locName || '').toLowerCase().trim();
+    if (name.includes('block f') || name.includes('blk-f')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-block-f');
+    if (name.includes('block c') || name.includes('blk-c') || name.includes('hostel c')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-block-c');
+    if (name.includes('block b') || name.includes('blk-b') || name.includes('hostel b')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-block-b');
+    if (name.includes('ab3 (north)') || name.includes('ab3 north') || name.includes('ab-3n')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-ab3-north');
+    if (name.includes('ab4') || name.includes('central commons') || name.includes('library') || name.includes('cafeteria')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-ab4');
+    if (name.includes('ab3 (south)') || name.includes('ab3 south') || name.includes('ab-3s')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-ab3-south');
+    if (name.includes('ab1') || name.includes('main block') || name.includes('ab-1')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-ab1');
+    if (name.includes('cricket') || name.includes('sports') || name.includes('spt-cg')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-cricket');
+    if (name.includes('pond') || name.includes('park') || name.includes('env-pnd')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-pond');
+    if (name.includes('admin') || name.includes('chancellor') || name.includes('adm-01') || name.includes('parking')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-admin');
+    if (name.includes('block d') || name.includes('engineering') || name.includes('blk-d')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-block-d');
+    if (name.includes('block e') || name.includes('auditorium') || name.includes('blk-e')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-block-e');
+    if (name.includes('medical') || name.includes('health') || name.includes('clinic') || name.includes('med-01')) return CAMPUS_LOCATIONS.find((l) => l.id === 'loc-med');
+
+    return null;
+  };
+
   // Map incidents to locations
   const locationIncidentMap = useMemo(() => {
     const map: Record<string, Incident[]> = {};
     CAMPUS_LOCATIONS.forEach((loc) => {
       map[loc.id] = filteredIncidents.filter((inc) => {
-        const incLoc = (inc.location_name || '').toLowerCase();
-        const locName = loc.name.toLowerCase();
-        const locCode = (loc.code || '').toLowerCase();
-        return (
-          inc.location_id === loc.id ||
-          incLoc.includes(locName) ||
-          locName.includes(incLoc) ||
-          (locCode && incLoc.includes(locCode))
-        );
+        const matched = normalizeBuildingMatch(inc.location_id, inc.location_name);
+        return matched?.id === loc.id;
       });
     });
     return map;
@@ -384,18 +403,14 @@ export function CampusMapInteractive({
             {/* DYNAMIC INCIDENT BEACONS & MARKERS */}
             {activeLayers.incidents &&
               filteredIncidents.map((incident) => {
-                // Find matching location
-                const matchedLocation = CAMPUS_LOCATIONS.find((l) =>
-                  incident.location_id === l.id ||
-                  incident.location_name?.toLowerCase().includes(l.name.toLowerCase()) ||
-                  l.name.toLowerCase().includes(incident.location_name?.toLowerCase() || '') ||
-                  (l.code && incident.location_name?.toLowerCase().includes(l.code.toLowerCase()))
-                );
+                // Find matching location using deterministic normalizer
+                const matchedLocation = normalizeBuildingMatch(incident.location_id, incident.location_name);
+                if (!matchedLocation) return null;
 
                 // Offset slightly from center so it sits beside building label
-                const baseX = matchedLocation ? (matchedLocation.coordinates.x / 100) * 1024 : 512;
-                const baseY = matchedLocation ? (matchedLocation.coordinates.y / 100) * 819 : 410;
-                const pinX = baseX + (matchedLocation ? (matchedLocation.name.length * 4.2 + 16) : 0);
+                const baseX = (matchedLocation.coordinates.x / 100) * 1024;
+                const baseY = (matchedLocation.coordinates.y / 100) * 819;
+                const pinX = baseX + (matchedLocation.name.length * 4.2 + 16);
                 const pinY = baseY;
 
                 const isSelected = selectedIncident?.id === incident.id;
