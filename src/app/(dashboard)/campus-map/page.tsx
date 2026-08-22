@@ -320,6 +320,48 @@ export default function CampusMapPage() {
                   />
                 </g>
 
+                {/* Animated Security Patrol Routes & Breadcrumbs */}
+                <g id="campus-security-patrol-routes" opacity="0.85">
+                  {/* Route Alpha: Central Commons -> AB1 -> Block D */}
+                  <path
+                    d="M 570 438 L 658 678 L 622 782"
+                    fill="none"
+                    stroke="#3F8F68"
+                    strokeWidth="2.5"
+                    strokeDasharray="6 4"
+                    className="animate-pulse"
+                  />
+                  {/* Route Bravo: Residence Quarters -> Medical Center */}
+                  <path
+                    d="M 454 154 L 570 154 L 551 260"
+                    fill="none"
+                    stroke="#2563EB"
+                    strokeWidth="2.5"
+                    strokeDasharray="6 4"
+                    className="animate-pulse"
+                  />
+
+                  {/* Officer Vikram Sharma Marker (Central Area) */}
+                  <g transform="translate(614, 558)">
+                    <circle r="12" fill="#3F8F68" opacity="0.2" className="animate-ping" />
+                    <circle r="7" fill="#3F8F68" stroke="#FFFFFF" strokeWidth="2" />
+                    <rect x="10" y="-10" width="88" height="18" rx="4" fill="#1F2933" />
+                    <text x="54" y="2.5" fill="#FFFFFF" fontSize="7.5" fontWeight="700" textAnchor="middle">
+                      🛡️ Officer Vikram (Patrol)
+                    </text>
+                  </g>
+
+                  {/* Officer Ramesh Ramos Marker (North Post) */}
+                  <g transform="translate(510, 207)">
+                    <circle r="12" fill="#2563EB" opacity="0.2" className="animate-ping" />
+                    <circle r="7" fill="#2563EB" stroke="#FFFFFF" strokeWidth="2" />
+                    <rect x="10" y="-10" width="88" height="18" rx="4" fill="#1F2933" />
+                    <text x="54" y="2.5" fill="#FFFFFF" fontSize="7.5" fontWeight="700" textAnchor="middle">
+                      🛡️ Officer Ramos (North)
+                    </text>
+                  </g>
+                </g>
+
                 {/* Interactive Facility Markers & Labels */}
                 {CAMPUS_LOCATIONS.map((bldg) => {
                   const visual = BUILDING_VISUALS[bldg.id] || {

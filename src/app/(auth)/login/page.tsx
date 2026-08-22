@@ -28,12 +28,12 @@ function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const demoRoles: (keyof typeof ROLE_DETAILS)[] = [
+    'super_admin',
+    'warden',
     'student',
     'faculty',
-    'admin',
     'security',
     'parent',
-    'super_admin',
   ];
 
   const handleQuickDemo = (role: keyof typeof ROLE_DETAILS) => {

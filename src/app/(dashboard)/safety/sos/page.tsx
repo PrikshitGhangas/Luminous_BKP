@@ -53,14 +53,33 @@ export default function SafetySosPage() {
   const [fakeCallTimer, setFakeCallTimer] = useState(0);
   const [isCallAnswered, setIsCallAnswered] = useState(false);
 
-  // Simulated GPS fetch
+  // Simulated GPS fetch with Local Storage caching
   useEffect(() => {
+    try {
+      const cachedLoc = localStorage.getItem('luminous_last_known_location');
+      if (cachedLoc) {
+        setLocationName(cachedLoc);
+      }
+    } catch {}
+
     const timer = setTimeout(() => {
-      setLocationName('AB4 (Central Commons), Level 2 Corridor (GPS ±3m)');
+      const liveLoc = 'AB4 (Central Commons), Level 2 Corridor (GPS ±3m)';
+      setLocationName(liveLoc);
       setCoordinates({ lat: 12.9716, lng: 77.5946 });
+      try {
+        localStorage.setItem('luminous_last_known_location', liveLoc);
+        localStorage.setItem('luminous_sos_cached_packet', JSON.stringify({
+          student: user?.full_name || 'Aanya Patel',
+          location: liveLoc,
+          lat: 12.9716,
+          lng: 77.5946,
+          timetableFallback: 'AB4 (Central Commons), Room 204',
+          medical: 'Blood Group B+, Asthmatic',
+        }));
+      } catch {}
     }, 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [user]);
 
   // Fake call timer
   useEffect(() => {

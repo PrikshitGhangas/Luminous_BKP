@@ -22,6 +22,7 @@ import {
   UserCheck,
   Shield,
   Zap,
+  Building2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -64,7 +65,7 @@ const FEATURES = [
 
 const ROLE_ICONS: Record<string, React.ElementType> = {
   super_admin: Crown,
-  admin: Landmark,
+  warden: Building2,
   security: ShieldCheck,
   faculty: GraduationCap,
   student: BookOpen,
@@ -88,10 +89,10 @@ export default function LandingPage() {
     router.refresh();
   };
 
-  // 6 Core Roles (Hostel Warden and Placement Officer removed)
+  // 6 Core Roles (Including Hostel Warden)
   const demoRoles: UserRole[] = [
     'super_admin',
-    'admin',
+    'warden',
     'security',
     'faculty',
     'student',

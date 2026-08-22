@@ -296,8 +296,9 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
 
     setIncidents((prev) => [newInc, ...prev]);
 
+    const notifId = `notif-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     const notif: SystemNotification = {
-      id: `notif-${Date.now()}`,
+      id: notifId,
       title: `New Incident: ${newInc.incident_number}`,
       message: `${input.severity.toUpperCase()} — ${newInc.title} (${newInc.location_name})`,
       type: isCritical ? 'emergency' : 'incident',
@@ -305,7 +306,10 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       created_at: now,
       link: '/security',
     };
-    setNotifications((prev) => [notif, ...prev]);
+    setNotifications((prev) => {
+      const existing = prev.filter((p) => p.id !== notifId);
+      return [notif, ...existing];
+    });
 
     const audit: AuditLogEntry = {
       id: `audit-${Date.now()}`,
@@ -667,8 +671,9 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       };
       setAuditLogs((prev) => [audit, ...prev]);
 
+      const notifId = `notif-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
       const notif: SystemNotification = {
-        id: `notif-${Date.now()}`,
+        id: notifId,
         title: `CRITICAL ALERT: ${title}`,
         message: `${scope.toUpperCase()} — ${message}`,
         type: 'emergency',
@@ -676,7 +681,10 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         created_at: now,
         link: '/safety/emergency',
       };
-      setNotifications((prev) => [notif, ...prev]);
+      setNotifications((prev) => {
+        const existing = prev.filter((p) => p.id !== notifId);
+        return [notif, ...existing];
+      });
 
       if (severity === 'critical') {
         setThreatLevelState('HIGH_ALERT');
@@ -811,8 +819,9 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       setAlerts((prev) => [emergencyAlert, ...prev]);
       setThreatLevelState('HIGH_ALERT');
 
+      const secNotifId = `notif-sec-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
       const notifSecurity: SystemNotification = {
-        id: `notif-sec-${Date.now()}`,
+        id: secNotifId,
         title: `EMERGENCY SOS (${isPoliceLevel ? 'POLICE LEVEL 2' : 'CAMPUS LEVEL 1'}): ${callerName}`, 
         message: `${categoryLabel} at ${locationName}. Response squad dispatched!`,
         type: 'emergency',
@@ -821,8 +830,9 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         link: '/security',
       };
 
+      const admNotifId = `notif-adm-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
       const notifAdmin: SystemNotification = {
-        id: `notif-adm-${Date.now()}`,
+        id: admNotifId,
         title: `EMERGENCY SOS LOGGED: ${newInc.incident_number}`,
         message: `Critical alert triggered by ${callerName} at ${locationName}. Security dispatched.`,
         type: 'emergency',
@@ -831,7 +841,10 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         link: '/safety/command-center',
       };
 
-      setNotifications((prev) => [notifSecurity, notifAdmin, ...prev]);
+      setNotifications((prev) => {
+        const existing = prev.filter((p) => p.id !== secNotifId && p.id !== admNotifId);
+        return [notifSecurity, notifAdmin, ...existing];
+      });
 
       const audit: AuditLogEntry = {
         id: `audit-sos-${Date.now()}`,
@@ -897,8 +910,9 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
     };
     setAuditLogs((prev) => [audit, ...prev]);
 
+    const notifId = `notif-esc-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     const notifAdmin: SystemNotification = {
-      id: `notif-esc-${Date.now()}`,
+      id: notifId,
       title: `INCIDENT ESCALATED TO ADMIN: ${targetInc?.incident_number || id}`, 
       message: `No guard acknowledgement within 5 min at ${targetInc?.location_name || 'campus'}. Escalated to Police and Chancellor's office.`,
       type: 'emergency',
@@ -906,7 +920,10 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       created_at: now,
       link: '/safety/command-center',
     };
-    setNotifications((prev) => [notifAdmin, ...prev]);
+    setNotifications((prev) => {
+      const existing = prev.filter((p) => p.id !== notifId);
+      return [notifAdmin, ...existing];
+    });
   }, [incidents]);
 
   // Periodic SLA Auto-Escalation check (checks every 5 seconds)

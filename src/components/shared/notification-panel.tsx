@@ -60,9 +60,9 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
           {notifications.length === 0 ? (
             <div className="p-6 text-center text-sm text-[#8A9199]">No notifications</div>
           ) : (
-            notifications.map((n) => (
+            notifications.map((n, idx) => (
               <div
-                key={n.id}
+                key={`${n.id}-${idx}`}
                 onClick={() => markAsRead(n.id)}
                 className={`p-3.5 transition-colors hover:bg-[#F7F8F6] cursor-pointer ${
                   !n.read ? 'bg-[#EAB308]/10' : ''

@@ -162,10 +162,10 @@ export default function HackathonDemoPage() {
 
   // 3. Switch to Admin & Execute Directive (Step 5)
   const handleAdminAction = () => {
-    switchRole('admin');
+    switchRole('super_admin');
     applyInsightAction('insight-1');
     setActiveStep(5);
-    showToast('Switched to Campus Admin persona — Block D Electrical SOP Directive Executed');
+    showToast('Switched to Administrator persona — Block D Electrical SOP Directive Executed');
   };
 
   // Run Full Automated Demo Flow
@@ -184,7 +184,7 @@ export default function HackathonDemoPage() {
       setActiveStep(4);
     }, 2400);
     setTimeout(() => {
-      switchRole('admin');
+      switchRole('super_admin');
       setActiveStep(5);
       applyInsightAction('insight-1');
       showToast('Full 5-Step System Flow Executed Successfully');
@@ -651,25 +651,25 @@ export default function HackathonDemoPage() {
                 icon: 'SEC',
               },
               {
+                roleKey: 'super_admin' as UserRole,
+                name: DEMO_USERS.super_admin.full_name,
+                email: DEMO_USERS.super_admin.email,
+                desc: 'Administrator',
+                icon: 'ADM',
+              },
+              {
+                roleKey: 'warden' as UserRole,
+                name: DEMO_USERS.warden.full_name,
+                email: DEMO_USERS.warden.email,
+                desc: 'Hostel Warden (Block B & C)',
+                icon: 'WRD',
+              },
+              {
                 roleKey: 'faculty' as UserRole,
                 name: DEMO_USERS.faculty.full_name,
                 email: DEMO_USERS.faculty.email,
                 desc: 'Faculty Professor',
                 icon: 'FAC',
-              },
-              {
-                roleKey: 'admin' as UserRole,
-                name: DEMO_USERS.admin.full_name,
-                email: DEMO_USERS.admin.email,
-                desc: 'Campus Safety Admin',
-                icon: 'ADM',
-              },
-              {
-                roleKey: 'super_admin' as UserRole,
-                name: DEMO_USERS.super_admin.full_name,
-                email: DEMO_USERS.super_admin.email,
-                desc: 'Super Administrator',
-                icon: 'DIR',
               },
               {
                 roleKey: 'parent' as UserRole,

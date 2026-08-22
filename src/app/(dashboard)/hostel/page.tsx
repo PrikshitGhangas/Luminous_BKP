@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useCampusServices } from '@/lib/context/campus-services-context';
+import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,10 +23,13 @@ import {
   MapPin,
   Clock,
   LogOut,
+  ShieldCheck,
+  Sparkles,
 } from 'lucide-react';
 import { HostelRoom } from '@/lib/types';
 
 export default function HostelPage() {
+  const { role, user } = useRole();
   const {
     hostelBuildings,
     hostelRooms,
@@ -240,6 +244,60 @@ export default function HostelPage() {
           </Button>
         </div>
       </div>
+
+      {/* Role-Specific Contextual Banner */}
+      {role === 'warden' && (
+        <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-[#EAB308]/40 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white border border-[#EAB308]/40 text-[#8a6d1a]">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-[#1F2933]">Hostel Warden On-Duty Desk</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#EAB308]/20 text-[#8a6d1a] border border-[#EAB308]/30">
+                  {user?.full_name || 'Dr. Rajeshwari Devi'}
+                </span>
+              </div>
+              <p className="text-[#667085] mt-0.5">
+                Assigned Jurisdiction: <strong>Block B & Block C Towers</strong> • Curfew Cutoff: <strong>10:30 PM</strong> • Pending Outings: <strong>{outings.filter(o => o.status === 'Pending').length} requests</strong>
+              </p>
+            </div>
+          </div>
+
+          <Button
+            size="sm"
+            onClick={() => setActiveTab('outings')}
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold rounded-lg shrink-0 cursor-pointer"
+          >
+            Review Pending Gate Passes
+          </Button>
+        </div>
+      )}
+
+      {role === 'student' && (
+        <div className="p-4 rounded-2xl bg-white border border-[#D6D8D5] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#F0F1EF] border border-[#D6D8D5] text-[#1F2933]">
+              <Bed className="h-5 w-5" />
+            </div>
+            <div>
+              <span className="font-bold text-[#1F2933]">Resident Allocation: Block B (East Tower) • Room 304 (Bed A)</span>
+              <p className="text-[#667085] mt-0.5">
+                Hostel Warden: <strong>Dr. Rajeshwari Devi</strong> • Wi-Fi 6 Connected • Biometric Pass Valid
+              </p>
+            </div>
+          </div>
+
+          <Button
+            size="sm"
+            onClick={() => setIsOutingModalOpen(true)}
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold rounded-lg shrink-0 cursor-pointer"
+          >
+            Request Outing Pass
+          </Button>
+        </div>
+      )}
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

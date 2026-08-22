@@ -280,9 +280,15 @@ export default function WellbeingPage() {
               ))}
 
               {isTyping && (
-                <div className="flex items-center gap-1.5 text-xs text-[#667085] bg-[#F0F1EF] px-3 py-2 rounded-xl w-fit">
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#1F2933]" />
-                  <span>Assessing and generating empathetic guidance...</span>
+                <div className="space-y-2 max-w-[80%]">
+                  <div className="flex items-center gap-2 text-[11px] text-[#8a6d1a] bg-[#FAF9F5] border border-[#EAB308]/30 px-3 py-1.5 rounded-lg w-fit">
+                    <Loader2 className="h-3 w-3 animate-spin text-[#8a6d1a]" />
+                    <span className="font-semibold">Gemini Clinical Engine analyzing emotional telemetry...</span>
+                  </div>
+                  <div className="bg-[#F0F1EF] p-3 rounded-2xl rounded-bl-xs border border-[#D6D8D5] space-y-2 animate-pulse">
+                    <div className="h-3 bg-gray-300 rounded w-3/4" />
+                    <div className="h-3 bg-gray-300 rounded w-1/2" />
+                  </div>
                 </div>
               )}
             </div>
