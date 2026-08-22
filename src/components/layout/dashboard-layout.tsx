@@ -19,7 +19,7 @@ import { CampusShieldCopilot } from '@/components/copilot/campus-shield-copilot'
 import { DemoModeBanner } from '@/components/shared/demo-mode-banner';
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { isLoading, isDemoMode } = useAuth();
+  const { user, isLoading, isDemoMode } = useAuth();
   const { role, roleMeta, canAccess } = useRole();
   const pathname = usePathname();
   const router = useRouter();
@@ -31,9 +31,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  // Demo mode is a client-only persona and should never be gated by the
-  // real Supabase session loading state.
-  if (isLoading && !isDemoMode) {
+  if (isLoading) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-[#F1F2F0]">
         <LoadingSpinner text="Authenticating Luminous AI..." />
@@ -93,11 +91,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       <span>RBAC RESTRICTION • HTTP 403 FORBIDDEN</span>
                     </div>
                     <h2 className="text-2xl font-bold text-[#1F2933]">
-                      CLEARANCE LEVEL INSUFFICIENT
+                      {!user ? 'AUTHENTICATION REQUIRED' : 'CLEARANCE LEVEL INSUFFICIENT'}
                     </h2>
                     <p className="text-xs sm:text-sm text-[#667085] max-w-md mx-auto">
-                      Your active persona ({roleMeta?.name || role}) does not have security authorization to access{' '}
-                      <code className="text-[#8a6d1a] bg-[#F7F8F6] px-1.5 py-0.5 rounded">{pathname}</code>.
+                      {!user ? (
+                        <>You must sign in or select a demo persona to access <code className="text-[#8a6d1a] bg-[#F7F8F6] px-1.5 py-0.5 rounded">{pathname}</code>.</>
+                      ) : (
+                        <>Your active persona ({roleMeta?.name || role}) does not have security authorization to access <code className="text-[#8a6d1a] bg-[#F7F8F6] px-1.5 py-0.5 rounded">{pathname}</code>.</>
+                      )}
                     </p>
                   </div>
 
@@ -124,7 +125,20 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       <span>Go Back</span>
                     </Button>
 
-                    {role === 'security' ? (
+                    {!user ? (
+                      <>
+                        <Button asChild size="sm" className="gap-1.5">
+                          <Link href={`/login?next=${encodeURIComponent(pathname)}`}>
+                            <span>Sign In</span>
+                          </Link>
+                        </Button>
+                        <Button asChild variant="outline" size="sm" className="gap-1.5">
+                          <Link href="/">
+                            <span>Launch Demo</span>
+                          </Link>
+                        </Button>
+                      </>
+                    ) : role === 'security' ? (
                       <Button asChild size="sm" className="gap-1.5">
                         <Link href="/security">
                           <Radio className="h-3.5 w-3.5" />

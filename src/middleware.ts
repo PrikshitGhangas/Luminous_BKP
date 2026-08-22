@@ -154,7 +154,7 @@ export async function middleware(request: NextRequest) {
     return applySecurityHeaders(NextResponse.redirect(url));
   }
 
-  // Resolve role from the profiles table (server-side; never trusted from client).
+  // Resolve role from the profiles table (server-side; fallback to user metadata).
   let role: UserRole = 'other';
   if (user) {
     const { data } = await supabase
@@ -164,6 +164,13 @@ export async function middleware(request: NextRequest) {
       .maybeSingle();
     if (data && ALLOWED_ROLES.includes(data.role as UserRole)) {
       role = data.role as UserRole;
+    } else if (user.user_metadata?.role && ALLOWED_ROLES.includes(user.user_metadata.role as UserRole)) {
+      role = user.user_metadata.role as UserRole;
+    } else {
+      const rawRoleCookie = request.cookies.get('luminous_role')?.value;
+      if (rawRoleCookie && ALLOWED_ROLES.includes(rawRoleCookie as UserRole)) {
+        role = rawRoleCookie as UserRole;
+      }
     }
   }
 

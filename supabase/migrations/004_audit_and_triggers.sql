@@ -234,17 +234,33 @@ EXECUTE FUNCTION log_incident_timeline_event();
 
 -- 7. Supabase Auth Signup Trigger: Auto-create Profile
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 DECLARE
     default_role VARCHAR(50);
     user_full_name TEXT;
+    dept_name TEXT;
+    dept_id UUID := NULL;
 BEGIN
+    -- Ensure fallback 'student' role exists in public.roles so foreign key never fails
+    INSERT INTO public.roles (name, display_name, description, hierarchy_level, permissions)
+    VALUES ('student', 'Enrolled Student', 'Campus member, incident reporter, SOS user & learner', 100, '["student"]'::jsonb)
+    ON CONFLICT (name) DO NOTHING;
+
     default_role := COALESCE(NEW.raw_user_meta_data->>'role', 'student');
     user_full_name := COALESCE(NEW.raw_user_meta_data->>'full_name', split_part(NEW.email, '@', 1));
+    dept_name := NEW.raw_user_meta_data->>'department';
 
     -- Verify role exists in roles table, fallback to 'student'
-    IF NOT EXISTS (SELECT 1 FROM roles WHERE name = default_role) THEN
+    IF NOT EXISTS (SELECT 1 FROM public.roles WHERE name = default_role) THEN
         default_role := 'student';
+    END IF;
+
+    IF dept_name IS NOT NULL AND dept_name <> '' THEN
+        SELECT id INTO dept_id FROM public.departments WHERE code = dept_name OR name ILIKE dept_name LIMIT 1;
     END IF;
 
     INSERT INTO public.profiles (
@@ -252,6 +268,7 @@ BEGIN
         email,
         full_name,
         role,
+        department_id,
         avatar_url,
         is_active,
         metadata
@@ -260,6 +277,7 @@ BEGIN
         NEW.email,
         user_full_name,
         default_role,
+        dept_id,
         NEW.raw_user_meta_data->>'avatar_url',
         true,
         COALESCE(NEW.raw_user_meta_data, '{}'::jsonb)
@@ -272,8 +290,11 @@ BEGIN
         updated_at = clock_timestamp();
 
     RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+    RAISE WARNING 'handle_new_user failed for %: %', NEW.email, SQLERRM;
+    RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 -- Attach trigger to auth.users if auth schema exists
 DO $$ BEGIN

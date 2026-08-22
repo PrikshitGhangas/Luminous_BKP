@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/context/auth-context';
+import { ROLE_DETAILS } from '@/lib/constants/roles';
+import { UserRole } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -26,9 +28,10 @@ const REGISTRATION_ROLES = [
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { signUp } = useAuth();
+  const { signUp, user, isLoading } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [department, setDepartment] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState<string>('student');
@@ -36,6 +39,12 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [needsVerification, setNeedsVerification] = useState(false);
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      router.replace(ROLE_DETAILS[user.role]?.defaultPath || '/student');
+    }
+  }, [user, isLoading, router]);
 
   const validate = (): string | null => {
     if (!fullName.trim()) return 'Please enter your full name.';
@@ -55,11 +64,12 @@ export default function RegisterPage() {
     }
     setIsSubmitting(true);
     try {
-      const { error, needsEmailVerification } = await signUp({
+      const { error, needsEmailVerification, defaultPath } = await signUp({
         email,
         password,
         fullName,
         role: role as 'student' | 'faculty' | 'other',
+        department,
       });
       if (error) {
         setErrorMessage(error);
@@ -69,7 +79,8 @@ export default function RegisterPage() {
         setNeedsVerification(true);
         return;
       }
-      router.push('/');
+      const target = defaultPath || ROLE_DETAILS[role as UserRole]?.defaultPath || '/student';
+      router.push(target);
       router.refresh();
     } catch {
       setErrorMessage('Unable to create account. Please try again.');
@@ -182,7 +193,13 @@ export default function RegisterPage() {
             <label className="text-xs font-semibold text-[#1F2933]" htmlFor="department">
               Department (optional)
             </label>
-            <Input id="department" type="text" placeholder="e.g. Engineering" />
+            <Input
+              id="department"
+              type="text"
+              placeholder="e.g. Engineering"
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+            />
           </div>
         </div>
 

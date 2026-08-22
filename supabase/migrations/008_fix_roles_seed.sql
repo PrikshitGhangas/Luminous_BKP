@@ -18,7 +18,8 @@ FROM (VALUES
     (gen_random_uuid(), 'placement_officer','Placement Officer',    'Career drives, internship and recruitment operations', 50, '["placement"]'::jsonb),
     (gen_random_uuid(), 'receptionist', 'Receptionist',             'Front desk, visitor registration and campus access', 60, '["reception"]'::jsonb),
     (gen_random_uuid(), 'parent',       'Parent / Guardian',        'Student safety, attendance and grade observation', 110, '["parent"]'::jsonb),
-    (gen_random_uuid(), 'student',      'Enrolled Student',         'Campus member, incident reporter, SOS user & learner', 100, '["student"]'::jsonb)
+    (gen_random_uuid(), 'student',      'Enrolled Student',         'Campus member, incident reporter, SOS user & learner', 100, '["student"]'::jsonb),
+    (gen_random_uuid(), 'other',        'Other Member',             'General campus user', 120, '["student"]'::jsonb)
 ) AS seed(id, name, display_name, description, hierarchy_level, permissions)
 WHERE NOT EXISTS (SELECT 1 FROM roles r WHERE r.name = seed.name)
 ON CONFLICT (name) DO NOTHING;

@@ -108,12 +108,14 @@ export default function LandingPage() {
                 <span className="hidden md:inline-flex px-2.5 py-1 rounded text-[10px] font-bold text-[#8a6d1a] bg-[#EAB308]/15 border border-[#EAB308]/30">
                   {roleMeta?.label}
                 </span>
-                <Link
-                  href={roleMeta?.defaultPath || '/'}
-                  className="text-xs font-semibold text-[#667085] hover:text-[#1F2933] px-3 py-2 transition-colors"
+                <Button
+                  size="sm"
+                  onClick={() => router.push(roleMeta?.defaultPath || '/student')}
+                  className="gap-1.5"
                 >
-                  Dashboard
-                </Link>
+                  <span>Go to Dashboard</span>
+                  <ArrowRight className="h-3.5 w-3.5 text-[#111827]" />
+                </Button>
                 <Button variant="outline" size="sm" onClick={handleLogout} className="gap-1.5">
                   <span>Sign Out</span>
                 </Button>

@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { UserRole, Profile } from '../types';
 import { DEMO_USERS } from '../constants/demo-data';
+import { ROLE_DETAILS } from '../constants/roles';
 
 export type AuthSource = 'supabase' | 'demo' | null;
 
@@ -21,6 +22,7 @@ export interface SignUpInput {
   password: string;
   fullName: string;
   role: UserRole;
+  department?: string;
 }
 
 interface AuthContextType {
@@ -30,8 +32,8 @@ interface AuthContextType {
   isLoading: boolean;
   isDemoMode: boolean;
   source: AuthSource;
-  signUp: (input: SignUpInput) => Promise<{ error: string | null; needsEmailVerification: boolean }>;
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
+  signUp: (input: SignUpInput) => Promise<{ error: string | null; needsEmailVerification: boolean; defaultPath?: string }>;
+  signIn: (email: string, password: string) => Promise<{ error: string | null; defaultPath?: string; role?: UserRole }>;
   signInWithProvider: (provider: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: string | null }>;
@@ -92,25 +94,87 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (p) setUser(mapProfileToUser(p));
   }, []);
 
-  // Initialize from Supabase session on mount.
+  // Initialize from Supabase session or demo cookie on mount.
   useEffect(() => {
     let disposed = false;
     (async () => {
       try {
         const client = await getBrowserClient();
-        if (!client || disposed) {
-          setIsLoading(false);
-          return;
+        let session = null;
+        if (client) {
+          try {
+            const { data } = await client.auth.getSession();
+            session = data?.session;
+          } catch (err) {
+            console.warn('[Luminous Auth] getSession error:', err);
+          }
         }
-        const {
-          data: { session },
-        } = await client.auth.getSession();
 
-        if (session?.user) {
+        if (session?.user && !disposed) {
           const p = await loadProfile(session.user.id);
           if (!disposed) {
             setSource('supabase');
-            applyProfile(p);
+            if (p) {
+              applyProfile(p);
+            } else {
+              const role = (session.user.user_metadata?.role as UserRole) || 'student';
+              setUser({
+                id: session.user.id,
+                email: session.user.email || '',
+                full_name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+                role,
+                avatar_url: session.user.user_metadata?.avatar_url,
+                is_active: true,
+              });
+              if (typeof document !== 'undefined') {
+                document.cookie = `luminous_role=${role}; path=/; max-age=86400; SameSite=Lax`;
+                document.cookie = `luminous_demo=; path=/; max-age=0`;
+              }
+            }
+          }
+        } else if (!disposed) {
+          // Check if a demo persona was active
+          let isDemo = false;
+          let demoRole: UserRole | null = null;
+
+          if (typeof document !== 'undefined') {
+            const cookies = Object.fromEntries(
+              document.cookie
+                .split('; ')
+                .filter(Boolean)
+                .map((c) => {
+                  const [k, ...v] = c.split('=');
+                  return [k, v.join('=')];
+                })
+            );
+            if (cookies['luminous_demo'] === '1' && cookies['luminous_role']) {
+              isDemo = true;
+              demoRole = cookies['luminous_role'] as UserRole;
+            }
+          }
+
+          if (!isDemo && typeof window !== 'undefined') {
+            try {
+              if (localStorage.getItem('luminous_demo') === '1') {
+                isDemo = true;
+                const storedRole = localStorage.getItem('luminous_role') as UserRole;
+                if (storedRole) demoRole = storedRole;
+              }
+            } catch {}
+          }
+
+          if (isDemo && demoRole && DEMO_USERS[demoRole]) {
+            const demo = DEMO_USERS[demoRole];
+            setSource('demo');
+            setProfile(null);
+            setUser({
+              id: demo.id,
+              email: demo.email,
+              full_name: demo.full_name,
+              role: demo.role,
+              avatar_url: demo.avatar_url,
+              is_active: demo.is_active !== false,
+            });
           }
         }
       } catch {
@@ -143,7 +207,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const p = await loadProfile(session.user.id);
           if (!disposed) {
             setSource('supabase');
-            applyProfile(p);
+            if (p) {
+              applyProfile(p);
+            } else {
+              const role = (session.user.user_metadata?.role as UserRole) || 'student';
+              setUser({
+                id: session.user.id,
+                email: session.user.email || '',
+                full_name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+                role,
+                avatar_url: session.user.user_metadata?.avatar_url,
+                is_active: true,
+              });
+            }
           }
         }
       });
@@ -159,7 +235,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signUp = useCallback(
-    async ({ email, password, fullName, role }: SignUpInput) => {
+    async ({ email, password, fullName, role, department }: SignUpInput) => {
       try {
         const client = await getBrowserClient();
         if (!client) return { error: 'Authentication is not configured.', needsEmailVerification: false };
@@ -170,6 +246,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             data: {
               full_name: fullName,
               role,
+              department: department?.trim() || undefined,
             },
           },
         });
@@ -179,26 +256,109 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return { error: friendlyAuthMessage(error.message), needsEmailVerification: false };
         }
         const needsEmailVerification = !data.session; // Session null => email confirmation required.
-        return { error: null, needsEmailVerification };
+        if (data.session?.user) {
+          const p = await loadProfile(data.session.user.id);
+          setSource('supabase');
+          if (p) {
+            applyProfile(p);
+          } else {
+            setUser({
+              id: data.session.user.id,
+              email: data.session.user.email || '',
+              full_name: fullName || 'User',
+              role,
+              department: department?.trim() || undefined,
+              is_active: true,
+            });
+          }
+          if (typeof document !== 'undefined') {
+            document.cookie = `luminous_role=${role}; path=/; max-age=86400; SameSite=Lax`;
+            document.cookie = `luminous_demo=; path=/; max-age=0`;
+          }
+        }
+        const defaultPath = ROLE_DETAILS[role]?.defaultPath || '/student';
+        return { error: null, needsEmailVerification, defaultPath };
       } catch (e) {
         console.error('[Luminous Auth] signUp exception:', e);
         return { error: 'Unable to create account. Please try again.', needsEmailVerification: false };
       }
     },
-    []
+    [loadProfile, applyProfile]
   );
 
   const signIn = useCallback(async (email: string, password: string) => {
+    const trimmedEmail = email.trim().toLowerCase();
+    const demoEntry = Object.entries(DEMO_USERS).find(
+      ([_, u]) => u.email.toLowerCase() === trimmedEmail
+    );
+
     try {
       const client = await getBrowserClient();
-      if (!client) return { error: 'Authentication is not configured.' };
-      const { error } = await client.auth.signInWithPassword({ email, password });
-      if (error) return { error: friendlyAuthMessage(error.message) };
-      return { error: null };
+      if (client) {
+        const { data, error } = await client.auth.signInWithPassword({ email: trimmedEmail, password });
+        if (!error && data?.user) {
+          let targetPath = '/student';
+          let userRole: UserRole = 'student';
+          const p = await loadProfile(data.user.id);
+          setSource('supabase');
+          if (p) {
+            applyProfile(p);
+            if (p?.role && p.role in ROLE_DETAILS) {
+              userRole = p.role as UserRole;
+              targetPath = ROLE_DETAILS[userRole]?.defaultPath || '/student';
+            }
+          } else {
+            userRole = (data.user.user_metadata?.role as UserRole) || 'student';
+            setUser({
+              id: data.user.id,
+              email: data.user.email || '',
+              full_name: data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'User',
+              role: userRole,
+              avatar_url: data.user.user_metadata?.avatar_url,
+              is_active: true,
+            });
+            targetPath = ROLE_DETAILS[userRole]?.defaultPath || '/student';
+          }
+          if (typeof document !== 'undefined') {
+            document.cookie = `luminous_role=${userRole}; path=/; max-age=86400; SameSite=Lax`;
+            document.cookie = `luminous_demo=; path=/; max-age=0`;
+          }
+          if (typeof window !== 'undefined') {
+            try {
+              localStorage.removeItem('luminous_demo');
+              localStorage.setItem('luminous_role', userRole);
+            } catch {}
+          }
+          return { error: null, defaultPath: targetPath, role: userRole };
+        }
+
+        // If Supabase authentication returned an error but user is testing a demo persona email, fall back smoothly
+        if (demoEntry) {
+          const role = demoEntry[0] as UserRole;
+          launchDemo(role);
+          const targetPath = ROLE_DETAILS[role]?.defaultPath || '/student';
+          return { error: null, defaultPath: targetPath, role };
+        }
+
+        if (error) return { error: friendlyAuthMessage(error.message) };
+      } else if (demoEntry) {
+        const role = demoEntry[0] as UserRole;
+        launchDemo(role);
+        const targetPath = ROLE_DETAILS[role]?.defaultPath || '/student';
+        return { error: null, defaultPath: targetPath, role };
+      }
+
+      return { error: 'Unable to sign in. Please check your email and password.' };
     } catch {
+      if (demoEntry) {
+        const role = demoEntry[0] as UserRole;
+        launchDemo(role);
+        const targetPath = ROLE_DETAILS[role]?.defaultPath || '/student';
+        return { error: null, defaultPath: targetPath, role };
+      }
       return { error: 'Unable to sign in. Please check your email and password.' };
     }
-  }, []);
+  }, [loadProfile, applyProfile]);
 
   /** Initiate an OAuth/social sign-in via Supabase Auth. */
   const signInWithProvider = useCallback(async (provider: string) => {
@@ -231,6 +391,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (typeof document !== 'undefined') {
       document.cookie = 'luminous_demo=; path=/; max-age=0';
       document.cookie = 'luminous_role=; path=/; max-age=0';
+    }
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('luminous_demo');
+        localStorage.removeItem('luminous_role');
+      } catch {}
     }
   }, []);
 
@@ -282,8 +448,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
     // Allow the middleware to recognize this as demo mode (client-only persona).
     if (typeof document !== 'undefined') {
-      document.cookie = `luminous_demo=1; path=/; max-age=3600; SameSite=Lax`;
-      document.cookie = `luminous_role=${demo.role}; path=/; max-age=3600; SameSite=Lax`;
+      document.cookie = `luminous_demo=1; path=/; max-age=86400; SameSite=Lax`;
+      document.cookie = `luminous_role=${demo.role}; path=/; max-age=86400; SameSite=Lax`;
+    }
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('luminous_demo', '1');
+        localStorage.setItem('luminous_role', demo.role);
+      } catch {}
     }
   }, []);
 
@@ -307,9 +479,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } = await client.auth.getSession();
       if (session?.user) {
         const p = await loadProfile(session.user.id);
+        setSource('supabase');
         if (p) {
-          setSource('supabase');
           applyProfile(p);
+        } else {
+          const role = (session.user.user_metadata?.role as UserRole) || 'student';
+          setUser({
+            id: session.user.id,
+            email: session.user.email || '',
+            full_name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'User',
+            role,
+            avatar_url: session.user.user_metadata?.avatar_url,
+            is_active: true,
+          });
         }
       }
     } catch {

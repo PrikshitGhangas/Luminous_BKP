@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { Suspense, useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/context/auth-context';
+import { ROLE_DETAILS } from '@/lib/constants/roles';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowRight, Eye, EyeOff, Loader2, Sparkles } from 'lucide-react';
@@ -14,15 +15,46 @@ const OAUTH_PROVIDERS = [
   { id: 'azure', label: 'Microsoft' },
 ] as const;
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
-  const { signIn, signInWithProvider } = useAuth();
+  const searchParams = useSearchParams();
+  const nextParam = searchParams.get('next');
+  const { signIn, signInWithProvider, launchDemo, user, isLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [oauthProvider, setOauthProvider] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const demoRoles: (keyof typeof ROLE_DETAILS)[] = [
+    'student',
+    'faculty',
+    'admin',
+    'security',
+    'parent',
+    'warden',
+    'placement_officer',
+    'super_admin',
+  ];
+
+  const handleQuickDemo = (role: keyof typeof ROLE_DETAILS) => {
+    launchDemo(role);
+    const target = nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')
+      ? nextParam
+      : (ROLE_DETAILS[role]?.defaultPath || '/student');
+    window.location.assign(target);
+  };
+
+  // If already logged in, redirect straight to their dashboard or requested page
+  useEffect(() => {
+    if (!isLoading && user) {
+      const target = nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')
+        ? nextParam
+        : (ROLE_DETAILS[user.role]?.defaultPath || '/student');
+      router.replace(target);
+    }
+  }, [user, isLoading, nextParam, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,13 +65,15 @@ export default function LoginPage() {
     setErrorMessage(null);
     setIsSubmitting(true);
     try {
-      const { error } = await signIn(email, password);
-      if (error) {
-        setErrorMessage(error);
+      const result = await signIn(email, password);
+      if (result.error) {
+        setErrorMessage(result.error);
         return;
       }
-      router.push('/');
-      router.refresh();
+      const target = nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')
+        ? nextParam
+        : (result.defaultPath || '/student');
+      window.location.assign(target);
     } catch {
       setErrorMessage('Unable to sign in. Please try again.');
     } finally {
@@ -53,7 +87,7 @@ export default function LoginPage() {
     try {
       const { error } = await signInWithProvider(provider);
       if (error) setErrorMessage(error);
-      // On success, Supabase redirects to the provider (no navigation needed here).
+      // On success, Supabase redirects to the provider.
     } finally {
       setOauthProvider(null);
     }
@@ -71,6 +105,28 @@ export default function LoginPage() {
         <p className="text-sm text-[#667085]">
           Access your campus safety and ERP dashboard
         </p>
+      </div>
+
+      {/* Quick 1-Click Demo Personas */}
+      <div className="rounded-xl border border-[#EAB308]/40 bg-[#FDFBF7] p-3 space-y-2">
+        <div className="flex items-center justify-between text-[11px] font-bold text-[#8a6d1a]">
+          <span className="flex items-center gap-1.5">
+            <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" /> Instant Demo Mode (1-Click)
+          </span>
+          <span className="text-[10px] font-normal text-[#667085]">No password needed</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+          {demoRoles.map((r) => (
+            <button
+              key={r}
+              type="button"
+              onClick={() => handleQuickDemo(r)}
+              className="px-2 py-1.5 text-[11px] font-semibold rounded-lg border border-[#D6D8D5] bg-white hover:border-[#EAB308] hover:bg-[#EAB308]/10 text-[#1F2933] hover:text-[#8a6d1a] transition-all text-center truncate cursor-pointer shadow-2xs"
+            >
+              {ROLE_DETAILS[r]?.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* OAuth / social sign-in */}
@@ -185,5 +241,19 @@ export default function LoginPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-48 items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-[#8a6d1a]" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
