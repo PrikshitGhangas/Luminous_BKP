@@ -633,13 +633,13 @@ export default function HackathonDemoPage() {
         </CardHeader>
 
         <CardContent className="p-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {[
               {
                 roleKey: 'student' as UserRole,
                 name: DEMO_USERS.student.full_name,
                 email: DEMO_USERS.student.email,
-                desc: 'Student Reporter',
+                desc: 'Student',
                 icon: '🎓',
               },
               {
@@ -648,6 +648,13 @@ export default function HackathonDemoPage() {
                 email: DEMO_USERS.security.email,
                 desc: 'Security Dispatcher',
                 icon: '🛡️',
+              },
+              {
+                roleKey: 'faculty' as UserRole,
+                name: DEMO_USERS.faculty.full_name,
+                email: DEMO_USERS.faculty.email,
+                desc: 'Faculty Professor',
+                icon: '📚',
               },
               {
                 roleKey: 'admin' as UserRole,
@@ -660,8 +667,15 @@ export default function HackathonDemoPage() {
                 roleKey: 'super_admin' as UserRole,
                 name: DEMO_USERS.super_admin.full_name,
                 email: DEMO_USERS.super_admin.email,
-                desc: 'Executive Chancellor',
+                desc: 'Super Administrator',
                 icon: '👑',
+              },
+              {
+                roleKey: 'parent' as UserRole,
+                name: DEMO_USERS.parent.full_name,
+                email: DEMO_USERS.parent.email,
+                desc: 'Parent / Guardian',
+                icon: '👨‍👩‍👧',
               },
             ].map((usr) => (
               <div
@@ -670,20 +684,20 @@ export default function HackathonDemoPage() {
                   switchRole(usr.roleKey);
                   showToast(`Switched persona to ${usr.name} (${usr.roleKey.toUpperCase()})`);
                 }}
-                className={`p-3.5 rounded-xl border transition-all cursor-pointer space-y-2 font-mono ${
+                className={`p-4 rounded-2xl border transition-all cursor-pointer space-y-2 ${
                   role === usr.roleKey
-                    ? 'border-[#EAB308] bg-white shadow-lg shadow-[#D4AF37]/15'
-                    : 'border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308]/50'
+                    ? 'border-[#EAB308] bg-white shadow-md'
+                    : 'border-[#D0D1D6] bg-[#F7F8F6] hover:border-[#EAB308]/50'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-lg">{usr.icon}</span>
+                  <span className="text-xl">{usr.icon}</span>
                   {role === usr.roleKey ? (
-                    <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#EAB308] text-[#0B132B]">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#EAB308] text-[#0B132B]">
                       ACTIVE
                     </span>
                   ) : (
-                    <span className="px-2 py-0.5 rounded text-[9px] bg-[#E7E8EB] text-[#555960]">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] bg-[#E7E8EB] text-[#555960]">
                       SWITCH
                     </span>
                   )}
@@ -692,7 +706,7 @@ export default function HackathonDemoPage() {
                   <div className="font-bold text-xs text-[#202226]">{usr.name}</div>
                   <div className="text-[10px] text-[#B45309]">{usr.email}</div>
                 </div>
-                <p className="text-[10px] text-[#555960] font-sans line-clamp-2">{usr.desc}</p>
+                <p className="text-[10px] text-[#555960] line-clamp-1">{usr.desc}</p>
               </div>
             ))}
           </div>

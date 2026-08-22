@@ -51,7 +51,7 @@ export const ROLE_DETAILS: Record<
     defaultPath: '/faculty-dashboard',
   },
   student: {
-    name: 'Undergraduate Student',
+    name: 'Student',
     label: 'STUDENT',
     description: 'Campus emergency SOS, incident reporting, timetable, and academics',
     badgeColor: 'bg-[#EAB308]/10 text-[#8a6d1a] border-[#EAB308]/30',
