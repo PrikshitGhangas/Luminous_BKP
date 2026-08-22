@@ -61,10 +61,15 @@ function isPublic(pathname: string): boolean {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow static files, favicon
+  // Allow static files, favicon, icons, and webmanifest
   if (
     pathname.startsWith('/_next') ||
-    pathname.startsWith('/favicon.ico')
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/icon') ||
+    pathname.startsWith('/apple-icon') ||
+    pathname.startsWith('/logo.svg') ||
+    pathname.startsWith('/site.webmanifest') ||
+    /\.(?:svg|png|ico|jpg|jpeg|webp|webmanifest)$/.test(pathname)
   ) {
     const response = NextResponse.next();
     return applySecurityHeaders(response);
@@ -193,5 +198,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|icon|apple-icon|logo\\.svg|site\\.webmanifest|.*\\.(?:svg|png|jpg|jpeg|ico|webp|webmanifest)$).*)'],
 };

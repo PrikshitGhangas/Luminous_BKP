@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   title: 'CampusShield AI / Luminous — Intelligent Campus ERP & Safety Command Center',
   description:
     'Next-generation institutional AI-powered smart college ERP, safety command center, incident triage, and student safety platform.',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/site.webmanifest',
 };
 
 export default function RootLayout({
