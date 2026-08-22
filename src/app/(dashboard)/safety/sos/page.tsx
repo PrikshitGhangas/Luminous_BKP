@@ -219,7 +219,7 @@ Guardian: Rajesh Patel (+91 98454 15882)`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       {/* Fake Call Overlay Modal */}
       {isFakeCallActive && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 text-white p-4 backdrop-blur-md animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 text-white p-4 backdrop-blur-md animate-in fade-in duration-200">
           <div className="w-full max-w-sm rounded-3xl bg-[#111827] border border-gray-800 p-8 text-center space-y-8 shadow-2xl">
             <div className="space-y-2">
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#EAB308]/20 text-[#EAB308] ring-4 ring-[#EAB308]/30 animate-pulse">
@@ -271,8 +271,8 @@ Guardian: Rajesh Patel (+91 98454 15882)`;
 
       {/* Offline SMS Failsafe Modal */}
       {isSmsModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="w-full max-w-lg rounded-2xl bg-white border border-[#D6D8D5] p-6 space-y-4 shadow-xl text-left">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="w-full max-w-lg rounded-2xl bg-white border border-[#D6D8D5] p-6 space-y-4 shadow-2xl text-left">
             <div className="flex items-center justify-between border-b border-[#D6D8D5] pb-3">
               <div className="flex items-center gap-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-600">

@@ -29,7 +29,7 @@ export function Drawer({ open, onClose, title, children, footer, className }: Dr
   return (
     <div className="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label={title || 'Details'}>
       <div
-        className="fixed inset-0 bg-black/30 backdrop-blur-xs"
+        className="fixed inset-0 bg-black/30 backdrop-blur-md"
         onClick={onClose}
         aria-hidden="true"
       />

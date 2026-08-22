@@ -194,7 +194,7 @@ export default function DepartmentsPage() {
 
       {/* Create Department Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md z-[100] p-4">
           <Card className="w-full max-w-lg bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
             <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
               <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
@@ -324,7 +324,7 @@ export default function DepartmentsPage() {
 
       {/* Department Detail Modal */}
       {selectedDept && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md z-[100] p-4">
           <Card className="w-full max-w-xl bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
             <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">

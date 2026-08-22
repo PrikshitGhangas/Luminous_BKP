@@ -393,7 +393,7 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
 
       {/* Slide-over Drawer / Copilot Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end sm:p-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end sm:p-4 bg-black/75 backdrop-blur-md z-[100] animate-in fade-in duration-200">
           <div
             className={cn(
               'flex flex-col bg-white border border-[#D0D1D6] shadow-2xl rounded-t-2xl sm:rounded-2xl text-[#202226] transition-all duration-300 w-full overflow-hidden',

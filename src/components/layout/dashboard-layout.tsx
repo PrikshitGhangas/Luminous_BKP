@@ -63,7 +63,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {isMobileMenuOpen && (
             <div className="fixed inset-0 z-50 md:hidden">
               <div
-                className="fixed inset-0 bg-black/40 backdrop-blur-xs"
+                className="fixed inset-0 bg-black/75 backdrop-blur-md z-[100]"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
               <div className="relative z-50 h-full w-72">

@@ -528,7 +528,7 @@ export function CampusMapInteractive({
         ) : null}
 
         {/* Pan Instruction Hint */}
-        <div className="absolute top-3 right-3 z-10 hidden sm:flex items-center gap-1.5 bg-white/85 backdrop-blur-xs border border-[#D6D8D5] px-2.5 py-1 rounded-full text-[10px] text-[#667085] shadow-2xs pointer-events-none">
+        <div className="absolute top-3 right-3 z-10 hidden sm:flex items-center gap-1.5 bg-white/85 backdrop-blur-md border border-[#D6D8D5] px-2.5 py-1 rounded-full text-[10px] text-[#667085] shadow-2xs pointer-events-none">
           <Maximize2 className="h-3 w-3" />
           <span>Click &amp; drag to pan &bull; Scroll / buttons to zoom</span>
         </div>
