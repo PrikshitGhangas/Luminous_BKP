@@ -109,22 +109,13 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
         {/* Quick Emergency SOS CTA */}
         {role && ['student', 'faculty', 'super_admin', 'admin'].includes(role) && (
           <Link
-            href="/sos"
+            href="/safety/sos"
             className="flex items-center gap-1.5 rounded-lg bg-[#C94C4C] px-3 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-[#b84343] transition-colors animate-pulse border border-red-400"
           >
             <HeartPulse className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Emergency SOS</span>
           </Link>
         )}
-
-        {/* AI Copilot Quick Access */}
-        <Link
-          href="/copilot"
-          className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-[#8a6d1a] bg-[#F7F8F6] hover:bg-[#EAEBE9] hover:border-[#EAB308] px-2.5 py-1 rounded-md border border-[#D6D8D5] transition-colors shadow-sm"
-        >
-          <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />
-          <span>Gemini 3.7 Copilot</span>
-        </Link>
 
         {/* Notification Bell */}
         <div className="relative">
