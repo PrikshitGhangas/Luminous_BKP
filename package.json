@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node scripts/test_security_and_emergency_system.js && npx tsx scripts/verify-copilot.ts && npx tsx scripts/verify-safety-intelligence.ts && npx tsx scripts/full_qa_verification_test.ts && npx tsx scripts/exhaustive_edge_case_verification.ts"
+    "test": "node scripts/test_security_and_emergency_system.js && npx tsx scripts/verify-copilot.ts && npx tsx scripts/verify-safety-intelligence.ts && npx tsx scripts/verify-security-hardening.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",

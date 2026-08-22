@@ -164,10 +164,26 @@ export const ROUTE_PERMISSIONS: Record<string, UserRole[]> = {
   '/settings': ['super_admin', 'admin', 'faculty', 'student', 'parent', 'security', 'warden', 'placement_officer'],
 };
 
+export const PUBLIC_ROUTES = [
+  '/',
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/auth/callback',
+  '/not-found',
+  '/error',
+] as const;
+
 export function isRouteAllowed(path: string, role: UserRole): boolean {
   const cleanPath = path.split('?')[0];
+  if (PUBLIC_ROUTES.includes(cleanPath as any)) {
+    return true;
+  }
   const basePath = '/' + cleanPath.split('/')[1];
   const allowedRoles = ROUTE_PERMISSIONS[cleanPath] || ROUTE_PERMISSIONS[basePath];
-  if (!allowedRoles) return true;
+  if (!allowedRoles) {
+    // Fail-secure: Deny access to unmapped protected routes by default
+    return false;
+  }
   return allowedRoles.includes(role);
 }

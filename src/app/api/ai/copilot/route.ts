@@ -3,10 +3,12 @@ import { z } from 'zod';
 import { runCampusShieldCopilot, CopilotMessage } from '@/lib/services/copilot/gemini-engine';
 import { UserRole } from '@/lib/types';
 import { DEMO_USERS } from '@/lib/constants/demo-data';
+import { verifyOrigin } from '@/lib/security/csrf';
+import { checkRateLimit, getClientIdentifier } from '@/lib/security/rate-limiter';
 
 const MessageSchema = z.object({
   role: z.enum(['user', 'assistant', 'system']),
-  content: z.string(),
+  content: z.string().max(5000, 'Message exceeds 5,000 character limit'),
 });
 
 const RequestSchema = z.object({
@@ -24,6 +26,22 @@ const RequestSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  // 1. CSRF Verification
+  const csrf = verifyOrigin(request);
+  if (!csrf.valid) {
+    return NextResponse.json({ success: false, error: csrf.error }, { status: 403 });
+  }
+
+  // 2. Rate Limiting (25 req / min)
+  const ip = getClientIdentifier(request);
+  const rateCheck = checkRateLimit(ip, 'copilot');
+  if (!rateCheck.success) {
+    return NextResponse.json(
+      { success: false, error: 'AI Copilot query rate limit exceeded. Please wait a moment.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000)) } }
+    );
+  }
+
   try {
     const json = await request.json();
     const parseResult = RequestSchema.safeParse(json);

@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { INITIAL_ALERTS } from '@/lib/constants/demo-data';
 import { z } from 'zod';
 import { UserRole, AlertType, IncidentSeverity } from '@/lib/types';
+import { verifyOrigin } from '@/lib/security/csrf';
+import { checkRateLimit, getClientIdentifier } from '@/lib/security/rate-limiter';
+import { authenticateApiRequest } from '@/lib/security/auth-guard';
+import { generateSecureId } from '@/lib/security/crypto';
 
 const CreateAlertSchema = z.object({
   title: z.string().min(3).max(150),
@@ -14,7 +18,17 @@ const CreateAlertSchema = z.object({
   sender_role: z.string().optional(),
 });
 
-export async function GET() {
+export async function GET(request: Request) {
+  // Rate limiting for GET requests
+  const ip = getClientIdentifier(request);
+  const rateCheck = checkRateLimit(ip, 'default');
+  if (!rateCheck.success) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000)) } }
+    );
+  }
+
   return NextResponse.json({
     data: INITIAL_ALERTS,
     total: INITIAL_ALERTS.length,
@@ -22,6 +36,25 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  // 1. CSRF & Origin Verification
+  const csrf = verifyOrigin(request);
+  if (!csrf.valid) {
+    return NextResponse.json({ success: false, error: csrf.error }, { status: 403 });
+  }
+
+  // 2. Rate Limiting
+  const ip = getClientIdentifier(request);
+  const rateCheck = checkRateLimit(ip, 'alerts');
+  if (!rateCheck.success) {
+    return NextResponse.json(
+      { success: false, error: 'Alert broadcast rate limit exceeded. Please wait before retrying.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000)) } }
+    );
+  }
+
+  // 3. Authentication & Session Verification
+  const auth = await authenticateApiRequest(request);
+
   try {
     const body = await request.json();
     const parseResult = CreateAlertSchema.safeParse(body);
@@ -33,22 +66,23 @@ export async function POST(request: Request) {
     }
     const validated = parseResult.data;
 
-    // RBAC Authorization Check: Only Admin and Security personnel may broadcast emergency alerts
-    const senderRole = validated.sender_role as UserRole | undefined;
+    // 4. Strict RBAC Authorization Check:
+    // Resolve role from payload sender_role or authenticated session
+    const effectiveRole: UserRole = (validated.sender_role as UserRole) || auth.user?.role || 'student';
     const allowedBroadcastRoles: UserRole[] = ['super_admin', 'admin', 'security'];
 
-    if (senderRole && !allowedBroadcastRoles.includes(senderRole)) {
+    if (!allowedBroadcastRoles.includes(effectiveRole)) {
       return NextResponse.json(
         {
           success: false,
-          error: `FORBIDDEN: Role '${senderRole}' is not authorized to broadcast institutional emergency alerts. Only Administrators and Security Officers possess broadcast clearance.`,
+          error: `FORBIDDEN: Role '${effectiveRole}' is not authorized to broadcast institutional emergency alerts. Only Administrators and Security Officers possess broadcast clearance.`,
         },
         { status: 403 }
       );
     }
 
     const newAlert = {
-      id: `alt-${Date.now()}`,
+      id: generateSecureId('alt'),
       title: validated.title,
       message: validated.message,
       type: validated.type as AlertType,
@@ -65,7 +99,7 @@ export async function POST(request: Request) {
       scope: validated.scope || 'campus_wide',
       target_entity: validated.target_entity,
       is_active: true,
-      created_by: senderRole ? `Campus Operations (${senderRole.toUpperCase()})` : 'Campus Safety Dispatch',
+      created_by: `Campus Operations (${effectiveRole.toUpperCase()})`,
       created_at: new Date().toISOString(),
     };
 

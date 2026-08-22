@@ -1,17 +1,35 @@
 import { NextResponse } from 'next/server';
 import { analyzeIncident, AIIncidentOutputSchema } from '@/lib/services/ai-incident';
 import { z } from 'zod';
+import { verifyOrigin } from '@/lib/security/csrf';
+import { checkRateLimit, getClientIdentifier } from '@/lib/security/rate-limiter';
 
 const RequestSchema = z.object({
-  title: z.string().optional(),
-  description: z.string().min(3, 'Description must be at least 3 characters long'),
-  location: z.string().optional(),
-  category: z.string().optional(),
+  title: z.string().max(200).optional(),
+  description: z.string().min(3, 'Description must be at least 3 characters long').max(4000),
+  location: z.string().max(100).optional(),
+  category: z.string().max(50).optional(),
   is_emergency: z.boolean().optional(),
   evidence_urls: z.array(z.string()).optional(),
 });
 
 export async function POST(request: Request) {
+  // 1. CSRF Verification
+  const csrf = verifyOrigin(request);
+  if (!csrf.valid) {
+    return NextResponse.json({ success: false, error: csrf.error }, { status: 403 });
+  }
+
+  // 2. Rate Limiting (35 req / min)
+  const ip = getClientIdentifier(request);
+  const rateCheck = checkRateLimit(ip, 'ai_triage');
+  if (!rateCheck.success) {
+    return NextResponse.json(
+      { success: false, error: 'AI classification rate limit exceeded. Please wait a moment.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000)) } }
+    );
+  }
+
   try {
     const json = await request.json();
     const parseResult = RequestSchema.safeParse(json);
@@ -42,7 +60,10 @@ export async function POST(request: Request) {
   } catch (error: unknown) {
     console.error('Error in /api/ai/classify-incident:', error);
 
-    if (error instanceof z.ZodError || (error && typeof error === 'object' && ('issues' in error || (error as { name?: string }).name === 'ZodError'))) {
+    if (
+      error instanceof z.ZodError ||
+      (error && typeof error === 'object' && ('issues' in error || (error as { name?: string }).name === 'ZodError'))
+    ) {
       return NextResponse.json(
         {
           success: false,

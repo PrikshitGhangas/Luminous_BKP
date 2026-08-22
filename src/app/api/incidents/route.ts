@@ -1,13 +1,25 @@
 import { NextResponse } from 'next/server';
 import { INITIAL_INCIDENTS, CAMPUS_LOCATIONS } from '@/lib/constants/demo-data';
-import { Incident, IncidentSeverity, IncidentCategory, IncidentTimelineEvent, AuditLogEntry, SystemNotification, EmergencyAlert } from '@/lib/types';
+import {
+  Incident,
+  IncidentSeverity,
+  IncidentCategory,
+  IncidentTimelineEvent,
+  AuditLogEntry,
+  SystemNotification,
+  EmergencyAlert,
+} from '@/lib/types';
 import { z } from 'zod';
+import { verifyOrigin } from '@/lib/security/csrf';
+import { checkRateLimit, getClientIdentifier } from '@/lib/security/rate-limiter';
+import { authenticateApiRequest } from '@/lib/security/auth-guard';
+import { generateSecureId, generateTrackingNumber } from '@/lib/security/crypto';
 
 const SafeUrlPattern = /^(\/[a-zA-Z0-9_./-]+|https:\/\/[a-zA-Z0-9_./-]+)$/;
 
 const CreateIncidentSchema = z.object({
-  reporter_id: z.string().default('usr-student-05'),
-  reporter_name: z.string().default('Aanya Patel'),
+  reporter_id: z.string().optional(),
+  reporter_name: z.string().optional(),
   title: z.string().min(3).max(200),
   description: z.string().min(5).max(4000),
   category: z.string().max(50),
@@ -37,6 +49,19 @@ const CreateIncidentSchema = z.object({
 });
 
 export async function GET(request: Request) {
+  // Rate limiting for GET requests
+  const ip = getClientIdentifier(request);
+  const rateCheck = checkRateLimit(ip, 'default');
+  if (!rateCheck.success) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please try again later.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000)) } }
+    );
+  }
+
+  // Authenticate session (allows authenticated users & demo mode)
+  await authenticateApiRequest(request);
+
   const { searchParams } = new URL(request.url);
   const severity = searchParams.get('severity');
   const location = searchParams.get('location');
@@ -65,6 +90,25 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  // 1. CSRF & Origin Verification
+  const csrf = verifyOrigin(request);
+  if (!csrf.valid) {
+    return NextResponse.json({ success: false, error: csrf.error }, { status: 403 });
+  }
+
+  // 2. Rate Limiting (30 req / min)
+  const ip = getClientIdentifier(request);
+  const rateCheck = checkRateLimit(ip, 'incidents');
+  if (!rateCheck.success) {
+    return NextResponse.json(
+      { success: false, error: 'Incident report rate limit exceeded. Please wait a moment.' },
+      { status: 429, headers: { 'Retry-After': String(Math.ceil(rateCheck.resetMs / 1000)) } }
+    );
+  }
+
+  // 3. User Authentication
+  const auth = await authenticateApiRequest(request);
+
   try {
     const rawBody = await request.json();
     const parseResult = CreateIncidentSchema.safeParse(rawBody);
@@ -80,29 +124,33 @@ export async function POST(request: Request) {
     }
     const validated = parseResult.data;
 
-    const normalizedSeverity = (validated.severity.toLowerCase()) as IncidentSeverity;
-    const normalizedCategory = (validated.category.toLowerCase()) as IncidentCategory;
+    const normalizedSeverity = validated.severity.toLowerCase() as IncidentSeverity;
+    const normalizedCategory = validated.category.toLowerCase() as IncidentCategory;
     const now = new Date().toISOString();
-    const incId = `inc-${Date.now()}`;
-    const incNumber = `INC-20260821-${Math.floor(1000 + Math.random() * 9000)}`;
+    const incId = generateSecureId('inc');
+    const incNumber = generateTrackingNumber('INC');
+
+    const effectiveReporterId = validated.reporter_id || auth.user?.id || 'usr-student-05';
+    const effectiveReporterName = validated.reporter_name || auth.user?.full_name || 'Aanya Patel';
 
     // Match campus location
-    const matchedLoc = CAMPUS_LOCATIONS.find((l) =>
-      validated.location_name.toLowerCase().includes(l.name.toLowerCase()) ||
-      l.name.toLowerCase().includes(validated.location_name.toLowerCase())
+    const matchedLoc = CAMPUS_LOCATIONS.find(
+      (l) =>
+        validated.location_name.toLowerCase().includes(l.name.toLowerCase()) ||
+        l.name.toLowerCase().includes(validated.location_name.toLowerCase())
     );
 
     // Initial timeline
     const timeline: IncidentTimelineEvent[] = [
       {
-        id: `tl-${Date.now()}-1`,
+        id: generateSecureId('tl'),
         incident_id: incId,
         timestamp: now,
         title: 'Incident Submitted',
         description: validated.is_anonymous
           ? 'Submitted anonymously with whistleblower protection enabled'
-          : `Reported by ${validated.reporter_name}`,
-        actor_name: validated.is_anonymous ? 'Anonymous Student' : validated.reporter_name,
+          : `Reported by ${effectiveReporterName}`,
+        actor_name: validated.is_anonymous ? 'Anonymous Student' : effectiveReporterName,
         actor_role: 'Student',
         type: 'reported',
       },
@@ -110,11 +158,13 @@ export async function POST(request: Request) {
 
     if (validated.ai_analysis) {
       timeline.push({
-        id: `tl-${Date.now()}-2`,
+        id: generateSecureId('tl'),
         incident_id: incId,
         timestamp: new Date(Date.now() + 1000).toISOString(),
         title: 'Gemini 3.7 Flash Autonomous Triage',
-        description: `Classified as ${validated.ai_analysis.severity || normalizedSeverity.toUpperCase()} (${Math.round((validated.ai_analysis.confidence || 0.95) * 100)}% confidence). ${validated.ai_analysis.summary || ''}`,
+        description: `Classified as ${validated.ai_analysis.severity || normalizedSeverity.toUpperCase()} (${Math.round(
+          (validated.ai_analysis.confidence || 0.95) * 100
+        )}% confidence). ${validated.ai_analysis.summary || ''}`,
         actor_name: 'Gemini 3.7 Flash AI',
         actor_role: 'AI Engine',
         type: 'ai_triage',
@@ -127,13 +177,13 @@ export async function POST(request: Request) {
     const newIncident: Incident = {
       id: incId,
       incident_number: incNumber,
-      reporter_id: validated.is_anonymous ? 'usr-anon' : validated.reporter_id,
-      reporter_name: validated.is_anonymous ? 'Anonymous Student' : validated.reporter_name,
+      reporter_id: validated.is_anonymous ? 'usr-anon' : effectiveReporterId,
+      reporter_name: validated.is_anonymous ? 'Anonymous Student' : effectiveReporterName,
       title: validated.title,
       description: validated.description,
       category: normalizedCategory,
       severity: normalizedSeverity,
-      ai_severity: validated.ai_analysis?.severity?.toLowerCase() as IncidentSeverity || normalizedSeverity,
+      ai_severity: (validated.ai_analysis?.severity?.toLowerCase() as IncidentSeverity) || normalizedSeverity,
       ai_confidence: validated.ai_analysis?.confidence || 0.95,
       ai_summary: validated.ai_analysis?.summary,
       ai_recommended_actions: validated.ai_analysis?.recommended_actions || [
@@ -157,7 +207,7 @@ export async function POST(request: Request) {
 
     // System Notification for Security & Admin
     const notification: SystemNotification = {
-      id: `notif-${Date.now()}`,
+      id: generateSecureId('notif'),
       title: `New Incident: ${newIncident.incident_number}`,
       message: `${normalizedSeverity.toUpperCase()} — ${newIncident.title} (${newIncident.location_name})`,
       type: normalizedSeverity === 'critical' ? 'emergency' : 'incident',
@@ -168,11 +218,11 @@ export async function POST(request: Request) {
 
     // Audit Log Entry
     const auditLog: AuditLogEntry = {
-      id: `audit-${Date.now()}`,
+      id: generateSecureId('audit'),
       action: normalizedSeverity === 'critical' ? 'CRITICAL_INCIDENT_DISPATCHED' : 'INCIDENT_CREATED',
-      actor: validated.is_anonymous ? 'Anonymous Student' : validated.reporter_name,
+      actor: validated.is_anonymous ? 'Anonymous Student' : effectiveReporterName,
       actorRole: 'Student',
-      ip: '10.0.12.89',
+      ip: getClientIdentifier(request),
       timestamp: now,
       timeAgo: 'Just now',
       entity: incNumber,
@@ -183,7 +233,7 @@ export async function POST(request: Request) {
     let emergencyAlert: EmergencyAlert | null = null;
     if (normalizedSeverity === 'critical' || validated.ai_analysis?.emergency_required) {
       emergencyAlert = {
-        id: `alt-${Date.now()}`,
+        id: generateSecureId('alt'),
         title: `EMERGENCY ALERT: ${newIncident.title}`,
         message: `Hazard at ${newIncident.location_name}. Avoid immediate area. Security and emergency responders deployed.`,
         type: 'evacuation',
@@ -207,7 +257,10 @@ export async function POST(request: Request) {
     );
   } catch (error: unknown) {
     console.error('Failed to create incident:', error);
-    if (error instanceof z.ZodError || (error && typeof error === 'object' && ('issues' in error || (error as { name?: string }).name === 'ZodError'))) {
+    if (
+      error instanceof z.ZodError ||
+      (error && typeof error === 'object' && ('issues' in error || (error as { name?: string }).name === 'ZodError'))
+    ) {
       return NextResponse.json(
         {
           success: false,
