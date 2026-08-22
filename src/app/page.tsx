@@ -71,45 +71,6 @@ const ROLE_ICONS: Record<string, React.ElementType> = {
   parent: UserCheck,
 };
 
-const ROLE_ACCENTS: Record<string, { bg: string; text: string; border: string; glow: string }> = {
-  super_admin: {
-    bg: 'bg-amber-50',
-    text: 'text-amber-800',
-    border: 'border-amber-200 hover:border-amber-400',
-    glow: 'from-amber-500/10 to-yellow-500/5',
-  },
-  admin: {
-    bg: 'bg-stone-50',
-    text: 'text-stone-800',
-    border: 'border-stone-200 hover:border-stone-400',
-    glow: 'from-stone-500/10 to-stone-500/5',
-  },
-  security: {
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-800',
-    border: 'border-emerald-200 hover:border-emerald-400',
-    glow: 'from-emerald-500/10 to-teal-500/5',
-  },
-  faculty: {
-    bg: 'bg-indigo-50',
-    text: 'text-indigo-800',
-    border: 'border-indigo-200 hover:border-indigo-400',
-    glow: 'from-indigo-500/10 to-blue-500/5',
-  },
-  student: {
-    bg: 'bg-blue-50',
-    text: 'text-blue-800',
-    border: 'border-blue-200 hover:border-blue-400',
-    glow: 'from-blue-500/10 to-sky-500/5',
-  },
-  parent: {
-    bg: 'bg-teal-50',
-    text: 'text-teal-800',
-    border: 'border-teal-200 hover:border-teal-400',
-    glow: 'from-teal-500/10 to-emerald-500/5',
-  },
-};
-
 export default function LandingPage() {
   const router = useRouter();
   const { launchDemo, user, logout } = useAuth();
@@ -256,33 +217,27 @@ export default function LandingPage() {
             {demoRoles.map((r) => {
               const meta = ROLE_DETAILS[r];
               const Icon = ROLE_ICONS[r] || Shield;
-              const accent = ROLE_ACCENTS[r] || {
-                bg: 'bg-gray-50',
-                text: 'text-gray-800',
-                border: 'border-gray-200',
-                glow: 'from-gray-500/10 to-gray-500/5',
-              };
 
               return (
                 <div
                   key={r}
                   onClick={() => handleLaunchRole(r)}
-                  className={`group relative rounded-3xl border ${accent.border} bg-gradient-to-br ${accent.glow} p-6 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden`}
+                  className="group relative rounded-2xl border border-[#D6D8D5] bg-white p-6 hover:border-[#1F2933] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden shadow-xs"
                 >
                   <div className="space-y-4">
                     {/* Top Row: Icon Capsule + Role Pill */}
                     <div className="flex items-center justify-between">
-                      <div className={`h-11 w-11 rounded-2xl ${accent.bg} border border-[#D6D8D5] flex items-center justify-center ${accent.text} shadow-xs group-hover:scale-105 transition-transform`}>
+                      <div className="h-10 w-10 rounded-xl bg-[#F0F1EF] border border-[#D6D8D5] flex items-center justify-center text-[#1F2933] group-hover:bg-[#1F2933] group-hover:text-white transition-colors">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <span className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${accent.bg} ${accent.text} border border-current/20 shadow-xs`}>
+                      <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-[#F7F8F6] text-[#667085] border border-[#D6D8D5]">
                         {meta.label}
                       </span>
                     </div>
 
                     {/* Role Title & Description */}
                     <div>
-                      <h3 className="font-bold text-lg text-[#1F2933] group-hover:text-[#8a6d1a] transition-colors">
+                      <h3 className="font-bold text-base text-[#1F2933] group-hover:text-[#8a6d1a] transition-colors">
                         {meta.name}
                       </h3>
                       <p className="text-xs text-[#667085] leading-relaxed mt-1.5">
@@ -291,10 +246,10 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Bottom Action Footer with Pill Button */}
-                  <div className="mt-5 pt-4 border-t border-black/5 flex items-center justify-between text-xs">
+                  {/* Bottom Action Footer with Clean Button */}
+                  <div className="mt-6 pt-4 border-t border-[#D6D8D5]/60 flex items-center justify-between text-xs">
                     <span className="text-[11px] text-[#8a9199] font-mono">{meta.defaultPath}</span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-[#D6D8D5] text-[#1F2933] font-semibold text-xs group-hover:bg-[#1F2933] group-hover:text-white group-hover:border-[#1F2933] transition-all shadow-xs">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F7F8F6] border border-[#D6D8D5] text-[#1F2933] font-semibold text-xs group-hover:bg-[#1F2933] group-hover:text-white group-hover:border-[#1F2933] transition-all shadow-2xs">
                       <span>Launch</span>
                       <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                     </span>
