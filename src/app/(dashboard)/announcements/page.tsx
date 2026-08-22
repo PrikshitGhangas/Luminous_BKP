@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,6 +27,9 @@ interface AnnouncementItem {
 }
 
 export default function AnnouncementsPage() {
+  const { isSuperAdmin, isAdmin, role, user } = useRole();
+  const canPost = isSuperAdmin || isAdmin || role === 'faculty' || role === 'security';
+
   const [announcements, setAnnouncements] = useState<AnnouncementItem[]>([
     {
       id: 'anc-1',
@@ -40,13 +44,13 @@ export default function AnnouncementsPage() {
     },
     {
       id: 'anc-2',
-      title: 'Campus Perimeter Security Protocol & Night Curfew Reminder',
+      title: 'Hostel Gate Curfew & Regular Evening Biometric Check',
       category: 'Safety',
-      author: 'Officer Vikram Sharma',
-      authorRole: 'Security Officer',
+      author: 'Vikram Sharma',
+      authorRole: 'Security Supervisor',
       postedAt: '5 hours ago',
       isUrgent: true,
-      content: 'Residential wardens and security officers will strictly enforce the 22:30 night entry curfew across Hostel Blocks A, B, C, & D. Biometric access logging remains mandatory at all gates.',
+      content: 'Residential wardens and security staff will enforce the 22:30 night entry check across Hostel Blocks A and B. Biometric turnstiles will require valid student ID cards.',
       targetAudience: 'All Hostel Residents & Security Staff',
     },
     {
@@ -82,14 +86,14 @@ export default function AnnouncementsPage() {
 
   const handlePostSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTitle || !newContent) return;
+    if (!newTitle || !newContent || !canPost) return;
 
     const newAnc: AnnouncementItem = {
       id: `anc-${Date.now()}`,
       title: newTitle,
       category: newCategory,
-      author: 'Campus Administration Desk',
-      authorRole: 'Admin Dispatch',
+      author: user?.full_name || 'Campus Administration Desk',
+      authorRole: isSuperAdmin || isAdmin ? 'Administrator' : role === 'faculty' ? 'Faculty Member' : 'Security Desk',
       postedAt: 'Just now',
       isUrgent: newUrgent,
       content: newContent,
@@ -116,14 +120,16 @@ export default function AnnouncementsPage() {
           </p>
         </div>
 
-        <Button
-          onClick={() => setIsPostModalOpen(true)}
-          size="sm"
-          className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs"
-        >
-          <Plus className="h-4 w-4" />
-          <span>New Announcement</span>
-        </Button>
+        {canPost && (
+          <Button
+            onClick={() => setIsPostModalOpen(true)}
+            size="sm"
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>New Announcement</span>
+          </Button>
+        )}
       </div>
 
       {/* Category Badges (Segmented Pills) */}

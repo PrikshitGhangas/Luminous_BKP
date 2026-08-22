@@ -76,8 +76,10 @@ interface SafetyContextType {
     category?: 'womens_safety' | 'sos_panic' | 'medical' | 'threat',
     coordinates?: { lat: number; lng: number },
     userProfile?: UserProfile,
-    description?: string
+    description?: string,
+    level?: 'campus' | 'police'
   ) => Promise<{ incident: Incident; alert: EmergencyAlert }>;
+  escalateIncident: (id: string, reason?: string) => void;
   checkInVisitor: (id: string, gate?: string) => void;
   checkOutVisitor: (id: string, gate?: string) => void;
   issueVisitorPass: (passData: Omit<VisitorPass, 'id' | 'created_at'>) => VisitorPass;
@@ -689,7 +691,8 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       category: 'womens_safety' | 'sos_panic' | 'medical' | 'threat' = 'womens_safety',
       coordinates = { lat: 12.9716, lng: 77.5946 },
       userProfile?: UserProfile,
-      description?: string
+      description?: string,
+      level: 'campus' | 'police' = 'campus'
     ) => {
       const now = new Date().toISOString();
       const incId = `sos-inc-${Date.now()}`;
@@ -697,7 +700,12 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
 
       const callerName = userProfile?.full_name || 'Aanya Patel';
       const callerPhone = userProfile?.phone || '+91 98454 15881';
-      const categoryLabel = 'Emergency SOS Distress Beacon';
+      const isPoliceLevel = level === 'police';
+      const categoryLabel = isPoliceLevel
+        ? 'Level 2 Police & Multi-Squad Emergency SOS'
+        : 'Level 1 Campus Guard & Volunteer SOS';
+
+      const slaExpiryTime = new Date(Date.now() + 5 * 60 * 1000).toISOString();
 
       const timeline: IncidentTimelineEvent[] = [
         {
@@ -705,7 +713,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
           incident_id: incId,
           timestamp: now,
           title: 'Reported',
-          description: `SOS panic beacon triggered by ${callerName} (${callerPhone}) at ${locationName}. GPS coordinates verified.`,
+          description: `${categoryLabel} triggered by ${callerName} (${callerPhone}) at ${locationName}. GPS coordinates verified.`,
           actor_name: callerName,
           actor_role: userProfile?.role === 'student' ? 'Student' : 'Campus Member',
           type: 'reported',
@@ -715,7 +723,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
           incident_id: incId,
           timestamp: new Date(Date.now() + 500).toISOString(),
           title: 'AI analyzed',
-          description: `Gemini 3.7 Flash AI evaluated distress beacon: Classified CRITICAL Tier (99% confidence). Instant Security Dispatch protocol initiated.`,
+          description: `Gemini 3.7 Flash AI evaluated distress beacon: Classified CRITICAL (${isPoliceLevel ? 'Level 2 - Police Escalation' : 'Level 1 - Nearest Guard/Volunteer Dispatch'}). 5-minute auto-escalation active.`,
           actor_name: 'Gemini 3.7 Flash AI',
           actor_role: 'Autonomous Safety Engine',
           type: 'ai_triage',
@@ -725,7 +733,9 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
           incident_id: incId,
           timestamp: new Date(Date.now() + 1000).toISOString(),
           title: 'Assigned',
-          description: `Assigned immediately to Sector Rapid Response Unit (Lead: Officer Vikram Sharma).`,
+          description: isPoliceLevel
+            ? `Immediate broadcast to All Campus Patrol Units, Student Volunteers, and Emergency Police.`
+            : `Assigned immediately to Nearest On-Duty Guard / Student Volunteer (Unit Alpha). 5-min SLA countdown engaged.`,
           actor_name: 'Security Automated Dispatch',
           actor_role: 'Security SOC',
           type: 'assigned',
@@ -734,19 +744,11 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
           id: `tl-sos-4-${Date.now()}`,
           incident_id: incId,
           timestamp: new Date(Date.now() + 1500).toISOString(),
-          title: 'Acknowledged',
-          description: `Security Command Center acknowledged panic alert. Unit Alpha on priority deployment.`,
-          actor_name: 'Officer Vikram Sharma',
-          actor_role: 'Security Officer',
-          type: 'acknowledged',
-        },
-        {
-          id: `tl-sos-5-${Date.now()}`,
-          incident_id: incId,
-          timestamp: new Date(Date.now() + 2000).toISOString(),
           title: 'Officer dispatched',
-          description: `Officer Ramos [Patrol Alpha] dispatched en-route to ${locationName}. ETA ~90 seconds.`,
-          actor_name: 'Officer Ramos (Unit Alpha)',
+          description: isPoliceLevel
+            ? `All perimeter squads, guards, and local authorities deployed.`
+            : `Officer Ramos [Patrol Alpha] automatically dispatched en-route to ${locationName}. SLA timer: 5 minutes.`,
+          actor_name: isPoliceLevel ? 'Central Police & Security Command' : 'Officer Ramos (Unit Alpha)',
           actor_role: 'Security Responder',
           type: 'dispatch',
         },
@@ -760,17 +762,17 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         title: `${categoryLabel} — ${locationName}`,
         description:
           description ||
-          `Emergency distress signal transmitted by ${callerName} at ${locationName}. Direct officer dispatch engaged.`,
+          `Emergency distress signal transmitted by ${callerName} at ${locationName}. Automatic responder dispatch engaged.`,
         category: category,
         severity: 'critical',
         ai_severity: 'critical',
         ai_confidence: 0.99,
-        ai_summary: `High-priority SOS signal active at ${locationName}. Response team dispatched.`,
+        ai_summary: `High-priority SOS signal active at ${locationName}. ${isPoliceLevel ? 'Police & all units alerted.' : 'Nearest guard dispatched with 5-minute SLA timer.'}`,
         ai_recommended_actions: [
           'Immediate physical patrol dispatch to caller coordinates',
           'Lock on closest CCTV feed overlooking location',
           'Contact caller emergency phone line',
-          'Alert Campus Medical and Executive Safety Officer',
+          isPoliceLevel ? 'Coordinate with Local Police (112)' : 'Escalate to Police if unacknowledged in 5 minutes',
         ],
         ai_departments: ['Campus Security', 'Emergency Rapid Response', 'Campus Medical'],
         location_name: locationName,
@@ -779,8 +781,11 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         status: 'dispatched',
         priority_score: 10,
         assigned_department: 'Campus Security & Rapid Response',
-        assigned_officer_name: 'Officer Vikram Sharma & Officer Ramos',
+        assigned_officer_name: isPoliceLevel ? 'All Units & Emergency Police' : 'Officer Ramos (Nearest Guard)',
         dispatched_at: now,
+        sos_level: level,
+        auto_escalated: isPoliceLevel,
+        sla_expires_at: isPoliceLevel ? undefined : slaExpiryTime,
         is_anonymous: false,
         requires_immediate_response: true,
         timeline: timeline,
@@ -808,8 +813,8 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
 
       const notifSecurity: SystemNotification = {
         id: `notif-sec-${Date.now()}`,
-        title: `🚨 EMERGENCY SOS: ${callerName}`,
-        message: `${categoryLabel} at ${locationName}. Patrol Unit Alpha dispatched!`,
+        title: `🚨 EMERGENCY SOS (${isPoliceLevel ? 'POLICE LEVEL 2' : 'CAMPUS LEVEL 1'}): ${callerName}`,
+        message: `${categoryLabel} at ${locationName}. Response squad dispatched!`,
         type: 'emergency',
         read: false,
         created_at: now,
@@ -830,14 +835,14 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
 
       const audit: AuditLogEntry = {
         id: `audit-sos-${Date.now()}`,
-        action: 'EMERGENCY_SOS_ACTIVATED',
+        action: isPoliceLevel ? 'POLICE_SOS_ACTIVATED' : 'CAMPUS_SOS_ACTIVATED',
         actor: callerName,
         actorRole: userProfile?.role || 'student',
         ip: '10.0.15.22 (Mobile SOS)',
         timestamp: now,
         timeAgo: 'Just now',
         entity: newInc.incident_number,
-        details: `SOS beacon: ${locationName} (${coordinates.lat.toFixed(4)}, ${coordinates.lng.toFixed(4)})`,
+        details: `SOS beacon (${level}): ${locationName} (${coordinates.lat.toFixed(4)}, ${coordinates.lng.toFixed(4)})`,
       };
       setAuditLogs((prev) => [audit, ...prev]);
 
@@ -845,6 +850,84 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
     },
     []
   );
+
+  const escalateIncident = useCallback((id: string, reason = 'No responder acknowledgement within 5-minute SLA') => {
+    const now = new Date().toISOString();
+    setIncidents((prev) =>
+      prev.map((i) => {
+        if (i.id !== id) return i;
+
+        const updatedTimeline: IncidentTimelineEvent[] = [
+          ...(i.timeline || []),
+          {
+            id: `tl-esc-${Date.now()}`,
+            incident_id: id,
+            timestamp: now,
+            title: 'Auto-Escalated to Police & Admin',
+            description: `${reason}. Alert escalated from Level 1 Campus to Level 2 Police/Admin protocol.`,
+            actor_name: 'Campus Safety SLA Monitor',
+            actor_role: 'Autonomous System',
+            type: 'status_change',
+          },
+        ];
+
+        return {
+          ...i,
+          sos_level: 'police' as const,
+          auto_escalated: true,
+          escalated_at: now,
+          sla_expires_at: undefined,
+          assigned_officer_name: 'All Units, Police & Campus Administration',
+          timeline: updatedTimeline,
+        };
+      })
+    );
+
+    const targetInc = incidents.find((i) => i.id === id);
+    const audit: AuditLogEntry = {
+      id: `audit-esc-${Date.now()}`,
+      action: 'INCIDENT_AUTO_ESCALATED',
+      actor: 'Campus Safety SLA Monitor',
+      actorRole: 'System Automation',
+      ip: '10.0.1.1 (Internal Mesh)',
+      timestamp: now,
+      timeAgo: 'Just now',
+      entity: targetInc?.incident_number || id,
+      details: `Incident escalated to Level 2 (Police/Admin). Reason: ${reason}`,
+    };
+    setAuditLogs((prev) => [audit, ...prev]);
+
+    const notifAdmin: SystemNotification = {
+      id: `notif-esc-${Date.now()}`,
+      title: `⚠️ INCIDENT ESCALATED TO ADMIN: ${targetInc?.incident_number || id}`,
+      message: `No guard acknowledgement within 5 min at ${targetInc?.location_name || 'campus'}. Escalated to Police and Chancellor's office.`,
+      type: 'emergency',
+      read: false,
+      created_at: now,
+      link: '/safety/command-center',
+    };
+    setNotifications((prev) => [notifAdmin, ...prev]);
+  }, [incidents]);
+
+  // Periodic SLA Auto-Escalation check (checks every 5 seconds)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nowMs = Date.now();
+      incidents.forEach((inc) => {
+        if (
+          inc.sos_level === 'campus' &&
+          inc.sla_expires_at &&
+          new Date(inc.sla_expires_at).getTime() < nowMs &&
+          inc.status !== 'resolved' &&
+          inc.status !== 'closed' &&
+          inc.status !== 'false_alarm'
+        ) {
+          escalateIncident(inc.id, 'SLA countdown expired (>5 minutes without resolution)');
+        }
+      });
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [incidents, escalateIncident]);
 
   const checkInVisitor = useCallback((id: string, gate = 'Main Security Gate Alpha') => {
     const now = new Date().toISOString();
@@ -1034,6 +1117,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         broadcastEmergencyAlert,
         dismissAlert,
         triggerEmergencySos,
+        escalateIncident,
         checkInVisitor,
         checkOutVisitor,
         issueVisitorPass,

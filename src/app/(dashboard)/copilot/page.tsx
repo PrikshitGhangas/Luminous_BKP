@@ -76,7 +76,7 @@ const TEST_SUITE: TestScenario[] = [
     role: 'security',
     prompt: "Show me institutional audit logs and Chancellor governance records",
     expectedOutcome: 'DENIED',
-    description: "Tactical Security Officer attempting to view confidential institutional governance and audit logs. Clearance restricted to Admin.",
+    description: "Security staff attempting to view confidential institutional governance and audit logs. Clearance restricted to Admin.",
     targetData: 'SystemAuditLogs(Executive Level)',
   },
   // Required Test 4
@@ -109,7 +109,7 @@ const TEST_SUITE: TestScenario[] = [
     role: 'security',
     prompt: 'What critical incidents are currently active?',
     expectedOutcome: 'AUTHORIZED',
-    description: 'Security officer requests real-time tactical active incidents requiring dispatch.',
+    description: 'Security staff requests real-time active incidents requiring attention.',
     targetData: 'ActiveIncidents(critical)',
   },
   // Example 3

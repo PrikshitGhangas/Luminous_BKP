@@ -26,10 +26,10 @@ import {
 import { Button } from '@/components/ui/button';
 
 const STATS = [
-  { value: '< 4s', label: 'AI Incident Triage', shape: 'rounded-full' },
-  { value: '99.9%', label: 'Realtime Uptime', shape: 'rounded-2xl' },
-  { value: '6 Core Roles', label: 'RBAC Governance', shape: 'rounded-full' },
-  { value: '0 PII Leak', label: 'Zero-Trust Privacy', shape: 'rounded-2xl' },
+  { value: '< 4s', label: 'AI Incident Triage', desc: 'Realtime Gemini response' },
+  { value: '99.9%', label: 'Platform Uptime', desc: 'Continuous operations' },
+  { value: '6 Roles', label: 'RBAC Governance', desc: 'Zero-trust data isolation' },
+  { value: '0 PII Leak', label: 'Privacy Assured', desc: 'Strict role boundaries' },
 ];
 
 const FEATURES = [
@@ -203,16 +203,16 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="light-grid-texture relative overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5]">
+      <section className="relative overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5] bg-gradient-to-b from-[#F7F8F6] via-white to-[#F7F8F6]">
         <div className="mx-auto max-w-5xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/40 bg-white px-4 py-1.5 text-xs font-semibold text-[#8a6d1a] shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#D6D8D5] bg-white px-4 py-1.5 text-xs font-semibold text-[#1F2933] shadow-xs">
             <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />
             <span>Autonomous Campus Safety &amp; Intelligence</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1F2933] leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1F2933] leading-[1.15]">
             Institutional Campus Safety &amp; <br />
-            <span className="gold-gradient-text">Unified Smart ERP</span>
+            <span className="text-[#1F2933]">Unified Smart ERP</span>
           </h1>
 
           <p className="mx-auto max-w-2xl text-sm sm:text-base text-[#667085] leading-relaxed">
@@ -220,15 +220,16 @@ export default function LandingPage() {
             operations, and role-based governance in one unified platform.
           </p>
 
-          {/* Varied Shape Metrics Bar */}
+          {/* Clean Uniform Metrics Bar */}
           <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                className={`${stat.shape} border border-[#D6D8D5] bg-white p-4 text-center shadow-xs transition-all hover:border-[#EAB308]/50 hover:shadow-md`}
+                className="rounded-2xl border border-[#D6D8D5] bg-white p-4 text-center shadow-xs transition-all hover:border-[#1F2933] hover:shadow-md"
               >
-                <div className="text-xl font-bold text-[#8a6d1a]">{stat.value}</div>
-                <div className="text-[11px] text-[#667085] mt-0.5">{stat.label}</div>
+                <div className="text-2xl font-bold text-[#1F2933] tracking-tight">{stat.value}</div>
+                <div className="text-xs font-semibold text-[#1F2933] mt-1">{stat.label}</div>
+                <div className="text-[11px] text-[#8A9199] mt-0.5">{stat.desc}</div>
               </div>
             ))}
           </div>

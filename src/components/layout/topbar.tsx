@@ -33,16 +33,22 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const notifRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!profileOpen) return;
     function handleClick(e: MouseEvent) {
-      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+      if (profileOpen && profileRef.current && !profileRef.current.contains(e.target as Node)) {
         setProfileOpen(false);
+      }
+      if (isNotifOpen && notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setIsNotifOpen(false);
       }
     }
     function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setProfileOpen(false);
+      if (e.key === 'Escape') {
+        setProfileOpen(false);
+        setIsNotifOpen(false);
+      }
     }
     document.addEventListener('mousedown', handleClick);
     document.addEventListener('keydown', handleKey);
@@ -50,13 +56,14 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
       document.removeEventListener('mousedown', handleClick);
       document.removeEventListener('keydown', handleKey);
     };
-  }, [profileOpen]);
+  }, [profileOpen, isNotifOpen]);
 
   const handleLogout = async () => {
     setProfileOpen(false);
     await logout();
-    router.push('/login');
-    router.refresh();
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
+    }
   };
 
   const segments = pathname.split('/').filter(Boolean);
@@ -118,7 +125,7 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
         )}
 
         {/* Notification Bell */}
-        <div className="relative">
+        <div className="relative" ref={notifRef}>
           <button
             onClick={() => setIsNotifOpen(!isNotifOpen)}
             className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-[#D6D8D5] bg-white text-[#667085] hover:bg-[#E8E9E7] hover:text-[#1F2933] hover:border-[#EAB308]/50 transition-colors cursor-pointer"

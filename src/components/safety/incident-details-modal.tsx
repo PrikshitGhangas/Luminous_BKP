@@ -44,6 +44,15 @@ export function IncidentDetailsModal({ incident, isOpen, onClose }: IncidentDeta
     ? '[ANONYMOUS REPORTER - PROTECTED]'
     : incident.reporter_name || 'Anonymous Student';
 
+  const getReporterRole = (reporterId?: string, reporterName?: string): string => {
+    if (reporterName?.includes('Prof.') || reporterName?.includes('Dr.') || reporterId?.includes('faculty')) return 'Faculty';
+    if (reporterName?.includes('Admin') || reporterName?.includes('Chancellor') || reporterId?.includes('admin')) return 'Admin';
+    if (reporterName?.includes('Officer') || reporterName?.includes('Security') || reporterId?.includes('security')) return 'Security';
+    if (reporterName?.includes('Warden') || reporterId?.includes('warden')) return 'Hostel Warden';
+    if (reporterName?.includes('Parent') || reporterId?.includes('parent')) return 'Parent';
+    return 'Student';
+  };
+
   const handleDispatch = () => {
     dispatchResponder(incident.id, 'Campus Hazmat & Rapid Security', 'Officer Vikram Sharma');
     setActionSuccessMessage('Rapid Response Unit successfully dispatched to ' + incident.location_name);
@@ -68,13 +77,30 @@ export function IncidentDetailsModal({ incident, isOpen, onClose }: IncidentDeta
   const handleBroadcastAlert = () => {
     broadcastEmergencyAlert(
       `HAZARD NOTICE: ${incident.title}`,
-      `Security & emergency teams responding at ${incident.location_name}. Please avoid the immediate vicinity.`,
-      'evacuation',
-      incident.severity
+      `Security Protocol active at ${incident.location_name}. Avoid the sector until cleared.`,
+      'security',
+      incident.severity === 'critical' ? 'critical' : 'high'
     );
-    setActionSuccessMessage('Emergency broadcast transmitted across all campus channels.');
+    setActionSuccessMessage('Emergency broadcast transmitted to campus.');
     setTimeout(() => setActionSuccessMessage(null), 3500);
   };
+
+  const reporterRole = getReporterRole(incident.reporter_id, incident.reporter_name);
+
+  const timelineEvents = incident.timeline && incident.timeline.length > 0
+    ? incident.timeline
+    : [
+        {
+          id: 't-1',
+          incident_id: incident.id,
+          timestamp: incident.created_at,
+          title: 'Incident Logged',
+          description: `Reported by ${displayReporter}`,
+          actor_name: displayReporter,
+          actor_role: reporterRole,
+          type: 'reported',
+        },
+      ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
@@ -230,18 +256,7 @@ export function IncidentDetailsModal({ incident, isOpen, onClose }: IncidentDeta
             </span>
 
             <div className="space-y-2 relative before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#D0D1D6]">
-              {(incident.timeline || [
-                {
-                  id: 't-1',
-                  incident_id: incident.id,
-                  timestamp: incident.created_at,
-                  title: 'Incident Logged',
-                  description: `Reported by ${displayReporter}`,
-                  actor_name: displayReporter,
-                  actor_role: 'Student',
-                  type: 'reported',
-                },
-              ]).map((evt, idx) => (
+              {timelineEvents.map((evt, idx) => (
                 <div key={evt.id || idx} className="relative flex items-start gap-3 pl-8">
                   <div className="absolute left-2 top-1.5 h-3 w-3 rounded-full bg-[#EAB308] border-2 border-white" />
                   <div className="flex-1 rounded-lg bg-[#F4F5F6] border border-[#D0D1D6] p-2.5">

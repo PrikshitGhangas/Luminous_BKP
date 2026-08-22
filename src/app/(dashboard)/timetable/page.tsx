@@ -31,6 +31,7 @@ const DEPARTMENTS = [
   { code: 'AI-DS', name: 'Artificial Intelligence & Data Science' },
   { code: 'ECE', name: 'Electronics & Communication Engineering' },
   { code: 'MECH', name: 'Mechanical Engineering' },
+  { code: 'CIVIL', name: 'Civil & Environmental Engineering' },
 ];
 
 export default function TimetablePage() {
@@ -55,7 +56,41 @@ export default function TimetablePage() {
   const canEdit = role === 'super_admin' || role === 'admin' || role === 'faculty';
 
   const filteredSlots = timetableSlots.filter((slot) => {
+    // 1. Day filter
     if (selectedDay !== 'ALL' && slot.day !== selectedDay) return false;
+
+    // 2. Department filter
+    if (selectedDept !== 'ALL') {
+      const batchUpper = (slot.batch || '').toUpperCase();
+      const courseUpper = (slot.courseCode || '').toUpperCase();
+      const deptUpper = selectedDept.toUpperCase();
+
+      let matchesDept = false;
+      if (deptUpper === 'CSE') {
+        matchesDept = batchUpper.startsWith('CSE') || courseUpper.startsWith('CS');
+      } else if (deptUpper === 'AI-DS') {
+        matchesDept = batchUpper.startsWith('AI') || courseUpper.startsWith('AI');
+      } else if (deptUpper === 'ECE') {
+        matchesDept = batchUpper.startsWith('ECE') || courseUpper.startsWith('EC');
+      } else if (deptUpper === 'MECH') {
+        matchesDept = batchUpper.startsWith('ME') || courseUpper.startsWith('ME');
+      } else if (deptUpper === 'CIVIL') {
+        matchesDept = batchUpper.startsWith('CE') || batchUpper.startsWith('CIVIL') || courseUpper.startsWith('CE');
+      } else {
+        matchesDept = batchUpper.startsWith(deptUpper);
+      }
+
+      if (!matchesDept) return false;
+    }
+
+    // 3. Semester filter
+    if (selectedSemester !== 'ALL') {
+      const batchUpper = (slot.batch || '').toUpperCase();
+      const semTag = `SEM${selectedSemester}`;
+      const matchesSem = batchUpper.includes(semTag) || (slot.id && slot.id.includes(`sem${selectedSemester}`));
+      if (!matchesSem) return false;
+    }
+
     return true;
   });
 
@@ -76,6 +111,8 @@ export default function TimetablePage() {
 
     setIsAddModalOpen(false);
   };
+
+  const currentDeptObj = DEPARTMENTS.find((d) => d.code === selectedDept) || DEPARTMENTS[0];
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
@@ -132,6 +169,12 @@ export default function TimetablePage() {
               <option value="2">Semester 2 · 1st Year (Section A)</option>
               <option value="8">Semester 8 · 4th Year (Section A)</option>
             </select>
+          </div>
+
+          <div className="flex items-center self-end pb-1 text-xs text-[#667085]">
+            <span className="bg-[#F0F1EF] px-2.5 py-1 rounded-md font-medium text-[#1F2933]">
+              {filteredSlots.length} {filteredSlots.length === 1 ? 'Slot' : 'Slots'} Found
+            </span>
           </div>
         </div>
 
@@ -191,19 +234,23 @@ export default function TimetablePage() {
       {viewMode === 'GRID' ? (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
           {DAYS.map((day) => {
-            const daySlots = timetableSlots.filter((s) => s.day === day);
+            const daySlots = filteredSlots.filter((s) => s.day === day);
             if (selectedDay !== 'ALL' && selectedDay !== day) return null;
 
             return (
               <div key={day} className="space-y-3">
-                <div className="bg-white p-2.5 rounded-xl border border-[#D6D8D5] text-center font-bold text-xs text-[#1F2933] shadow-xs">
-                  {day} ({daySlots.length})
+                <div className="bg-white p-2.5 rounded-xl border border-[#D6D8D5] text-center font-bold text-xs text-[#1F2933] shadow-xs flex items-center justify-between px-3">
+                  <span>{day}</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#F0F1EF] font-semibold text-[#667085]">
+                    {daySlots.length}
+                  </span>
                 </div>
 
                 <div className="space-y-2">
                   {daySlots.length === 0 ? (
-                    <div className="p-4 text-center text-[#667085] text-xs border border-dashed border-[#D6D8D5] rounded-xl bg-white/50">
-                      No Classes
+                    <div className="p-4 text-center text-[#667085] text-xs border border-dashed border-[#D6D8D5] rounded-xl bg-white/50 space-y-1">
+                      <p className="font-semibold text-[#1F2933]">No Classes</p>
+                      <p className="text-[10px] text-[#868E96]">Free Study / Lab slot</p>
                     </div>
                   ) : (
                     daySlots.map((slot) => (
@@ -256,46 +303,56 @@ export default function TimetablePage() {
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredSlots.map((slot) => (
-            <div
-              key={slot.id}
-              className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
-                    {slot.day} · {slot.timeSlot}
+          {filteredSlots.length === 0 ? (
+            <div className="p-8 text-center bg-white rounded-xl border border-dashed border-[#D6D8D5] space-y-2">
+              <CalendarDays className="h-8 w-8 text-[#667085] mx-auto opacity-50" />
+              <h3 className="text-sm font-bold text-[#1F2933]">No Classes Scheduled</h3>
+              <p className="text-xs text-[#667085] max-w-sm mx-auto">
+                No classes found for {currentDeptObj.name} · Semester {selectedSemester}.
+              </p>
+            </div>
+          ) : (
+            filteredSlots.map((slot) => (
+              <div
+                key={slot.id}
+                className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
+                      {slot.day} · {slot.timeSlot}
+                    </span>
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
+                      {slot.courseCode}
+                    </span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1F2933]">{slot.courseName}</h3>
+                </div>
+
+                <div className="flex items-center gap-4 text-[#667085] text-xs">
+                  <span className="flex items-center gap-1">
+                    <MapPin className="h-3.5 w-3.5" />
+                    <span>{slot.room}</span>
                   </span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
-                    {slot.courseCode}
+                  <span className="flex items-center gap-1">
+                    <User className="h-3.5 w-3.5" />
+                    <span>{slot.instructor}</span>
+                  </span>
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
+                      slot.type === 'Lecture'
+                        ? 'bg-blue-50 text-blue-800 border border-blue-200'
+                        : slot.type === 'Lab'
+                        ? 'bg-purple-50 text-purple-800 border border-purple-200'
+                        : 'bg-amber-50 text-amber-800 border border-amber-200'
+                    }`}
+                  >
+                    {slot.type}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-[#1F2933]">{slot.courseName}</h3>
               </div>
-
-              <div className="flex items-center gap-4 text-[#667085] text-xs">
-                <span className="flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5" />
-                  <span>{slot.room}</span>
-                </span>
-                <span className="flex items-center gap-1">
-                  <User className="h-3.5 w-3.5" />
-                  <span>{slot.instructor}</span>
-                </span>
-                <span
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
-                    slot.type === 'Lecture'
-                      ? 'bg-blue-50 text-blue-800 border border-blue-200'
-                      : slot.type === 'Lab'
-                      ? 'bg-purple-50 text-purple-800 border border-purple-200'
-                      : 'bg-amber-50 text-amber-800 border border-amber-200'
-                  }`}
-                >
-                  {slot.type}
-                </span>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       )}
 

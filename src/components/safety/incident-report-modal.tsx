@@ -476,19 +476,19 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
                 </p>
                 <p className="text-[#202226] flex items-center gap-1.5">
                   <Check className="h-3.5 w-3.5 text-[#10B981]" />
-                  <span>Placed onto <strong>Live Command Center Map</strong></span>
+                  <span>Placed onto <strong>Interactive Campus Map</strong></span>
                 </p>
                 <p className="text-[#202226] flex items-center gap-1.5">
                   <Check className="h-3.5 w-3.5 text-[#10B981]" />
-                  <span>Added to <strong>Immutable Audit Trail</strong></span>
+                  <span>Added to <strong>Incident Audit Trail</strong></span>
                 </p>
               </div>
 
               <Button
                 onClick={resetForm}
-                className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#202226] font-bold text-xs px-6"
+                className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs px-6 rounded-lg cursor-pointer"
               >
-                Done &amp; View Command Center
+                Done &amp; View Safety Desk
               </Button>
             </div>
           )}

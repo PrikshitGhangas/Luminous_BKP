@@ -18,7 +18,7 @@ const ROUTE_TITLES: Record<string, string> = {
   '/incidents': 'Incidents | Luminous AI',
   '/copilot': 'AI Copilot | Luminous AI',
   '/dashboard': 'Dashboard | Luminous AI',
-  '/safety/command-center': 'Safety Command Center | Luminous AI',
+  '/safety/command-center': 'Campus Safety Desk | Luminous AI',
   '/safety/emergency': 'Emergency Dispatch | Luminous AI',
   '/safety/risk-intelligence': 'Risk Intelligence | Luminous AI',
   '/safety/sos': 'SOS Alert Center | Luminous AI',

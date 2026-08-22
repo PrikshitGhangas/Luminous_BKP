@@ -408,24 +408,24 @@ export default function HackathonDemoPage() {
 
           {/* STEP 2 DETAILS: Gemini AI Triage */}
           {activeStep === 2 && (
-            <div className="p-5 rounded-xl border border-[#EAB308]/40 bg-gradient-to-br from-[#131C38] to-[#0F1026] space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D6D8D5] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#EAB308]/20 text-[#B45309] text-[10px] font-mono font-bold mb-1">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-bold mb-1">
                     <span>STAGE 2: GEMINI 3.7 FLASH AUTONOMOUS ANALYSIS</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#202226] font-mono">
-                    Step 2: Gemini Analyzes Incident &amp; Escalates to CRITICAL
+                  <h3 className="text-base font-bold text-[#1F2933]">
+                    Step 2: Gemini Analyzes Incident &amp; Flags High Severity
                   </h3>
-                  <p className="text-xs text-[#555960]">
-                    Gemini evaluates hazard indicators, classifies severity as CRITICAL (98% confidence), and attaches Hazmat SOP directives.
+                  <p className="text-xs text-[#667085]">
+                    Gemini evaluates hazard indicators, classifies severity as CRITICAL (98% confidence), and suggests safety action steps.
                   </p>
                 </div>
 
                 <Button
                   size="sm"
                   onClick={() => setActiveStep(3)}
-                  className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs font-mono gap-1.5 shrink-0"
+                  className="bg-[#1F2933] hover:bg-[#111827] text-white font-bold text-xs gap-1.5 shrink-0 cursor-pointer"
                 >
                   <span>Proceed to Step 3: Security Dispatch</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -433,37 +433,37 @@ export default function HackathonDemoPage() {
               </div>
 
               {/* Gemini Output Visualization Card */}
-              <div className="rounded-xl border border-[#EAB308] bg-[#F4F5F6] p-4 space-y-3 shadow-xl">
-                <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-2">
+              <div className="rounded-xl border border-[#D6D8D5] bg-[#F7F8F6] p-4 space-y-3 shadow-xs">
+                <div className="flex items-center justify-between border-b border-[#D6D8D5] pb-2">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-[#B45309]" />
-                    <span className="font-bold font-mono text-xs text-[#B45309]">
+                    <Sparkles className="h-4 w-4 text-[#8a6d1a]" />
+                    <span className="font-bold text-xs text-[#1F2933]">
                       Gemini 3.7 Flash Triage Card
                     </span>
                   </div>
                   <SeverityBadge severity="critical" size="md" isAiClassified />
                 </div>
 
-                <p className="text-xs text-[#202226] leading-relaxed font-sans">
+                <p className="text-xs text-[#1F2933] leading-relaxed">
                   Active smoke and potential electrical fire hazard detected near Block D. Immediate containment, evacuation, and circuit isolation required.
                 </p>
 
-                <div className="space-y-1 font-mono text-xs">
-                  <span className="text-[#B45309] font-bold block uppercase text-[10px]">
-                    Recommended Action Directives:
+                <div className="space-y-1 text-xs">
+                  <span className="text-[#8a6d1a] font-bold block uppercase text-[10px]">
+                    Recommended Action Steps:
                   </span>
-                  <ul className="space-y-1 text-[#555960] text-[11px]">
+                  <ul className="space-y-1 text-[#667085] text-[11px]">
                     <li className="flex items-center gap-1.5">
-                      <span className="text-[#B45309]">•</span>
-                      <span>Dispatch Campus Rapid Security &amp; Hazmat Team immediately</span>
+                      <span className="text-[#8a6d1a]">•</span>
+                      <span>Dispatch Campus Security &amp; Maintenance staff immediately</span>
                     </li>
                     <li className="flex items-center gap-1.5">
-                      <span className="text-[#B45309]">•</span>
+                      <span className="text-[#8a6d1a]">•</span>
                       <span>Isolate local electrical main distribution breakers</span>
                     </li>
                     <li className="flex items-center gap-1.5">
-                      <span className="text-[#B45309]">•</span>
-                      <span>Initiate Level 1 localized building evacuation</span>
+                      <span className="text-[#8a6d1a]">•</span>
+                      <span>Initiate localized building evacuation</span>
                     </li>
                   </ul>
                 </div>
@@ -473,30 +473,30 @@ export default function HackathonDemoPage() {
 
           {/* STEP 3 DETAILS: Security Receive & Acknowledge */}
           {activeStep === 3 && (
-            <div className="p-5 rounded-xl border border-[#D0D1D6] bg-white space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D6D8D5] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold mb-1">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-amber-50 text-amber-800 text-[10px] font-bold mb-1">
                     <span>STAGE 3: SECURITY OPERATIONS DESK</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#202226] font-mono">
+                  <h3 className="text-base font-bold text-[#1F2933]">
                     Step 3: Security Receives &amp; Acknowledges Incident
                   </h3>
-                  <p className="text-xs text-[#555960]">
-                    Officer Vikram Sharma receives real-time dispatch alert on Security Desk (`/security`) and dispatches Rapid Patrol Unit Alpha.
+                  <p className="text-xs text-[#667085]">
+                    Vikram Sharma receives real-time dispatch alert on Security Desk (`/security`) and assigns campus security.
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={handleSecurityAction}
-                    className="bg-amber-600 hover:bg-amber-500 text-black font-bold text-xs font-mono gap-1.5"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-bold text-xs gap-1.5 cursor-pointer"
                   >
                     <ShieldAlert className="h-4 w-4" />
-                    <span>Acknowledge &amp; Dispatch Unit Alpha</span>
+                    <span>Acknowledge &amp; Dispatch Security</span>
                   </Button>
 
-                  <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#D0D1D6]">
+                  <Button asChild variant="outline" size="sm" className="h-9 text-xs border-[#D6D8D5] cursor-pointer">
                     <Link href="/security">Open Security Desk →</Link>
                   </Button>
                 </div>
@@ -504,26 +504,26 @@ export default function HackathonDemoPage() {
             </div>
           )}
 
-          {/* STEP 4 DETAILS: Command Center & Campus Map */}
+          {/* STEP 4 DETAILS: Safety Desk & Campus Map */}
           {activeStep === 4 && (
-            <div className="p-5 rounded-xl border border-[#D0D1D6] bg-white space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D6D8D5] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-red-500/20 text-red-300 text-[10px] font-mono font-bold mb-1">
-                    <span>STAGE 4: GEOSPATIAL MAP &amp; EMERGENCY BROADCAST</span>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-blue-50 text-blue-700 text-[10px] font-bold mb-1">
+                    <span>STAGE 4: CAMPUS MAP &amp; SAFETY DESK</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#202226] font-mono">
-                    Step 4: Command Center &amp; Campus Map Update Live
+                  <h3 className="text-base font-bold text-[#1F2933]">
+                    Step 4: Safety Desk &amp; Campus Map Update Live
                   </h3>
-                  <p className="text-xs text-[#555960]">
-                    Threat level escalates to HIGH_ALERT. The geospatial map shows Block D pulsing red, and emergency broadcasts are transmitted.
+                  <p className="text-xs text-[#667085]">
+                    The safety desk reflects the active incident queue, and the campus map highlights the affected facility.
                   </p>
                 </div>
 
                 <Button
                   size="sm"
                   onClick={() => setActiveStep(5)}
-                  className="bg-[#EAB308] text-[#0B132B] font-bold text-xs font-mono gap-1.5"
+                  className="bg-[#1F2933] hover:bg-[#111827] text-white font-bold text-xs gap-1.5 cursor-pointer"
                 >
                   <span>Proceed to Step 5: Admin Intelligence</span>
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -534,44 +534,44 @@ export default function HackathonDemoPage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                 <Link
                   href="/safety/command-center"
-                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308] transition-all space-y-1 block font-mono"
+                  className="p-3.5 rounded-xl border border-[#D6D8D5] bg-[#F7F8F6] hover:border-[#1F2933] transition-all space-y-1 block"
                 >
-                  <div className="flex items-center justify-between text-xs text-[#B45309] font-bold">
+                  <div className="flex items-center justify-between text-xs text-[#1F2933] font-bold">
                     <span className="flex items-center gap-1.5">
-                      <Radio className="h-4 w-4" />
-                      <span>Command Center</span>
+                      <Radio className="h-4 w-4 text-[#8a6d1a]" />
+                      <span>Safety Desk</span>
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                  <p className="text-[11px] text-[#555960]">View live threat posture and active emergency queue</p>
+                  <p className="text-[11px] text-[#667085]">View live incident queue and safety overview</p>
                 </Link>
 
                 <Link
                   href="/campus-map"
-                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308] transition-all space-y-1 block font-mono"
+                  className="p-3.5 rounded-xl border border-[#D6D8D5] bg-[#F7F8F6] hover:border-[#1F2933] transition-all space-y-1 block"
                 >
-                  <div className="flex items-center justify-between text-xs text-[#B45309] font-bold">
+                  <div className="flex items-center justify-between text-xs text-[#1F2933] font-bold">
                     <span className="flex items-center gap-1.5">
-                      <MapPin className="h-4 w-4" />
+                      <MapPin className="h-4 w-4 text-[#2563EB]" />
                       <span>Campus Map</span>
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                  <p className="text-[11px] text-[#555960]">See Block D pulsing red hazard warning</p>
+                  <p className="text-[11px] text-[#667085]">Browse facilities and building directories</p>
                 </Link>
 
                 <Link
                   href="/safety/emergency"
-                  className="p-3.5 rounded-xl border border-[#D0D1D6] bg-[#F4F5F6] hover:border-[#EAB308] transition-all space-y-1 block font-mono"
+                  className="p-3.5 rounded-xl border border-[#D6D8D5] bg-[#F7F8F6] hover:border-[#1F2933] transition-all space-y-1 block"
                 >
-                  <div className="flex items-center justify-between text-xs text-[#B45309] font-bold">
+                  <div className="flex items-center justify-between text-xs text-[#1F2933] font-bold">
                     <span className="flex items-center gap-1.5">
-                      <Bell className="h-4 w-4" />
+                      <Bell className="h-4 w-4 text-red-600" />
                       <span>Emergency Alerts</span>
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </div>
-                  <p className="text-[11px] text-[#555960]">Inspect active evacuation broadcast alert</p>
+                  <p className="text-[11px] text-[#667085]">Manage campus-wide safety announcements</p>
                 </Link>
               </div>
             </div>
@@ -579,41 +579,41 @@ export default function HackathonDemoPage() {
 
           {/* STEP 5 DETAILS: AI Risk Intelligence & Admin Recommendation */}
           {activeStep === 5 && (
-            <div className="p-5 rounded-xl border border-indigo-500/40 bg-gradient-to-br from-[#131C38] via-[#0F1026] to-[#1C2541] space-y-4 animate-in fade-in">
+            <div className="p-5 rounded-xl border border-[#D6D8D5] bg-white space-y-4 animate-in fade-in">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-mono font-bold mb-1">
-                    <span>STAGE 5: AI RISK INTELLIGENCE &amp; ADMIN GOVERNANCE</span>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-indigo-50 text-indigo-700 text-[10px] font-bold mb-1">
+                    <span>STAGE 5: SYSTEM &amp; SAFETY AUDIT LOGS</span>
                   </div>
-                  <h3 className="text-base font-bold text-[#202226] font-mono">
-                    Step 5: AI Identifies Broader Pattern &amp; Admin Executes Recommendation
+                  <h3 className="text-base font-bold text-[#1F2933]">
+                    Step 5: Review Safety Records &amp; Activity Audit
                   </h3>
-                  <p className="text-xs text-[#555960]">
-                    AI Risk Intelligence correlates 7 Block D infrastructure incidents over the last 30 days and recommends an electrical inspection SOP.
+                  <p className="text-xs text-[#667085]">
+                    View synchronized audit trails of AI triage actions, guard check-ins, and administrative decisions.
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={handleAdminAction}
-                    className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs font-mono gap-1.5"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-bold text-xs gap-1.5 cursor-pointer"
                   >
                     <Send className="h-3.5 w-3.5" />
-                    <span>Execute Electrical Directive</span>
+                    <span>Acknowledge Log Entry</span>
                   </Button>
 
-                  <Button asChild variant="outline" size="sm" className="h-9 text-xs font-mono border-[#D0D1D6]">
-                    <Link href="/safety/risk-intelligence">Open Risk Intelligence →</Link>
+                  <Button asChild variant="outline" size="sm" className="h-9 text-xs border-[#D6D8D5] cursor-pointer">
+                    <Link href="/audit-logs">Open Audit Logs →</Link>
                   </Button>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl border border-[#EAB308]/40 bg-white space-y-2 font-mono text-xs">
-                <div className="text-[#B45309] font-bold">
-                  AI Pattern Cluster #1: Block D (Engineering) Recurrent Electrical &amp; Fume Strain
+              <div className="p-4 rounded-xl border border-[#D6D8D5] bg-[#F7F8F6] space-y-2 text-xs">
+                <div className="text-[#1F2933] font-bold">
+                  Activity Log Entry: Engineering Block Inspection Scheduled
                 </div>
-                <p className="text-[#555960] font-sans text-xs">
-                  Grounded Evidence: 7 incidents logged in last 30 days. Directive: &ldquo;Schedule an electrical inspection and thermal imaging of all sub-panels in Block D.&rdquo;
+                <p className="text-[#667085] leading-relaxed">
+                  Electrical sub-panel inspection verified by campus operations. Incident marked in audit trail.
                 </p>
               </div>
             </div>

@@ -132,6 +132,10 @@ export interface Incident {
   requires_immediate_response?: boolean;
   evidence_urls?: string[];
   timeline?: IncidentTimelineEvent[];
+  sos_level?: 'campus' | 'police';
+  auto_escalated?: boolean;
+  escalated_at?: string;
+  sla_expires_at?: string;
   created_at: string;
   updated_at?: string;
   resolved_at?: string;
@@ -160,6 +164,12 @@ export interface CampusLocation {
   activeIncidentsCount: number;
   buildingType: string;
   officerStationed?: string;
+  operatingHours?: string;
+  floors?: string;
+  contactExt?: string;
+  inCharge?: string;
+  amenities?: string[];
+  facilities?: string[];
 }
 
 export interface AuditLogEntry {

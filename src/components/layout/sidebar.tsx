@@ -79,9 +79,9 @@ const NAV_SECTIONS: NavSection[] = [
         roles: ['super_admin', 'admin', 'security', 'faculty', 'warden'],
       },
       {
-        title: 'Command Center',
+        title: 'Safety Desk',
         href: '/safety/command-center',
-        icon: Radio,
+        icon: Building2,
         roles: ['super_admin', 'admin', 'security'],
       },
       {
@@ -94,7 +94,7 @@ const NAV_SECTIONS: NavSection[] = [
         title: 'Campus Map',
         href: '/campus-map',
         icon: MapPin,
-        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer'],
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
       },
     ],
   },
@@ -240,7 +240,10 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       )}
     >
       {/* Header with Luminous AI Branding */}
-      <div className="flex h-16 shrink-0 items-center justify-between border-b border-[#D6D8D5] px-3.5 bg-white">
+      <div className={cn(
+        "flex h-16 shrink-0 items-center border-b border-[#D6D8D5] bg-white transition-all",
+        isCollapsed ? "justify-center px-1 relative" : "justify-between px-3.5"
+      )}>
         <Link href="/" className="flex items-center gap-2.5 overflow-hidden">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#F4C430] via-[#EAB308] to-[#D4AF37] shadow-sm shadow-[#D4AF37]/30 text-[#111827]">
             <Sparkles className="h-5 w-5 font-bold" />
@@ -259,10 +262,15 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
 
         <button
           onClick={onToggleCollapse}
-          className="flex h-7 w-7 items-center justify-center rounded-md text-[#8A9199] hover:bg-[#E8E9E7] hover:text-[#1F2933] transition-colors"
+          className={cn(
+            "flex items-center justify-center rounded-md text-[#8A9199] hover:bg-[#E8E9E7] hover:text-[#1F2933] transition-colors cursor-pointer",
+            isCollapsed
+              ? "absolute -right-3 top-5 h-6 w-6 rounded-full bg-white border border-[#D6D8D5] shadow-xs text-[#1F2933] z-50 hover:bg-[#F0F1EF]"
+              : "h-7 w-7"
+          )}
           title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          {isCollapsed ? <ChevronRight className="h-3.5 w-3.5" /> : <ChevronLeft className="h-4 w-4" />}
         </button>
       </div>
 
@@ -374,7 +382,12 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
       {/* Footer / Logout */}
       <div className="shrink-0 border-t border-[#D6D8D5] p-2 bg-white">
         <button
-          onClick={() => logout()}
+          onClick={async () => {
+            await logout();
+            if (typeof window !== 'undefined') {
+              window.location.href = '/';
+            }
+          }}
           className={cn(
             'flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-xs font-medium text-[#667085] hover:bg-[#F0F1EF] hover:text-[#1F2933] transition-colors cursor-pointer',
             isCollapsed && 'justify-center px-0'

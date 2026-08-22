@@ -67,13 +67,13 @@ export function LiveIncidentFeed({
   return (
     <Card className="border-[#AEB0B7] bg-white text-[#202226] shadow-md overflow-hidden flex flex-col h-full">
       {/* Header */}
-      <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-[#F4F5F6] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <CardHeader className="p-4 pb-2 border-b border-[#D6D8D5] bg-[#F7F8F6] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Radio className="h-4 w-4 text-[#B45309] animate-pulse" />
-          <CardTitle className="text-xs font-bold text-[#202226] tracking-wider uppercase flex items-center gap-2">
-            <span>Live Incident Stream</span>
-            <span className="rounded bg-[#E7E8EB] border border-[#D0D1D6] px-2 py-0.5 text-[10px] text-[#202226]">
-              {filtered.length} ACTIVE
+          <Radio className="h-4 w-4 text-[#8a6d1a]" />
+          <CardTitle className="text-xs font-bold text-[#1F2933] flex items-center gap-2">
+            <span>Campus Incident Log</span>
+            <span className="rounded-full bg-[#F0F1EF] border border-[#D6D8D5] px-2 py-0.5 text-[10px] text-[#667085]">
+              {filtered.length} Reports
             </span>
           </CardTitle>
         </div>
@@ -82,20 +82,21 @@ export function LiveIncidentFeed({
           <Button
             size="sm"
             onClick={simulateIncomingIncident}
-            className="h-7 text-[10px] font-mono font-bold bg-white hover:bg-[#E7E8EB] border border-[#EAB308] text-[#B45309] gap-1"
-            title="Simulate incoming real-time incident event"
+            variant="outline"
+            className="h-7 text-xs border-[#D6D8D5] text-[#667085] hover:text-[#1F2933] gap-1 rounded-lg cursor-pointer"
+            title="Simulate incoming campus incident event"
           >
             <RefreshCw className="h-3 w-3" />
-            <span>Simulate Alert</span>
+            <span>Simulate Report</span>
           </Button>
 
           <Button
             size="sm"
             onClick={onOpenReportModal}
-            className="h-7 text-[10px] font-mono font-bold bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#202226] gap-1 shadow-sm"
+            className="h-7 text-xs bg-[#1F2933] hover:bg-[#111827] text-white gap-1 rounded-lg shadow-xs cursor-pointer"
           >
             <Plus className="h-3 w-3" />
-            <span>Report Incident</span>
+            <span>Report Issue</span>
           </Button>
         </div>
       </CardHeader>
@@ -174,22 +175,22 @@ export function LiveIncidentFeed({
 
 
                 {/* Bottom Row: Location, Officer, Action Button */}
-                <div className="flex items-center justify-between text-[10px] text-[#555960] pt-1.5 border-t border-[#D0D1D6]">
-                  <span className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3 text-[#B45309]" />
-                    <span className="truncate max-w-[140px]">{incident.location_name}</span>
+                <div className="flex items-center justify-between text-[11px] text-[#667085] pt-2 border-t border-[#D6D8D5]">
+                  <span className="flex items-center gap-1 truncate max-w-[170px]">
+                    <MapPin className="h-3 w-3 text-[#8a6d1a] shrink-0" />
+                    <span className="truncate">{incident.location_name}</span>
                   </span>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     {!isResolved && incident.status !== 'responding' && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           dispatchResponder(incident.id);
                         }}
-                        className="px-2 py-0.5 rounded bg-[#FEF3C7] border border-[#EAB308]/40 text-[#B45309] font-bold hover:bg-[#FDE68A] cursor-pointer"
+                        className="px-2.5 py-0.5 rounded-md bg-[#F0F1EF] hover:bg-[#E8E9E7] text-[#1F2933] font-medium text-[10px] border border-[#D6D8D5] cursor-pointer"
                       >
-                        Dispatch Unit
+                        Respond
                       </button>
                     )}
 
@@ -199,14 +200,14 @@ export function LiveIncidentFeed({
                           e.stopPropagation();
                           resolveIncident(incident.id);
                         }}
-                        className="px-2 py-0.5 rounded bg-[#ECFDF5] border border-[#10B981] text-[#067a4f] font-bold hover:bg-[#D1FAE5] cursor-pointer"
+                        className="px-2.5 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-medium text-[10px] border border-emerald-200 cursor-pointer"
                       >
                         Resolve
                       </button>
                     )}
 
-                    <span className="font-bold text-[#B45309] hover:underline">
-                      Inspect →
+                    <span className="text-[11px] font-semibold text-[#8a6d1a] hover:underline">
+                      View →
                     </span>
                   </div>
                 </div>

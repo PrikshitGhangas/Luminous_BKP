@@ -397,6 +397,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('luminous_demo');
         localStorage.removeItem('luminous_role');
       } catch {}
+      window.location.href = '/';
     }
   }, []);
 

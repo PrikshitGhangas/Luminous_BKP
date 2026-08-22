@@ -57,7 +57,13 @@ function getStored<T>(key: string, fallback: T): T {
   if (typeof window !== 'undefined') {
     try {
       const item = localStorage.getItem(key);
-      if (item) return JSON.parse(item) as T;
+      if (item) {
+        const parsed = JSON.parse(item);
+        if (Array.isArray(parsed) && Array.isArray(fallback) && parsed.length < fallback.length) {
+          return fallback;
+        }
+        return parsed as T;
+      }
     } catch (err) {
       console.warn(`Failed to parse localStorage key "${key}":`, err);
     }

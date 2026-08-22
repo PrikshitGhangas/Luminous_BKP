@@ -31,10 +31,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
-  if (isLoading) {
+  React.useEffect(() => {
+    if (mounted && !isLoading && !user) {
+      window.location.href = '/';
+    }
+  }, [mounted, isLoading, user]);
+
+  if (isLoading || (mounted && !user)) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-[#F1F2F0]">
-        <LoadingSpinner text="Authenticating Luminous AI..." />
+        <LoadingSpinner text="Redirecting to main page..." />
       </div>
     );
   }

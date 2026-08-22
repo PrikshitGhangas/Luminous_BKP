@@ -94,15 +94,15 @@ export default function AdminDashboardPage() {
           <span className="text-xs text-[#667085]">Active Safety Events</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-bold text-[#1F2933]">{activeIncidents.length}</span>
-            <span className="text-xs text-amber-700 font-medium">Under active patrol review</span>
+            <span className="text-xs text-amber-700 font-medium">Active campus reports</span>
           </div>
         </div>
 
         <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
-          <span className="text-xs text-[#667085]">Platform Security Status</span>
+          <span className="text-xs text-[#667085]">Platform Status</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-bold text-[#1F2933]">Operational</span>
-            <span className="text-xs text-emerald-700 font-medium">100% services online</span>
+            <span className="text-xs text-emerald-700 font-medium">All systems online</span>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function AdminDashboardPage() {
       <div className="flex flex-wrap items-center gap-2.5">
         <Button asChild size="sm" className="gap-1.5">
           <Link href="/students">
-            <UserCog className="h-4 w-4" /> Manage Users
+            <UserCog className="h-4 w-4" /> Manage Students
           </Link>
         </Button>
         <Button asChild size="sm" variant="outline" className="gap-1.5">
@@ -120,8 +120,8 @@ export default function AdminDashboardPage() {
           </Link>
         </Button>
         <Button asChild size="sm" variant="outline" className="gap-1.5">
-          <Link href="/alerts">
-            <BarChart3 className="h-4 w-4" /> View Reports
+          <Link href="/safety/emergency">
+            <BellRing className="h-4 w-4" /> Campus Alerts
           </Link>
         </Button>
         <Button asChild size="sm" variant="outline" className="gap-1.5">
@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
               <AlertTriangle className="h-4 w-4 text-[#C94C4C]" />
               Critical Alerts
             </CardTitle>
-            <Link href="/alerts" className="flex items-center gap-1 text-xs font-medium text-[#8a6d1a] hover:underline">
+            <Link href="/safety/emergency" className="flex items-center gap-1 text-xs font-medium text-[#8a6d1a] hover:underline">
               View all <ChevronRight className="h-3.5 w-3.5" />
             </Link>
           </CardHeader>

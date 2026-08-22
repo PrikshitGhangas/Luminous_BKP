@@ -33,8 +33,6 @@ function LoginForm() {
     'admin',
     'security',
     'parent',
-    'warden',
-    'placement_officer',
     'super_admin',
   ];
 
@@ -115,13 +113,13 @@ function LoginForm() {
           </span>
           <span className="text-[10px] font-normal text-[#667085]">No password needed</span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
           {demoRoles.map((r) => (
             <button
               key={r}
               type="button"
               onClick={() => handleQuickDemo(r)}
-              className="px-2 py-1.5 text-[11px] font-semibold rounded-lg border border-[#D6D8D5] bg-white hover:border-[#EAB308] hover:bg-[#EAB308]/10 text-[#1F2933] hover:text-[#8a6d1a] transition-all text-center truncate cursor-pointer shadow-2xs"
+              className="px-2.5 py-2 text-[11px] font-semibold rounded-lg border border-[#D6D8D5] bg-white hover:border-[#1F2933] hover:bg-[#F0F1EF] text-[#1F2933] transition-all text-center truncate cursor-pointer shadow-2xs"
             >
               {ROLE_DETAILS[r]?.label}
             </button>

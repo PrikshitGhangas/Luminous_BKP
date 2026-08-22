@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useCampusServices } from '@/lib/context/campus-services-context';
+import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,6 +19,8 @@ import { Complaint, ComplaintCategory } from '@/lib/types';
 
 export default function ComplaintsPage() {
   const { complaints, lodgeComplaint, updateComplaintStatus } = useCampusServices();
+  const { isSuperAdmin, isAdmin, role } = useRole();
+  const canManageTickets = isSuperAdmin || isAdmin || role === 'faculty' || role === 'security';
 
   const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');

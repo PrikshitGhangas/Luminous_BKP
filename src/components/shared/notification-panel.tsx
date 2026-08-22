@@ -35,10 +35,8 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
   };
 
   return (
-    <>
-      <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-xs" onClick={onClose} />
-      <div className="fixed right-4 top-16 z-50 w-80 sm:w-96 rounded-xl border border-[#D6D8D5] bg-white text-[#1F2933] shadow-lg overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-        <div className="flex items-center justify-between border-b border-[#D6D8D5] bg-[#F7F8F6] px-4 py-3">
+    <div className="absolute right-0 top-full mt-2 z-50 w-80 sm:w-96 rounded-xl border border-[#D6D8D5] bg-white text-[#1F2933] shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+      <div className="flex items-center justify-between border-b border-[#D6D8D5] bg-[#F7F8F6] px-4 py-3">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-sm text-[#1F2933]">Notifications</span>
             {unreadCount > 0 && (
@@ -105,14 +103,13 @@ export function NotificationPanel({ isOpen, onClose }: NotificationPanelProps) {
 
         <div className="border-t border-[#D6D8D5] bg-[#F7F8F6] p-2 text-center">
           <Link
-            href="/alerts"
+            href="/safety/emergency"
             onClick={onClose}
             className="text-xs text-[#8a6d1a] hover:text-[#B45309] font-medium"
           >
-            View Alert Center →
+            View Safety Announcements &amp; Alerts →
           </Link>
         </div>
       </div>
-    </>
   );
 }
