@@ -203,7 +203,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5] bg-gradient-to-b from-[#F7F8F6] via-white to-[#F7F8F6]">
+      <section className="overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5] bg-gradient-to-b from-[#F7F8F6] via-white to-[#F7F8F6]">
         <div className="mx-auto max-w-5xl text-center space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#D6D8D5] bg-white px-4 py-1.5 text-xs font-semibold text-[#1F2933] shadow-xs">
             <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />

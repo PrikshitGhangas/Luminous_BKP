@@ -240,22 +240,23 @@ export default function HackathonDemoPage() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* Toast Notification Notification */}
+      {/* Toast Notification */}
       {demoMessage && (
         <div className="fixed top-20 right-6 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
-          <div className="flex items-center gap-2.5 rounded-xl border border-[#EAB308] bg-white px-4 py-3 text-xs font-mono text-[#202226] shadow-2xl shadow-black">
-            <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+          <div className="flex items-center gap-2.5 rounded-xl border border-[#D6D8D5] bg-white px-4 py-3 text-xs font-semibold text-[#1F2933] shadow-lg">
+            <CheckCircle2 className="h-4 w-4 text-[#3F8F68] shrink-0" />
             <span>{demoMessage}</span>
           </div>
         </div>
       )}
 
       {/* Demo Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Demo Control Hub
+          <h1 className="text-2xl font-bold text-[#1F2933]">
+            Demo Console
           </h1>
+          <p className="text-xs text-[#667085] mt-0.5">Role simulation and automated scenario validation</p>
         </div>
 
         {/* Quick Hub Controls */}
@@ -263,18 +264,18 @@ export default function HackathonDemoPage() {
           <Button
             onClick={handleRunFullDemoFlow}
             disabled={isSubmittingHero}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+            className="font-semibold"
           >
-            <Play className="h-4 w-4 mr-2" />
-            Auto-Run Demo
+            <Play className="h-3.5 w-3.5 mr-1.5" />
+            Auto-Run Scenario
           </Button>
 
           <Button
             onClick={handleReset}
             variant="outline"
-            className="text-gray-600"
+            className="text-[#1F2933]"
           >
-            <RotateCcw className="h-4 w-4 mr-2" />
+            <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
             Reset State
           </Button>
         </div>

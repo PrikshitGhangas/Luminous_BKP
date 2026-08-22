@@ -307,13 +307,14 @@ export default function CampusShieldCopilotPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Copilot</h1>
+          <h1 className="text-2xl font-bold text-[#1F2933]">Campus AI Copilot</h1>
+          <p className="text-xs text-[#667085] mt-0.5">Role-aware conversational assistant with strict database authorization</p>
         </div>
-        <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-[#D0D1D6]">
-          <span className="text-[11px] font-mono text-[#B45309] uppercase font-bold pl-2">
-            Simulate Persona:
+        <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-[#D6D8D5] shadow-2xs">
+          <span className="text-xs font-semibold text-[#667085]">
+            Role View:
           </span>
           <select
             value={selectedRole}
@@ -322,8 +323,8 @@ export default function CampusShieldCopilotPage() {
               setSelectedRole(newR);
               switchRole(newR);
             }}
-            aria-label="Simulate Persona"
-            className="h-8 rounded-lg bg-[#E7E8EB] border border-[#D0D1D6] px-2 text-xs font-mono font-bold text-[#B45309] focus:border-[#EAB308] focus:outline-none cursor-pointer"
+            aria-label="Active Role View"
+            className="h-8 rounded-lg bg-[#F7F8F6] border border-[#D6D8D5] px-2.5 text-xs font-semibold text-[#1F2933] focus:border-[#EAB308] focus:outline-none cursor-pointer"
           >
             <option value="admin">Administrator (Marcus Chen)</option>
             <option value="super_admin">Super Admin (Dr. Evelyn Vance)</option>

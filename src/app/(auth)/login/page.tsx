@@ -85,14 +85,13 @@ function LoginForm() {
     try {
       const { error } = await signInWithProvider(provider);
       if (error) setErrorMessage(error);
-      // On success, Supabase redirects to the provider.
     } finally {
       setOauthProvider(null);
     }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-lg rounded-2xl border border-[#D6D8D5] bg-white p-6 sm:p-8 shadow-xs space-y-6">
       <div className="text-center space-y-2">
         <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#F4C430] via-[#EAB308] to-[#D4AF37] text-[#111827] shadow-sm shadow-[#D4AF37]/30">
           <Sparkles className="h-6 w-6" />

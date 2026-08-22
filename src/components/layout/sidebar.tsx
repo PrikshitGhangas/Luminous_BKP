@@ -55,7 +55,7 @@ const NAV_SECTIONS: NavSection[] = [
     title: 'Safety',
     items: [
        {
-        title: 'Hackathon Demo Hub',
+        title: 'Demo Console',
         href: '/demo',
         icon: Sparkles,
         roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],

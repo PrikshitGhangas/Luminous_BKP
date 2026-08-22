@@ -184,8 +184,8 @@ export default function AdminDashboardPage() {
               <div className="py-8 text-center text-xs text-[#8A9199]">No recent activity.</div>
             ) : (
               <div className="space-y-2">
-                {notifications.slice(0, 5).map((n) => (
-                  <div key={n.id} className="rounded-lg border border-[#D6D8D5] p-2.5">
+                {notifications.slice(0, 5).map((n, idx) => (
+                  <div key={`${n.id || 'notif'}-${idx}`} className="rounded-lg border border-[#D6D8D5] p-2.5">
                     <p className="text-xs font-semibold text-[#1F2933]">{n.title}</p>
                     <p className="line-clamp-1 text-[11px] text-[#667085] mt-0.5">{n.message}</p>
                   </div>
@@ -237,8 +237,8 @@ export default function AdminDashboardPage() {
           {notifications.length === 0 ? (
             <p className="text-sm text-[#8A9199]">No notifications.</p>
           ) : (
-            notifications.map((n) => (
-              <div key={n.id} className="rounded-lg border border-[#D6D8D5] p-3">
+            notifications.map((n, idx) => (
+              <div key={`${n.id || 'notif'}-${idx}`} className="rounded-lg border border-[#D6D8D5] p-3">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold text-[#1F2933]">{n.title}</p>
                   <Badge variant={n.read ? 'secondary' : 'gold'} className="text-[10px]">
