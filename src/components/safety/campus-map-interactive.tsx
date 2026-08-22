@@ -634,15 +634,14 @@ export function CampusMapInteractive({
             </div>
           </div>
         ) : hoveredNode ? (
-          <div className="absolute bottom-4 left-4 z-30 max-w-xs rounded-xl border border-[#AEB0B7] bg-white p-3 text-xs text-[#202226] shadow-lg animate-in fade-in duration-150">
-            <div className="flex items-center justify-between border-b border-[#D0D1D6] pb-1">
-              <span className="font-bold text-[#202226]">{hoveredNode.name}</span>
-              <span className="text-[10px] text-[#555960]">({hoveredNode.code})</span>
+          <div className="absolute bottom-4 left-4 z-30 max-w-xs rounded-xl border border-[#D6D8D5] bg-white p-3 text-xs text-[#1F2933] shadow-lg animate-in fade-in duration-150">
+            <div className="flex items-center justify-between border-b border-[#D6D8D5] pb-1">
+              <span className="font-bold text-[#1F2933]">{hoveredNode.name}</span>
+              <span className="text-[10px] text-[#667085]">({hoveredNode.code})</span>
             </div>
-            <div className="mt-1.5 text-[11px] text-[#555960] space-y-0.5">
+            <div className="mt-1.5 text-[11px] text-[#667085] space-y-0.5">
               <p>Sector: {hoveredNode.sector}</p>
-              <p>Stationed: {hoveredNode.officerStationed}</p>
-              <p className="text-amber-600">Risk Level: {hoveredNode.riskLevel.toUpperCase()}</p>
+              {hoveredNode.officerStationed && <p>Stationed: {hoveredNode.officerStationed}</p>}
             </div>
           </div>
         ) : null}

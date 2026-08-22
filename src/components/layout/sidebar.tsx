@@ -182,7 +182,7 @@ const NAV_SECTIONS: NavSection[] = [
         title: 'Student Wellbeing',
         href: '/wellbeing',
         icon: Heart,
-        roles: ['student', 'faculty', 'super_admin', 'admin', 'warden'],
+        roles: ['student'],
       },
     ],
   },

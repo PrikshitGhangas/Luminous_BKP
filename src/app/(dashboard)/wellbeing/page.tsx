@@ -31,6 +31,20 @@ export default function WellbeingPage() {
     setNotes('');
   };
 
+  if (role !== 'student') {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 bg-[#F7F8F6] border border-[#D6D8D5] rounded-xl space-y-3">
+        <div className="h-10 w-10 rounded-full bg-[#F0F1EF] border border-[#D6D8D5] flex items-center justify-center text-[#1F2933]">
+          <Heart className="h-5 w-5 text-rose-500" />
+        </div>
+        <h2 className="text-base font-bold text-[#1F2933]">Student Confidential Access Only</h2>
+        <p className="text-xs text-[#667085] max-w-sm">
+          The Student Wellbeing &amp; Counseling Portal is strictly reserved for enrolled students to protect personal privacy and counselor confidentiality.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Header */}

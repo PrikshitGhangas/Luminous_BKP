@@ -45,20 +45,20 @@ export function IncidentDetailsModal({ incident, isOpen, onClose }: IncidentDeta
     : incident.reporter_name || 'Anonymous Student';
 
   const handleDispatch = () => {
-    dispatchResponder(incident.id, 'Campus Hazmat & Rapid Security', 'Capt. Vikram Sharma');
+    dispatchResponder(incident.id, 'Campus Hazmat & Rapid Security', 'Officer Vikram Sharma');
     setActionSuccessMessage('Rapid Response Unit successfully dispatched to ' + incident.location_name);
     setTimeout(() => setActionSuccessMessage(null), 3500);
   };
 
   const handleAcknowledge = () => {
-    updateIncidentStatus(incident.id, 'acknowledged', 'Capt. Vikram Sharma (Security)', 'Incident acknowledged by SOC duty desk.');
+    updateIncidentStatus(incident.id, 'acknowledged', 'Officer Vikram Sharma (Security)', 'Incident acknowledged by SOC duty desk.');
     setActionSuccessMessage('Incident acknowledged.');
     setTimeout(() => setActionSuccessMessage(null), 3000);
   };
 
   const handleConfirmResolve = (e: React.FormEvent) => {
     e.preventDefault();
-    resolveIncident(incident.id, 'Capt. Vikram Sharma (Security)', resolutionNotes || 'Area secured and normal operations restored.');
+    resolveIncident(incident.id, 'Officer Vikram Sharma (Security)', resolutionNotes || 'Area secured and normal operations restored.');
     setIsResolving(false);
     setResolutionNotes('');
     setActionSuccessMessage('Incident marked as RESOLVED and archived into audit log.');

@@ -147,11 +147,11 @@ export default function HackathonDemoPage() {
   const handleSecurityAction = () => {
     switchRole('security');
     if (lastCreatedIncident) {
-      acknowledgeIncident(lastCreatedIncident.id, 'Capt. Vikram Sharma (Security)');
+      acknowledgeIncident(lastCreatedIncident.id, 'Officer Vikram Sharma (Security)');
       dispatchResponder(
         lastCreatedIncident.id,
         'Rapid Reaction Patrol Alpha',
-        'Capt. Vikram Sharma',
+        'Officer Vikram Sharma',
         'UNIT-A1',
         'Sirens active, en-route to Engineering Block'
       );
@@ -324,7 +324,7 @@ export default function HackathonDemoPage() {
             {[
               { num: 1, title: '1. Student Report', role: 'student', desc: 'Aanya Patel files hazard' },
               { num: 2, title: '2. Gemini AI Triage', role: 'system', desc: 'Classifies CRITICAL fire' },
-              { num: 3, title: '3. Security Dispatch', role: 'security', desc: 'Capt. Sharma dispatches' },
+              { num: 3, title: '3. Security Dispatch', role: 'security', desc: 'Officer Vikram dispatches' },
               { num: 4, title: '4. Command & Map', role: 'all', desc: 'Threat level & map pulse' },
               { num: 5, title: '5. Admin Intelligence', role: 'admin', desc: 'Pattern SOP executed' },
             ].map((st) => (
@@ -483,7 +483,7 @@ export default function HackathonDemoPage() {
                     Step 3: Security Receives &amp; Acknowledges Incident
                   </h3>
                   <p className="text-xs text-[#555960]">
-                    Capt. Vikram Sharma receives real-time dispatch alert on Security Desk (`/security`) and dispatches Rapid Patrol Unit Alpha.
+                    Officer Vikram Sharma receives real-time dispatch alert on Security Desk (`/security`) and dispatches Rapid Patrol Unit Alpha.
                   </p>
                 </div>
 

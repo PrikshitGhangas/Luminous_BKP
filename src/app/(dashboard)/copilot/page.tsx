@@ -327,11 +327,11 @@ export default function CampusShieldCopilotPage() {
           >
             <option value="admin">Administrator (Marcus Chen)</option>
             <option value="super_admin">Super Admin (Dr. Evelyn Vance)</option>
-            <option value="security">Security Officer (Capt. Vikram Sharma)</option>
+            <option value="security">Security Officer (Officer Vikram Sharma)</option>
             <option value="student">Student (Aanya Patel)</option>
             <option value="parent">Parent (Rajesh Patel)</option>
             <option value="faculty">Faculty (Prof. Sarah Jenkins)</option>
-            <option value="warden">Hostel Warden (Col. Rajeshwari Devi)</option>
+            <option value="warden">Hostel Warden (Dr. Rajeshwari Devi)</option>
           </select>
         </div>
       </div>

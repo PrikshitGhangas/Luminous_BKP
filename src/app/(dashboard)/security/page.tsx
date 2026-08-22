@@ -36,7 +36,7 @@ import {
 import Link from 'next/link';
 
 const ON_DUTY_OFFICERS = [
-  { name: 'Capt. Vikram Sharma', unit: 'Rapid Unit Alpha (Lead)', sector: 'Central Sector' },
+  { name: 'Officer Vikram Sharma', unit: 'Rapid Unit Alpha (Lead)', sector: 'Central Sector' },
   { name: 'Officer Ramos', unit: 'Patrol Beta (Vehicle #4)', sector: 'North Perimeter' },
   { name: 'Officer Chen', unit: 'Station Guard (Post #1)', sector: 'Main Academic Gate' },
   { name: 'Officer Priya Nair', unit: 'Hostel Patrol Delta', sector: 'Residential Block B' },
@@ -103,7 +103,7 @@ export default function SecurityDashboardPage() {
   // Dispatch Modal
   const [dispatchModalIncident, setDispatchModalIncident] = useState<Incident | null>(null);
   const [selectedDispatchUnit, setSelectedDispatchUnit] = useState('Rapid Unit Alpha');
-  const [dispatchOfficerName, setDispatchOfficerName] = useState('Capt. Vikram Sharma');
+  const [dispatchOfficerName, setDispatchOfficerName] = useState('Officer Vikram Sharma');
   const [dispatchNotes, setDispatchNotes] = useState('');
 
   // Resolve Modal
@@ -145,7 +145,7 @@ export default function SecurityDashboardPage() {
   const handleResolveSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!resolveModalIncident) return;
-    resolveIncident(resolveModalIncident.id, `${user?.full_name || 'Capt. Vikram Sharma'} (Security Officer)`, resolveNotes);
+    resolveIncident(resolveModalIncident.id, `${user?.full_name || 'Officer Vikram Sharma'} (Security Officer)`, resolveNotes);
     setResolveModalIncident(null);
     setResolveNotes('');
   };
@@ -193,7 +193,7 @@ export default function SecurityDashboardPage() {
             Security Operations
           </h1>
           <p className="text-xs text-[#667085] mt-1">
-            Active Duty: <span className="font-semibold text-[#1F2933]">Capt. Vikram Sharma</span> · Sector Patrol Unit Alpha
+            Active Duty: <span className="font-semibold text-[#1F2933]">Officer Vikram Sharma</span> · Sector Patrol Unit Alpha
           </p>
         </div>
 
@@ -421,7 +421,7 @@ export default function SecurityDashboardPage() {
           <div className="space-y-3">
             {assignedToMeIncidents.length === 0 ? (
               <div className="py-12 text-center text-xs text-[#667085] bg-white rounded-xl border border-[#D6D8D5]">
-                No active incidents currently assigned to Capt. Vikram Sharma.
+                No active incidents currently assigned to Officer Vikram Sharma.
               </div>
             ) : (
               assignedToMeIncidents.map((incident) => (

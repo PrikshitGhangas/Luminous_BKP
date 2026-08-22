@@ -340,7 +340,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const updateIncidentStatus = useCallback(
-    (id: string, newStatus: IncidentStatus, actorName = 'Capt. Vikram Sharma (Security)', notes?: string) => {
+    (id: string, newStatus: IncidentStatus, actorName = 'Officer Vikram Sharma (Security)', notes?: string) => {
       const now = new Date().toISOString();
       setIncidents((prev) =>
         prev.map((i) => {
@@ -388,7 +388,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
   );
 
   const acknowledgeIncident = useCallback(
-    (id: string, officerName = 'Capt. Vikram Sharma (Security)', notes = 'Incident acknowledged and placed under active observation') => {
+    (id: string, officerName = 'Officer Vikram Sharma (Security)', notes = 'Incident acknowledged and placed under active observation') => {
       const now = new Date().toISOString();
       setIncidents((prev) =>
         prev.map((i) => {
@@ -468,7 +468,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       const audit: AuditLogEntry = {
         id: `audit-${Date.now()}`,
         action: 'INCIDENT_ASSIGNED',
-        actor: 'Capt. Vikram Sharma (Security)',
+        actor: 'Officer Vikram Sharma (Security)',
         actorRole: 'Security Dispatcher',
         ip: '10.0.8.44',
         timestamp: now,
@@ -482,7 +482,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
   );
 
   const dispatchResponder = useCallback(
-    (id: string, department = 'Rapid Reaction Patrol Alpha', officerName = 'Capt. Vikram Sharma', unitCode = 'UNIT-A1', notes?: string) => {
+    (id: string, department = 'Rapid Reaction Patrol Alpha', officerName = 'Officer Vikram Sharma', unitCode = 'UNIT-A1', notes?: string) => {
       const now = new Date().toISOString();
       setIncidents((prev) =>
         prev.map((i) => {
@@ -531,7 +531,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
   );
 
   const startResponse = useCallback(
-    (id: string, officerName = 'Capt. Vikram Sharma (Security)', notes = 'Officer reached site, perimeter secured, actively engaged') => {
+    (id: string, officerName = 'Officer Vikram Sharma (Security)', notes = 'Officer reached site, perimeter secured, actively engaged') => {
       const now = new Date().toISOString();
       setIncidents((prev) =>
         prev.map((i) => {
@@ -578,7 +578,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
   );
 
   const resolveIncident = useCallback(
-    (id: string, actorName = 'Capt. Vikram Sharma (Security)', notes = 'Area thoroughly secured, zero casualties reported, debrief filed.', resolutionCategory = 'Resolved') => {
+    (id: string, actorName = 'Officer Vikram Sharma (Security)', notes = 'Area thoroughly secured, zero casualties reported, debrief filed.', resolutionCategory = 'Resolved') => {
       const now = new Date().toISOString();
       setIncidents((prev) =>
         prev.map((i) => {
@@ -725,7 +725,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
           incident_id: incId,
           timestamp: new Date(Date.now() + 1000).toISOString(),
           title: 'Assigned',
-          description: `Assigned immediately to Sector Rapid Response Unit (Lead: Capt. Vikram Sharma).`,
+          description: `Assigned immediately to Sector Rapid Response Unit (Lead: Officer Vikram Sharma).`,
           actor_name: 'Security Automated Dispatch',
           actor_role: 'Security SOC',
           type: 'assigned',
@@ -736,7 +736,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
           timestamp: new Date(Date.now() + 1500).toISOString(),
           title: 'Acknowledged',
           description: `Security Command Center acknowledged panic alert. Unit Alpha on priority deployment.`,
-          actor_name: 'Capt. Vikram Sharma',
+          actor_name: 'Officer Vikram Sharma',
           actor_role: 'Security Officer',
           type: 'acknowledged',
         },
@@ -779,7 +779,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
         status: 'dispatched',
         priority_score: 10,
         assigned_department: 'Campus Security & Rapid Response',
-        assigned_officer_name: 'Capt. Vikram Sharma & Officer Ramos',
+        assigned_officer_name: 'Officer Vikram Sharma & Officer Ramos',
         dispatched_at: now,
         is_anonymous: false,
         requires_immediate_response: true,
@@ -865,7 +865,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
     const audit: AuditLogEntry = {
       id: `audit-vis-in-${Date.now()}`,
       action: 'VISITOR_CHECKED_IN',
-      actor: 'Capt. Vikram Sharma (Security)',
+      actor: 'Officer Vikram Sharma (Security)',
       actorRole: 'Security Officer',
       ip: '10.0.8.44',
       timestamp: now,
@@ -894,7 +894,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
     const audit: AuditLogEntry = {
       id: `audit-vis-out-${Date.now()}`,
       action: 'VISITOR_CHECKED_OUT',
-      actor: 'Capt. Vikram Sharma (Security)',
+      actor: 'Officer Vikram Sharma (Security)',
       actorRole: 'Security Officer',
       ip: '10.0.8.44',
       timestamp: now,
@@ -918,7 +918,7 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
     const audit: AuditLogEntry = {
       id: `audit-vis-iss-${Date.now()}`,
       action: 'VISITOR_PASS_ISSUED',
-      actor: 'Capt. Vikram Sharma (Security)',
+      actor: 'Officer Vikram Sharma (Security)',
       actorRole: 'Security Officer',
       ip: '10.0.8.44',
       timestamp: now,

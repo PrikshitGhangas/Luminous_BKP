@@ -172,7 +172,7 @@ export async function POST(request: Request) {
     }
 
     const assignedDept = validated.ai_analysis?.departments?.[0] || 'Campus Security';
-    const assignedOfficer = 'Capt. Vikram Sharma';
+    const assignedOfficer = 'Officer Vikram Sharma';
 
     const newIncident: Incident = {
       id: incId,

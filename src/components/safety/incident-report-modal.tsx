@@ -472,7 +472,7 @@ export function IncidentReportModal({ isOpen, onClose, onSuccess }: IncidentRepo
               <div className="p-3 rounded-xl bg-[#F4F5F6] border border-[#D0D1D6] max-w-sm mx-auto text-left text-xs space-y-1">
                 <p className="text-[#202226] flex items-center gap-1.5">
                   <Check className="h-3.5 w-3.5 text-[#10B981]" />
-                  <span>Assigned to <strong>Capt. Vikram Sharma (Security)</strong></span>
+                  <span>Assigned to <strong>Officer Vikram Sharma (Security)</strong></span>
                 </p>
                 <p className="text-[#202226] flex items-center gap-1.5">
                   <Check className="h-3.5 w-3.5 text-[#10B981]" />

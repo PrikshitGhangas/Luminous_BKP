@@ -162,7 +162,7 @@ export default function SafetySosPage() {
 
             <div className="rounded-xl bg-[#F7F8F6] border border-[#D6D8D5] p-3 text-xs text-left space-y-1.5">
               <div className="flex justify-between"><span className="text-[#667085]">Incident:</span><span className="font-semibold">{activeSosIncident?.incident_number || 'SOS-ACTIVE'}</span></div>
-              <div className="flex justify-between"><span className="text-[#667085]">Responder:</span><span className="font-semibold text-emerald-700">Capt. Vikram Sharma</span></div>
+              <div className="flex justify-between"><span className="text-[#667085]">Responder:</span><span className="font-semibold text-emerald-700">Officer Vikram Sharma</span></div>
               <div className="flex justify-between"><span className="text-[#667085]">Target:</span><span className="font-semibold truncate max-w-[200px]">{locationName}</span></div>
             </div>
 

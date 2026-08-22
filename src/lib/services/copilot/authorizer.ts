@@ -488,7 +488,7 @@ export async function executeAuthorizedTool(
                 'Deploy Hazmat Unit with full respirator equipment to isolate Lab 302 exhaust hood',
                 'Coordinate with Campus Health Clinic for any fume inhalation checks',
               ],
-              responsible_officer: 'Capt. Vikram Sharma (Hazmat Lead)',
+              responsible_officer: 'Officer Vikram Sharma (Hazmat Lead)',
             },
             {
               priority_rank: 2,

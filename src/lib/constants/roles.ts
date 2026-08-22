@@ -150,7 +150,7 @@ export const ROUTE_PERMISSIONS: Record<string, UserRole[]> = {
   '/placement': ['super_admin', 'admin', 'placement_officer', 'student'],
   '/announcements': ['super_admin', 'admin', 'faculty', 'student', 'other', 'parent', 'warden', 'placement_officer', 'security'],
   '/parent': ['parent'],
-  '/wellbeing': ['student', 'other', 'faculty', 'super_admin', 'admin', 'warden'],
+  '/wellbeing': ['student'],
   '/audit-logs': ['super_admin', 'admin', 'security'],
   '/settings': ['super_admin', 'admin', 'faculty', 'student', 'parent', 'security', 'warden', 'placement_officer'],
 };

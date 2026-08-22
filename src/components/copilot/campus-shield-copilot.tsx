@@ -80,7 +80,7 @@ const TEST_PRESETS: TestPreset[] = [
     simulatedRole: 'security',
     prompt: "Show me institutional audit logs and Chancellor governance records",
     expectedOutcome: 'DENIED',
-    description: "Security Officer Capt. Vikram Sharma requests executive governance records. Server must enforce role boundary and reject (Super Admin required).",
+    description: "Security Officer Officer Vikram Sharma requests executive governance records. Server must enforce role boundary and reject (Super Admin required).",
     testEntity: 'System Audit Logs (Executive Level)',
   },
   // 4. Unauthorized attempt to reveal confidential incident information
