@@ -105,117 +105,132 @@ export default function AnnouncementsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
-            <Megaphone className="h-6 w-6 text-[#B45309]" />
-            <span>CAMPUS ANNOUNCEMENTS &amp; BROADCAST FEED</span>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2.5">
+            <Megaphone className="h-6 w-6 text-[#8a6d1a]" />
+            <span>Announcements</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-sans">
-            Official institutional notices, emergency advisories, academic updates, and placement drive bulletins
+          <p className="text-xs text-[#667085] mt-1 font-sans">
+            Official campus notices, academic updates, safety advisories, and administrative circulars.
           </p>
         </div>
 
         <Button
           onClick={() => setIsPostModalOpen(true)}
           size="sm"
-          className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+          className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs"
         >
           <Plus className="h-4 w-4" />
-          <span>Post Official Announcement</span>
+          <span>New Announcement</span>
         </Button>
       </div>
 
-      {/* Category Badges */}
+      {/* Category Badges (Segmented Pills) */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-        {['ALL', 'Safety', 'Academic', 'Administrative', 'Placement', 'Hostel'].map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setCategoryFilter(cat)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all whitespace-nowrap ${
-              categoryFilter === cat
-                ? 'bg-[#EAB308] text-[#0B132B]'
-                : 'bg-[#F4F5F6] text-[#555960] border border-[#D0D1D6] hover:text-white'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        <div className="inline-flex p-1 bg-[#F0F1EF] rounded-full border border-[#D6D8D5] gap-1">
+          {['ALL', 'Safety', 'Academic', 'Administrative', 'Placement', 'Hostel'].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategoryFilter(cat)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap cursor-pointer ${
+                categoryFilter === cat
+                  ? 'bg-[#1F2933] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#1F2933]'
+              }`}
+            >
+              {cat === 'ALL' ? 'All Notices' : cat}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Search */}
-      <div className="flex items-center gap-3 bg-[#F4F5F6] p-3 rounded-xl border border-[#D0D1D6]">
-        <Search className="h-4 w-4 text-[#B45309] shrink-0" />
+      <div className="flex items-center gap-2.5 bg-white px-3.5 py-2.5 rounded-xl border border-[#D6D8D5] shadow-xs">
+        <Search className="h-4 w-4 text-[#667085] shrink-0" />
         <Input
-          placeholder="Search announcements by title or keyword..."
+          placeholder="Search notices by title or keywords..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="bg-transparent border-0 text-xs text-[#202226] placeholder:text-[#555960]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="bg-transparent border-0 text-xs text-[#1F2933] placeholder:text-[#667085] focus-visible:ring-0 focus-visible:ring-offset-0 p-0 h-auto"
         />
       </div>
 
       {/* Announcements Feed */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {filteredAnnouncements.map((a) => (
-          <Card key={a.id} className={`bg-[#F4F5F6] border-[#D0D1D6] text-[#202226] ${a.isUrgent ? 'border-2 border-amber-500/60 shadow-lg shadow-amber-950/20' : ''}`}>
-            <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white/60 flex flex-row items-center justify-between">
+          <div
+            key={a.id}
+            className={`p-4 rounded-xl border bg-white space-y-2.5 shadow-xs transition-all ${
+              a.isUrgent ? 'border-amber-300' : 'border-[#D6D8D5]'
+            }`}
+          >
+            <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-2">
-                {a.isUrgent && <Pin className="h-4 w-4 text-amber-400 shrink-0" />}
-                <CardTitle className="text-sm font-bold font-mono text-[#202226]">{a.title}</CardTitle>
+                {a.isUrgent && <Pin className="h-4 w-4 text-amber-600 shrink-0" />}
+                <h2 className="text-sm font-bold text-[#1F2933]">{a.title}</h2>
               </div>
-              <Badge className={`font-mono text-[10px] ${a.category === 'Safety' ? 'bg-red-500/15 text-red-300 border-red-500/30' : a.category === 'Academic' ? 'bg-blue-500/15 text-blue-300 border-blue-500/30' : 'bg-purple-500/15 text-purple-300 border-purple-500/30'}`}>
-                {a.category.toUpperCase()}
-              </Badge>
-            </CardHeader>
-            <CardContent className="p-4 space-y-2 text-xs font-mono">
-              <p className="text-[#202226] font-sans text-xs sm:text-sm leading-relaxed">{a.content}</p>
-              <div className="flex flex-wrap items-center justify-between gap-2 text-[10px] text-[#555960] pt-2 border-t border-[#D0D1D6]">
-                <span>Author: <strong className="text-[#B45309]">{a.author}</strong> ({a.authorRole})</span>
-                <span>Audience: {a.targetAudience} · Posted: {a.postedAt}</span>
-              </div>
-            </CardContent>
-          </Card>
+              <span
+                className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold shrink-0 ${
+                  a.category === 'Safety'
+                    ? 'bg-red-50 text-red-700 border border-red-200'
+                    : a.category === 'Academic'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'bg-[#F0F1EF] text-[#667085] border border-[#D6D8D5]'
+                }`}
+              >
+                {a.category}
+              </span>
+            </div>
+
+            <p className="text-xs text-[#667085] leading-relaxed">{a.content}</p>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-[#667085] pt-2 border-t border-[#D6D8D5]">
+              <span>
+                Posted by: <strong className="text-[#1F2933]">{a.author}</strong> ({a.authorRole})
+              </span>
+              <span>Audience: {a.targetAudience} · {a.postedAt}</span>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Modal: POST ANNOUNCEMENT */}
       {isPostModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <Card className="w-full max-w-lg bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
+            <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
                 <Megaphone className="h-4 w-4" />
                 <span>Post Official Campus Announcement</span>
               </CardTitle>
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={() => setIsPostModalOpen(false)}
-                className="h-6 w-6 text-[#555960] hover:text-white"
+                className="text-[#667085] hover:text-[#1F2933] cursor-pointer"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </CardHeader>
             <CardContent className="p-4 space-y-3.5">
               <form onSubmit={handlePostSubmit} className="space-y-3 text-xs">
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Announcement Title *</label>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">Announcement Title *</label>
                   <Input
                     required
                     placeholder="e.g. Mid-Term Examination Schedule or Security Notice"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
-                    className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                    className="bg-white border-[#D6D8D5] text-xs"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Category *</label>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Category *</label>
                     <select
                       value={newCategory}
                       onChange={(e) => setNewCategory(e.target.value as typeof newCategory)}
-                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
+                      className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933] cursor-pointer"
                     >
                       <option value="Academic">Academic</option>
                       <option value="Safety">Safety</option>
@@ -231,38 +246,40 @@ export default function AnnouncementsPage() {
                       id="urgentCheck"
                       checked={newUrgent}
                       onChange={(e) => setNewUrgent(e.target.checked)}
-                      className="h-4 w-4 rounded border-[#D0D1D6] bg-white text-[#B45309] focus:ring-0"
+                      className="h-4 w-4 rounded border-[#D6D8D5] text-[#1F2933] focus:ring-0"
                     />
-                    <label htmlFor="urgentCheck" className="text-xs font-mono text-[#B45309] font-bold">
+                    <label htmlFor="urgentCheck" className="text-xs font-semibold text-[#1F2933] cursor-pointer">
                       Flag as Urgent Advisory
                     </label>
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Announcement Body *</label>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">Announcement Body *</label>
                   <textarea
                     required
                     rows={4}
                     placeholder="Write announcement text..."
                     value={newContent}
                     onChange={(e) => setNewContent(e.target.value)}
-                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
+                    className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933]"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D6D8D5]">
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
                     onClick={() => setIsPostModalOpen(false)}
-                    className="text-xs border-[#D0D1D6]"
+                    className="text-xs cursor-pointer"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
+                    size="sm"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs cursor-pointer"
                   >
                     Broadcast Notice
                   </Button>

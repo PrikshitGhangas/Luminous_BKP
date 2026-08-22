@@ -24,14 +24,14 @@ export default function CampusMapPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-[#B45309]" />
-            <span>CAMPUS SAFETY GEOLOCATION MAP</span>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <MapPin className="h-6 w-6 text-[#8a6d1a]" />
+            <span>Campus Map</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-mono">
-            High-fidelity vector telemetry across 10 campus facilities · Click pins to inspect hazards
+          <p className="text-xs text-[#667085] mt-1">
+            Interactive campus map with facility locations and active incident pins.
           </p>
         </div>
 
@@ -39,13 +39,13 @@ export default function CampusMapPage() {
           <Button
             size="sm"
             onClick={() => setIsReportModalOpen(true)}
-            className="bg-gradient-to-r from-[#F4C430] via-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+            className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#111827] font-bold text-xs gap-1.5 shadow-sm"
           >
             <Plus className="h-4 w-4" />
             <span>Report Incident</span>
           </Button>
 
-          <Button asChild size="sm" variant="outline" className="text-xs font-mono">
+          <Button asChild size="sm" variant="outline" className="text-xs border-[#D6D8D5]">
             <Link href="/safety/command-center">
               <span>Command Center</span>
             </Link>

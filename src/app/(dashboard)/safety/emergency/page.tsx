@@ -106,53 +106,40 @@ export default function SafetyEmergencyPage() {
 
   return (
     <div className="space-y-6">
-      {/* Simulation Compliance Warning */}
-      <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/40 flex items-start gap-3 text-amber-200">
-        <Info className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-        <div className="text-xs space-y-0.5">
-          <span className="font-bold uppercase tracking-wider font-mono text-[#B45309]">
-            Operational Training &amp; Demo System Notice:
-          </span>
-          <p className="text-[#202226] opacity-90 leading-relaxed">
-            This module provides simulated multi-channel campus alert broadcasting for university security drills and internal incident dispatch. It does <strong>NOT</strong> dispatch external police or local municipal 911/112 emergency services.
-          </p>
-        </div>
-      </div>
-
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2">
-            <Bell className="h-6 w-6 text-red-500 animate-pulse" />
-            <span>CAMPUS EMERGENCY RESPONSE &amp; BROADCAST HUB</span>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <Bell className="h-6 w-6 text-[#DC2626]" />
+            <span>Emergency Alerts</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-mono">
-            Multi-tier perimeter alerts: Campus-wide, Building-level, Hostel sector, and Department containment
+          <p className="text-xs text-[#667085] mt-1">
+            Manage and broadcast priority alerts across campus zones, buildings, hostels, and departments.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Button
             onClick={() => setIsBroadcastModalOpen(true)}
-            className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold text-xs gap-1.5 shadow-lg shadow-red-950/60 border border-red-500/40"
+            className="bg-[#DC2626] hover:bg-[#B91C1C] text-white font-semibold text-xs gap-1.5 shadow-sm"
           >
-            <Radio className="h-4 w-4 animate-ping" />
+            <Radio className="h-4 w-4" />
             <span>New Emergency Broadcast</span>
           </Button>
         </div>
       </div>
 
       {lastBroadcastSuccess && (
-        <div className="p-3 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-xs flex items-center gap-2 font-mono animate-in fade-in">
-          <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-          <span>Emergency alert transmitted and synchronized across all active devices &amp; digital signage.</span>
+        <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+          <span>Emergency alert transmitted and synchronized across active devices.</span>
         </div>
       )}
 
-      {/* Quick Trigger Scopes Matrix */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {/* Campus-Wide */}
-        <div
+      {/* Quick Trigger Preset Scopes */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs font-semibold text-[#1F2933]">Broadcast Templates:</span>
+        <button
           onClick={() =>
             setPresetAlert(
               'campus_wide',
@@ -162,31 +149,12 @@ export default function SafetyEmergencyPage() {
               'critical'
             )
           }
-          className="p-4 rounded-xl bg-white border border-red-500/30 hover:border-red-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="px-3.5 py-1.5 rounded-full text-xs bg-[#F0F1EF] hover:bg-[#E4E6E3] text-[#1F2933] border border-[#D6D8D5] font-medium transition-colors cursor-pointer"
         >
-          <div className="flex items-center justify-between">
-            <span className="p-2 rounded-lg bg-red-950/80 text-red-400 border border-red-600/40">
-              <Globe className="h-5 w-5" />
-            </span>
-            <span className="text-[10px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-red-950 text-red-300 border border-red-800">
-              Tier 1 • Global
-            </span>
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
-              Campus-Wide Alert
-            </h3>
-            <p className="text-[11px] text-[#555960] mt-0.5">
-              Full lockdown, severe weather, or universal evacuation
-            </p>
-          </div>
-          <span className="text-[10px] font-mono text-red-400 flex items-center gap-1 font-bold pt-1">
-            <span>Broadcast Campus-Wide →</span>
-          </span>
-        </div>
+          Campus Lockdown
+        </button>
 
-        {/* Building-Specific */}
-        <div
+        <button
           onClick={() =>
             setPresetAlert(
               'building',
@@ -196,31 +164,12 @@ export default function SafetyEmergencyPage() {
               'high'
             )
           }
-          className="p-4 rounded-xl bg-white border border-amber-500/30 hover:border-amber-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="px-3.5 py-1.5 rounded-full text-xs bg-[#F0F1EF] hover:bg-[#E4E6E3] text-[#1F2933] border border-[#D6D8D5] font-medium transition-colors cursor-pointer"
         >
-          <div className="flex items-center justify-between">
-            <span className="p-2 rounded-lg bg-amber-950/80 text-amber-400 border border-amber-600/40">
-              <Building className="h-5 w-5" />
-            </span>
-            <span className="text-[10px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800">
-              Tier 2 • Building
-            </span>
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
-              Building Specific
-            </h3>
-            <p className="text-[11px] text-[#555960] mt-0.5">
-              Targeted academic block alarms &amp; localized hazard containment
-            </p>
-          </div>
-          <span className="text-[10px] font-mono text-amber-400 flex items-center gap-1 font-bold pt-1">
-            <span>Select Building →</span>
-          </span>
-        </div>
+          Building Evacuation
+        </button>
 
-        {/* Hostel Alert */}
-        <div
+        <button
           onClick={() =>
             setPresetAlert(
               'hostel',
@@ -230,31 +179,12 @@ export default function SafetyEmergencyPage() {
               'medium'
             )
           }
-          className="p-4 rounded-xl bg-white border border-orange-500/30 hover:border-orange-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="px-3.5 py-1.5 rounded-full text-xs bg-[#F0F1EF] hover:bg-[#E4E6E3] text-[#1F2933] border border-[#D6D8D5] font-medium transition-colors cursor-pointer"
         >
-          <div className="flex items-center justify-between">
-            <span className="p-2 rounded-lg bg-orange-950/80 text-orange-400 border border-orange-600/40">
-              <Home className="h-5 w-5" />
-            </span>
-            <span className="text-[10px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-orange-950 text-orange-300 border border-orange-800">
-              Tier 3 • Hostel
-            </span>
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
-              Hostel Alert
-            </h3>
-            <p className="text-[11px] text-[#555960] mt-0.5">
-              Residential quarters curfew alerts &amp; dormitory emergency pings
-            </p>
-          </div>
-          <span className="text-[10px] font-mono text-orange-400 flex items-center gap-1 font-bold pt-1">
-            <span>Target Hostels →</span>
-          </span>
-        </div>
+          Hostel Security Drill
+        </button>
 
-        {/* Department Alert */}
-        <div
+        <button
           onClick={() =>
             setPresetAlert(
               'department',
@@ -264,41 +194,28 @@ export default function SafetyEmergencyPage() {
               'high'
             )
           }
-          className="p-4 rounded-xl bg-white border border-indigo-500/30 hover:border-indigo-400 hover:bg-[#E7E8EB] transition-all cursor-pointer space-y-2 group shadow-md"
+          className="px-3.5 py-1.5 rounded-full text-xs bg-[#F0F1EF] hover:bg-[#E4E6E3] text-[#1F2933] border border-[#D6D8D5] font-medium transition-colors cursor-pointer"
         >
-          <div className="flex items-center justify-between">
-            <span className="p-2 rounded-lg bg-indigo-950/80 text-indigo-400 border border-indigo-600/40">
-              <GraduationCap className="h-5 w-5" />
-            </span>
-            <span className="text-[10px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800">
-              Tier 4 • Department
-            </span>
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-[#202226] group-hover:text-[#B45309] transition-colors">
-              Department Alert
-            </h3>
-            <p className="text-[11px] text-[#555960] mt-0.5">
-              Specialized faculty labs, server room isolations, and workshops
-            </p>
-          </div>
-          <span className="text-[10px] font-mono text-indigo-400 flex items-center gap-1 font-bold pt-1">
-            <span>Target Depts →</span>
-          </span>
-        </div>
+          Lab Containment
+        </button>
       </div>
 
       {/* Broadcast Modal / Form */}
       {isBroadcastModalOpen && (
-        <Card className="border-red-500/50 bg-[#F4F5F6] text-[#202226] shadow-2xl animate-in fade-in duration-200">
-          <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-red-950/30 flex flex-row items-center justify-between">
-            <CardTitle className="text-sm font-bold text-red-300 flex items-center gap-2 font-mono">
-              <ShieldAlert className="h-5 w-5 text-red-400 animate-pulse" />
-              <span>TRANSMIT EMERGENCY BROADCAST</span>
+        <Card className="border-[#D6D8D5] bg-white text-[#1F2933] shadow-lg animate-in fade-in duration-200">
+          <CardHeader className="p-4 pb-3 border-b border-[#D6D8D5] bg-[#F7F8F6] flex flex-row items-center justify-between">
+            <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
+              <ShieldAlert className="h-5 w-5 text-red-600" />
+              <span>Transmit Campus Broadcast</span>
             </CardTitle>
-            <span className="text-[10px] font-mono text-amber-300 bg-amber-950/80 border border-amber-600/40 px-2 py-0.5 rounded">
-              SIMULATED CAMPUS MESH
-            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsBroadcastModalOpen(false)}
+              className="text-xs text-[#667085] hover:text-[#1F2933] h-7 px-2"
+            >
+              ✕ Close
+            </Button>
           </CardHeader>
           <CardContent className="p-5 space-y-4">
             <form onSubmit={handleBroadcast} className="space-y-4 text-xs">
@@ -501,74 +418,70 @@ export default function SafetyEmergencyPage() {
       {/* Emergency Broadcast History & Active Feed */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider font-mono flex items-center gap-2">
-            <History className="h-4 w-4 text-[#B45309]" />
-            <span>Emergency Broadcast History &amp; Active Feed ({alerts.length})</span>
+          <h2 className="text-sm font-bold text-[#1F2933]">
+            Broadcast History ({alerts.length})
           </h2>
-          <span className="text-[11px] font-mono text-[#B45309]">REAL-TIME AUDIT TRAIL</span>
+          <span className="text-xs text-[#667085]">Audit Log</span>
         </div>
 
         {alerts.length === 0 ? (
-          <Card className="p-8 text-center bg-[#F4F5F6] border-[#D0D1D6] text-[#555960] font-mono text-xs">
+          <div className="p-8 text-center bg-white rounded-xl border border-[#D6D8D5] text-[#667085] text-xs">
             No active emergency alerts recorded. All sectors in normal operating posture.
-          </Card>
+          </div>
         ) : (
           alerts.map((alert) => (
-            <Card
+            <div
               key={alert.id}
-              className={`border-l-4 transition-all bg-[#F4F5F6] text-[#202226] ${
+              className={`p-4 rounded-xl border transition-all bg-white text-[#1F2933] space-y-2.5 shadow-xs ${
                 alert.severity === 'critical'
-                  ? 'border-l-red-500 border-[#D0D1D6]'
+                  ? 'border-red-300'
                   : alert.severity === 'high'
-                  ? 'border-l-amber-500 border-[#D0D1D6]'
-                  : 'border-l-blue-500 border-[#D0D1D6]'
+                  ? 'border-amber-300'
+                  : 'border-[#D6D8D5]'
               }`}
             >
-              <CardContent className="p-4 space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <SeverityBadge severity={alert.severity} size="sm" />
-                    <span className="rounded bg-white border border-[#D0D1D6] px-2 py-0.5 text-[10px] font-bold uppercase font-mono text-[#B45309]">
-                      {alert.scope ? alert.scope.replace('_', ' ') : 'CAMPUS WIDE'}
-                    </span>
-                    {alert.target_entity && (
-                      <span className="rounded bg-[#E7E8EB] border border-[#D0D1D6] px-2 py-0.5 text-[10px] font-mono text-[#B45309]">
-                        Target: {alert.target_entity}
-                      </span>
-                    )}
-                    {alert.is_active && (
-                      <span className="flex items-center gap-1 rounded-full bg-red-950 text-red-300 border border-red-800 px-2 py-0.2 text-[10px] font-bold font-mono">
-                        <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-ping" />
-                        BROADCASTING
-                      </span>
-                    )}
-                  </div>
-                  <span className="text-[11px] text-[#B45309] font-mono">
-                    {formatTimeAgo(alert.created_at)}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <SeverityBadge severity={alert.severity} size="sm" />
+                  <span className="rounded-full bg-[#F0F1EF] border border-[#D6D8D5] px-2.5 py-0.5 text-[10px] font-medium text-[#667085] capitalize">
+                    {alert.scope ? alert.scope.replace('_', ' ') : 'Campus Wide'}
                   </span>
+                  {alert.target_entity && (
+                    <span className="rounded-full bg-[#F0F1EF] border border-[#D6D8D5] px-2.5 py-0.5 text-[10px] font-medium text-[#667085]">
+                      Target: {alert.target_entity}
+                    </span>
+                  )}
+                  {alert.is_active && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 text-[10px] font-semibold">
+                      <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-ping" />
+                      Live
+                    </span>
+                  )}
                 </div>
+                <span className="text-xs text-[#667085]">
+                  {formatTimeAgo(alert.created_at)}
+                </span>
+              </div>
 
-                <div>
-                  <h3 className="text-sm font-bold text-[#202226]">{alert.title}</h3>
-                  <p className="text-xs text-[#555960] mt-1 leading-relaxed">{alert.message}</p>
-                </div>
+              <div>
+                <h3 className="text-sm font-bold text-[#1F2933]">{alert.title}</h3>
+                <p className="text-xs text-[#667085] mt-0.5 leading-relaxed">{alert.message}</p>
+              </div>
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#B45309] pt-2 border-t border-[#D0D1D6] font-mono">
-                  <span>Authorized by: {alert.created_by}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-emerald-400">Pushed to Mobile App, SMS Mesh &amp; IoT Alarms</span>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => dismissAlert(alert.id)}
-                      className="h-6 text-[10px] border-[#D0D1D6] text-[#202226]"
-                    >
-                      Dismiss Alert
-                    </Button>
-                  </div>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#667085] pt-2 border-t border-[#D6D8D5]">
+                <span>Authorized by: <strong className="text-[#1F2933]">{alert.created_by}</strong></span>
+                <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => dismissAlert(alert.id)}
+                    className="h-7 text-xs border-[#D6D8D5] text-[#1F2933] rounded-lg"
+                  >
+                    Dismiss Alert
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))
         )}
       </div>

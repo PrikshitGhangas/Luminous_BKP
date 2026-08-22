@@ -151,9 +151,9 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="light-grid-texture relative overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5]">
         <div className="mx-auto max-w-5xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/40 bg-white px-4 py-1 text-xs font-bold text-[#8a6d1a] shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/40 bg-white px-4 py-1 text-xs font-semibold text-[#8a6d1a] shadow-sm">
             <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />
-            <span>AI-POWERED REAL-TIME CAMPUS INTELLIGENCE</span>
+            <span>Autonomous Campus Safety &amp; Intelligence</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1F2933] leading-tight">

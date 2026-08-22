@@ -81,7 +81,7 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
         </button>
 
         <nav className="flex items-center gap-1.5 text-xs text-[#667085]">
-          <Link href="/" className="hover:text-[#1F2933] font-semibold tracking-wider">
+          <Link href="/" className="hover:text-[#1F2933] font-semibold">
             Luminous AI
           </Link>
           <ChevronRight className="h-3.5 w-3.5 text-[#8a9199]" />
@@ -102,10 +102,6 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
           />
         </div>
 
-        <div className="flex items-center gap-2 rounded-full border border-[#EAB308]/40 bg-[#EAB308]/10 px-3 py-1 text-[11px] font-bold text-[#8a6d1a]">
-          <span className="h-2 w-2 rounded-full bg-[#3F8F68] animate-pulse" />
-          <span>SYSTEM OPERATIONAL</span>
-        </div>
       </div>
 
       {/* Right: Actions, SOS link, Notifications, User Badge */}
@@ -117,7 +113,7 @@ export function Topbar({ onToggleMobileMenu }: TopbarProps) {
             className="flex items-center gap-1.5 rounded-lg bg-[#C94C4C] px-3 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-[#b84343] transition-colors animate-pulse border border-red-400"
           >
             <HeartPulse className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">EMERGENCY SOS</span>
+            <span className="hidden sm:inline">Emergency SOS</span>
           </Link>
         )}
 

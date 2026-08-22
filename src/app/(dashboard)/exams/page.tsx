@@ -6,26 +6,31 @@ import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import {
   FileSpreadsheet,
   Award,
   Calendar,
   Clock,
   MapPin,
-  CheckCircle,
   Plus,
   X,
   FileCheck,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
+  PieChart,
+  Pie,
+  Cell,
   Tooltip,
 } from 'recharts';
+
+const GRADE_DATA = [
+  { name: 'Grade A+', grade: 'A+', count: 12, percentage: '27%', color: '#10B981' },
+  { name: 'Grade A', grade: 'A', count: 18, percentage: '40%', color: '#3B82F6' },
+  { name: 'Grade B+', grade: 'B+', count: 8, percentage: '18%', color: '#8B5CF6' },
+  { name: 'Grade B', grade: 'B', count: 5, percentage: '11%', color: '#F59E0B' },
+  { name: 'Grade C', grade: 'C', count: 2, percentage: '4%', color: '#EC4899' },
+];
 
 export default function ExamsPage() {
   const { exams, scheduleExam, courses } = useAcademic();
@@ -46,15 +51,6 @@ export default function ExamsPage() {
 
   const upcomingExams = exams.filter((e) => e.status === 'Upcoming' || e.status === 'Ongoing');
   const publishedExams = exams.filter((e) => e.status === 'Grades Published' || e.status === 'Completed');
-
-  const gradeDistributionData = [
-    { grade: 'A+', count: 12 },
-    { grade: 'A', count: 18 },
-    { grade: 'B+', count: 8 },
-    { grade: 'B', count: 5 },
-    { grade: 'C', count: 2 },
-    { grade: 'F', count: 0 },
-  ];
 
   const handleScheduleExam = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,24 +74,23 @@ export default function ExamsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
-            <FileSpreadsheet className="h-6 w-6 text-[#B45309]" />
-            <span>EXAMINATIONS &amp; GRADE PORTAL</span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <FileSpreadsheet className="h-6 w-6 text-[#1F2933]" />
+            <span>Examinations &amp; Grade Reports</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-sans">
-            Mid-term &amp; final semester schedules, hall ticket clearance, grade reports, and SGPA transcripts
+          <p className="text-xs text-[#667085] mt-0.5">
+            Semester exam schedules, hall allocations, published grades, and GPA distributions.
           </p>
         </div>
 
         {canSchedule && (
           <Button
             onClick={() => setIsScheduleModalOpen(true)}
-            size="sm"
-            className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span>Schedule New Exam</span>
@@ -103,100 +98,124 @@ export default function ExamsPage() {
         )}
       </div>
 
-      {/* Overview Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Scheduled Exams</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{upcomingExams.length} Exams</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
-              <Calendar className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+      {/* Summary Metrics */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Scheduled Examinations</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{upcomingExams.length} Exams</span>
+            <span className="text-xs text-[#667085]">Active roster</span>
+          </div>
+        </div>
 
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Published Results</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-emerald-400">{publishedExams.length} Sessions</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <FileCheck className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Published Grade Reports</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{publishedExams.length} Batches</span>
+            <span className="text-xs text-emerald-700 font-medium">Results verified</span>
+          </div>
+        </div>
 
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Average Campus SGPA</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#B45309]">9.12 / 10.0</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-[#EAB308]/10 border border-[#EAB308]/30 flex items-center justify-center text-[#B45309]">
-              <Award className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Hall Ticket Status</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-purple-400">100% Cleared</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-              <CheckCircle className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Campus Average SGPA</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">9.12 / 10.0</span>
+            <span className="text-xs text-[#667085]">Across departments</span>
+          </div>
+        </div>
       </div>
 
-      {/* Grade Distribution Chart */}
-      <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-        <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/60">
-          <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
-            <Award className="h-4 w-4" />
-            <span>Semester Grade Distribution (A+ to F)</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 h-48">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={gradeDistributionData}>
-              <XAxis dataKey="grade" stroke="#B8B5A3" fontSize={11} />
-              <YAxis stroke="#B8B5A3" fontSize={11} />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#0B132B', borderColor: '#243356', color: '#F4F1DE' }}
-              />
-              <Bar dataKey="count" fill="#8B5CF6" name="Student Count" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {/* Grade Distribution Pie Chart */}
+      <div className="p-5 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+        <div className="flex items-center justify-between pb-3 border-b border-[#D6D8D5]">
+          <div>
+            <h3 className="text-sm font-bold text-[#1F2933]">Semester Grade Distribution</h3>
+            <p className="text-xs text-[#667085]">Breakdown of student performance across active cohorts</p>
+          </div>
+          <span className="text-xs font-semibold text-[#1F2933]">45 Students Evaluated</span>
+        </div>
 
-      {/* Tabs Bar */}
-      <div className="flex items-center gap-2 border-b border-[#D0D1D6] pb-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 pt-4">
+          {/* Donut Chart */}
+          <div className="h-52 flex items-center justify-center">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={GRADE_DATA}
+                  dataKey="count"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={55}
+                  outerRadius={85}
+                  paddingAngle={3}
+                >
+                  {GRADE_DATA.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  content={({ active, payload }) => {
+                    if (active && payload && payload.length) {
+                      const data = payload[0].payload;
+                      return (
+                        <div className="bg-white px-3 py-2 rounded-lg border border-[#D6D8D5] shadow-md text-xs space-y-0.5">
+                          <p className="font-bold text-[#1F2933]">{data.name}</p>
+                          <p className="text-[#667085]">
+                            {data.count} Students ({data.percentage})
+                          </p>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Clean Legend & Statistics */}
+          <div className="space-y-2.5">
+            {GRADE_DATA.map((item) => (
+              <div key={item.grade} className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="h-3 w-3 rounded-full shrink-0"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="font-semibold text-[#1F2933]">{item.name}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[#667085]">{item.count} students</span>
+                  <span className="font-semibold text-[#1F2933] w-10 text-right">{item.percentage}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="inline-flex p-1 bg-[#F0F1EF] rounded-full border border-[#D6D8D5] gap-1">
         <button
           onClick={() => setActiveTab('UPCOMING')}
-          className={`px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all ${
+          className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
             activeTab === 'UPCOMING'
-              ? 'bg-[#EAB308] text-[#0B132B]'
-              : 'bg-[#F4F5F6] text-[#555960] border border-[#D0D1D6] hover:text-white'
+              ? 'bg-[#1F2933] text-white shadow-xs'
+              : 'text-[#667085] hover:text-[#1F2933]'
           }`}
         >
           Upcoming Examinations ({upcomingExams.length})
         </button>
         <button
           onClick={() => setActiveTab('RESULTS')}
-          className={`px-4 py-2 rounded-lg text-xs font-mono font-bold transition-all ${
+          className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
             activeTab === 'RESULTS'
-              ? 'bg-[#EAB308] text-[#0B132B]'
-              : 'bg-[#F4F5F6] text-[#555960] border border-[#D0D1D6] hover:text-white'
+              ? 'bg-[#1F2933] text-white shadow-xs'
+              : 'text-[#667085] hover:text-[#1F2933]'
           }`}
         >
-          Published Grade Reports
+          Published Grade Reports ({publishedExams.length})
         </button>
       </div>
 
@@ -204,133 +223,137 @@ export default function ExamsPage() {
       {activeTab === 'UPCOMING' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {upcomingExams.map((ex) => (
-            <Card key={ex.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-              <CardHeader className="p-4 pb-3 border-b border-[#D0D1D6] bg-white/40 flex flex-row items-center justify-between">
+            <div
+              key={ex.id}
+              className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs space-y-3"
+            >
+              <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Badge className="bg-[#EAB308]/15 text-[#B45309] border-[#EAB308]/30 font-mono text-[10px]">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
                       {ex.courseCode}
-                    </Badge>
-                    <Badge variant="outline" className="text-[9px] font-mono border-[#D0D1D6] text-[#B45309]">
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#F0F1EF] text-[#667085]">
                       {ex.type}
-                    </Badge>
+                    </span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#202226] mt-1 font-mono">{ex.courseName}</h3>
+                  <h3 className="text-sm font-bold text-[#1F2933] mt-1">{ex.courseName}</h3>
                 </div>
-                <Badge className="bg-indigo-500/15 text-indigo-300 border-indigo-500/30 text-[10px] font-mono">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-blue-50 text-blue-800 border border-blue-200">
                   {ex.status}
-                </Badge>
-              </CardHeader>
+                </span>
+              </div>
 
-              <CardContent className="p-4 space-y-2.5 text-xs">
-                <div className="flex items-center gap-2 text-[#555960]">
-                  <Calendar className="h-3.5 w-3.5 text-[#B45309]" />
+              <div className="space-y-1.5 text-xs text-[#667085]">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-3.5 w-3.5" />
                   <span>Date: {ex.date}</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#555960]">
-                  <Clock className="h-3.5 w-3.5 text-[#B45309]" />
+                <div className="flex items-center gap-2">
+                  <Clock className="h-3.5 w-3.5" />
                   <span>Time: {ex.timeSlot} ({ex.duration})</span>
                 </div>
-                <div className="flex items-center gap-2 text-[#555960]">
-                  <MapPin className="h-3.5 w-3.5 text-[#B45309]" />
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-3.5 w-3.5" />
                   <span>Hall: {ex.room}</span>
                 </div>
+              </div>
 
-                <div className="pt-2 border-t border-[#D0D1D6] flex justify-between items-center text-[11px] font-mono">
-                  <span className="text-[#555960]">Maximum Score:</span>
-                  <span className="font-bold text-[#B45309]">{ex.totalMarks} Marks</span>
-                </div>
-              </CardContent>
-            </Card>
+              <div className="pt-2 border-t border-[#D6D8D5] flex justify-between items-center text-xs">
+                <span className="text-[#667085]">Maximum Score:</span>
+                <span className="font-bold text-[#1F2933]">{ex.totalMarks} Marks</span>
+              </div>
+            </div>
           ))}
         </div>
       ) : (
         <div className="space-y-4">
           {publishedExams.map((ex) => (
-            <Card key={ex.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-              <CardHeader className="p-4 pb-3 border-b border-[#D0D1D6] bg-white/50 flex flex-row items-center justify-between">
+            <div
+              key={ex.id}
+              className="rounded-xl border border-[#D6D8D5] bg-white shadow-xs overflow-hidden"
+            >
+              <div className="p-4 border-b border-[#D6D8D5] flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/40 font-mono text-[10px]">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
                       {ex.courseCode}
-                    </Badge>
-                    <CardTitle className="text-sm font-bold font-mono text-[#202226]">
-                      {ex.courseName}
-                    </CardTitle>
+                    </span>
+                    <h3 className="text-sm font-bold text-[#1F2933]">{ex.courseName}</h3>
                   </div>
-                  <p className="text-[11px] text-[#555960] font-mono mt-1">
-                    Exam: {ex.examCode} · Max Score: {ex.totalMarks} Marks
+                  <p className="text-xs text-[#667085] mt-0.5">
+                    Exam Ref: {ex.examCode} · Max Score: {ex.totalMarks} Marks
                   </p>
                 </div>
-                <Badge className="bg-emerald-500/15 text-emerald-300 border-emerald-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
                   {ex.status}
-                </Badge>
-              </CardHeader>
+                </span>
+              </div>
 
-              <CardContent className="p-0">
-                <div className="divide-y divide-[#243356] text-xs">
-                  {ex.grades?.map((g) => (
-                    <div key={g.id} className="flex items-center justify-between p-3.5 hover:bg-white/40">
-                      <div>
-                        <p className="font-bold text-[#202226]">{g.studentName}</p>
-                        <p className="text-[#555960] font-mono text-[11px]">{g.rollNumber}</p>
-                      </div>
-
-                      <div className="flex items-center gap-4 font-mono">
-                        <span className="text-[#555960]">Score: <strong className="text-[#202226]">{g.score} / {g.maxScore}</strong></span>
-                        <Badge className="bg-[#EAB308]/20 text-[#B45309] border-[#EAB308]/40 font-bold text-xs font-mono">
-                          GRADE {g.grade}
-                        </Badge>
-                      </div>
+              <div className="divide-y divide-[#E5E7EB] text-xs">
+                {ex.grades?.map((g) => (
+                  <div key={g.id} className="flex items-center justify-between p-3.5 hover:bg-[#F7F8F6]">
+                    <div>
+                      <p className="font-semibold text-[#1F2933]">{g.studentName}</p>
+                      <p className="text-[#667085] text-[11px]">{g.rollNumber}</p>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+
+                    <div className="flex items-center gap-4">
+                      <span className="text-[#667085]">
+                        Score: <strong className="text-[#1F2933]">{g.score} / {g.maxScore}</strong>
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-md font-bold text-xs bg-emerald-50 text-emerald-800 border border-emerald-200">
+                        Grade {g.grade}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}
 
       {/* Modal: Schedule Exam */}
       {isScheduleModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <Card className="w-full max-w-lg bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
+            <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
                 <FileSpreadsheet className="h-4 w-4" />
                 <span>Schedule New Examination</span>
               </CardTitle>
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={() => setIsScheduleModalOpen(false)}
-                className="h-6 w-6 text-[#555960] hover:text-white"
+                className="text-[#667085] hover:text-[#1F2933] cursor-pointer"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </CardHeader>
             <CardContent className="p-4 space-y-3.5">
               <form onSubmit={handleScheduleExam} className="space-y-3 text-xs">
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Select Course</label>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">Select Course</label>
                   <select
                     value={newCourseCode}
                     onChange={(e) => setNewCourseCode(e.target.value)}
-                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226] font-mono"
+                    className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933] cursor-pointer"
                   >
                     {courses.map((c) => (
-                      <option key={c.code} value={c.code}>{c.code} — {c.title}</option>
+                      <option key={c.code} value={c.code}>
+                        {c.code} — {c.title}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Exam Type</label>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Exam Type</label>
                     <select
                       value={newType}
-                      onChange={(e) => setNewType(e.target.value as 'Mid-Term' | 'Final Semester' | 'Quiz' | 'Practical')}
-                      className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226]"
+                      onChange={(e) => setNewType(e.target.value as any)}
+                      className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933] cursor-pointer"
                     >
                       <option value="Mid-Term">Mid-Term</option>
                       <option value="Final Semester">Final Semester</option>
@@ -339,59 +362,61 @@ export default function ExamsPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Total Marks</label>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Total Marks</label>
                     <Input
                       type="number"
                       value={newTotalMarks}
                       onChange={(e) => setNewTotalMarks(Number(e.target.value))}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Date</label>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Date</label>
                     <Input
                       type="date"
                       value={newDate}
                       onChange={(e) => setNewDate(e.target.value)}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Time Slot</label>
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">Time Slot</label>
                     <Input
                       placeholder="09:30 AM - 11:30 AM"
                       value={newTimeSlot}
                       onChange={(e) => setNewTimeSlot(e.target.value)}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Exam Hall / Room</label>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">Exam Hall / Room</label>
                   <Input
                     placeholder="e.g. Main Auditorium Hall A"
                     value={newRoom}
                     onChange={(e) => setNewRoom(e.target.value)}
-                    className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                    className="bg-white border-[#D6D8D5] text-xs"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D6D8D5]">
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
                     onClick={() => setIsScheduleModalOpen(false)}
-                    className="text-xs border-[#D0D1D6]"
+                    className="text-xs cursor-pointer"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
+                    size="sm"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs cursor-pointer"
                   >
                     Publish Exam Schedule
                   </Button>

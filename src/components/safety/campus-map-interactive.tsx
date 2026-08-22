@@ -91,100 +91,49 @@ export function CampusMapInteractive({
   };
 
   return (
-    <div className={`relative rounded-2xl border border-[#AEB0B7] bg-white overflow-hidden shadow-md flex flex-col ${className}`}>
-      {/* Map HUD Header */}
-      <div className="relative z-20 flex flex-wrap items-center justify-between gap-2 border-b border-[#D0D1D6] bg-white px-4 py-3">
+    <div className={`relative rounded-xl border border-[#D6D8D5] bg-white overflow-hidden shadow-xs flex flex-col ${className}`}>
+      {/* Map Header */}
+      <div className="relative z-20 flex items-center justify-between gap-2 border-b border-[#D6D8D5] bg-white px-4 py-3">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#EAB308]/15 border border-[#EAB308]/40 text-[#B45309]">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F0F1EF] border border-[#D6D8D5] text-[#1F2933]">
             <Compass className="h-4 w-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold tracking-wider text-[#202226] uppercase">
-                GEOSPATIAL CAMPUS MAP
+              <span className="text-xs font-bold tracking-tight text-[#1F2933]">
+                Campus Map Overview
               </span>
-              <span className="flex h-2 w-2 rounded-full bg-[#EAB308] animate-pulse" />
-              <span className="text-[10px] text-[#555960] hidden sm:inline">
-                GRID: 10 SECTORS SYNCED
-              </span>
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500" />
             </div>
-            <span className="text-[10px] text-[#555960]">
-              Live Vector Telemetry · 10 Strategic Campus Facilities
+            <span className="text-[11px] text-[#667085]">
+              Real-time facility locations &amp; active beacons
             </span>
           </div>
         </div>
 
-        {/* Sector Filter & Layer Controls */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Sector Buttons */}
-          <div className="hidden lg:flex items-center gap-1 bg-[#E7E8EB] p-1 rounded-lg border border-[#D0D1D6] text-[11px]">
-            {['all', 'Academic', 'Residential', 'Services', 'Administration'].map((sec) => (
-              <button
-                key={sec}
-                onClick={() => setActiveSector(sec)}
-                className={`px-2 py-0.5 rounded capitalize transition-colors cursor-pointer ${
-                  activeSector === sec
-                    ? 'bg-[#EAB308] text-[#202226] font-bold'
-                    : 'text-[#555960] hover:text-[#202226]'
-                }`}
-              >
-                {sec}
-              </button>
-            ))}
-          </div>
-
-          {/* Layer Toggle Buttons */}
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => toggleLayer('patrols')}
-              title="Toggle Security Patrols"
-              className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 font-mono transition-colors ${
-                activeLayers.patrols
-                  ? 'bg-[#10B981]/15 border-[#10B981] text-[#067a4f]'
-                  : 'bg-white border-[#D0D1D6] text-[#555960]'
-              }`}
-            >
-              <Shield className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline text-[10px]">Patrols</span>
-            </button>
-            <button
-              onClick={() => toggleLayer('sensors')}
-              title="Toggle CCTV & Sensors"
-              className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 font-mono transition-colors ${
-                activeLayers.sensors
-                  ? 'bg-[#3B82F6]/15 border-[#3B82F6] text-[#1d4ed8]'
-                  : 'bg-white border-[#D0D1D6] text-[#555960]'
-              }`}
-            >
-              <Eye className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline text-[10px]">CCTV</span>
-            </button>
-          </div>
-
-          {/* Zoom Controls */}
-          <div className="flex items-center gap-1 bg-white border border-[#D0D1D6] rounded-lg p-0.5">
-            <button
-              onClick={handleZoomIn}
-              className="p-1 text-[#555960] hover:text-[#B45309] transition-colors"
-              title="Zoom In"
-            >
-              <ZoomIn className="h-3.5 w-3.5" />
-            </button>
-            <button
-              onClick={handleZoomOut}
-              className="p-1 text-[#555960] hover:text-[#B45309] transition-colors"
-              title="Zoom Out"
-            >
-              <ZoomOut className="h-3.5 w-3.5" />
-            </button>
-            <button
-              onClick={handleResetZoom}
-              className="p-1 text-[#555960] hover:text-[#B45309] transition-colors"
-              title="Reset Zoom"
-            >
-              <RotateCcw className="h-3.5 w-3.5" />
-            </button>
-          </div>
+        {/* Working Zoom Controls */}
+        <div className="flex items-center gap-1 bg-[#F7F8F6] border border-[#D6D8D5] rounded-lg p-0.5">
+          <button
+            onClick={handleZoomIn}
+            className="p-1.5 text-[#667085] hover:text-[#1F2933] transition-colors rounded hover:bg-white cursor-pointer"
+            title="Zoom In"
+          >
+            <ZoomIn className="h-3.5 w-3.5" />
+          </button>
+          <button
+            onClick={handleZoomOut}
+            className="p-1.5 text-[#667085] hover:text-[#1F2933] transition-colors rounded hover:bg-white cursor-pointer"
+            title="Zoom Out"
+          >
+            <ZoomOut className="h-3.5 w-3.5" />
+          </button>
+          <button
+            onClick={handleResetZoom}
+            className="p-1.5 text-[#667085] hover:text-[#1F2933] transition-colors rounded hover:bg-white cursor-pointer"
+            title="Reset Zoom"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+          </button>
         </div>
       </div>
 
@@ -248,84 +197,66 @@ export function CampusMapInteractive({
               y="40"
               width="900"
               height="600"
-              rx="40"
-              fill="none"
-              stroke="#B7B9C0"
-              strokeWidth="24"
+              rx="32"
+              fill="#F9FAF9"
+              stroke="#D6D8D5"
+              strokeWidth="4"
               strokeLinejoin="round"
             />
-            <rect
-              x="50"
-              y="40"
-              width="900"
-              height="600"
-              rx="40"
+
+            {/* Pathways & Walkways */}
+            <path
+              d="M 60 360 L 940 360"
               fill="none"
-              stroke="#EAB308"
-              strokeWidth="1.5"
-              strokeDasharray="8 8"
-              opacity="0.5"
-            />
-
-            {/* Inner Boulevard Network */}
-            {/* Horizontal Main Avenue */}
-            <path
-              d="M 60 360 L 940 360"
-              stroke="url(#gradPath)"
-              strokeWidth="20"
-              strokeLinecap="round"
-            />
-            <path
-              d="M 60 360 L 940 360"
-              stroke="#EAB308"
-              strokeWidth="1.5"
-              strokeDasharray="12 12"
-              opacity="0.5"
-            />
-
-            {/* Vertical Central Walkway */}
-            <path
-              d="M 500 50 L 500 630"
-              stroke="url(#gradPath)"
-              strokeWidth="20"
+              stroke="#E2E4E0"
+              strokeWidth="16"
               strokeLinecap="round"
             />
             <path
               d="M 500 50 L 500 630"
-              stroke="#EAB308"
-              strokeWidth="1.5"
-              strokeDasharray="12 12"
-              opacity="0.5"
+              fill="none"
+              stroke="#E2E4E0"
+              strokeWidth="16"
+              strokeLinecap="round"
             />
 
-            {/* Diagonal Connecting Paths */}
-            <path d="M 300 220 L 500 360 L 800 200" stroke="#B7B9C0" strokeWidth="12" strokeLinecap="round" />
-            <path d="M 180 520 L 340 440 L 500 360 L 620 420 L 820 540" stroke="#B7B9C0" strokeWidth="12" strokeLinecap="round" />
+            {/* Connecting Diagonal Walkways */}
+            <path
+              d="M 300 220 L 500 360 L 800 200"
+              fill="none"
+              stroke="#E2E4E0"
+              strokeWidth="10"
+              strokeLinecap="round"
+            />
+            <path
+              d="M 180 520 L 340 440 L 500 360 L 620 420 L 820 540"
+              fill="none"
+              stroke="#E2E4E0"
+              strokeWidth="10"
+              strokeLinecap="round"
+            />
 
-            {/* Central University Plaza / Roundabout */}
-            <circle cx="500" cy="360" r="48" fill="#D4D5DA" stroke="#EAB308" strokeWidth="2" />
-            <circle cx="500" cy="360" r="32" fill="#C7C8CE" stroke="#AEB0B7" strokeWidth="1.5" />
-            <circle cx="500" cy="360" r="12" fill="#EAB308" opacity="0.8" />
-            <text x="500" y="364" textAnchor="middle" fill="#202226" fontSize="9" fontWeight="bold" fontFamily="monospace">
-              PLAZA
+            {/* Central University Plaza */}
+            <circle cx="500" cy="360" r="42" fill="#FFFFFF" stroke="#D6D8D5" strokeWidth="2" />
+            <circle cx="500" cy="360" r="28" fill="#F0F1EF" stroke="#D6D8D5" strokeWidth="1" />
+            <text x="500" y="364" textAnchor="middle" fill="#667085" fontSize="10" fontWeight="600">
+              Central Plaza
             </text>
 
-            {/* Green Spaces & Canopy Accents */}
-            <g opacity="0.7">
-              {/* North Green Quad */}
-              <rect x="580" y="100" width="120" height="90" rx="16" fill="#E5F3EC" stroke="#9CCFB4" strokeWidth="1" />
-              <text x="640" y="150" textAnchor="middle" fill="#067a4f" fontSize="10" fontFamily="monospace" opacity="0.7">
-                NORTH PARK
-              </text>
-              {/* West Lawn */}
-              <circle cx="160" cy="240" r="45" fill="#E5F3EC" stroke="#9CCFB4" strokeWidth="1" />
-              {/* South Garden */}
-              <rect x="680" y="390" width="90" height="70" rx="14" fill="#E5F3EC" stroke="#9CCFB4" strokeWidth="1" />
-            </g>
+            {/* Landscaped Green Zones */}
+            <rect x="590" y="90" width="110" height="80" rx="16" fill="#F0FDF4" stroke="#DCFCE7" strokeWidth="1" />
+            <text x="645" y="135" textAnchor="middle" fill="#166534" fontSize="11" fontWeight="500">
+              North Gardens
+            </text>
 
-            {/* 10 STRATEGIC CAMPUS BUILDINGS */}
+            <circle cx="160" cy="240" r="38" fill="#F0FDF4" stroke="#DCFCE7" strokeWidth="1" />
+            <text x="160" y="244" textAnchor="middle" fill="#166534" fontSize="10" fontWeight="500">
+              West Lawn
+            </text>
 
-            {/* 1. ENGINEERING BLOCK (BLOCK D) — Top Left */}
+            {/* CAMPUS BUILDINGS (Clean Modern SaaS Cards) */}
+
+            {/* 1. ENGINEERING BLOCK — Top Left */}
             <g
               onClick={() => {
                 const loc = CAMPUS_LOCATIONS.find((l) => l.id === 'loc-eng')!;
@@ -335,39 +266,24 @@ export function CampusMapInteractive({
               }}
               onMouseEnter={() => setHoveredNode(CAMPUS_LOCATIONS.find((l) => l.id === 'loc-eng') || null)}
               onMouseLeave={() => setHoveredNode(null)}
-              className="cursor-pointer group transition-all"
+              className="cursor-pointer group"
             >
-              {/* Building base */}
-              <rect x="230" y="165" width="160" height="120" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
                 x="220"
                 y="150"
                 width="160"
-                height="120"
-                rx="12"
-                fill="url(#gradEngCritical)"
-                stroke="#DC2626"
-                strokeWidth="2.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
-                filter="url(#glowRed)"
-                opacity="0.95"
+                height="110"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
+                strokeWidth="1.5"
+                className="group-hover:stroke-[#1F2933] group-hover:shadow-md transition-all"
               />
-              {/* Floor accent lines */}
-              <line x1="235" y1="190" x2="365" y2="190" stroke="#DC2626" strokeWidth="1" opacity="0.3" />
-              <line x1="235" y1="225" x2="365" y2="225" stroke="#DC2626" strokeWidth="1" opacity="0.3" />
-              {/* Building Label */}
-              <rect x="235" y="162" width="46" height="18" rx="4" fill="#FDE8E8" />
-              <text x="258" y="175" textAnchor="middle" fill="#B91C1C" fontSize="10" fontWeight="bold" fontFamily="monospace">
-                ENG-D
-              </text>
-              <text x="300" y="210" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
+              <text x="300" y="200" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
                 Engineering Block
               </text>
-              <text x="300" y="230" textAnchor="middle" fill="#555960" fontSize="10" fontFamily="monospace">
-                Block D · Labs &amp; Computing
-              </text>
-              <text x="300" y="252" textAnchor="middle" fill="#DC2626" fontSize="10" fontWeight="bold" fontFamily="monospace">
-                ⚠ 2 ACTIVE HAZARDS
+              <text x="300" y="222" textAnchor="middle" fill="#667085" fontSize="10">
+                Labs &amp; Computing
               </text>
             </g>
 
@@ -383,27 +299,22 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="425" y="115" width="130" height="95" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
-                x="415"
+                x="420"
                 y="105"
-                width="130"
+                width="150"
                 height="95"
-                rx="12"
-                fill="url(#gradAcademic)"
-                stroke="#EAB308"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#B45309] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="428" y="115" width="50" height="18" rx="4" fill="#FFFFFF" stroke="#D0D1D6" strokeWidth="1" />
-              <text x="453" y="128" textAnchor="middle" fill="#B45309" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                LIB-01
+              <text x="495" y="150" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
+                Central Library
               </text>
-              <text x="480" y="155" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
-                Library
-              </text>
-              <text x="480" y="175" textAnchor="middle" fill="#555960" fontSize="10" fontFamily="monospace">
-                Central Commons
+              <text x="495" y="170" textAnchor="middle" fill="#667085" fontSize="10">
+                Study Commons
               </text>
             </g>
 
@@ -419,31 +330,26 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="735" y="115" width="130" height="95" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
                 x="725"
                 y="105"
-                width="130"
+                width="140"
                 height="95"
-                rx="12"
-                fill="url(#gradResidential)"
-                stroke="#AEB0B7"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="738" y="115" width="50" height="18" rx="4" fill="#FFFFFF" stroke="#D0D1D6" strokeWidth="1" />
-              <text x="763" y="128" textAnchor="middle" fill="#1d4ed8" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                HST-A
+              <text x="795" y="150" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
+                Hostel Block A
               </text>
-              <text x="790" y="155" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
-                Hostel A
-              </text>
-              <text x="790" y="175" textAnchor="middle" fill="#555960" fontSize="10" fontFamily="monospace">
-                North Student Tower
+              <text x="795" y="170" textAnchor="middle" fill="#667085" fontSize="10">
+                Student Residence
               </text>
             </g>
 
-            {/* 4. MAIN BLOCK — Center */}
+            {/* 4. MAIN ACADEMIC BLOCK — Center */}
             <g
               onClick={() => {
                 const loc = CAMPUS_LOCATIONS.find((l) => l.id === 'loc-main')!;
@@ -455,26 +361,21 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="425" y="245" width="150" height="100" rx="14" fill="#FFFFFF" opacity="0.6" />
               <rect
                 x="415"
                 y="235"
-                width="150"
+                width="160"
                 height="100"
                 rx="14"
-                fill="url(#gradAcademic)"
-                stroke="#EAB308"
-                strokeWidth="2"
-                className="group-hover:stroke-[#B45309] transition-colors"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
+                strokeWidth="1.5"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="428" y="245" width="46" height="18" rx="4" fill="#FFFFFF" stroke="#EAB308" strokeWidth="1" />
-              <text x="451" y="258" textAnchor="middle" fill="#B45309" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                MB-01
+              <text x="495" y="280" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
+                Main Academic Block
               </text>
-              <text x="490" y="285" textAnchor="middle" fill="#202226" fontSize="14" fontWeight="bold">
-                Main Block
-              </text>
-              <text x="490" y="305" textAnchor="middle" fill="#555960" fontSize="10" fontFamily="monospace">
+              <text x="495" y="300" textAnchor="middle" fill="#667085" fontSize="10">
                 Lecture Complex &amp; Halls
               </text>
             </g>
@@ -491,27 +392,22 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="765" y="275" width="130" height="95" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
-                x="755"
+                x="745"
                 y="265"
-                width="130"
+                width="140"
                 height="95"
-                rx="12"
-                fill="url(#gradResidential)"
-                stroke="#F59E0B"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="768" y="275" width="50" height="18" rx="4" fill="#FFFFFF" stroke="#F59E0B" strokeWidth="1" />
-              <text x="793" y="288" textAnchor="middle" fill="#B45309" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                HST-B
+              <text x="815" y="310" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
+                Hostel Block B
               </text>
-              <text x="820" y="315" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
-                Hostel B
-              </text>
-              <text x="820" y="335" textAnchor="middle" fill="#B45309" fontSize="10" fontFamily="monospace">
-                1 Warning Event
+              <text x="815" y="330" textAnchor="middle" fill="#667085" fontSize="10">
+                Student Residence
               </text>
             </g>
 
@@ -527,27 +423,22 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="585" y="425" width="120" height="90" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
                 x="575"
                 y="415"
-                width="120"
+                width="130"
                 height="90"
-                rx="12"
-                fill="url(#gradAcademic)"
-                stroke="#AEB0B7"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="588" y="425" width="50" height="18" rx="4" fill="#FFFFFF" />
-              <text x="613" y="438" textAnchor="middle" fill="#067a4f" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                CAF-01
-              </text>
-              <text x="635" y="465" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
+              <text x="640" y="460" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
                 Cafeteria
               </text>
-              <text x="635" y="485" textAnchor="middle" fill="#555960" fontSize="10" fontFamily="monospace">
-                Food Court &amp; Terrace
+              <text x="640" y="480" textAnchor="middle" fill="#667085" fontSize="10">
+                Food Court &amp; Dining
               </text>
             </g>
 
@@ -563,27 +454,22 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="765" y="485" width="140" height="110" rx="14" fill="#FFFFFF" opacity="0.6" />
               <rect
-                x="755"
-                y="475"
+                x="745"
+                y="465"
                 width="140"
-                height="110"
+                height="100"
                 rx="14"
-                fill="url(#gradSports)"
-                stroke="#10B981"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="768" y="485" width="50" height="18" rx="4" fill="#ECFDF5" />
-              <text x="793" y="498" textAnchor="middle" fill="#067a4f" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                SPT-01
-              </text>
-              <text x="825" y="530" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
+              <text x="815" y="515" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
                 Sports Complex
               </text>
-              <text x="825" y="550" textAnchor="middle" fill="#067a4f" fontSize="10" fontFamily="monospace">
-                Arena &amp; Gymnasium
+              <text x="815" y="535" textAnchor="middle" fill="#667085" fontSize="10">
+                Gymnasium &amp; Arena
               </text>
             </g>
 
@@ -599,27 +485,22 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="295" y="425" width="120" height="90" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
                 x="285"
                 y="415"
-                width="120"
+                width="130"
                 height="90"
-                rx="12"
-                fill="url(#gradAcademic)"
-                stroke="#DC2626"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="298" y="425" width="50" height="18" rx="4" fill="#FDE8E8" />
-              <text x="323" y="438" textAnchor="middle" fill="#B91C1C" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                MED-01
-              </text>
-              <text x="345" y="465" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
+              <text x="350" y="460" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
                 Medical Center
               </text>
-              <text x="345" y="485" textAnchor="middle" fill="#B91C1C" fontSize="10" fontFamily="monospace">
-                24/7 Trauma Clinic
+              <text x="350" y="480" textAnchor="middle" fill="#667085" fontSize="10">
+                Health &amp; First Aid
               </text>
             </g>
 
@@ -635,26 +516,21 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="135" y="485" width="130" height="95" rx="12" fill="#FFFFFF" opacity="0.6" />
               <rect
                 x="125"
-                y="475"
+                y="465"
                 width="130"
                 height="95"
-                rx="12"
-                fill="url(#gradAcademic)"
-                stroke="#AEB0B7"
+                rx="14"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
                 strokeWidth="1.5"
-                className="group-hover:stroke-[#EAB308] transition-colors"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="138" y="485" width="50" height="18" rx="4" fill="#F0F1F2" />
-              <text x="163" y="498" textAnchor="middle" fill="#555960" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                PRK-N
+              <text x="190" y="510" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
+                Campus Parking
               </text>
-              <text x="190" y="525" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
-                Parking
-              </text>
-              <text x="190" y="545" textAnchor="middle" fill="#555960" fontSize="10" fontFamily="monospace">
+              <text x="190" y="530" textAnchor="middle" fill="#667085" fontSize="10">
                 North &amp; South Decks
               </text>
             </g>
@@ -671,35 +547,28 @@ export function CampusMapInteractive({
               onMouseLeave={() => setHoveredNode(null)}
               className="cursor-pointer group"
             >
-              <rect x="425" y="515" width="160" height="100" rx="14" fill="#FFFFFF" opacity="0.6" />
               <rect
-                x="415"
-                y="505"
+                x="420"
+                y="495"
                 width="160"
                 height="100"
                 rx="14"
-                fill="url(#gradAdmin)"
-                stroke="#EAB308"
-                strokeWidth="2"
-                className="group-hover:stroke-[#B45309] transition-colors"
-                filter="url(#glowGold)"
+                fill="#FFFFFF"
+                stroke="#D6D8D5"
+                strokeWidth="1.5"
+                className="group-hover:stroke-[#1F2933] transition-all"
               />
-              <rect x="428" y="515" width="56" height="18" rx="4" fill="#EAB308" />
-              <text x="456" y="528" textAnchor="middle" fill="#202226" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                ADM-HQ
-              </text>
-              <text x="495" y="555" textAnchor="middle" fill="#202226" fontSize="13" fontWeight="bold">
+              <text x="500" y="540" textAnchor="middle" fill="#1F2933" fontSize="13" fontWeight="bold">
                 Administrative Block
               </text>
-              <text x="495" y="575" textAnchor="middle" fill="#B45309" fontSize="10" fontFamily="monospace">
-                Security Operations &amp; HQ
+              <text x="500" y="560" textAnchor="middle" fill="#667085" fontSize="10">
+                Security &amp; Admin HQ
               </text>
             </g>
 
-            {/* DYNAMIC INCIDENT PINS & RADAR PULSES */}
+            {/* DYNAMIC INCIDENT PINS & BEACONS */}
             {activeLayers.incidents &&
               filteredIncidents.map((incident) => {
-                // Find matching location coords
                 const matchedLocation = CAMPUS_LOCATIONS.find((l) =>
                   incident.location_name.toLowerCase().includes(l.name.toLowerCase()) ||
                   l.name.toLowerCase().includes(incident.location_name.toLowerCase()) ||
@@ -708,12 +577,10 @@ export function CampusMapInteractive({
 
                 if (!matchedLocation) return null;
 
-                // Scale percentage coords (0-100) to SVG canvas (1000x680)
                 const pinX = (matchedLocation.coordinates.x / 100) * 1000;
                 const pinY = (matchedLocation.coordinates.y / 100) * 680;
                 const isSelected = selectedIncident?.id === incident.id;
                 const isCritical = incident.severity === 'critical';
-                const isHigh = incident.severity === 'high';
 
                 return (
                   <g
@@ -725,119 +592,28 @@ export function CampusMapInteractive({
                     }}
                     onMouseEnter={() => setHoveredIncident(incident)}
                     onMouseLeave={() => setHoveredIncident(null)}
-                    className="cursor-pointer group"
+                    className="cursor-pointer"
                   >
-                    {/* Pulsing Radar Wave for CRITICAL */}
+                    {/* Subtle Pulsing Beacon */}
                     {isCritical && (
-                      <>
-                        <circle cx="0" cy="0" r="32" fill="#DC2626" opacity="0.15">
-                          <animate attributeName="r" values="16;44;16" dur="2s" repeatCount="indefinite" />
-                          <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
-                        </circle>
-                        <circle cx="0" cy="0" r="22" fill="#DC2626" opacity="0.25">
-                          <animate attributeName="r" values="12;32;12" dur="2s" repeatCount="indefinite" />
-                        </circle>
-                      </>
-                    )}
-
-                    {/* Double Pulse for HIGH */}
-                    {isHigh && (
-                      <circle cx="0" cy="0" r="24" fill="#F59E0B" opacity="0.2">
-                        <animate attributeName="r" values="14;28;14" dur="2.5s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.3;0;0.3" dur="2.5s" repeatCount="indefinite" />
+                      <circle cx="0" cy="0" r="24" fill="#DC2626" opacity="0.2">
+                        <animate attributeName="r" values="12;28;12" dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite" />
                       </circle>
                     )}
 
-                    {/* Pin Outer Ring */}
+                    {/* Pin Outer Circle */}
                     <circle
                       cx="0"
                       cy="0"
-                      r={isSelected ? 18 : 14}
-                      fill={
-                        isCritical
-                          ? '#DC2626'
-                          : isHigh
-                          ? '#F59E0B'
-                          : incident.severity === 'medium'
-                          ? '#3B82F6'
-                          : '#10B981'
-                      }
-                      stroke={isSelected ? '#EAB308' : '#FFFFFF'}
-                      strokeWidth={isSelected ? 3 : 2}
-                      className="transition-all duration-200"
+                      r={isSelected ? 14 : 10}
+                      fill={isCritical ? '#DC2626' : '#F59E0B'}
+                      stroke="#FFFFFF"
+                      strokeWidth="2.5"
                     />
-
-                    {/* Pin Icon Glyph */}
-                    <text
-                      x="0"
-                      y="4"
-                      textAnchor="middle"
-                      fill="#FFFFFF"
-                      fontSize="10"
-                      fontWeight="bold"
-                      fontFamily="monospace"
-                    >
-                      {isCritical ? '!' : isHigh ? '▲' : '●'}
-                    </text>
-
-                    {/* Quick Floating Tag */}
-                    <g transform="translate(0, -22)" className="pointer-events-none">
-                      <rect
-                        x="-45"
-                        y="-14"
-                        width="90"
-                        height="18"
-                        rx="4"
-                        fill="#FFFFFF"
-                        stroke={isCritical ? '#DC2626' : isHigh ? '#F59E0B' : '#EAB308'}
-                        strokeWidth="1"
-                        opacity="0.95"
-                      />
-                      <text
-                        x="0"
-                        y="-2"
-                        textAnchor="middle"
-                        fill={isCritical ? '#DC2626' : isHigh ? '#B45309' : '#B45309'}
-                        fontSize="9"
-                        fontWeight="bold"
-                        fontFamily="monospace"
-                      >
-                        {incident.severity.toUpperCase()}
-                      </text>
-                    </g>
                   </g>
                 );
               })}
-
-            {/* SECURITY PATROL UNITS OVERLAY */}
-            {activeLayers.patrols && (
-              <g className="pointer-events-none">
-                {/* Officer Sharma at Block D */}
-                <g transform="translate(290, 240)">
-                  <circle cx="0" cy="0" r="10" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-                  <circle cx="0" cy="0" r="18" fill="#10B981" opacity="0.2">
-                    <animate attributeName="r" values="10;22;10" dur="3s" repeatCount="indefinite" />
-                  </circle>
-                  <text x="14" y="4" fill="#067a4f" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                    UNIT-ALPHA (Sharma)
-                  </text>
-                </g>
-                {/* Officer Ramos at Main Block */}
-                <g transform="translate(530, 270)">
-                  <circle cx="0" cy="0" r="10" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-                  <text x="14" y="4" fill="#067a4f" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                    UNIT-BRAVO (Ramos)
-                  </text>
-                </g>
-                {/* Perimeter Patrol at Parking */}
-                <g transform="translate(180, 520)">
-                  <circle cx="0" cy="0" r="10" fill="#10B981" stroke="#FFFFFF" strokeWidth="1.5" />
-                  <text x="14" y="4" fill="#067a4f" fontSize="9" fontWeight="bold" fontFamily="monospace">
-                    PERIMETER-MOBILE
-                  </text>
-                </g>
-              </g>
-            )}
           </svg>
         </div>
 
@@ -873,30 +649,20 @@ export function CampusMapInteractive({
       </div>
 
       {/* Map Legend Footer */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-t border-[#D0D1D6] bg-white px-4 py-2.5 text-[11px] text-[#555960]">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-t border-[#D6D8D5] bg-white px-4 py-2.5 text-xs text-[#667085]">
         <div className="flex items-center gap-4 flex-wrap">
-          <span className="font-bold text-[#202226]">SEVERITY PINS:</span>
+          <span className="font-semibold text-[#1F2933]">Legend:</span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#DC2626] animate-ping" />
-            <span className="text-[#DC2626] font-bold">CRITICAL</span>
+            <span className="h-2 w-2 rounded-full bg-red-500" />
+            <span>Active Incident</span>
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#F59E0B]" />
-            <span className="text-[#B45309]">HIGH</span>
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#3B82F6]" />
-            <span className="text-[#1d4ed8]">MEDIUM</span>
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
-            <span className="text-[#067a4f]">LOW</span>
+            <span className="h-2 w-2 rounded-full bg-amber-500" />
+            <span>Under Review</span>
           </span>
         </div>
 
-        <div className="flex items-center gap-3 text-[10px] text-[#555960]">
-          <span>Interactive: Click any pin or building to dispatch &amp; triage</span>
-        </div>
+        <span className="text-[11px] text-[#667085]">Click any facility to view location details &amp; active logs</span>
       </div>
     </div>
   );

@@ -251,52 +251,36 @@ export default function HackathonDemoPage() {
       )}
 
       {/* Demo Header */}
-      <div className="rounded-2xl border border-[#EAB308]/50 bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-[#EAB308]/20 border border-[#EAB308]/50 px-2.5 py-0.5 text-[10px] font-mono font-bold text-[#B45309] uppercase tracking-wider">
-                HACKATHON DEMO CONTROL HUB
-              </span>
-              {isDemoMode && (
-                <span className="rounded-md bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-0.5 text-[10px] font-mono font-bold text-emerald-300 uppercase">
-                  ✓ DEMO MODE ISOLATED
-                </span>
-              )}
-              <span className="rounded-md bg-indigo-500/20 border border-indigo-500/40 px-2.5 py-0.5 text-[10px] font-mono text-[#60A5FA]">
-                GEMINI 3.7 FLASH TRIAGE ACTIVE
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
-              <span>LUMINOUS AI — AUTONOMOUS SAFETY ORCHESTRATOR</span>
-            </h1>
-            <p className="text-xs text-[#555960] font-mono max-w-3xl leading-relaxed">
-              Demonstrates the end-to-end incident triage, rapid dispatch, geospatial map updates, emergency alerts, and AI risk pattern intelligence.
-            </p>
-          </div>
-
-          {/* Quick Hub Controls */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <Button
-              onClick={handleRunFullDemoFlow}
-              disabled={isSubmittingHero}
-              className="bg-gradient-to-r from-[#F4C430] via-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold text-xs font-mono gap-1.5 shadow-lg shadow-[#D4AF37]/25 h-10 px-4"
-            >
-              <Play className="h-4 w-4 fill-[#0B132B]" />
-              <span>Auto-Run 3-Min Demo Flow</span>
-            </Button>
-
-            <Button
-              onClick={handleReset}
-              variant="outline"
-              className="border-[#D0D1D6] hover:border-red-500/50 hover:bg-red-950/30 text-red-400 text-xs font-mono font-bold gap-1.5 h-10"
-            >
-              <RotateCcw className="h-3.5 w-3.5" />
-              <span>Reset Demo State</span>
-            </Button>
-          </div>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Demo Control Hub
+          </h1>
         </div>
 
+        {/* Quick Hub Controls */}
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={handleRunFullDemoFlow}
+            disabled={isSubmittingHero}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+          >
+            <Play className="h-4 w-4 mr-2" />
+            Auto-Run Demo
+          </Button>
+
+          <Button
+            onClick={handleReset}
+            variant="outline"
+            className="text-gray-600"
+          >
+            <RotateCcw className="h-4 w-4 mr-2" />
+            Reset State
+          </Button>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-gray-200 bg-white p-4 space-y-4">
         {/* Active Persona & Threat Level Bar */}
         <div className="pt-3 border-t border-[#D0D1D6] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
           <div className="flex items-center gap-2 text-[#555960]">
@@ -638,15 +622,14 @@ export default function HackathonDemoPage() {
       </Card>
 
       {/* DEMO ACCOUNTS & PERSONA SWITCHER GRID */}
-      <Card className="border-[#D0D1D6] bg-[#F4F5F6] text-[#202226] shadow-xl">
-        <CardHeader className="p-4 border-b border-[#D0D1D6] bg-white flex flex-row items-center justify-between">
+      <Card className="border-gray-200 bg-white">
+        <CardHeader className="p-4 border-b border-gray-200 flex flex-row items-center justify-between">
           <div className="flex items-center gap-2">
-            <UserCheck className="h-4 w-4 text-[#B45309]" />
-            <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226]">
-              DEMO PERSONA ACCOUNTS (1-CLICK ROLE SWITCHING)
+            <UserCheck className="h-4 w-4 text-gray-500" />
+            <CardTitle className="text-sm font-bold text-gray-900">
+              Demo Persona Accounts
             </CardTitle>
           </div>
-          <span className="text-[10px] font-mono text-[#555960]">Instant RBAC Clearance Transition</span>
         </CardHeader>
 
         <CardContent className="p-4">
@@ -656,28 +639,28 @@ export default function HackathonDemoPage() {
                 roleKey: 'student' as UserRole,
                 name: DEMO_USERS.student.full_name,
                 email: DEMO_USERS.student.email,
-                desc: 'Student Incident Reporter & SOS Distress Beacon',
+                desc: 'Student Reporter',
                 icon: '🎓',
               },
               {
                 roleKey: 'security' as UserRole,
                 name: DEMO_USERS.security.full_name,
                 email: DEMO_USERS.security.email,
-                desc: 'Security Desk Dispatcher & Rapid Patrol Lead',
+                desc: 'Security Dispatcher',
                 icon: '🛡️',
               },
               {
                 roleKey: 'admin' as UserRole,
                 name: DEMO_USERS.admin.full_name,
                 email: DEMO_USERS.admin.email,
-                desc: 'Campus Safety Admin & Risk Intelligence Governance',
+                desc: 'Campus Safety Admin',
                 icon: '🏛️',
               },
               {
                 roleKey: 'super_admin' as UserRole,
                 name: DEMO_USERS.super_admin.full_name,
                 email: DEMO_USERS.super_admin.email,
-                desc: 'Executive Chancellor & Full Institutional Oversight',
+                desc: 'Executive Chancellor',
                 icon: '👑',
               },
             ].map((usr) => (

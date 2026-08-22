@@ -7,7 +7,9 @@ import { useAcademic } from '@/lib/context/academic-context';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Drawer } from '@/components/shared/drawer';
+import { StudentSearchSelector } from '@/components/shared/student-search-selector';
 import {
   HeartPulse,
   Clock,
@@ -17,26 +19,38 @@ import {
   CalendarDays,
   Phone,
   ChevronRight,
+  Search,
+  X,
+  BookOpen,
+  GraduationCap,
 } from 'lucide-react';
 
 export default function StudentDashboardPage() {
   const { user } = useRole();
-  const { students } = useAcademic();
+  const { students, departments, courses } = useAcademic();
 
   const [timetableDrawer, setTimetableDrawer] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [deptFilter, setDeptFilter] = useState('ALL');
+
+  const isActualStudent = user?.role === 'student';
+  const [selectedStudentId, setSelectedStudentId] = useState(students[0]?.id || 'std-001');
 
   const currentStudent =
-    students.find(
-      (s) =>
-        (user?.email && s.email.toLowerCase() === user.email.toLowerCase()) ||
-        (user?.full_name && s.name.toLowerCase() === user.full_name.toLowerCase())
-    ) ||
+    (isActualStudent
+      ? students.find(
+          (s) =>
+            (user?.email && s.email.toLowerCase() === user.email.toLowerCase()) ||
+            (user?.full_name && s.name.toLowerCase() === user.full_name.toLowerCase())
+        )
+      : students.find((s) => s.id === selectedStudentId)) ||
     students[0] || {
-      name: 'Student',
-      rollNumber: '—',
-      department: '',
-      attendancePercentage: 95,
-      cgpa: 9.2,
+      id: 'std-001',
+      name: 'Priya Sharma',
+      rollNumber: 'CS23B042',
+      department: 'Computer Science & Engineering',
+      attendancePercentage: 96,
+      cgpa: 9.28,
     };
 
   const greeting = (() => {
@@ -46,21 +60,74 @@ export default function StudentDashboardPage() {
     return 'Good evening';
   })();
 
-  const firstName = user?.full_name?.split(' ')[0] || currentStudent.name.split(' ')[0];
+  const displayName = isActualStudent
+    ? user?.full_name || currentStudent.name
+    : currentStudent.name;
+
+  // Search Results filtering
+  const matchingCourses = courses.filter((c) => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return false;
+    const matchesDept = deptFilter === 'ALL' || c.departmentCode === deptFilter || c.departmentCode.toLowerCase().includes(deptFilter.toLowerCase());
+    const matchesQ = c.code.toLowerCase().includes(q) || c.title.toLowerCase().includes(q) || c.instructorName.toLowerCase().includes(q);
+    return matchesDept && matchesQ;
+  });
+
+  const matchingStudents = students.filter((s) => {
+    const q = searchQuery.toLowerCase().trim();
+    if (!q) return false;
+    const matchesDept = deptFilter === 'ALL' || s.department.toLowerCase().includes(deptFilter.toLowerCase());
+    const matchesQ = s.name.toLowerCase().includes(q) || s.rollNumber.toLowerCase().includes(q) || s.department.toLowerCase().includes(q);
+    return matchesDept && matchesQ;
+  });
 
   return (
     <div className="space-y-6">
       {/* Greeting + identity */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#1F2933]">{greeting}, {firstName}</h1>
-          <p className="mt-1 text-sm text-[#667085]">
-            {currentStudent.department || 'Campus member'} · <span className="font-medium text-[#1F2933]">{currentStudent.rollNumber}</span>
-          </p>
+          {isActualStudent ? (
+            <>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#1F2933]">
+                {greeting}, {displayName.split(' ')[0]}
+              </h1>
+              <p className="mt-1 text-sm text-[#667085]">
+                {currentStudent.department} ·{' '}
+                <span className="font-medium text-[#1F2933]">{currentStudent.rollNumber}</span>
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-xl sm:text-2xl font-bold text-[#1F2933]">
+                Student Academic Record
+              </h1>
+              <p className="text-xs text-[#667085] mt-0.5">
+                Administrator View: Inspecting academic status and profile for {currentStudent.name}.
+              </p>
+            </>
+          )}
         </div>
-        <div className="flex items-center gap-3 text-sm">
-          <Badge variant="gold" className="text-xs">CGPA {currentStudent.cgpa?.toFixed(2) ?? '—'}</Badge>
-          <Badge variant="safe" className="text-xs">Attendance {currentStudent.attendancePercentage ?? 0}%</Badge>
+
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          {!isActualStudent && students.length > 0 && (
+            <div className="w-full sm:w-72">
+              <StudentSearchSelector
+                students={students}
+                selectedStudentId={selectedStudentId}
+                onSelectStudent={setSelectedStudentId}
+                placeholder="Search student by name or roll no..."
+              />
+            </div>
+          )}
+
+          <div className="flex items-center gap-2 text-sm">
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#F0F1EF] text-[#1F2933] border border-[#D6D8D5]">
+              CGPA {currentStudent.cgpa?.toFixed(2) ?? '9.28'}
+            </span>
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+              Attendance {currentStudent.attendancePercentage ?? 96}%
+            </span>
+          </div>
         </div>
       </div>
 
@@ -79,6 +146,117 @@ export default function StudentDashboardPage() {
           <Link href="/complaints"><Phone className="h-4 w-4" /> Contact Support</Link>
         </Button>
       </div>
+
+      {/* Dashboard Search Bar (Similar to Student Directory) */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#667085]" />
+          <Input
+            placeholder="Search courses, curriculum, schedule, or student peers..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 text-xs border-[#D6D8D5] bg-white rounded-xl shadow-xs"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-2.5 top-2.5 p-0.5 rounded text-[#667085] hover:text-[#1F2933] cursor-pointer"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
+
+        <select
+          value={deptFilter}
+          onChange={(e) => setDeptFilter(e.target.value)}
+          className="text-xs bg-white border border-[#D6D8D5] rounded-xl px-3 py-2 text-[#1F2933] shadow-xs cursor-pointer focus:outline-none"
+        >
+          <option value="ALL">All Departments</option>
+          {departments.map((d) => (
+            <option key={d.code} value={d.name}>
+              {d.code} ({d.name})
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Dynamic Search Results Panel (if search query active) */}
+      {searchQuery && (
+        <div className="space-y-4 p-4 bg-white border border-[#D6D8D5] rounded-xl shadow-xs">
+          <div className="flex items-center justify-between border-b border-[#D6D8D5] pb-2 text-xs">
+            <span className="font-bold text-[#1F2933]">
+              Search Results for &ldquo;{searchQuery}&rdquo;
+            </span>
+            <span className="text-[#667085]">
+              {matchingCourses.length + matchingStudents.length} matches found
+            </span>
+          </div>
+
+          {/* Matching Courses */}
+          {matchingCourses.length > 0 && (
+            <div className="space-y-2">
+              <span className="text-[11px] font-semibold text-[#667085] uppercase flex items-center gap-1.5">
+                <BookOpen className="h-3.5 w-3.5" /> Matching Courses ({matchingCourses.length})
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {matchingCourses.map((c) => (
+                  <div key={c.id} className="p-2.5 rounded-lg border border-[#D6D8D5] bg-[#F7F8F6] space-y-0.5">
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#1F2933]">{c.code} · {c.title}</span>
+                      <span className="px-1.5 py-0.2 rounded text-[10px] bg-white border border-[#D6D8D5]">
+                        {c.credits} Credits
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#667085]">Faculty: {c.instructorName} · Room: {c.room}</p>
+                    <p className="text-[11px] text-[#667085]">Days: {c.scheduleDays.join(', ')} ({c.scheduleTime})</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Matching Students */}
+          {matchingStudents.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-[#F0F1EF]">
+              <span className="text-[11px] font-semibold text-[#667085] uppercase flex items-center gap-1.5">
+                <GraduationCap className="h-3.5 w-3.5" /> Matching Students ({matchingStudents.length})
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                {matchingStudents.map((s) => (
+                  <div
+                    key={s.id}
+                    onClick={() => {
+                      if (!isActualStudent) {
+                        setSelectedStudentId(s.id);
+                        setSearchQuery('');
+                      }
+                    }}
+                    className={`p-2.5 rounded-lg border border-[#D6D8D5] bg-[#F7F8F6] space-y-0.5 ${!isActualStudent ? 'cursor-pointer hover:bg-white hover:border-[#1F2933]' : ''}`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-[#1F2933]">{s.name}</span>
+                      <span className="px-1.5 py-0.2 rounded text-[10px] bg-white border border-[#D6D8D5]">
+                        {s.rollNumber}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#667085]">{s.department} · CGPA {s.cgpa}</p>
+                    {!isActualStudent && (
+                      <span className="text-[10px] text-blue-700 font-medium block pt-0.5">Click to view student record →</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {matchingCourses.length === 0 && matchingStudents.length === 0 && (
+            <div className="text-center py-6 text-xs text-[#667085]">
+              No courses or students matched &ldquo;{searchQuery}&rdquo;.
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left: Today's information */}

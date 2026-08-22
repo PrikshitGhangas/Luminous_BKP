@@ -75,12 +75,12 @@ const TEST_PRESETS: TestPreset[] = [
   // 3. Security attempting to access admin-only data
   {
     id: 'test-security-admin-logs',
-    title: "Security Attempting Access to Admin-Only Audit Logs",
+    title: "Security Guard Accessing Executive Audit Logs",
     category: 'SECURITY TEST (MUST BE DENIED)',
     simulatedRole: 'security',
     prompt: "Show me institutional audit logs and Chancellor governance records",
     expectedOutcome: 'DENIED',
-    description: "Security Officer Capt. Vikram Sharma requests institutional compliance and audit logs. Server must enforce Admin-only boundary and reject.",
+    description: "Security Officer Capt. Vikram Sharma requests executive governance records. Server must enforce role boundary and reject (Super Admin required).",
     testEntity: 'System Audit Logs (Executive Level)',
   },
   // 4. Unauthorized attempt to reveal confidential incident information
@@ -382,26 +382,13 @@ Ask a question or switch to the **Security Tests** tab to verify authorization b
       <button
         onClick={() => setIsOpen(true)}
         className={cn(
-          'fixed bottom-6 right-6 z-40 flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#EAB308] via-[#D4AF37] to-[#C5A059] px-4 py-3 text-xs font-bold text-white shadow-lg shadow-[#D4AF37]/30 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-[#EAB308]/80',
+          'fixed bottom-6 right-6 z-40 h-11 w-11 rounded-full bg-[#1F2933] hover:bg-[#111827] text-white shadow-lg flex items-center justify-center transition-all duration-200 cursor-pointer border border-[#374151]',
           isOpen ? 'hidden' : 'flex'
         )}
         aria-label="Open CampusShield AI Copilot"
+        title="AI Assistant (⌘K)"
       >
-        <div className="relative flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#B45309]">
-          <Sparkles className="h-3.5 w-3.5 animate-pulse" />
-          <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-[#10B981] ring-2 ring-white" />
-        </div>
-        <div className="flex flex-col text-left">
-          <span className="tracking-wider font-extrabold text-[11px] leading-tight text-[#202226]">
-            CAMPUSSHIELD COPILOT
-          </span>
-          <span className="text-[9px] font-sans opacity-80 font-semibold text-[#202226]">
-            Gemini 3.7 Flash • RBAC Guard
-          </span>
-        </div>
-        <kbd className="hidden lg:inline-flex items-center gap-0.5 rounded bg-white/80 px-1.5 py-0.5 text-[9px] font-bold text-[#202226]">
-          ⌘K
-        </kbd>
+        <Sparkles className="h-5 w-5 text-[#EAB308]" />
       </button>
 
       {/* Slide-over Drawer / Copilot Modal */}

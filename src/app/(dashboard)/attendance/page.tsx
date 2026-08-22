@@ -5,24 +5,14 @@ import { useAcademic } from '@/lib/context/academic-context';
 import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import {
   CalendarCheck,
-  CheckCircle,
-  AlertTriangle,
   Plus,
   X,
-  History,
-  TrendingUp,
+  Search,
+  ChevronDown,
 } from 'lucide-react';
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from 'recharts';
 import { AttendanceStudentLog } from '@/lib/types/academic';
 
 export default function AttendancePage() {
@@ -31,6 +21,10 @@ export default function AttendancePage() {
 
   const [isMarkingModalOpen, setIsMarkingModalOpen] = useState(false);
   const [selectedCourseCode, setSelectedCourseCode] = useState('CS301');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [expandedSessionIds, setExpandedSessionIds] = useState<Record<string, boolean>>({
+    [attendanceRecords[0]?.id || '']: true,
+  });
 
   // Interactive marking session state
   const [studentLogs, setStudentLogs] = useState<AttendanceStudentLog[]>([
@@ -49,16 +43,6 @@ export default function AttendancePage() {
   const overallAvgAttendance = Math.round(
     students.reduce((acc, s) => acc + s.attendancePercentage, 0) / (students.length || 1)
   );
-
-  const trendData = [
-    { day: 'Mon', percentage: 92 },
-    { day: 'Tue', percentage: 95 },
-    { day: 'Wed', percentage: 91 },
-    { day: 'Thu', percentage: 94 },
-    { day: 'Fri', percentage: 96 },
-    { day: 'Sat', percentage: 89 },
-    { day: 'Sun', percentage: 97 },
-  ];
 
   const handleStatusToggle = (index: number, newStatus: 'present' | 'absent' | 'late' | 'excused') => {
     setStudentLogs((prev) =>
@@ -90,202 +74,210 @@ export default function AttendancePage() {
     setIsMarkingModalOpen(false);
   };
 
+  const toggleExpand = (id: string) => {
+    setExpandedSessionIds((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const filteredRecords = attendanceRecords.filter((r) => {
+    if (!searchQuery) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      r.courseName.toLowerCase().includes(q) ||
+      r.courseCode.toLowerCase().includes(q) ||
+      r.batch.toLowerCase().includes(q) ||
+      r.markedBy.toLowerCase().includes(q)
+    );
+  });
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
-            <CalendarCheck className="h-6 w-6 text-[#B45309]" />
-            <span>ACADEMIC ATTENDANCE ROSTER</span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <CalendarCheck className="h-6 w-6 text-[#1F2933]" />
+            <span>Attendance Management</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-sans">
-            Real-time daily class attendance, batch submission, attendance warnings, and parent observer logs
+          <p className="text-xs text-[#667085] mt-0.5">
+            Classroom attendance logs, batch verification, and student attendance tracking.
           </p>
         </div>
 
         {canMark && (
           <Button
             onClick={() => setIsMarkingModalOpen(true)}
-            size="sm"
-            className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs cursor-pointer"
           >
             <Plus className="h-4 w-4" />
-            <span>Submit Attendance Session</span>
+            <span>Mark Class Attendance</span>
           </Button>
         )}
       </div>
 
-      {/* Overview Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Campus Attendance Rate</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-emerald-400">{overallAvgAttendance}%</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <CheckCircle className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+      {/* Clean Metric Summary Bar */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Average Campus Attendance</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{overallAvgAttendance}%</span>
+            <span className="text-xs font-medium text-emerald-700">Healthy rate</span>
+          </div>
+        </div>
 
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Submissions Logged</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{totalSubmissions} Sessions</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-              <History className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Recorded Sessions</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{totalSubmissions}</span>
+            <span className="text-xs text-[#667085]">Total verified batches</span>
+          </div>
+        </div>
 
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Attendance Defaulters</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-red-400">{defaultersCount} Students (&lt;75%)</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
-              <AlertTriangle className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Weekly Velocity</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#B45309]">+2.4% vs last week</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-[#EAB308]/10 border border-[#EAB308]/30 flex items-center justify-center text-[#B45309]">
-              <TrendingUp className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Attendance Warnings (&lt;75%)</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-amber-700">{defaultersCount} Students</span>
+            <span className="text-xs text-[#667085]">Follow-up required</span>
+          </div>
+        </div>
       </div>
 
-      {/* Attendance Trend Chart */}
-      <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-        <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/60">
-          <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            <span>7-Day Aggregated Campus Attendance Trend</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-4 h-48">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={trendData}>
-              <XAxis dataKey="day" stroke="#B8B5A3" fontSize={11} />
-              <YAxis domain={[70, 100]} stroke="#B8B5A3" fontSize={11} />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#0B132B', borderColor: '#243356', color: '#F4F1DE' }}
-              />
-              <Area type="monotone" dataKey="percentage" stroke="#D4AF37" fill="#D4AF37" fillOpacity={0.2} name="Attendance %" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {/* Filter Bar */}
+      <div className="relative">
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#667085]" />
+        <Input
+          placeholder="Filter by subject name, course code, or instructor..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 text-xs border-[#D6D8D5] bg-white rounded-xl shadow-xs"
+        />
+      </div>
 
-      {/* Attendance History Roster Sessions */}
+      {/* Lecture Attendance Session Cards */}
       <div className="space-y-4">
-        <h3 className="text-xs font-mono font-bold text-[#B45309] uppercase tracking-wider">
-          Submitted Lecture Attendance Sessions
-        </h3>
+        {filteredRecords.map((record) => {
+          const isExpanded = !!expandedSessionIds[record.id];
+          const presentRatio =
+            record.totalStudents > 0
+              ? Math.round((record.presentCount / record.totalStudents) * 100)
+              : 100;
 
-        {attendanceRecords.map((record) => (
-          <Card key={record.id} className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-            <CardHeader className="p-4 pb-3 border-b border-[#D0D1D6] bg-white/50 flex flex-row items-center justify-between">
-              <div>
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-[#EAB308]/20 text-[#B45309] border-[#EAB308]/40 font-mono text-[10px]">
-                    {record.courseCode}
-                  </Badge>
-                  <CardTitle className="text-sm font-bold font-mono text-[#202226]">
-                    {record.courseName}
-                  </CardTitle>
-                </div>
-                <p className="text-[11px] text-[#555960] font-mono mt-1">
-                  Batch: {record.batch} · Marked by: {record.markedBy}
-                </p>
-              </div>
-
-              <div className="text-right font-mono text-xs">
-                <Badge className="bg-emerald-500/15 text-emerald-300 border-emerald-500/30">
-                  {record.status}
-                </Badge>
-                <p className="text-[10px] text-[#555960] mt-1">{record.date}</p>
-              </div>
-            </CardHeader>
-
-            <CardContent className="p-0">
-              <div className="divide-y divide-[#243356] text-xs">
-                {record.studentLogs.map((log, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-3.5 hover:bg-white/40 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-[#555960] text-[11px]">#{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
-                      <div>
-                        <p className="font-bold text-[#202226]">{log.studentName}</p>
-                        <p className="text-[#555960] font-mono text-[11px]">{log.rollNumber}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      {log.remarks && (
-                        <span className="text-[10px] text-amber-400 font-mono italic mr-2">{log.remarks}</span>
-                      )}
-                      <Badge
-                        className={
-                          log.status === 'present'
-                            ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30 font-mono text-[10px]'
-                            : log.status === 'absent'
-                            ? 'bg-red-500/15 text-red-300 border-red-500/30 font-mono text-[10px]'
-                            : 'bg-amber-500/15 text-amber-300 border-amber-500/30 font-mono text-[10px]'
-                        }
-                      >
-                        {log.status.toUpperCase()}
-                      </Badge>
-                    </div>
+          return (
+            <div
+              key={record.id}
+              className="rounded-xl border border-[#D6D8D5] bg-white shadow-xs overflow-hidden transition-all"
+            >
+              {/* Session Header Row */}
+              <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#F0F1EF] text-[#1F2933]">
+                      {record.courseCode}
+                    </span>
+                    <h3 className="text-sm font-bold text-[#1F2933]">
+                      {record.courseName}
+                    </h3>
                   </div>
-                ))}
+                  <p className="text-xs text-[#667085]">
+                    Batch: <span className="font-medium text-[#1F2933]">{record.batch}</span> · Instructor:{' '}
+                    <span className="font-medium text-[#1F2933]">{record.markedBy}</span> · Date:{' '}
+                    <span className="text-[#667085]">{record.date}</span>
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 shrink-0">
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-[#1F2933]">
+                      {record.presentCount}/{record.totalStudents} Present
+                    </span>
+                    <span className="text-[11px] text-emerald-700 block font-medium">
+                      {presentRatio}% Attendance
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => toggleExpand(record.id)}
+                    className="p-1.5 rounded-lg border border-[#D6D8D5] hover:bg-[#F0F1EF] text-[#667085] cursor-pointer"
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform duration-200 ${
+                        isExpanded ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        ))}
+
+              {/* Collapsible Student Attendance Roster */}
+              {isExpanded && (
+                <div className="border-t border-[#D6D8D5] bg-[#F7F8F6] p-4">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="text-left text-[#667085] border-b border-[#D6D8D5] pb-2">
+                          <th className="pb-2 font-medium">Roll Number</th>
+                          <th className="pb-2 font-medium">Student Name</th>
+                          <th className="pb-2 font-medium">Status</th>
+                          <th className="pb-2 font-medium">Remarks</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#E5E7EB]">
+                        {record.studentLogs.map((log, idx) => (
+                          <tr key={idx} className="hover:bg-white/60">
+                            <td className="py-2.5 font-medium text-[#1F2933]">{log.rollNumber}</td>
+                            <td className="py-2.5 text-[#1F2933]">{log.studentName}</td>
+                            <td className="py-2.5">
+                              <span
+                                className={`px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize ${
+                                  log.status === 'present'
+                                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                                    : log.status === 'absent'
+                                    ? 'bg-red-50 text-red-800 border border-red-200'
+                                    : 'bg-amber-50 text-amber-800 border border-amber-200'
+                                }`}
+                              >
+                                {log.status}
+                              </span>
+                            </td>
+                            <td className="py-2.5 text-[#667085]">{log.remarks || '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Modal: Interactive Attendance Marking */}
+      {/* Modal: Attendance Marking */}
       {isMarkingModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-xl bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
-                <CalendarCheck className="h-4 w-4" />
-                <span>Mark Attendance Session</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <Card className="w-full max-w-lg bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
+            <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
+                <CalendarCheck className="h-4 w-4 text-[#1F2933]" />
+                <span>Mark Class Attendance</span>
               </CardTitle>
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={() => setIsMarkingModalOpen(false)}
-                className="h-6 w-6 text-[#555960] hover:text-white"
+                className="text-[#667085] hover:text-[#1F2933] cursor-pointer"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </CardHeader>
 
             <CardContent className="p-4 space-y-4">
               <form onSubmit={handleSaveAttendance} className="space-y-4">
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">Select Course Section</label>
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">
+                    Select Subject &amp; Section
+                  </label>
                   <select
                     value={selectedCourseCode}
                     onChange={(e) => setSelectedCourseCode(e.target.value)}
-                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226] font-mono"
+                    className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933] cursor-pointer"
                   >
                     {courses.map((c) => (
                       <option key={c.code} value={c.code}>
@@ -296,70 +288,61 @@ export default function AttendancePage() {
                 </div>
 
                 {/* Enrolled Student List for marking */}
-                <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
                   {studentLogs.map((log, index) => (
                     <div
                       key={log.studentId}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 bg-white rounded-lg border border-[#D0D1D6] text-xs gap-2"
+                      className="flex items-center justify-between p-2.5 bg-[#F7F8F6] rounded-lg border border-[#D6D8D5] text-xs"
                     >
                       <div>
-                        <span className="font-bold text-[#202226]">{log.studentName}</span>
-                        <span className="text-[10px] text-[#555960] font-mono block">{log.rollNumber}</span>
+                        <span className="font-semibold text-[#1F2933] block">{log.studentName}</span>
+                        <span className="text-[11px] text-[#667085]">{log.rollNumber}</span>
                       </div>
 
-                      <div className="flex items-center gap-1">
+                      <div className="inline-flex rounded-lg border border-[#D6D8D5] bg-white p-0.5 gap-0.5">
                         <button
                           type="button"
                           onClick={() => handleStatusToggle(index, 'present')}
-                          className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all ${
+                          className={`px-2.5 py-1 rounded text-[10px] font-semibold transition-all cursor-pointer ${
                             log.status === 'present'
-                              ? 'bg-emerald-500 text-[#0B132B]'
-                              : 'bg-[#E7E8EB] text-[#555960] hover:text-white'
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'text-[#667085] hover:text-[#1F2933]'
                           }`}
                         >
-                          PRESENT
+                          Present
                         </button>
                         <button
                           type="button"
                           onClick={() => handleStatusToggle(index, 'absent')}
-                          className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all ${
+                          className={`px-2.5 py-1 rounded text-[10px] font-semibold transition-all cursor-pointer ${
                             log.status === 'absent'
-                              ? 'bg-red-500 text-white'
-                              : 'bg-[#E7E8EB] text-[#555960] hover:text-white'
+                              ? 'bg-red-600 text-white shadow-xs'
+                              : 'text-[#667085] hover:text-[#1F2933]'
                           }`}
                         >
-                          ABSENT
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleStatusToggle(index, 'late')}
-                          className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold transition-all ${
-                            log.status === 'late'
-                              ? 'bg-amber-500 text-[#0B132B]'
-                              : 'bg-[#E7E8EB] text-[#555960] hover:text-white'
-                          }`}
-                        >
-                          LATE
+                          Absent
                         </button>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D6D8D5]">
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
                     onClick={() => setIsMarkingModalOpen(false)}
-                    className="text-xs border-[#D0D1D6]"
+                    className="text-xs cursor-pointer"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
+                    size="sm"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs cursor-pointer"
                   >
-                    Save &amp; Submit Attendance
+                    Save Attendance Log
                   </Button>
                 </div>
               </form>

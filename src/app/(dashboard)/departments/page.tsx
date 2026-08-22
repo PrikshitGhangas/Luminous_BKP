@@ -6,7 +6,6 @@ import { useRole } from '@/lib/hooks/use-role';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import {
   Landmark,
   Plus,
@@ -14,25 +13,11 @@ import {
   Users,
   GraduationCap,
   BookOpen,
-  DollarSign,
   FlaskConical,
   X,
   ChevronRight,
 } from 'lucide-react';
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts';
 import { Department } from '@/lib/types/academic';
-
-const PIE_COLORS = ['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B'];
 
 export default function DepartmentsPage() {
   const { departments, addDepartment, faculty } = useAcademic();
@@ -46,7 +31,7 @@ export default function DepartmentsPage() {
   const [newDeptName, setNewDeptName] = useState('');
   const [newDeptCode, setNewDeptCode] = useState('');
   const [newHOD, setNewHOD] = useState('');
-  const [newBudget, setNewBudget] = useState('$500K');
+  const [newBudget, setNewBudget] = useState('₹50 Lakhs');
   const [newLabs, setNewLabs] = useState(4);
   const [newEstYear, setNewEstYear] = useState(2024);
   const [newDescription, setNewDescription] = useState('');
@@ -62,20 +47,7 @@ export default function DepartmentsPage() {
 
   const totalFaculty = departments.reduce((acc, d) => acc + d.facultyCount, 0);
   const totalStudents = departments.reduce((acc, d) => acc + d.studentCount, 0);
-  const totalCourses = departments.reduce((acc, d) => acc + d.coursesCount, 0);
   const totalLabs = departments.reduce((acc, d) => acc + d.labCount, 0);
-
-  // Chart data
-  const barChartData = departments.map((d) => ({
-    code: d.code,
-    students: d.studentCount,
-    faculty: d.facultyCount,
-  }));
-
-  const pieChartData = departments.map((d) => ({
-    name: d.code,
-    value: parseInt(d.budget.replace(/[^0-9]/g, '')) * (d.budget.includes('M') ? 1000 : 1),
-  }));
 
   const handleCreateDepartment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +63,7 @@ export default function DepartmentsPage() {
       budget: newBudget,
       labCount: Number(newLabs),
       establishedYear: Number(newEstYear),
-      description: newDescription || 'Academic department pursuing education and technological research.',
+      description: newDescription || 'Academic department pursuing technical education and research.',
     });
 
     setNewDeptName('');
@@ -102,24 +74,23 @@ export default function DepartmentsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2.5">
-            <Landmark className="h-6 w-6 text-[#B45309]" />
-            <span>ACADEMIC DEPARTMENTS</span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <Landmark className="h-6 w-6 text-[#1F2933]" />
+            <span>Academic Departments</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-sans">
-            Institutional governance, department heads, research lab allocation, and budget oversight
+          <p className="text-xs text-[#667085] mt-0.5">
+            Institutional governance, department heads, research laboratories, and budget allocations.
           </p>
         </div>
 
         {canManage && (
           <Button
             onClick={() => setIsAddModalOpen(true)}
-            size="sm"
-            className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] hover:opacity-90 text-[#0B132B] font-bold text-xs gap-1.5 shadow-md shadow-[#D4AF37]/20"
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span>Create Department</span>
@@ -128,217 +99,120 @@ export default function DepartmentsPage() {
       </div>
 
       {/* Overview Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Departments</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{departments.length}</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-[#EAB308]/10 border border-[#EAB308]/30 flex items-center justify-center text-[#B45309]">
-              <Landmark className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Active Departments</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{departments.length}</span>
+            <span className="text-xs text-[#667085]">Academic divisions</span>
+          </div>
+        </div>
 
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Total Students</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{totalStudents}</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-              <GraduationCap className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Total Enrolled Students</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{totalStudents}</span>
+            <span className="text-xs text-emerald-700 font-medium">{totalFaculty} Faculty Members</span>
+          </div>
+        </div>
 
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Total Faculty</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{totalFaculty}</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-              <Users className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Active Courses</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{totalCourses}</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <BookOpen className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226] col-span-2 lg:col-span-1">
-          <CardContent className="p-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-mono text-[#B45309] uppercase tracking-wider">Research Labs</p>
-              <h3 className="text-xl font-bold font-mono mt-0.5 text-[#202226]">{totalLabs}</h3>
-            </div>
-            <div className="h-9 w-9 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-              <FlaskConical className="h-5 w-5" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Visual Analytics Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/60">
-            <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
-              <GraduationCap className="h-4 w-4" />
-              <span>Student &amp; Faculty Distribution by Department</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-4 h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={barChartData}>
-                <XAxis dataKey="code" stroke="#B8B5A3" fontSize={11} />
-                <YAxis stroke="#B8B5A3" fontSize={11} />
-                <Tooltip
-                  contentStyle={{ backgroundColor: '#0B132B', borderColor: '#243356', color: '#F4F1DE' }}
-                />
-                <Bar dataKey="students" fill="#3B82F6" name="Students" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="faculty" fill="#8B5CF6" name="Faculty" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-          <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6] bg-white/60">
-            <CardTitle className="text-xs font-mono font-bold uppercase tracking-wider text-[#B45309] flex items-center gap-2">
-              <DollarSign className="h-4 w-4" />
-              <span>Departmental Budget Allocation ($K)</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-4 h-64 flex items-center justify-center">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={pieChartData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={75}
-                  label={({ name, percent }) => `${name} (${((percent || 0) * 100).toFixed(0)}%)`}
-                >
-                  {pieChartData.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(val) => `$${val}K`}
-                  contentStyle={{ backgroundColor: '#0B132B', borderColor: '#243356', color: '#F4F1DE' }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Research Laboratories</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{totalLabs}</span>
+            <span className="text-xs text-[#667085]">Active specialized labs</span>
+          </div>
+        </div>
       </div>
 
       {/* Search Bar */}
-      <div className="flex items-center gap-3 bg-[#F4F5F6] p-3 rounded-xl border border-[#D0D1D6]">
-        <Search className="h-4 w-4 text-[#B45309] shrink-0" />
+      <div className="relative">
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#667085]" />
         <Input
-          placeholder="Search department by name, code, or HOD..."
+          placeholder="Search department by name, code, or Head of Department..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="bg-transparent border-0 text-xs text-[#202226] placeholder:text-[#555960]/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="pl-10 text-xs border-[#D6D8D5] bg-white rounded-xl shadow-xs"
         />
       </div>
 
       {/* Departments Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredDepts.map((dept) => (
-          <Card
+          <div
             key={dept.id}
-            className="bg-[#F4F5F6] border-[#D0D1D6] hover:border-[#EAB308]/50 transition-all duration-200 text-[#202226] flex flex-col justify-between"
+            className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs hover:border-[#1F2933] transition-all flex flex-col justify-between space-y-3"
           >
-            <CardHeader className="p-4 pb-3 border-b border-[#D0D1D6] bg-white/40 flex flex-row items-start justify-between gap-2">
-              <div>
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-[#EAB308]/15 text-[#B45309] border-[#EAB308]/30 font-mono text-[10px]">
-                    {dept.code}
-                  </Badge>
-                  <span className="text-[10px] text-[#B45309] font-mono">Estd. {dept.establishedYear}</span>
+            <div>
+              <div className="flex items-start justify-between gap-2 border-b border-[#D6D8D5] pb-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded text-xs font-semibold bg-[#F0F1EF] text-[#1F2933] border border-[#D6D8D5]">
+                      {dept.code}
+                    </span>
+                    <span className="text-xs text-[#667085]">Estd. {dept.establishedYear}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#1F2933] mt-1.5">{dept.name}</h3>
                 </div>
-                <h3 className="text-sm font-bold text-[#202226] mt-1 font-mono">{dept.name}</h3>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSelectedDept(dept)}
-                className="h-7 w-7 text-[#555960] hover:text-[#B45309] hover:bg-[#E7E8EB]"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </CardHeader>
-
-            <CardContent className="p-4 space-y-3 text-xs flex-1">
-              <p className="text-[#555960] text-[11px] line-clamp-2 leading-relaxed">{dept.description}</p>
-
-              <div className="bg-white p-2.5 rounded-lg border border-[#D0D1D6] space-y-1">
-                <span className="text-[10px] uppercase font-mono text-[#B45309] block">Head of Department</span>
-                <p className="font-bold text-[#202226]">{dept.headOfDepartment}</p>
+                <button
+                  onClick={() => setSelectedDept(dept)}
+                  className="p-1 rounded hover:bg-[#F0F1EF] text-[#667085] hover:text-[#1F2933] cursor-pointer"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
-                <div className="bg-[#E7E8EB]/50 p-2 rounded border border-[#D0D1D6]/60">
-                  <span className="text-[#555960] block text-[9px]">STUDENTS</span>
-                  <span className="font-bold text-blue-400 text-sm">{dept.studentCount}</span>
-                </div>
-                <div className="bg-[#E7E8EB]/50 p-2 rounded border border-[#D0D1D6]/60">
-                  <span className="text-[#555960] block text-[9px]">FACULTY</span>
-                  <span className="font-bold text-purple-400 text-sm">{dept.facultyCount}</span>
-                </div>
-                <div className="bg-[#E7E8EB]/50 p-2 rounded border border-[#D0D1D6]/60">
-                  <span className="text-[#555960] block text-[9px]">COURSES</span>
-                  <span className="font-bold text-emerald-400 text-sm">{dept.coursesCount}</span>
-                </div>
-                <div className="bg-[#E7E8EB]/50 p-2 rounded border border-[#D0D1D6]/60">
-                  <span className="text-[#555960] block text-[9px]">BUDGET</span>
-                  <span className="font-bold text-[#B45309] text-sm">{dept.budget}</span>
-                </div>
+              <p className="text-[#667085] text-xs line-clamp-2 leading-relaxed mt-2">{dept.description}</p>
+
+              <div className="bg-[#F7F8F6] p-2.5 rounded-lg border border-[#D6D8D5] space-y-0.5 mt-3">
+                <span className="text-[11px] text-[#667085] block">Head of Department</span>
+                <p className="font-semibold text-xs text-[#1F2933]">{dept.headOfDepartment}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#D6D8D5]">
+              <div className="bg-[#F7F8F6] p-2 rounded-lg border border-[#D6D8D5]">
+                <span className="text-[#667085] block text-[10px]">Students</span>
+                <span className="font-bold text-[#1F2933]">{dept.studentCount}</span>
+              </div>
+              <div className="bg-[#F7F8F6] p-2 rounded-lg border border-[#D6D8D5]">
+                <span className="text-[#667085] block text-[10px]">Faculty</span>
+                <span className="font-bold text-[#1F2933]">{dept.facultyCount}</span>
+              </div>
+              <div className="bg-[#F7F8F6] p-2 rounded-lg border border-[#D6D8D5]">
+                <span className="text-[#667085] block text-[10px]">Courses</span>
+                <span className="font-bold text-[#1F2933]">{dept.coursesCount}</span>
+              </div>
+              <div className="bg-[#F7F8F6] p-2 rounded-lg border border-[#D6D8D5]">
+                <span className="text-[#667085] block text-[10px]">Labs</span>
+                <span className="font-bold text-[#1F2933]">{dept.labCount} Labs</span>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Create Department Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-lg bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
-              <CardTitle className="text-sm font-bold font-mono text-[#B45309] flex items-center gap-2">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <Card className="w-full max-w-lg bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
+            <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-[#1F2933] flex items-center gap-2">
                 <Landmark className="h-4 w-4" />
-                <span>Establish New Academic Department</span>
+                <span>Establish Academic Department</span>
               </CardTitle>
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={() => setIsAddModalOpen(false)}
-                className="h-6 w-6 text-[#555960] hover:text-white"
+                className="text-[#667085] hover:text-[#1F2933] cursor-pointer"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </CardHeader>
             <CardContent className="p-4 space-y-4">
               <form onSubmit={handleCreateDepartment} className="space-y-3.5 text-xs">
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                       Department Code *
                     </label>
                     <Input
@@ -346,11 +220,11 @@ export default function DepartmentsPage() {
                       placeholder="e.g. BME"
                       value={newDeptCode}
                       onChange={(e) => setNewDeptCode(e.target.value)}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                       Department Name *
                     </label>
                     <Input
@@ -358,61 +232,61 @@ export default function DepartmentsPage() {
                       placeholder="e.g. Biomedical Engineering"
                       value={newDeptName}
                       onChange={(e) => setNewDeptName(e.target.value)}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                     Head of Department (HOD)
                   </label>
                   <Input
                     placeholder="e.g. Dr. Arthur Pendelton"
                     value={newHOD}
                     onChange={(e) => setNewHOD(e.target.value)}
-                    className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                    className="bg-white border-[#D6D8D5] text-xs"
                   />
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                       Annual Budget
                     </label>
                     <Input
-                      placeholder="$600K"
+                      placeholder="₹50 Lakhs"
                       value={newBudget}
                       onChange={(e) => setNewBudget(e.target.value)}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                       Lab Count
                     </label>
                     <Input
                       type="number"
                       value={newLabs}
                       onChange={(e) => setNewLabs(Number(e.target.value))}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                    <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                       Established Year
                     </label>
                     <Input
                       type="number"
                       value={newEstYear}
                       onChange={(e) => setNewEstYear(Number(e.target.value))}
-                      className="bg-white border-[#D0D1D6] text-xs text-[#202226]"
+                      className="bg-white border-[#D6D8D5] text-xs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-[10px] font-mono text-[#B45309] uppercase block mb-1">
+                  <label className="text-xs font-semibold text-[#1F2933] block mb-1">
                     Department Overview
                   </label>
                   <textarea
@@ -420,22 +294,24 @@ export default function DepartmentsPage() {
                     placeholder="Brief description of research focus and academic goals..."
                     value={newDescription}
                     onChange={(e) => setNewDescription(e.target.value)}
-                    className="w-full rounded-md bg-white border border-[#D0D1D6] p-2 text-xs text-[#202226] focus:outline-none focus:border-[#EAB308]"
+                    className="w-full rounded-lg bg-white border border-[#D6D8D5] p-2 text-xs text-[#1F2933]"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-2 border-t border-[#D0D1D6]">
+                <div className="flex justify-end gap-2 pt-2 border-t border-[#D6D8D5]">
                   <Button
                     type="button"
                     variant="outline"
+                    size="sm"
                     onClick={() => setIsAddModalOpen(false)}
-                    className="text-xs border-[#D0D1D6]"
+                    className="text-xs cursor-pointer"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#0B132B] font-bold text-xs"
+                    size="sm"
+                    className="bg-[#1F2933] hover:bg-[#111827] text-white font-semibold text-xs cursor-pointer"
                   >
                     Save &amp; Create
                   </Button>
@@ -448,51 +324,50 @@ export default function DepartmentsPage() {
 
       {/* Department Detail Modal */}
       {selectedDept && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <Card className="w-full max-w-xl bg-[#F4F5F6] border-[#D0D1D6] text-[#202226]">
-            <CardHeader className="p-4 border-b border-[#D0D1D6] flex flex-row items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <Card className="w-full max-w-xl bg-white border-[#D6D8D5] text-[#1F2933] shadow-xl">
+            <CardHeader className="p-4 border-b border-[#D6D8D5] flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
-                <Badge className="bg-[#EAB308]/20 text-[#B45309] border-[#EAB308]/40 font-mono">
+                <span className="px-2 py-0.5 rounded text-xs font-semibold bg-[#F0F1EF] text-[#1F2933]">
                   {selectedDept.code}
-                </Badge>
-                <CardTitle className="text-sm font-bold font-mono text-[#202226]">
+                </span>
+                <CardTitle className="text-sm font-bold text-[#1F2933]">
                   {selectedDept.name}
                 </CardTitle>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={() => setSelectedDept(null)}
-                className="h-6 w-6 text-[#555960] hover:text-white"
+                className="text-[#667085] hover:text-[#1F2933] cursor-pointer"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </CardHeader>
             <CardContent className="p-4 space-y-4 text-xs">
-              <p className="text-[#555960]">{selectedDept.description}</p>
+              <p className="text-[#667085] leading-relaxed">{selectedDept.description}</p>
 
-              <div className="grid grid-cols-2 gap-3 bg-white p-3 rounded-lg border border-[#D0D1D6]">
+              <div className="grid grid-cols-2 gap-3 bg-[#F7F8F6] p-3 rounded-lg border border-[#D6D8D5]">
                 <div>
-                  <span className="text-[10px] text-[#B45309] font-mono block uppercase">Head of Dept</span>
-                  <span className="font-bold text-[#202226] text-xs">{selectedDept.headOfDepartment}</span>
+                  <span className="text-[11px] text-[#667085] block">Head of Department</span>
+                  <span className="font-semibold text-[#1F2933] text-xs">{selectedDept.headOfDepartment}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#B45309] font-mono block uppercase">Annual Budget</span>
-                  <span className="font-bold text-[#B45309] text-xs">{selectedDept.budget}</span>
+                  <span className="text-[11px] text-[#667085] block">Annual Budget</span>
+                  <span className="font-semibold text-[#1F2933] text-xs">{selectedDept.budget}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#B45309] font-mono block uppercase">Established</span>
-                  <span className="font-bold text-[#202226] text-xs">{selectedDept.establishedYear}</span>
+                  <span className="text-[11px] text-[#667085] block">Established</span>
+                  <span className="font-semibold text-[#1F2933] text-xs">{selectedDept.establishedYear}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#B45309] font-mono block uppercase">Research Labs</span>
-                  <span className="font-bold text-amber-400 text-xs">{selectedDept.labCount} Active Labs</span>
+                  <span className="text-[11px] text-[#667085] block">Research Laboratories</span>
+                  <span className="font-semibold text-emerald-700 text-xs">{selectedDept.labCount} Active Labs</span>
                 </div>
               </div>
 
               <div>
-                <h4 className="font-mono text-[11px] text-[#B45309] uppercase font-bold mb-2">
-                  Assigned Faculty Members in Dept
+                <h4 className="text-xs font-semibold text-[#1F2933] mb-2 flex items-center gap-1.5">
+                  <Users className="h-3.5 w-3.5" />
+                  <span>Assigned Faculty Members</span>
                 </h4>
                 <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
                   {faculty
@@ -500,15 +375,15 @@ export default function DepartmentsPage() {
                     .map((f) => (
                       <div
                         key={f.id}
-                        className="flex items-center justify-between bg-[#E7E8EB]/40 p-2 rounded border border-[#D0D1D6]"
+                        className="flex items-center justify-between bg-[#F7F8F6] p-2 rounded-lg border border-[#D6D8D5]"
                       >
                         <div>
-                          <span className="font-bold text-[#202226]">{f.name}</span>
-                          <span className="text-[10px] text-[#555960] block font-mono">{f.employeeId} · {f.officeRoom}</span>
+                          <span className="font-semibold text-[#1F2933]">{f.name}</span>
+                          <span className="text-[11px] text-[#667085] block">{f.employeeId} · {f.officeRoom}</span>
                         </div>
-                        <Badge className="bg-purple-500/15 text-purple-300 border-purple-500/30 text-[10px] font-mono">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-50 text-purple-800 border border-purple-200">
                           {f.designation}
-                        </Badge>
+                        </span>
                       </div>
                     ))}
                 </div>

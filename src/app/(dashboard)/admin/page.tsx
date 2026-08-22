@@ -67,36 +67,30 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Key metrics */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
-        <StatCard
-          title="Active Users"
-          value={students.length + faculty.length}
-          icon={<Users className="h-5 w-5" />}
-          variant="primary"
-        />
-        <StatCard
-          title="Open Incidents"
-          value={activeIncidents.length}
-          icon={<Flame className="h-5 w-5" />}
-          variant="warning"
-        />
-        <StatCard
-          title="Today's Alerts"
-          value={todayAlerts}
-          icon={<BellRing className="h-5 w-5" />}
-          variant="critical"
-        />
-        <StatCard
-          title="System Health"
-          value="Operational"
-          icon={<Activity className="h-5 w-5" />}
-          variant="success"
-        />
-        <StatCard
-          title="Unread Notifications"
-          value={unreadNotifs.length}
-          icon={<BellRing className="h-5 w-5" />}
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Total Registered Users</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{students.length + faculty.length}</span>
+            <span className="text-xs text-[#667085]">{students.length} Students · {faculty.length} Faculty</span>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Active Safety Events</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">{activeIncidents.length}</span>
+            <span className="text-xs text-amber-700 font-medium">Under active patrol review</span>
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl border border-[#D6D8D5] bg-white shadow-xs">
+          <span className="text-xs text-[#667085]">Platform Security Status</span>
+          <div className="flex items-baseline gap-2 mt-1">
+            <span className="text-2xl font-bold text-[#1F2933]">Operational</span>
+            <span className="text-xs text-emerald-700 font-medium">100% services online</span>
+          </div>
+        </div>
       </div>
 
       {/* Quick actions — only the most frequent */}

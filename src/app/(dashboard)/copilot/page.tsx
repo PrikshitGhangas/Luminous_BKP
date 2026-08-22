@@ -17,6 +17,7 @@ import {
   User,
   Terminal,
   Check,
+  ChevronDown,
 } from 'lucide-react';
 import { ToolExecutionResult } from '@/lib/services/copilot/authorizer';
 import { cn } from '@/lib/utils';
@@ -152,18 +153,14 @@ export default function CampusShieldCopilotPage() {
   const [inputQuery, setInputQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [testResults, setTestResults] = useState<Record<string, { passed: boolean; details: string }>>({});
+  const [expandedTestLogs, setExpandedTestLogs] = useState<Record<string, boolean>>({});
   const [isRunningAll, setIsRunningAll] = useState(false);
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'init-msg',
       role: 'assistant',
-      content: `### 🛡️ CampusShield AI Copilot Command Hub
-**Powered by Gemini 3.7 Flash** • Architecture: \`User -> Gemini -> approved tool -> server authorization -> database -> Gemini -> answer\`
-
-I am ready to assist with safety intelligence, student academic records, active incident dispatch, and hazard prioritizations under strict Role-Based Access Control (RBAC).
-
-Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the right-hand panel!`,
+      content: 'I am ready to assist with safety intelligence and academic records. How can I help you today?',
       timestamp: 'System Initialized',
     },
   ]);
@@ -309,63 +306,46 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
 
   return (
     <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="rounded-2xl border border-[#EAB308]/40 bg-gradient-to-r from-[#131C38] via-[#0F1026] to-[#1C2541] p-6 shadow-2xl">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#EAB308]/20 border border-[#EAB308]/40 text-[#B45309]">
-                <Sparkles className="h-4 w-4" />
-              </div>
-              <h1 className="text-xl font-bold font-mono text-[#202226] tracking-wide">
-                CAMPUSSHIELD AI COPILOT COMMAND HUB
-              </h1>
-              <span className="rounded bg-[#EAB308]/15 border border-[#EAB308]/30 px-2 py-0.5 text-xs font-mono font-bold text-[#B45309]">
-                Gemini 3.7 Flash
-              </span>
-            </div>
-            <p className="text-xs text-[#555960] font-mono max-w-3xl">
-              Strictly Controlled Server-Side Architecture: <code className="text-[#B45309]">User → Gemini → approved tool → server authorization → database → Gemini → answer</code>. Never generates arbitrary SQL or bypasses authorization.
-            </p>
-          </div>
-
-          {/* Active Testing Persona Switcher */}
-          <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-[#D0D1D6]">
-            <span className="text-[11px] font-mono text-[#B45309] uppercase font-bold pl-2">
-              Simulate Persona:
-            </span>
-            <select
-              value={selectedRole}
-              onChange={(e) => {
-                const newR = e.target.value as UserRole;
-                setSelectedRole(newR);
-                switchRole(newR);
-              }}
-              aria-label="Simulate Persona"
-              className="h-8 rounded-lg bg-[#E7E8EB] border border-[#D0D1D6] px-2 text-xs font-mono font-bold text-[#B45309] focus:border-[#EAB308] focus:outline-none cursor-pointer"
-            >
-              <option value="admin">Administrator (Marcus Chen)</option>
-              <option value="super_admin">Super Admin (Dr. Evelyn Vance)</option>
-              <option value="security">Security Officer (Capt. Vikram Sharma)</option>
-              <option value="student">Student (Aanya Patel)</option>
-              <option value="parent">Parent (Rajesh Patel)</option>
-              <option value="faculty">Faculty (Prof. Sarah Jenkins)</option>
-              <option value="warden">Hostel Warden (Col. Rajeshwari Devi)</option>
-            </select>
-          </div>
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Copilot</h1>
+        </div>
+        <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-[#D0D1D6]">
+          <span className="text-[11px] font-mono text-[#B45309] uppercase font-bold pl-2">
+            Simulate Persona:
+          </span>
+          <select
+            value={selectedRole}
+            onChange={(e) => {
+              const newR = e.target.value as UserRole;
+              setSelectedRole(newR);
+              switchRole(newR);
+            }}
+            aria-label="Simulate Persona"
+            className="h-8 rounded-lg bg-[#E7E8EB] border border-[#D0D1D6] px-2 text-xs font-mono font-bold text-[#B45309] focus:border-[#EAB308] focus:outline-none cursor-pointer"
+          >
+            <option value="admin">Administrator (Marcus Chen)</option>
+            <option value="super_admin">Super Admin (Dr. Evelyn Vance)</option>
+            <option value="security">Security Officer (Capt. Vikram Sharma)</option>
+            <option value="student">Student (Aanya Patel)</option>
+            <option value="parent">Parent (Rajesh Patel)</option>
+            <option value="faculty">Faculty (Prof. Sarah Jenkins)</option>
+            <option value="warden">Hostel Warden (Col. Rajeshwari Devi)</option>
+          </select>
         </div>
       </div>
 
       {/* Main Grid: Chat Console + Security Sandbox */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Interactive Chat & Architecture Inspector */}
+        {/* Left Column: Interactive Chat */}
         <div className="lg:col-span-7 space-y-4">
           <Card className="border-[#D0D1D6] bg-white text-[#202226] shadow-xl overflow-hidden flex flex-col h-[700px]">
             <CardHeader className="p-4 border-b border-[#D0D1D6] bg-[#F4F5F6] flex flex-row items-center justify-between">
               <div className="flex items-center gap-2">
-                <Terminal className="h-4 w-4 text-[#B45309]" />
-                <CardTitle className="text-xs font-mono font-bold uppercase text-[#202226] tracking-wider">
-                  Interactive AI Copilot Session
+                <Terminal className="h-4 w-4 text-gray-500" />
+                <CardTitle className="text-sm font-bold text-gray-900">
+                  Interactive Copilot Session
                 </CardTitle>
               </div>
               <div className="flex items-center gap-2">
@@ -399,18 +379,18 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                     {msg.role === 'user' ? (
                       <>
                         <span>{msg.timestamp}</span>
-                        <span className="text-[#B45309] font-bold">
-                          {msg.simulatedRole?.toUpperCase()}
+                        <span className="font-bold">
+                          {msg.simulatedRole}
                         </span>
-                        <User className="h-3 w-3 text-[#B45309]" />
+                        <User className="h-3 w-3" />
                       </>
                     ) : (
                       <>
-                        <Sparkles className="h-3 w-3 text-[#B45309]" />
-                        <span className="text-[#B45309] font-bold">CAMPUSSHIELD AI</span>
+                        <Sparkles className="h-3 w-3" />
+                        <span className="font-bold">Copilot</span>
                         {msg.executionTimeMs && (
-                          <span className="text-[9px] text-[#8A9199]">
-                            ({msg.executionTimeMs}ms • Gemini 3.7 Flash)
+                          <span className="text-[9px] text-gray-400">
+                            ({msg.executionTimeMs}ms)
                           </span>
                         )}
                       </>
@@ -466,9 +446,9 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
               ))}
 
               {isLoading && (
-                <div className="flex items-center gap-2 text-xs font-mono text-[#B45309] animate-pulse p-3 bg-white rounded-xl border border-[#D0D1D6] w-fit">
+                <div className="flex items-center gap-2 text-xs animate-pulse p-3 bg-white rounded-xl border border-gray-200 w-fit">
                   <Sparkles className="h-4 w-4 animate-spin" />
-                  <span>Gemini 3.7 Flash invoking server authorization gateway...</span>
+                  <span>Loading...</span>
                 </div>
               )}
             </CardContent>
@@ -549,33 +529,31 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
               {TEST_SUITE.map((test) => {
                 const res = testResults[test.id];
                 const isViolation = test.type === 'SECURITY_VIOLATION';
+                const isExpanded = !!expandedTestLogs[test.id];
 
                 return (
                   <div
                     key={test.id}
-                    className={cn(
-                      'rounded-xl border p-3 text-xs space-y-2 transition-all',
-                      isViolation
-                        ? 'border-red-500/30 bg-red-950/10'
-                        : 'border-emerald-500/30 bg-emerald-950/10'
-                    )}
+                    className="p-3.5 rounded-xl border border-[#D6D8D5] bg-white text-xs space-y-2.5 shadow-xs"
                   >
                     <div className="flex items-start justify-between gap-2">
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2 font-mono text-[9px]">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#F0F1EF] text-[#667085] uppercase">
+                            Role: {test.role}
+                          </span>
                           <span
                             className={cn(
-                              'px-1.5 py-0.2 rounded font-bold uppercase',
+                              'px-2 py-0.5 rounded-full text-[10px] font-semibold',
                               isViolation
-                                ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                                : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                                ? 'bg-red-50 text-red-700 border border-red-200'
+                                : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                             )}
                           >
-                            {test.expectedOutcome === 'DENIED' ? 'MUST BE DENIED' : 'AUTHORIZED'}
+                            {isViolation ? 'Restricted Action' : 'Permitted Action'}
                           </span>
-                          <span className="text-[#555960]">Role: <strong className="text-[#B45309] uppercase">{test.role}</strong></span>
                         </div>
-                        <h5 className="font-bold text-xs font-mono text-[#202226]">
+                        <h5 className="font-bold text-xs text-[#1F2933]">
                           {test.title}
                         </h5>
                       </div>
@@ -584,37 +562,62 @@ Select a quick prompt below or run the **Zero-Trust Security Test Suite** in the
                         onClick={() => handleSend(test.prompt, test.role)}
                         size="sm"
                         variant="outline"
-                        className="h-6 text-[10px] font-mono border-[#D0D1D6] hover:border-[#EAB308] hover:text-[#B45309] text-[#555960] px-2 shrink-0"
+                        className="h-7 text-xs border-[#D6D8D5] hover:bg-[#F0F1EF] text-[#1F2933] px-2.5 shrink-0 rounded-lg cursor-pointer"
                       >
-                        <Play className="h-2.5 w-2.5 mr-1" />
-                        Run
+                        <Play className="h-3 w-3 mr-1" />
+                        Test
                       </Button>
                     </div>
 
-                    <div className="bg-white rounded p-2 border border-[#D0D1D6] font-mono text-[10px] text-[#202226]">
+                    <div className="bg-[#F7F8F6] rounded-lg p-2.5 border border-[#D6D8D5] text-xs text-[#1F2933] italic">
                       &ldquo;{test.prompt}&rdquo;
                     </div>
 
-                    <div className="flex items-center justify-between text-[9px] text-[#555960] font-mono">
-                      <span>Target: <code className="text-[#B45309]">{test.targetData}</code></span>
-                      <span>Enforcement: <strong className={isViolation ? 'text-red-400' : 'text-emerald-400'}>{test.expectedOutcome}</strong></span>
-                    </div>
-
+                    {/* Result badge if run */}
                     {res && (
                       <div
                         className={cn(
-                          'p-1.5 rounded border font-mono text-[10px] flex items-center justify-between',
+                          'p-2 rounded-lg text-xs flex items-center justify-between font-medium',
                           res.passed
-                            ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300'
-                            : 'bg-red-950/40 border-red-500/40 text-red-300'
+                            ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+                            : 'bg-red-50 border border-red-200 text-red-800'
                         )}
                       >
-                        <span className="flex items-center gap-1">
-                          {res.passed ? <Check className="h-3 w-3 text-emerald-400" /> : <XCircle className="h-3 w-3 text-red-400" />}
-                          {res.passed ? 'PASSED: Server Rule Strictly Enforced' : 'FAILED'}
+                        <span className="flex items-center gap-1.5">
+                          {res.passed ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <XCircle className="h-3.5 w-3.5 text-red-600" />}
+                          {res.passed ? 'Verified: Policy Rule Enforced' : 'Verification Issue'}
                         </span>
                       </div>
                     )}
+
+                    {/* Collapsible Technical Details */}
+                    <div className="pt-1">
+                      <button
+                        onClick={() =>
+                          setExpandedTestLogs((prev) => ({ ...prev, [test.id]: !prev[test.id] }))
+                        }
+                        className="flex items-center gap-1 text-[11px] font-semibold text-[#667085] hover:text-[#1F2933] cursor-pointer"
+                      >
+                        <span>{isExpanded ? 'Hide Technical Policy Log' : 'View Technical Policy Log'}</span>
+                        <ChevronDown
+                          className={cn('h-3.5 w-3.5 transition-transform duration-200', isExpanded && 'rotate-180')}
+                        />
+                      </button>
+
+                      {isExpanded && (
+                        <div className="mt-2 p-2.5 rounded-lg bg-[#F0F1EF] border border-[#D6D8D5] text-[11px] text-[#667085] space-y-1 animate-in fade-in">
+                          <p>
+                            <strong>Target Resource:</strong> {test.targetData}
+                          </p>
+                          <p>
+                            <strong>Policy Rule:</strong> {test.description}
+                          </p>
+                          <p>
+                            <strong>Server Enforcement:</strong> {test.expectedOutcome}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 );
               })}

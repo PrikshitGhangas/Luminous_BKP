@@ -3,36 +3,36 @@
 import React, { useState } from 'react';
 import { useSafety } from '@/lib/context/safety-context';
 import { Incident } from '@/lib/types';
-import { SeverityBadge } from '@/components/shared/severity-badge';
 import { IncidentReportModal } from '@/components/safety/incident-report-modal';
 import { IncidentDetailsModal } from '@/components/safety/incident-details-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
 import { formatTimeAgo } from '@/lib/utils';
 import {
   Flame,
   Plus,
   Search,
-  Sparkles,
   MapPin,
   Clock,
+  ChevronDown,
+  FileText,
+  User,
+  Shield,
 } from 'lucide-react';
-
 import { useRole } from '@/lib/hooks/use-role';
 
 export default function IncidentsPage() {
   const { incidents } = useSafety();
   const { user, isSuperAdmin, isAdmin, isSecurity } = useRole();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filterSeverity, setFilterSeverity] = useState('all');
+  const [statusTab, setStatusTab] = useState<'all' | 'active' | 'resolved'>('all');
+  const [expandedIncidentIds, setExpandedIncidentIds] = useState<Record<string, boolean>>({});
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [selectedIncident, setSelectedIncident] = useState<Incident | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const isPrivileged = isSuperAdmin || isAdmin || isSecurity;
 
-  // Incident Scoping: Non-privileged users only see incidents they reported or campus-wide critical emergencies
   const scopedIncidents = incidents.filter((i) => {
     if (isPrivileged) return true;
     if (i.severity === 'critical') return true;
@@ -40,7 +40,9 @@ export default function IncidentsPage() {
   });
 
   const filtered = scopedIncidents.filter((i) => {
-    if (filterSeverity !== 'all' && i.severity !== filterSeverity) return false;
+    const isResolved = i.status === 'resolved' || i.status === 'closed';
+    if (statusTab === 'active' && isResolved) return false;
+    if (statusTab === 'resolved' && !isResolved) return false;
 
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -54,28 +56,33 @@ export default function IncidentsPage() {
     return true;
   });
 
+  const toggleExpand = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpandedIncidentIds((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   const handleOpenDetails = (inc: Incident) => {
     setSelectedIncident(inc);
     setIsDetailsModalOpen(true);
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D0D1D6] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2">
-            <Flame className="h-6 w-6 text-red-500" />
-            <span>INCIDENT MANAGEMENT SYSTEM</span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+            <Flame className="h-6 w-6 text-red-600" />
+            <span>Incidents Queue</span>
           </h1>
-          <p className="text-xs text-[#555960] mt-1 font-mono">
-            Autonomous Gemini 3.7 Flash triage, rapid dispatch, and complete audit lifecycle
+          <p className="text-xs text-[#667085] mt-0.5">
+            Overview and status records of active campus security events and safety reports.
           </p>
         </div>
 
         <Button
           onClick={() => setIsReportModalOpen(true)}
-          className="bg-gradient-to-r from-[#F4C430] via-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold text-xs gap-1.5 shadow-lg shadow-[#D4AF37]/20"
+          className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs cursor-pointer"
         >
           <Plus className="h-4 w-4" />
           <span>Report Safety Incident</span>
@@ -85,28 +92,28 @@ export default function IncidentsPage() {
       {/* Filter & Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative flex-1 w-full">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#B45309]" />
+          <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#667085]" />
           <Input
-            placeholder="Search by incident number, title, category, or location..."
+            placeholder="Search by incident title, building, or reporter..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 text-xs"
+            className="pl-10 text-xs border-[#D6D8D5] bg-white rounded-xl shadow-xs"
           />
         </div>
 
-        {/* Severity Filter */}
-        <div className="flex items-center gap-1 bg-[#F4F5F6] border border-[#D0D1D6] p-1 rounded-lg text-xs font-mono shrink-0">
-          {['all', 'critical', 'high', 'medium', 'low'].map((sev) => (
+        {/* Status Segmented Pills */}
+        <div className="inline-flex p-1 bg-[#F0F1EF] rounded-full border border-[#D6D8D5] gap-1 shrink-0">
+          {(['all', 'active', 'resolved'] as const).map((tab) => (
             <button
-              key={sev}
-              onClick={() => setFilterSeverity(sev)}
-              className={`px-2.5 py-1 rounded capitalize transition-colors cursor-pointer text-xs ${
-                filterSeverity === sev
-                  ? 'bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold shadow-xs'
-                  : 'text-[#555960] hover:text-[#B45309]'
+              key={tab}
+              onClick={() => setStatusTab(tab)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all capitalize cursor-pointer ${
+                statusTab === tab
+                  ? 'bg-[#1F2933] text-white shadow-xs'
+                  : 'text-[#667085] hover:text-[#1F2933]'
               }`}
             >
-              {sev}
+              {tab === 'all' ? 'All Incidents' : tab}
             </button>
           ))}
         </div>
@@ -115,105 +122,103 @@ export default function IncidentsPage() {
       {/* Incident List */}
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <div className="p-12 text-center text-xs text-[#555960] font-mono border border-[#D0D1D6] rounded-xl bg-[#F4F5F6]">
-            No incidents matching search and filter criteria.
+          <div className="p-12 text-center text-xs text-[#667085] border border-[#D6D8D5] rounded-xl bg-white shadow-xs">
+            No incident reports found matching the criteria.
           </div>
         ) : (
           filtered.map((incident) => {
             const isResolved = incident.status === 'resolved' || incident.status === 'closed';
+            const isExpanded = !!expandedIncidentIds[incident.id];
 
             return (
-              <Card
+              <div
                 key={incident.id}
-                onClick={() => handleOpenDetails(incident)}
-                className={`transition-all hover:border-[#EAB308] cursor-pointer ${
-                  incident.severity === 'critical'
-                    ? 'border-l-4 border-l-red-500 bg-white/95'
-                    : incident.severity === 'high'
-                    ? 'border-l-4 border-l-amber-500 bg-white/95'
-                    : 'border-l-4 border-l-[#D4AF37] bg-white/95'
-                }`}
+                className="p-4 rounded-xl border border-[#D6D8D5] bg-white transition-all space-y-3 shadow-xs"
               >
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#B45309]">
-                          {incident.incident_number}
-                        </span>
-                        <SeverityBadge
-                          severity={incident.severity}
-                          isAiClassified={!!incident.ai_confidence}
-                          size="sm"
-                        />
-                        <span className="rounded bg-[#F4F5F6] border border-[#D0D1D6] px-2 py-0.5 text-[10px] font-bold uppercase font-mono text-[#202226]">
-                          {incident.category}
-                        </span>
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase font-mono ${
-                            incident.status === 'responding'
-                              ? 'bg-amber-950 text-[#B45309] border border-[#EAB308] animate-pulse'
-                              : isResolved
-                              ? 'bg-emerald-950 text-emerald-300 border border-emerald-800'
-                              : 'bg-[#E7E8EB] text-[#555960] border border-[#D0D1D6]'
-                          }`}
-                        >
-                          {incident.status}
-                        </span>
-                      </div>
-                      <h3 className="text-sm font-bold text-[#202226]">
-                        {incident.title}
-                      </h3>
-                    </div>
-
-                    <span className="text-[11px] text-[#B45309] font-mono shrink-0 flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      <span>{formatTimeAgo(incident.created_at)}</span>
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-[#555960] leading-relaxed">
-                    {incident.description}
-                  </p>
-
-                  {incident.ai_summary && (
-                    <div className="rounded-lg bg-[#F4F5F6] border border-[#EAB308]/30 p-2.5 text-xs text-[#202226] flex items-start gap-2">
-                      <Sparkles className="h-4 w-4 text-[#B45309] shrink-0 mt-0.5" />
-                      <div>
-                        <span className="font-bold text-[#B45309]">Gemini Triage: </span>
-                        <span className="text-[#202226]">{incident.ai_summary}</span>
-                        <span className="ml-2 text-[10px] font-mono text-[#B45309]">
-                          (Confidence: {Math.round((incident.ai_confidence || 0.95) * 100)}%)
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-[#D0D1D6] text-xs text-[#555960]">
-                    <div className="flex items-center gap-4 flex-wrap font-mono">
+                {/* Top Row: Title, Status, Time */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="space-y-1">
+                    <h2 className="text-sm font-bold text-[#1F2933]">
+                      {incident.title}
+                    </h2>
+                    <div className="flex items-center gap-3 text-xs text-[#667085]">
                       <span className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5 text-[#B45309]" />
+                        <MapPin className="h-3.5 w-3.5 text-[#667085]" />
                         <span>{incident.location_name}</span>
                       </span>
-                      <span>
-                        Reporter:{' '}
-                        {incident.is_anonymous && !isSuperAdmin
-                          ? '[ANONYMOUS REPORTER - PROTECTED]'
-                          : incident.reporter_name || 'Anonymous Student'}
+                      <span>·</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3.5 w-3.5 text-[#667085]" />
+                        <span>{formatTimeAgo(incident.created_at)}</span>
                       </span>
-                      {incident.assigned_officer_name && (
-                        <span className="text-[#B45309]">
-                          Assigned: {incident.assigned_officer_name}
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-1.5 text-xs font-mono text-[#B45309] font-bold">
-                      <span>View Full Details →</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold shrink-0 capitalize ${
+                      incident.status === 'dispatched' || incident.status === 'investigating' || incident.status === 'arrived'
+                        ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                        : isResolved
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-[#F0F1EF] text-[#667085] border border-[#D6D8D5]'
+                    }`}
+                  >
+                    {incident.status.replace('_', ' ')}
+                  </span>
+                </div>
+
+                <p className="text-xs text-[#667085] leading-relaxed">
+                  {incident.description}
+                </p>
+
+                {/* Collapsible Dropdown Trigger */}
+                <div className="pt-2 border-t border-[#D6D8D5] flex items-center justify-between">
+                  <button
+                    onClick={(e) => toggleExpand(incident.id, e)}
+                    className="flex items-center gap-1.5 text-xs font-semibold text-[#1F2933] hover:underline cursor-pointer"
+                  >
+                    <span>{isExpanded ? 'Hide Technical Log' : 'View Incident Details & Log'}</span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-[#667085] transition-transform duration-200 ${
+                        isExpanded ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  <button
+                    onClick={() => handleOpenDetails(incident)}
+                    className="text-xs font-medium text-[#667085] hover:text-[#1F2933] cursor-pointer"
+                  >
+                    Full Incident Report →
+                  </button>
+                </div>
+
+                {/* Collapsed Technical Details & Operational Log */}
+                {isExpanded && (
+                  <div className="mt-2 p-3.5 rounded-lg bg-[#F7F8F6] border border-[#D6D8D5] text-xs space-y-2 animate-in fade-in duration-150">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                      <div>
+                        <span className="text-[11px] text-[#667085] block">Reference Number</span>
+                        <strong className="text-[#1F2933]">{incident.incident_number}</strong>
+                      </div>
+                      <div>
+                        <span className="text-[11px] text-[#667085] block">Reported By</span>
+                        <strong className="text-[#1F2933]">
+                          {incident.is_anonymous && !isSuperAdmin
+                            ? 'Anonymous Reporter'
+                            : incident.reporter_name || 'Anonymous Reporter'}
+                        </strong>
+                      </div>
+                      <div>
+                        <span className="text-[11px] text-[#667085] block">Assigned Officer</span>
+                        <strong className="text-[#1F2933]">
+                          {incident.assigned_officer_name || 'Campus Patrol Dispatch'}
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             );
           })
         )}

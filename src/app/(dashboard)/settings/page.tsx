@@ -12,42 +12,42 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
-      <div className="border-b border-[#D0D1D6] pb-4">
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] font-mono flex items-center gap-2">
-          <Settings className="h-6 w-6 text-[#B45309]" />
-          <span>ACCOUNT &amp; SAFETY SETTINGS</span>
+      <div className="border-b border-[#D6D8D5] pb-4">
+        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1F2933] flex items-center gap-2">
+          <Settings className="h-6 w-6 text-[#8a6d1a]" />
+          <span>Account Settings</span>
         </h1>
-        <p className="text-xs text-[#555960] mt-1">
-          Configure multi-factor authentication, emergency contacts, and notifications
+        <p className="text-xs text-[#667085] mt-1">
+          Configure profile details, emergency contacts, and notifications.
         </p>
       </div>
 
-      <Card>
-        <CardHeader className="p-4 pb-2 border-b border-[#D0D1D6]">
-          <CardTitle className="text-sm font-bold flex items-center gap-2 text-[#202226] font-mono">
-            <Shield className="h-4 w-4 text-[#B45309]" />
+      <Card className="bg-white border-[#D6D8D5]">
+        <CardHeader className="p-4 pb-2 border-b border-[#D6D8D5]">
+          <CardTitle className="text-sm font-bold flex items-center gap-2 text-[#1F2933]">
+            <Shield className="h-4 w-4 text-[#8a6d1a]" />
             <span>Profile Identity</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 space-y-3 text-xs">
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-[#202226]">Full Name</label>
-              <Input defaultValue={user?.full_name} />
+              <label className="font-semibold text-[#1F2933]">Full Name</label>
+              <Input defaultValue={user?.full_name} className="border-[#D6D8D5]" />
             </div>
             <div className="space-y-1">
-              <label className="font-semibold text-[#202226]">Role Assigned</label>
-              <Input value={role || 'N/A'} disabled className="bg-[#F4F5F6] text-[#B45309] font-mono" />
+              <label className="font-semibold text-[#1F2933]">Role Assigned</label>
+              <Input value={role || 'N/A'} disabled className="bg-[#F7F8F6] text-[#8a6d1a] border-[#D6D8D5]" />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-[#202226]">Department / Unit</label>
-            <Input defaultValue={user?.department || 'N/A'} />
+            <label className="font-semibold text-[#1F2933]">Department / Unit</label>
+            <Input defaultValue={user?.department || 'N/A'} className="border-[#D6D8D5]" />
           </div>
 
           <div className="flex justify-end pt-2">
-            <Button size="sm" className="bg-gradient-to-r from-[#EAB308] to-[#D4AF37] text-[#0B132B] font-bold text-xs">
+            <Button size="sm" className="bg-[#EAB308] hover:bg-[#D4AF37] text-[#111827] font-bold text-xs">
               Save Profile Changes
             </Button>
           </div>

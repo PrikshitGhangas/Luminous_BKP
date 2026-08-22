@@ -696,15 +696,8 @@ export function SafetyProvider({ children }: { children: React.ReactNode }) {
       const incNumber = `SOS-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`;
 
       const callerName = userProfile?.full_name || 'Aanya Patel';
-      const callerPhone = userProfile?.phone || '+1 (555) 015-8812';
-      const categoryLabel =
-        category === 'womens_safety'
-          ? "Women's Safety SOS Distress Beacon"
-          : category === 'medical'
-          ? 'Medical Emergency SOS Alert'
-          : category === 'threat'
-          ? 'Physical Threat / Intruder Alert'
-          : 'High-Priority Panic SOS Distress Ping';
+      const callerPhone = userProfile?.phone || '+91 98454 15881';
+      const categoryLabel = 'Emergency SOS Distress Beacon';
 
       const timeline: IncidentTimelineEvent[] = [
         {

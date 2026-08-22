@@ -50,6 +50,7 @@ export interface StudentRecord {
   avatarUrl?: string;
   medicalNotes?: string;
   address?: string;
+  activeBacklogs?: number;
 }
 
 export interface FacultyRecord {

@@ -17,7 +17,7 @@ const ALLOWED_ROLES: UserRole[] = [
 
 // Routes that don't require an authenticated Supabase session.
 // Demo sandbox routes — exempt from real-auth guardianship (client-only personas).
-const DEMO_PREFIXES = ['/demo', '/command-center', '/safety/command-center'];
+const DEMO_PREFIXES = ['/demo', '/safety/command-center'];
 
 function applySecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('X-Content-Type-Options', 'nosniff');

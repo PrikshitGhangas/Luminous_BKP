@@ -22,7 +22,6 @@ import {
   FileSpreadsheet,
   Clock,
   Building2,
-  Bus,
   MessageSquareWarning,
   Award,
   Megaphone,
@@ -53,37 +52,31 @@ interface NavSection {
 
 const NAV_SECTIONS: NavSection[] = [
   {
-    title: 'SAFETY & EMERGENCY',
+    title: 'Safety',
     items: [
       {
         title: 'Hackathon Demo Hub',
         href: '/demo',
         icon: Sparkles,
         roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
-        highlight: true,
-        badge: 'DEMO',
       },
       {
         title: 'CampusShield Copilot',
         href: '/copilot',
         icon: Sparkles,
         roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
-        highlight: true,
-        badge: 'AI',
       },
       {
         title: 'Security Operations',
         href: '/security',
         icon: ShieldCheck,
         roles: ['security', 'super_admin', 'admin'],
-        highlight: true,
       },
       {
         title: 'Emergency SOS',
         href: '/safety/sos',
         icon: HeartPulse,
         roles: ['student', 'faculty', 'super_admin', 'admin', 'warden', 'security', 'parent', 'placement_officer'],
-        highlight: true,
       },
       {
         title: 'Emergency Alerts',
@@ -109,30 +102,16 @@ const NAV_SECTIONS: NavSection[] = [
         icon: MapPin,
         roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer'],
       },
-      {
-        title: 'Safety Analytics',
-        href: '/analytics/safety',
-        icon: BarChart3,
-        roles: ['super_admin', 'admin', 'security', 'faculty', 'student', 'warden', 'placement_officer', 'parent'],
-      },
-      {
-        title: 'Risk Intelligence',
-        href: '/safety/risk-intelligence',
-        icon: Sparkles,
-        roles: ['super_admin', 'admin', 'security', 'faculty', 'warden'],
-        highlight: true,
-      },
     ],
   },
   {
-    title: 'STUDENT & ACADEMIC ERP',
+    title: 'Academics',
     items: [
       {
         title: 'Student Dashboard',
         href: '/student',
         icon: User,
         roles: ['student', 'super_admin', 'admin', 'faculty', 'parent'],
-        highlight: true,
       },
       {
         title: 'Attendance',
@@ -179,7 +158,7 @@ const NAV_SECTIONS: NavSection[] = [
     ],
   },
   {
-    title: 'SECONDARY CAMPUS SERVICES',
+    title: 'Campus',
     items: [
       {
         title: 'Hostel Quarters',
@@ -187,12 +166,7 @@ const NAV_SECTIONS: NavSection[] = [
         icon: Building2,
         roles: ['super_admin', 'admin', 'warden', 'student', 'faculty', 'parent'],
       },
-      {
-        title: 'Transport Routes',
-        href: '/transport',
-        icon: Bus,
-        roles: ['super_admin', 'admin', 'student', 'parent', 'faculty', 'warden'],
-      },
+
       {
         title: 'Placements Portal',
         href: '/placement',
@@ -220,7 +194,7 @@ const NAV_SECTIONS: NavSection[] = [
     ],
   },
   {
-    title: 'COMMUNICATION & ADMIN',
+    title: 'Admin',
     items: [
       {
         title: 'Announcements',
@@ -229,10 +203,10 @@ const NAV_SECTIONS: NavSection[] = [
         roles: ['super_admin', 'admin', 'faculty', 'student', 'parent', 'warden', 'placement_officer', 'security'],
       },
       {
-        title: 'Audit Logs',
+        title: 'System & Safety Logs',
         href: '/audit-logs',
         icon: ScrollText,
-        roles: ['super_admin', 'admin'],
+        roles: ['super_admin', 'admin', 'security', 'faculty', 'warden'],
       },
       {
         title: 'Settings',
@@ -283,7 +257,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
               <span className="font-bold text-sm tracking-tight text-[#1F2933] flex items-center gap-1.5">
                 Luminous <span className="text-[#8a6d1a] font-bold text-xs">AI</span>
               </span>
-              <span className="text-[10px] text-[#667085] uppercase tracking-widest">
+              <span className="text-[10px] text-[#667085]">
                 Smart ERP &amp; Safety
               </span>
             </div>
@@ -338,7 +312,7 @@ export function Sidebar({ isCollapsed, onToggleCollapse }: SidebarProps) {
           return (
             <div key={section.title} className="space-y-1">
               {!isCollapsed && (
-                <p className="px-2.5 text-[10px] font-bold tracking-widest text-[#8A9199]">
+                <p className="px-2.5 text-xs font-semibold text-[#667085]">
                   {section.title}
                 </p>
               )}

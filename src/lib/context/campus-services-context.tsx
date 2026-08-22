@@ -96,6 +96,8 @@ interface CampusServicesContextType {
   placementDrives: PlacementDrive[];
   placementApplications: PlacementApplication[];
   applyForDrive: (driveId: string, studentName: string, rollNumber: string, cgpa: number, department: string) => PlacementApplication;
+  updatePlacementApplicationStatus: (applicationId: string, status: PlacementApplication['status']) => void;
+  createPlacementDrive: (drive: Omit<PlacementDrive, 'id' | 'totalApplicants'>) => PlacementDrive;
 
   // Wellbeing
   wellbeingCheckIns: WellbeingCheckIn[];
@@ -146,7 +148,7 @@ export function CampusServicesProvider({ children }: { children: React.ReactNode
         id: 'vis-101',
         pass_number: 'PASS-20260821-0391',
         visitor_name: 'Dr. Anita Roy',
-        visitor_phone: '+1 (555) 012-3399',
+        visitor_phone: '+91 98450 12339',
         visitor_company: 'Stanford AI Institute',
         purpose: 'Guest Keynote on Agentic Safety & Robotics',
         host_name: 'Prof. Sarah Jenkins',
@@ -166,7 +168,7 @@ export function CampusServicesProvider({ children }: { children: React.ReactNode
         id: 'vis-102',
         pass_number: 'PASS-20260821-0392',
         visitor_name: 'Vikramaditya Roy',
-        visitor_phone: '+1 (555) 019-4400',
+        visitor_phone: '+91 98450 19440',
         visitor_company: 'Infosys Research Lab',
         purpose: 'Technical Seminar & Capstone Evaluation',
         host_name: 'Prof. Sarah Jenkins',
@@ -197,7 +199,7 @@ export function CampusServicesProvider({ children }: { children: React.ReactNode
 
   // Placement State
   const [placementCompanies] = useState<PlacementCompany[]>(INITIAL_PLACEMENT_COMPANIES);
-  const [placementDrives] = useState<PlacementDrive[]>(INITIAL_PLACEMENT_DRIVES);
+  const [placementDrives, setPlacementDrives] = useState<PlacementDrive[]>(INITIAL_PLACEMENT_DRIVES);
   const [placementApplications, setPlacementApplications] = useState<PlacementApplication[]>(() =>
     getStored(STORAGE_KEYS.PLACEMENT_APPS, INITIAL_PLACEMENT_APPLICATIONS)
   );
@@ -400,7 +402,7 @@ export function CampusServicesProvider({ children }: { children: React.ReactNode
     );
   }, []);
 
-  // Placement Application Mutation
+  // Placement Mutations
   const applyForDrive = useCallback((driveId: string, studentName: string, rollNumber: string, cgpa: number, department: string): PlacementApplication => {
     const targetDrive = placementDrives.find((d) => d.id === driveId);
     const newApp: PlacementApplication = {
@@ -419,6 +421,22 @@ export function CampusServicesProvider({ children }: { children: React.ReactNode
     setPlacementApplications((prev) => [newApp, ...prev]);
     return newApp;
   }, [placementDrives]);
+
+  const updatePlacementApplicationStatus = useCallback((applicationId: string, status: PlacementApplication['status']) => {
+    setPlacementApplications((prev) =>
+      prev.map((app) => (app.id === applicationId ? { ...app, status } : app))
+    );
+  }, []);
+
+  const createPlacementDrive = useCallback((drive: Omit<PlacementDrive, 'id' | 'totalApplicants'>): PlacementDrive => {
+    const newDrive: PlacementDrive = {
+      ...drive,
+      id: `drv-${Date.now()}`,
+      totalApplicants: 0,
+    };
+    setPlacementDrives((prev) => [newDrive, ...prev]);
+    return newDrive;
+  }, []);
 
   // Wellbeing Check-in Logger
   const logWellbeingCheckIn = useCallback((
@@ -472,6 +490,8 @@ export function CampusServicesProvider({ children }: { children: React.ReactNode
         placementDrives,
         placementApplications,
         applyForDrive,
+        updatePlacementApplicationStatus,
+        createPlacementDrive,
         wellbeingCheckIns,
         wellbeingAggregated,
         counselors,

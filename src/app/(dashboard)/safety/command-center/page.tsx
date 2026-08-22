@@ -7,22 +7,16 @@ import { StatCard } from '@/components/shared/stat-card';
 import { CampusMapInteractive } from '@/components/safety/campus-map-interactive';
 import { IncidentDetailsModal } from '@/components/safety/incident-details-modal';
 import { IncidentReportModal } from '@/components/safety/incident-report-modal';
-import { AISafetyIntelligencePanel } from '@/components/safety/ai-intelligence-panel';
-import { IncidentCharts } from '@/components/safety/incident-charts';
 import { LiveIncidentFeed } from '@/components/safety/live-incident-feed';
-import { SecurityActivityFeed } from '@/components/safety/security-activity-feed';
 import { Button } from '@/components/ui/button';
 import {
   Radio,
   Flame,
   ShieldCheck,
-  Clock,
-  Sparkles,
   AlertOctagon,
   RefreshCw,
   Plus,
   ShieldAlert,
-  Activity,
 } from 'lucide-react';
 
 export default function SafetyCommandCenterPage() {
@@ -89,20 +83,14 @@ export default function SafetyCommandCenterPage() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* 1. SOC Header Bar */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#AEB0B7] pb-4">
+      {/* 1. Header Bar */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 border-b border-[#D6D8D5] pb-4">
         <div>
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="flex h-3 w-3 rounded-full bg-[#EAB308] animate-ping" />
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#202226] flex items-center gap-2">
-              <span>Campus Security Operations Center (SOC)</span>
-            </h1>
-            <span className="rounded bg-[#EAB308]/15 border border-[#EAB308]/40 px-2 py-0.5 text-[10px] font-bold text-[#B45309]">
-              COMMAND CENTER
-            </span>
-          </div>
-          <p className="text-xs text-[#555960] mt-1">
-            Autonomous AI Incident Triage · Real-time Multi-Sector Vector Telemetry · Rapid Dispatch
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2933]">
+            Command Center
+          </h1>
+          <p className="text-xs text-[#667085] mt-0.5">
+            Real-time incident monitoring, threat posture, and security dispatch operations.
           </p>
         </div>
 
@@ -111,7 +99,7 @@ export default function SafetyCommandCenterPage() {
           <Button
             size="sm"
             onClick={() => setIsReportModalOpen(true)}
-            className="bg-gradient-to-r from-[#EAB308] via-[#EAB308] to-[#D4AF37] text-[#202226] font-bold text-xs gap-1.5 shadow-sm"
+            className="bg-[#1F2933] hover:bg-[#111827] text-white text-xs font-semibold gap-1.5 rounded-lg shadow-xs cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span>Report Incident</span>
@@ -120,9 +108,9 @@ export default function SafetyCommandCenterPage() {
           <Button
             size="sm"
             onClick={() => setIsBroadcastOpen(!isBroadcastOpen)}
-            className="bg-[#DC2626] hover:bg-[#b91c1c] text-white font-bold text-xs gap-1.5 shadow-sm border border-[#DC2626]"
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold text-xs gap-1.5 rounded-lg shadow-xs cursor-pointer"
           >
-            <Radio className="h-3.5 w-3.5 animate-pulse" />
+            <Radio className="h-3.5 w-3.5" />
             <span>Broadcast Alert</span>
           </Button>
 
@@ -131,7 +119,7 @@ export default function SafetyCommandCenterPage() {
             variant="outline"
             onClick={resetDemoData}
             title="Reset to default seeded demo state"
-            className="text-xs text-[#555960] hover:text-[#202226]"
+            className="text-xs text-[#667085] hover:text-[#1F2933] rounded-lg border-[#D6D8D5] cursor-pointer"
           >
             <RefreshCw className="h-3.5 w-3.5" />
           </Button>
@@ -139,75 +127,52 @@ export default function SafetyCommandCenterPage() {
       </div>
 
       {/* 2. Global Threat Level & Filter Ribbon */}
-      <div className="rounded-xl border border-[#AEB0B7] bg-white p-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-sm">
+      <div className="rounded-xl border border-[#D6D8D5] bg-white p-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-xs">
         {/* Threat Level Switcher */}
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] uppercase font-bold text-[#555960] shrink-0">
-            Campus Safety Threat Posture:
+        <div className="flex items-center gap-2.5">
+          <span className="text-xs font-semibold text-[#1F2933] shrink-0">
+            Campus Threat Posture:
           </span>
-          <div className="flex items-center gap-1 bg-[#E7E8EB] border border-[#D0D1D6] p-1 rounded-lg text-xs font-bold">
+          <div className="inline-flex p-1 bg-[#F0F1EF] border border-[#D6D8D5] rounded-full gap-1">
             {(['NORMAL', 'ELEVATED', 'HIGH_ALERT', 'LOCKDOWN'] as ThreatLevel[]).map((lvl) => (
               <button
                 key={lvl}
                 onClick={() => setThreatLevel(lvl)}
-                className={`px-2 py-0.5 rounded uppercase transition-colors cursor-pointer text-[10px] ${
+                className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all capitalize cursor-pointer ${
                   threatLevel === lvl
                     ? lvl === 'LOCKDOWN'
-                      ? 'bg-[#DC2626] text-white animate-pulse'
+                      ? 'bg-red-600 text-white font-bold shadow-xs'
                       : lvl === 'HIGH_ALERT'
-                      ? 'bg-[#F59E0B] text-white'
+                      ? 'bg-amber-600 text-white font-bold shadow-xs'
                       : lvl === 'ELEVATED'
-                      ? 'bg-[#EAB308] text-[#202226]'
-                      : 'bg-[#10B981] text-white'
-                    : 'text-[#555960] hover:text-[#202226]'
+                      ? 'bg-amber-500 text-white font-bold shadow-xs'
+                      : 'bg-emerald-600 text-white font-bold shadow-xs'
+                    : 'text-[#667085] hover:text-[#1F2933]'
                 }`}
               >
-                {lvl}
+                {lvl.replace('_', ' ').toLowerCase()}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Global Severity & Time Filters */}
-        <div className="flex items-center gap-3 flex-wrap">
-          {/* Severity Filter */}
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] text-[#555960]">Severity:</span>
-            <div className="flex items-center gap-0.5 bg-[#E7E8EB] border border-[#D0D1D6] p-0.5 rounded-lg text-[10px]">
-              {['all', 'critical', 'high', 'medium', 'low'].map((sev) => (
-                <button
-                  key={sev}
-                  onClick={() => setSeverityFilter(sev)}
-                  className={`px-2 py-0.5 rounded capitalize transition-colors cursor-pointer ${
-                    severityFilter === sev
-                      ? 'bg-[#EAB308] text-[#202226] font-bold'
-                      : 'text-[#555960] hover:text-[#202226]'
-                  }`}
-                >
-                  {sev}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Time Filter */}
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] text-[#555960]">Time Window:</span>
-            <div className="flex items-center gap-0.5 bg-[#E7E8EB] border border-[#D0D1D6] p-0.5 rounded-lg text-[10px]">
-              {(['today', '7days', '30days'] as TimeFilter[]).map((tf) => (
-                <button
-                  key={tf}
-                  onClick={() => setTimeFilter(tf)}
-                  className={`px-2 py-0.5 rounded uppercase transition-colors cursor-pointer ${
-                    timeFilter === tf
-                      ? 'bg-[#EAB308] text-[#202226] font-bold'
-                      : 'text-[#555960] hover:text-[#202226]'
-                  }`}
-                >
-                  {tf === 'today' ? 'Today' : tf === '7days' ? '7 Days' : '30 Days'}
-                </button>
-              ))}
-            </div>
+        {/* Time Window Filter */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-[#667085]">Window:</span>
+          <div className="inline-flex p-1 bg-[#F0F1EF] border border-[#D6D8D5] rounded-full gap-1">
+            {(['today', '7days', '30days'] as const).map((win) => (
+              <button
+                key={win}
+                onClick={() => setTimeFilter(win)}
+                className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all cursor-pointer ${
+                  timeFilter === win
+                    ? 'bg-[#1F2933] text-white font-semibold shadow-xs'
+                    : 'text-[#667085] hover:text-[#1F2933]'
+                }`}
+              >
+                {win === 'today' ? 'Today' : win === '7days' ? 'Last 7 Days' : 'Last 30 Days'}
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -260,47 +225,32 @@ export default function SafetyCommandCenterPage() {
         </div>
       )}
 
-      {/* 3. Top Metrics Strip */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      {/* 3. Top Metrics Summary */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard
-          title="Campus Safety Posture"
+          title="Threat Level"
           value={threatLevel}
-          description="Real-time SOC monitoring"
+          description="Campus security posture"
           icon={<ShieldCheck className="h-5 w-5" />}
           variant={threatLevel === 'LOCKDOWN' ? 'critical' : threatLevel === 'HIGH_ALERT' ? 'warning' : 'primary'}
         />
         <StatCard
           title="Active Emergencies"
           value={metrics.activeCount}
-          description={`${metrics.resolvedCount} cleared this window`}
+          description={`${metrics.resolvedCount} resolved in window`}
           icon={<Flame className="h-5 w-5" />}
           variant={metrics.activeCount > 0 ? 'warning' : 'default'}
         />
         <StatCard
           title="Critical Incidents"
           value={metrics.criticalCount}
-          description="Life-safety priority dispatch"
+          description="High priority dispatch"
           icon={<AlertOctagon className="h-5 w-5" />}
           variant="critical"
         />
-        <StatCard
-          title="High Severity Count"
-          value={metrics.highCount}
-          description="Urgent containment tier"
-          icon={<Radio className="h-5 w-5" />}
-          variant="warning"
-        />
-        <StatCard
-          title="Avg Response Latency"
-          value="2.8 min"
-          trend={{ value: "18% faster", isPositive: true }}
-          description="Target < 4.0 min (94.6% SLA)"
-          icon={<Clock className="h-5 w-5" />}
-          variant="success"
-        />
       </div>
 
-      {/* 4. Centerpiece Grid: Interactive SVG Campus Map & Live Incident Feed */}
+      {/* 4. Centerpiece Grid: Interactive Campus Map & Live Incident Feed */}
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Left 7 Columns: Interactive Vector Campus Map */}
         <div className="xl:col-span-7 space-y-6">
@@ -325,39 +275,6 @@ export default function SafetyCommandCenterPage() {
             timeFilter={timeFilter}
           />
         </div>
-      </div>
-
-      {/* 5. AI Safety Intelligence & Pattern Synthesis */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-[#AEB0B7] pb-2">
-          <Sparkles className="h-4 w-4 text-[#B45309]" />
-          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider">
-            AI Safety Intelligence &amp; Predictive Risk Synthesis
-          </h2>
-        </div>
-        <AISafetyIntelligencePanel />
-      </div>
-
-      {/* 6. Incident Velocity & First Responder Response Time Charts */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-[#AEB0B7] pb-2">
-          <Activity className="h-4 w-4 text-[#B45309]" />
-          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider">
-            Campus Incident Trends &amp; SLA Velocity Charts
-          </h2>
-        </div>
-        <IncidentCharts timeFilter={timeFilter} />
-      </div>
-
-      {/* 7. Security Activity Stream & Active Patrol Telemetry */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 border-b border-[#AEB0B7] pb-2">
-          <ShieldCheck className="h-4 w-4 text-[#B45309]" />
-          <h2 className="text-sm font-bold text-[#202226] uppercase tracking-wider">
-            Security Operations Telemetry &amp; Audit Log Stream
-          </h2>
-        </div>
-        <SecurityActivityFeed />
       </div>
 
       {/* Modals */}

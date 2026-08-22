@@ -142,51 +142,36 @@ export function LiveIncidentFeed({
                     : 'border-l-4 border-l-[#10B981] border-[#D0D1D6] hover:border-[#EAB308]/50 hover:shadow-md'
                 }`}
               >
-                {/* Top Row: ID, Severity, Status, Time */}
+                {/* Top Row: Title, Status, Time */}
                 <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="font-mono text-xs font-bold text-[#B45309]">
-                      {incident.incident_number}
-                    </span>
-                    <SeverityBadge severity={incident.severity} size="sm" isAiClassified={!!incident.ai_confidence} />
+                  <div className="space-y-0.5">
+                    <h4 className="text-xs font-bold text-[#1F2933] line-clamp-1">
+                      {incident.title}
+                    </h4>
                     <span
-                      className={`rounded-full px-2 py-0.2 text-[9px] font-mono font-bold uppercase ${
+                      className={`inline-block rounded-full px-2 py-0.5 text-[9px] font-medium capitalize ${
                         incident.status === 'responding'
-                          ? 'bg-[#FEF3C7] text-[#B45309] border border-[#EAB308] animate-pulse'
+                          ? 'bg-amber-50 text-amber-800 border border-amber-200'
                           : isResolved
-                          ? 'bg-[#ECFDF5] text-[#067a4f] border border-[#10B981]'
-                          : 'bg-[#E7E8EB] text-[#555960] border border-[#D0D1D6]'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          : 'bg-[#F0F1EF] text-[#667085] border border-[#D6D8D5]'
                       }`}
                     >
-                      {incident.status}
+                      {incident.status.replace('_', ' ')}
                     </span>
                   </div>
 
-                  <span className="text-[10px] text-[#555960] shrink-0 flex items-center gap-1">
+                  <span className="text-[10px] text-[#667085] shrink-0 flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     <span>{formatTimeAgo(incident.created_at)}</span>
                   </span>
                 </div>
 
-                {/* Title & Description */}
-                <div>
-                  <h4 className="text-xs font-bold text-[#202226] line-clamp-1">
-                    {incident.title}
-                  </h4>
-                  <p className="text-[11px] text-[#555960] line-clamp-2 mt-0.5">
-                    {incident.description}
-                  </p>
-                </div>
+                <p className="text-[11px] text-[#667085] line-clamp-2 leading-relaxed">
+                  {incident.description}
+                </p>
 
-                {/* AI Assessment Pill if present */}
-                {incident.ai_summary && (
-                  <div className="rounded-lg bg-[#FEFCE8] border border-[#EAB308]/40 p-2 text-[11px] text-[#202226] flex items-start gap-1.5">
-                    <Sparkles className="h-3.5 w-3.5 text-[#B45309] shrink-0 mt-0.5" />
-                    <span className="line-clamp-1 text-[#202226]">
-                      <strong className="text-[#B45309]">AI:</strong> {incident.ai_summary}
-                    </span>
-                  </div>
-                )}
+
 
                 {/* Bottom Row: Location, Officer, Action Button */}
                 <div className="flex items-center justify-between text-[10px] text-[#555960] pt-1.5 border-t border-[#D0D1D6]">
