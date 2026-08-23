@@ -152,6 +152,7 @@ export const ROUTE_PERMISSIONS: Record<string, UserRole[]> = {
   '/parent': ['parent', 'super_admin', 'admin'],
   '/wellbeing': ['student', 'super_admin', 'admin', 'faculty'],
   '/audit-logs': ['super_admin', 'admin', 'security'],
+  '/alerts': ['super_admin', 'admin', 'security', 'faculty', 'warden', 'student', 'parent', 'placement_officer', 'other'],
   '/settings': ['super_admin', 'admin', 'faculty', 'student', 'parent', 'security', 'warden', 'placement_officer'],
 };
 
@@ -160,6 +161,7 @@ export const PUBLIC_ROUTES = [
   '/login',
   '/register',
   '/forgot-password',
+  '/reset-password',
   '/auth/callback',
   '/not-found',
   '/error',

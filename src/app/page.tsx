@@ -22,15 +22,14 @@ import {
   UserCheck,
   Shield,
   Zap,
-  Building2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const STATS = [
-  { value: '< 4s', label: 'AI Incident Triage', desc: 'Realtime Gemini response' },
-  { value: '99.9%', label: 'Platform Uptime', desc: 'Continuous operations' },
-  { value: '6 Roles', label: 'RBAC Governance', desc: 'Zero-trust data isolation' },
-  { value: '0 PII Leak', label: 'Privacy Assured', desc: 'Strict role boundaries' },
+  { value: '< 4s', label: 'AI Incident Triage', shape: 'rounded-full' },
+  { value: '99.9%', label: 'Realtime Uptime', shape: 'rounded-2xl' },
+  { value: '6 Core Roles', label: 'RBAC Governance', shape: 'rounded-full' },
+  { value: '0 PII Leak', label: 'Zero-Trust Privacy', shape: 'rounded-2xl' },
 ];
 
 const FEATURES = [
@@ -65,11 +64,50 @@ const FEATURES = [
 
 const ROLE_ICONS: Record<string, React.ElementType> = {
   super_admin: Crown,
-  warden: Building2,
+  admin: Landmark,
   security: ShieldCheck,
   faculty: GraduationCap,
   student: BookOpen,
   parent: UserCheck,
+};
+
+const ROLE_ACCENTS: Record<string, { bg: string; text: string; border: string; glow: string }> = {
+  super_admin: {
+    bg: 'bg-amber-50',
+    text: 'text-amber-800',
+    border: 'border-amber-200 hover:border-amber-400',
+    glow: 'from-amber-500/10 to-yellow-500/5',
+  },
+  admin: {
+    bg: 'bg-stone-50',
+    text: 'text-stone-800',
+    border: 'border-stone-200 hover:border-stone-400',
+    glow: 'from-stone-500/10 to-stone-500/5',
+  },
+  security: {
+    bg: 'bg-emerald-50',
+    text: 'text-emerald-800',
+    border: 'border-emerald-200 hover:border-emerald-400',
+    glow: 'from-emerald-500/10 to-teal-500/5',
+  },
+  faculty: {
+    bg: 'bg-indigo-50',
+    text: 'text-indigo-800',
+    border: 'border-indigo-200 hover:border-indigo-400',
+    glow: 'from-indigo-500/10 to-blue-500/5',
+  },
+  student: {
+    bg: 'bg-blue-50',
+    text: 'text-blue-800',
+    border: 'border-blue-200 hover:border-blue-400',
+    glow: 'from-blue-500/10 to-sky-500/5',
+  },
+  parent: {
+    bg: 'bg-teal-50',
+    text: 'text-teal-800',
+    border: 'border-teal-200 hover:border-teal-400',
+    glow: 'from-teal-500/10 to-emerald-500/5',
+  },
 };
 
 export default function LandingPage() {
@@ -89,10 +127,10 @@ export default function LandingPage() {
     router.refresh();
   };
 
-  // 6 Core Roles (Including Hostel Warden)
+  // 6 Core Roles (Hostel Warden and Placement Officer removed)
   const demoRoles: UserRole[] = [
     'super_admin',
-    'warden',
+    'admin',
     'security',
     'faculty',
     'student',
@@ -165,16 +203,16 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5] bg-gradient-to-b from-[#F7F8F6] via-white to-[#F7F8F6]">
+      <section className="light-grid-texture relative overflow-hidden py-16 sm:py-24 px-6 border-b border-[#D6D8D5]">
         <div className="mx-auto max-w-5xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#D6D8D5] bg-white px-4 py-1.5 text-xs font-semibold text-[#1F2933] shadow-xs">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/40 bg-white px-4 py-1.5 text-xs font-semibold text-[#8a6d1a] shadow-sm">
             <Sparkles className="h-3.5 w-3.5 text-[#D4AF37]" />
             <span>Autonomous Campus Safety &amp; Intelligence</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1F2933] leading-[1.15]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#1F2933] leading-tight">
             Institutional Campus Safety &amp; <br />
-            <span className="text-[#1F2933]">Unified Smart ERP</span>
+            <span className="gold-gradient-text">Unified Smart ERP</span>
           </h1>
 
           <p className="mx-auto max-w-2xl text-sm sm:text-base text-[#667085] leading-relaxed">
@@ -182,16 +220,15 @@ export default function LandingPage() {
             operations, and role-based governance in one unified platform.
           </p>
 
-          {/* Clean Uniform Metrics Bar */}
+          {/* Varied Shape Metrics Bar */}
           <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto">
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border border-[#D6D8D5] bg-white p-4 text-center shadow-xs transition-all hover:border-[#1F2933] hover:shadow-md"
+                className={`${stat.shape} border border-[#D6D8D5] bg-white p-4 text-center shadow-xs transition-all hover:border-[#EAB308]/50 hover:shadow-md`}
               >
-                <div className="text-2xl font-bold text-[#1F2933] tracking-tight">{stat.value}</div>
-                <div className="text-xs font-semibold text-[#1F2933] mt-1">{stat.label}</div>
-                <div className="text-[11px] text-[#8A9199] mt-0.5">{stat.desc}</div>
+                <div className="text-xl font-bold text-[#8a6d1a]">{stat.value}</div>
+                <div className="text-[11px] text-[#667085] mt-0.5">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -218,27 +255,33 @@ export default function LandingPage() {
             {demoRoles.map((r) => {
               const meta = ROLE_DETAILS[r];
               const Icon = ROLE_ICONS[r] || Shield;
+              const accent = ROLE_ACCENTS[r] || {
+                bg: 'bg-gray-50',
+                text: 'text-gray-800',
+                border: 'border-gray-200',
+                glow: 'from-gray-500/10 to-gray-500/5',
+              };
 
               return (
                 <div
                   key={r}
                   onClick={() => handleLaunchRole(r)}
-                  className="group relative rounded-2xl border border-[#D6D8D5] bg-white p-6 hover:border-[#1F2933] hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between overflow-hidden shadow-xs"
+                  className={`group relative rounded-3xl border ${accent.border} bg-gradient-to-br ${accent.glow} p-6 hover:shadow-lg transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden`}
                 >
                   <div className="space-y-4">
                     {/* Top Row: Icon Capsule + Role Pill */}
                     <div className="flex items-center justify-between">
-                      <div className="h-10 w-10 rounded-xl bg-[#F0F1EF] border border-[#D6D8D5] flex items-center justify-center text-[#1F2933] group-hover:bg-[#1F2933] group-hover:text-white transition-colors">
+                      <div className={`h-11 w-11 rounded-2xl ${accent.bg} border border-[#D6D8D5] flex items-center justify-center ${accent.text} shadow-xs group-hover:scale-105 transition-transform`}>
                         <Icon className="h-5 w-5" />
                       </div>
-                      <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-[#F7F8F6] text-[#667085] border border-[#D6D8D5]">
+                      <span className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${accent.bg} ${accent.text} border border-current/20 shadow-xs`}>
                         {meta.label}
                       </span>
                     </div>
 
                     {/* Role Title & Description */}
                     <div>
-                      <h3 className="font-bold text-base text-[#1F2933] group-hover:text-[#8a6d1a] transition-colors">
+                      <h3 className="font-bold text-lg text-[#1F2933] group-hover:text-[#8a6d1a] transition-colors">
                         {meta.name}
                       </h3>
                       <p className="text-xs text-[#667085] leading-relaxed mt-1.5">
@@ -247,10 +290,10 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Bottom Action Footer with Clean Button */}
-                  <div className="mt-6 pt-4 border-t border-[#D6D8D5]/60 flex items-center justify-between text-xs">
+                  {/* Bottom Action Footer with Pill Button */}
+                  <div className="mt-5 pt-4 border-t border-black/5 flex items-center justify-between text-xs">
                     <span className="text-[11px] text-[#8a9199] font-mono">{meta.defaultPath}</span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#F7F8F6] border border-[#D6D8D5] text-[#1F2933] font-semibold text-xs group-hover:bg-[#1F2933] group-hover:text-white group-hover:border-[#1F2933] transition-all shadow-2xs">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-[#D6D8D5] text-[#1F2933] font-semibold text-xs group-hover:bg-[#1F2933] group-hover:text-white group-hover:border-[#1F2933] transition-all shadow-xs">
                       <span>Launch</span>
                       <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                     </span>

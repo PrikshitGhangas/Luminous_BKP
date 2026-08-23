@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { UserRole, Profile } from '../types';
 import { DEMO_USERS } from '../constants/demo-data';
 import { ROLE_DETAILS } from '../constants/roles';
+import { getAuthRedirectUrl } from '../utils/url';
 
 export type AuthSource = 'supabase' | 'demo' | null;
 
@@ -243,6 +244,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           email,
           password,
           options: {
+            emailRedirectTo: getAuthRedirectUrl('/auth/callback'),
             data: {
               full_name: fullName,
               role,
@@ -365,7 +367,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const client = await getBrowserClient();
       if (!client) return { error: 'Authentication is not configured.' };
-      const redirectTo = `${window.location.origin}/auth/callback`;
+      const redirectTo = getAuthRedirectUrl('/auth/callback');
       const { error } = await client.auth.signInWithOAuth({
         provider: provider as never,
         options: { redirectTo },
@@ -397,7 +399,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem('luminous_demo');
         localStorage.removeItem('luminous_role');
       } catch {}
-      window.location.href = '/';
     }
   }, []);
 
@@ -407,9 +408,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!client) return { error: 'Authentication is not configured.' };
       // redirectTo must match a configured app URL so Supabase can embed a working
       // reset link into the recovery email (otherwise the email has no link).
-      const redirectTo = typeof window !== 'undefined'
-        ? `${window.location.origin}/reset-password`
-        : undefined;
+      const redirectTo = getAuthRedirectUrl('/reset-password');
       const { error } = await client.auth.resetPasswordForEmail(email, {
         redirectTo,
       });

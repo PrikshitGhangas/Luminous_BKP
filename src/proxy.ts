@@ -81,6 +81,17 @@ export async function proxy(request: NextRequest) {
     return applySecurityHeaders(response);
   }
 
+  // Intercept any auth callback parameters that landed on root or login
+  if (
+    (pathname === '/' || pathname === '/login') &&
+    (request.nextUrl.searchParams.has('code') ||
+      (request.nextUrl.searchParams.has('token_hash') && request.nextUrl.searchParams.has('type')))
+  ) {
+    const callbackUrl = request.nextUrl.clone();
+    callbackUrl.pathname = '/auth/callback';
+    return applySecurityHeaders(NextResponse.redirect(callbackUrl));
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 

@@ -28,12 +28,14 @@ function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const demoRoles: (keyof typeof ROLE_DETAILS)[] = [
-    'super_admin',
-    'warden',
     'student',
     'faculty',
+    'admin',
     'security',
     'parent',
+    'warden',
+    'placement_officer',
+    'super_admin',
   ];
 
   const handleQuickDemo = (role: keyof typeof ROLE_DETAILS) => {
@@ -85,13 +87,14 @@ function LoginForm() {
     try {
       const { error } = await signInWithProvider(provider);
       if (error) setErrorMessage(error);
+      // On success, Supabase redirects to the provider.
     } finally {
       setOauthProvider(null);
     }
   };
 
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-[#D6D8D5] bg-white p-6 sm:p-8 shadow-xs space-y-6">
+    <div className="space-y-6">
       <div className="text-center space-y-2">
         <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#F4C430] via-[#EAB308] to-[#D4AF37] text-[#111827] shadow-sm shadow-[#D4AF37]/30">
           <Sparkles className="h-6 w-6" />
@@ -112,13 +115,13 @@ function LoginForm() {
           </span>
           <span className="text-[10px] font-normal text-[#667085]">No password needed</span>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
           {demoRoles.map((r) => (
             <button
               key={r}
               type="button"
               onClick={() => handleQuickDemo(r)}
-              className="px-2.5 py-2 text-[11px] font-semibold rounded-lg border border-[#D6D8D5] bg-white hover:border-[#1F2933] hover:bg-[#F0F1EF] text-[#1F2933] transition-all text-center truncate cursor-pointer shadow-2xs"
+              className="px-2 py-1.5 text-[11px] font-semibold rounded-lg border border-[#D6D8D5] bg-white hover:border-[#EAB308] hover:bg-[#EAB308]/10 text-[#1F2933] hover:text-[#8a6d1a] transition-all text-center truncate cursor-pointer shadow-2xs"
             >
               {ROLE_DETAILS[r]?.label}
             </button>
